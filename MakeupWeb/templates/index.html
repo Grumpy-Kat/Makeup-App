@@ -1,0 +1,11 @@
+{% extends "template.html" %}
+
+{% block body %}
+<div class="main">
+	<form method="post" enctype="multipart/form-data">
+		<input type="file" name="file" accept="image/*" onchange="fileChanged(this)" required /><br />
+		<input type="submit" value="Add Palette" />
+   </form><br />
+	<img id="img" style="display: none;" src="#" height="200px" />
+</div>
+{% endblock %}

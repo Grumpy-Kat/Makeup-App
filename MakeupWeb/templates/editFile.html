@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+
+{% block body %}
+<div class="main">
+	<form method="post" enctype="multipart/form-data">
+		<input name="imgSrc" id="imgSrc" type="hidden" value="{{ filename }}" />
+		<label for="border">Borders</label>
+		<input name="border-top" id="border-top" type="number" value="0" onchange="updateBorders();" />
+		<input name="border-left" id="border-left" type="number" value="0" onchange="updateBorders();" />
+		<input name="border-btm" id="border-btm" type="number" value="0" onchange="updateBorders();" />
+		<input name="border-right" id="border-right" type="number" value="0" onchange="updateBorders();" /><br />
+		<label for="padding">Padding</label>
+		<input name="padding-horizontal" id="padding-horizontal" type="number" value="0" onchange="updatePadding();" />
+		<input name="padding-vertical" id="padding-vertical" type="number" value="0" onchange="updatePadding();" /><br />
+		<label for="boxes">Boxes</label>
+		<input name="boxes-cols" id="boxes-cols" type="number" value="0" onchange="updateBoxes();" />
+		<input name="boxes-rows" id="boxes-rows" type="number" value="0" onchange="updateBoxes();" /><br />
+		<input type="submit" value="Done" />
+   </form><br />
+	<img id="img" src="{{ url_for('static', filename = filename) }}" height="300px" />
+	<div id="borders"><table id="borderTable"></table></div>
+</div>
+{% endblock %}

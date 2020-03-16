@@ -1,0 +1,83 @@
+<AddPaletteScreen>:
+	cols: cols
+	rows: rows
+	paletteName: paletteName
+	img: img
+	border: border
+	borderParent: borderParent
+	FloatLayout:
+		size: root.width, root.height
+		GridLayout:
+			cols: 2
+			size_hint_y: 0.25
+			pos_hint: { 'left': 0, 'top': 1 }
+			padding: 10
+			spacing: 10
+			Label:
+				text: 'Columns:'
+				valign: 'middle'
+				font_size: 13
+				color: app.theme_cls.text_color
+				size_hint_x: 0.2
+			TextInput:
+				id: cols
+				multiline: False
+				halign: 'left'
+				valign: 'middle'
+				input_filter: 'int'
+				font_size: 13
+				text: '1'
+				size_hint_x: 0.2
+			Label:
+				text: 'Rows:'
+				valign: 'middle'
+				font_size: 13
+				color: app.theme_cls.text_color
+				size_hint_x: 0.2
+			TextInput:
+				id: rows
+				multiline: False
+				halign: 'left'
+				valign: 'middle'
+				input_filter: 'int'
+				font_size: 13
+				text: '1'
+				size_hint_x: 0.8
+			Label:
+				text: 'Palette Name:'
+				valign: 'middle'
+				font_size: 13
+				color: app.theme_cls.text_color
+				size_hint_x: 0.2
+			TextInput:
+				id: paletteName
+				multiline: False
+				halign: 'left'
+				valign: 'middle'
+				font_size: 13
+				text: ''
+				size_hint_x: 0.8
+		Button:
+			size_hint: 0.75, 0.06
+			pos_hint: { 'center_x': 0.5, 'top': 0.76 }
+			halign: 'center'
+			valign: 'middle'
+			text: 'Save'
+			on_release: root.save()
+		Image:
+			id: img
+			allow_stretch: True
+			size_hint_y: 0.68
+			pos_hint: { 'center_x': 0.5 }
+			y: 5
+			on_parent: root.setImg()
+		Border:
+			id: border
+			color: app.theme_cls.text_color
+			size_hint: None, None
+			size: 200, 200
+			pos: 100, 100
+			GridLayout:
+				id: borderParent
+				pos: self.parent.pos
+				size: self.parent.size

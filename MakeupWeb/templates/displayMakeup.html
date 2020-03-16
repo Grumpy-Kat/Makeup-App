@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+
+{% block body %}
+<div class="main">
+	<div class="tabLinks">
+		<button class="tabLink" id="tabLink0" onclick="openTab(this.id, 'tab0')">0</button>
+		<button class="tabLink" id="tabLink1" onclick="openTab(this.id, 'tab1')">1</button>
+		<button class="tabLink" id="tabLink2" onclick="openTab(this.id, 'tab2')">2</button>
+		<button class="tabLink" id="tabLink3" onclick="openTab(this.id, 'tab3')">3</button>
+	</div>
+	<div class="tab" id="tab0">
+		{% for i in makeup %}
+			<div class="makeup" style="background-image: url({{ url_for('static', filename='imgs/' + i[3] + '.jpg') }})" onclick="openPopup(this, '{{ i[4] }}', '{{ i[3] }}')">
+				<div class="makeup-overlay" style="background-color: rgb({{ i[0] * 255 }}, {{ i[1] * 255 }}, {{ i[2] * 255 }});"></div>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="tab" id="tab1">
+	</div>
+	<div class="tab" id="tab2">
+	</div>
+	<div class="tab" id="tab3">
+	</div>
+	<div class="popup">
+		<p class="popupText" id="popupColor">Color: </p>
+		<p class="popupText" id="popupFinish">Finish: </p>
+		<p class="popupText" id="popupPalette">Palette: </p>
+	</div>
+</div>
+{% endblock %}

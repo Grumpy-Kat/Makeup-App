@@ -1,0 +1,36 @@
+<Main2Screen>:
+	scroll: scroll
+	swatchParent: swatchParent
+	infoBox: infoBox
+	currSwatchBar: currSwatchBar
+	recommendedSwatchBar: recommendedSwatchBar
+	recommendedInfoBox: recommendedInfoBox
+	FloatLayout:
+		size: root.width, root.height
+		MenuBar:
+		ScrollView:
+			id: scroll
+			do_scroll_x: False
+			size_hint: 1, 0.8
+			pos_hint: { 'left': 0, 'top': 0.9 }
+			FloatLayout:
+				size_hint_y: None
+				GridLayout:
+					id: swatchParent
+					cols: 4
+					row_default_height: 75
+					row_force_default: True
+					padding: 20
+					spacing: 15
+				InfoBox:
+					id: infoBox
+					opacity: 0
+					disabled: True
+		RecommendedSwatchBar:
+			id: recommendedSwatchBar
+		InfoBox:
+			id: recommendedInfoBox
+			opacity: 0
+			disabled: True
+		CurrSwatchBar:
+			id: currSwatchBar

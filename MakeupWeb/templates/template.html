@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Makeup App</title>
+		<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+		<link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" />
+		<link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet" />
+		<link href="{{ url_for('static', filename='css/editFile.css') }}" rel="stylesheet" />
+		<link href="{{ url_for('static', filename='css/displayMakeup.css') }}" rel="stylesheet" />
+		<script src="{{ url_for('static', filename='js/fileChooser.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/editFile.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/displayMakeup.js') }}"></script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>{% block body %}{% endblock %}</body>
+</html>

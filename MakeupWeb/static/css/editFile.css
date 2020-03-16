@@ -1,0 +1,33 @@
+input {
+	margin: 10px;
+	font-size: 13px;
+	border-radius: 5px;
+}
+#img {
+	margin: 0;
+	padding: 0;
+}
+#borders {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+#borderTable {
+	margin: 0;
+	padding: 0;
+	top: 0;
+	left: 0;
+	border: 1px groove black;
+	border-collapse: separate;
+	border-spacing: 0px;
+}
+tbody, tr {
+	margin: 0;
+	padding: 0;
+}
+td {
+	margin: 0;
+	padding: 0;
+	border: 1px groove black;
+}

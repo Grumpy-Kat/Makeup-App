@@ -1,0 +1,104 @@
+#:include templates/main0screen.kv
+#:include templates/main1screen.kv
+#:include templates/main2screen.kv
+#:include templates/addpalettescreen.kv
+#:include templates/errorscreen.kv
+	
+
+
+<Border>:
+	color: app.theme_cls.text_color
+	canvas:
+		Color:
+			rgba: self.color
+		Line:
+			points: self.x, self.y, self.x + self.width, self.y, self.x + self.width, self.y + self.height, self.x, self.y + self.height
+			close: True
+	
+	
+	
+<MenuBar>:
+	orientation: 'horizontal'
+	size_hint: 1, 0.1
+	pos_hint: { 'left': 0, 'top': 1 }
+	Button:
+		background_normal: ''
+		background_color: app.theme_cls.primary_color
+		text: '0'
+		on_release: app.setScreen('Main0Screen')
+	Button:
+		background_normal: ''
+		background_color: app.theme_cls.primary_color
+		text: '1'
+		on_release: app.setScreen('Main1Screen')
+	Button:
+		background_normal: ''
+		background_color: app.theme_cls.primary_color
+		text: '2'
+		on_release: app.setScreen('Main2Screen')
+
+
+
+<InfoBox>:
+	size_hint: 0.9, None
+	pos_hint: { 'center_x': 0.5 }
+	canvas.before:
+		Color:
+			rgba: app.theme_cls.accent_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		Triangle:
+			points: self.arrowPoints
+	
+
+
+<CurrSwatchBar>:
+	swatchParent: swatchParent
+	size_hint: 1, 0.1
+	pos_hint: { 'left': 0, 'y': 0 }
+	canvas.before:
+		Color:
+			rgba: app.theme_cls.primary_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	ScrollView:
+		do_scroll_y: False
+		pos_hint: root.pos_hint
+		GridLayout:
+			id: swatchParent
+			rows: 1
+			orientation: 'horizontal'
+			width: self.minimum_width
+			size_hint_x: None
+			col_default_width: 75
+			padding: 10
+			spacing: 10
+
+
+
+<RecommendedSwatchBar>:
+	swatchParent: swatchParent
+	size_hint: 1, 0.1
+	pos_hint: { 'left': 0, 'y': 0.1 }
+	opacity: 0
+	disabled: True
+	canvas.before:
+		Color:
+			rgba: app.theme_cls.primary_color
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	ScrollView:
+		do_scroll_y: False
+		pos_hint: root.pos_hint
+		GridLayout:
+			id: swatchParent
+			rows: 1
+			orientation: 'horizontal'
+			width: self.minimum_width
+			size_hint_x: None
+			col_default_width: 75
+			padding: 10
+			spacing: 10

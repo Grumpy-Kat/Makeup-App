@@ -1,0 +1,79 @@
+.makeup {
+	display: inline-block;
+	height: 50px;
+	width: 50px;
+	margin: 10px;
+	border-radius: 100px;
+	background-size: 100px 100px;
+}
+.makeup-overlay {
+	width: 100%;
+	height: 100%;
+	opacity: 0.85;
+	margin: 0;
+	border-radius: 100px;
+}
+.tabLinks {
+	overflow: hidden;
+	border: 1px solid #cccccc;
+	background-color: #f1f1f1;
+}
+.tabLink {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+}
+.tabLink:hover {
+	background-color: #dddddd;
+}
+.tabLink.active {
+	background-color: #cccccc;
+}
+.tab {
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #cccccc;
+	border-top: none;
+	-webkit-animation: fade 1s;
+	animation: fade 1s;
+}
+.popup {
+	position: absolute;
+	display: none;
+	cursor: pointer;
+	width: 99%;
+	background-color: #555555;
+	color: #ffffff;
+	border-radius: 6px;
+	padding: 10px;
+	z-index: 1;
+	text-transform: capitalize;
+}
+.popup::before {
+	content: '';
+	position: absolute;
+	bottom: 100%;
+	left: var(arrowLeft, 50%);
+	margin-left: -10px;
+	border-width: 10px;
+	border-style: solid;
+	border-color: transparent transparent #555555  transparent;
+}
+.show {
+	display: inline-block;
+	-webkit-animation: fade 1s;
+	animation: fade 1s;
+}
+
+@-webkit-keyframes fade {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+@keyframes fade {
+	from { opacity: 0; }
+	to  { opacity: 1; }
+}

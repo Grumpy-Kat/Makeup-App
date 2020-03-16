@@ -1,0 +1,48 @@
+<Main1Screen>:
+	colorPicker: colorPicker
+	scroll: scroll
+	swatchParent: swatchParent
+	infoBox: infoBox
+	currSwatchBar: currSwatchBar
+	recommendedSwatchBar: recommendedSwatchBar
+	recommendedInfoBox: recommendedInfoBox
+	FloatLayout:
+		size: root.width, root.height
+		MenuBar:
+		ColorPicker:
+			id: colorPicker
+			size_hint: 1, 0.35
+			pos_hint: { 'center_x': 0.5, 'top': 0.9 }
+		Button:
+			size_hint: 0.75, 0.06
+			pos_hint: { 'center_x': 0.5, 'top': 0.5 }
+			halign: 'center'
+			valign: 'middle'
+			text: 'Find Colors'
+			on_release: root.addSwatches()
+		ScrollView:
+			id: scroll
+			do_scroll_x: False
+			size_hint: 1, 0.3
+			pos_hint: { 'left': 0, 'top': 0.4 }
+			FloatLayout:
+				size_hint_y: None
+				GridLayout:
+					id: swatchParent
+					cols: 4
+					row_default_height: 75
+					row_force_default: True
+					padding: 20
+					spacing: 15
+				InfoBox:
+					id: infoBox
+					opacity: 0
+					disabled: True
+		RecommendedSwatchBar:
+			id: recommendedSwatchBar
+		InfoBox:
+			id: recommendedInfoBox
+			opacity: 0
+			disabled: True
+		CurrSwatchBar:
+			id: currSwatchBar
