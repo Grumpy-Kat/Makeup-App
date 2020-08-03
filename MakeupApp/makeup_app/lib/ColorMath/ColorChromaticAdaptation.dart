@@ -7,7 +7,7 @@ List<double> dotProduct(List<List<double>> matrix, List<double> vector) {
   List<double> result = [];
   for(int i = 0; i < matrix.length; i++) {
     result.add(0);
-    for (int j = 0; i < vector.length; i++) {
+    for (int j = 0; j < vector.length; j++) {
       result[i] += matrix[i][j] * vector[j];
     }
   }

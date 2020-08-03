@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import '../Widgets/MenuBar.dart';
-import '../Widgets/CurrSwatchBar.dart';
-import '../Widgets/RecommendedSwatchBar.dart';
+import '../Screens/Screen.dart';
+import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/Swatch.dart';
+import '../ColorMath/ColorProcessing.dart';
+import '../theme.dart' as theme;
+import '../routes.dart' as routes;
 
 class Main0Screen extends StatefulWidget {
-  final List<Swatch> Function() loadFormatted;
+  final Future<List<Swatch>> Function() loadFormatted;
 
   Main0Screen(this.loadFormatted);
 
@@ -13,65 +15,63 @@ class Main0Screen extends StatefulWidget {
   Main0ScreenState createState() => Main0ScreenState();
 }
 
-class Main0ScreenState extends State<Main0Screen> {
-  List<Swatch> swatches = [];
-  List<SwatchIcon> swatchIcons = [];
+class Main0ScreenState extends State<Main0Screen> with ScreenState {
+  List<Swatch> _swatches = [];
+  Future<List<Swatch>> _swatchesFuture;
 
   @override
   void initState() {
     super.initState();
-    _addSwatches();
+    _swatchesFuture = _addSwatches();
   }
 
-  void _addSwatches() {
-    swatchIcons.clear();
-    swatches = widget.loadFormatted();
-    for(Swatch swatch in swatches) {
-      swatchIcons.add(SwatchIcon(swatch));
-    }
+  Future<List<Swatch>> _addSwatches() async {
+    _swatches.clear();
+    _swatches = await widget.loadFormatted();
+    return _swatches;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: MenuBar(),
+    return buildComplete(
+      context,
+      widget.loadFormatted,
+      0,
+      SingleSwatchList(
+        addSwatches: _swatchesFuture,
+        updateSwatches: (List<Swatch> swatches) { this._swatches = swatches; },
+        showNoColorsFound: false,
+        showPlus: true,
+        onPlusPressed: () {
+          Navigator.pushReplacement(context,
+            PageRouteBuilder(
+              transitionDuration: Duration(milliseconds: 1500),
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return routes.routes['/addPaletteScreen'](context);
+              },
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return ScaleTransition(
+                  scale: Tween(
+                    begin: 0.0,
+                    end: 1.0,
+                  ).animate(
+                    CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.easeInOutCirc,
+                    ),
+                  ),
+                  child: child,
+                );
+              },
             ),
-            Expanded(
-              flex: 7,
-              child: GridView.builder(
-                scrollDirection: Axis.vertical,
-                primary: true,
-                padding: const EdgeInsets.all(20),
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(mainAxisSpacing: 15, crossAxisSpacing: 15, crossAxisCount: 3),
-                itemCount: swatchIcons.length + 1,
-                itemBuilder: (BuildContext context, int i) {
-                  if(swatchIcons.length  == 0) {
-                    return Text('No colors found!', textAlign: TextAlign.center);
-                  } else if(swatchIcons.length == i) {
-                    return RaisedButton.icon(
-                      icon: Icon(Icons.add),
-                      onPressed: () {},
-                    );
-                  }
-                  return swatchIcons[i];
-                },
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: RecommendedSwatchBar(),
-            ),
-            Expanded(
-              flex: 1,
-              child: CurrSwatchBar(),
-            ),
-          ],
-        )
+          );
+        },
+        defaultSort: 'Color',
+        sort: {
+          'Color': (Swatch swatch) { return stepSort(swatch.color, step: 8); },
+          'Finish': (Swatch swatch) { return finishSort(swatch, step: 8); },
+          'Palette': (Swatch swatch) { return paletteSort(swatch, _swatches, step: 8); },
+        },
       ),
     );
   }

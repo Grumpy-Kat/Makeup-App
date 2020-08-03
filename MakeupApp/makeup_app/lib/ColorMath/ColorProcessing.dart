@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'dart:math';
 import 'dart:io';
@@ -103,6 +104,22 @@ List<double> finishSort(Swatch swatch, { int step = 1, String firstFinish = '' }
   return [finish, sort[0], sort[1], sort[2], sort[3]];
 }
 
+List<double> paletteSort(Swatch swatch, List<Swatch> swatches, { int step = 1 }) {
+  List<double> sort = stepSort(swatch.color, step: step);
+  List<String> palettes = [];
+  for(int i = 0; i < swatches.length; i++) {
+    if(!palettes.contains(swatches[i].palette)) {
+      palettes.add(swatches[i].palette);
+    }
+  }
+  //palette: 0 - (palettes.length - 1)
+  //isGray: 0 - 1
+  //lum2: 0 - (360 * step)
+  //h2: 0 - step
+  //v2: 0 - step
+  return [palettes.indexOf(swatch.palette).toDouble(), sort[0], sort[1], sort[2], sort[3]];
+}
+
 List<double> colorSort(RGBColor rgb) {
   List<double> val = rgb.getValues();
   LabColor color0 = RGBtoLab(rgb);
@@ -118,19 +135,26 @@ List<double> colorSort(RGBColor rgb) {
   return [1, deltaECie2000(color0, color1)];
 }
 
-Image loadImg(String path) {
-  return decodeImage(new File(path.replaceAll('/', '\\')).readAsBytesSync());
+List<double> distanceSort(RGBColor rgb, RGBColor org) {
+  //diff: 0 - 100
+  return [deltaECie2000(RGBtoLab(rgb), RGBtoLab(org))];
+}
+
+Future<Image> loadImg(String path) async {
+  //return decodeImage(File(path.replaceAll('/', '\\')).readAsBytesSync());
+  ByteData data = await rootBundle.load(path);
+  return decodeImage(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
 }
 
 RGBColor avgColor(Image img) {
   List<int> totalColor = [0, 0, 0];
-  List<int> pxs = img.getBytes(format: Format.rgb);
+  List<int> pxs = img.data;
   for(int x = 0; x < img.width; x++) {
     for(int y = 0; y < img.height; y++) {
-      int index = (y * img.width + x) * 3;
-      totalColor[0] += pxs[index + 0];
-      totalColor[1] += pxs[index + 1];
-      totalColor[2] += pxs[index + 2];
+      int color = pxs[y * img.width + x];
+      totalColor[0] += (color) & 0xff;
+      totalColor[1] += (color >> 8) & 0xff;
+      totalColor[2] += (color >> 16) & 0xff;
     }
   }
   int size = (img.width * img.height);
@@ -181,7 +205,7 @@ List<Swatch> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatc
   String colorName = getColorName(rgb);
   LabColor color0 = RGBtoLab(rgb);
   Map<String, RGBColor> colorWheel = createColorWheel();
-  List<String> categories = colorWheel.keys;
+  List<String> categories = colorWheel.keys.toList();
   int index = categories.indexOf(colorName);
   List<String> similarCategories = [];
   List<String> oppositeCategories = [];

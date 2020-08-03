@@ -9,7 +9,7 @@ class ColorBase {
   final Map<String, double> values = {};
 
   List<double> getValues() {
-    return values.values;
+    return values.values.toList(growable: true);
   }
 }
 
@@ -33,7 +33,7 @@ class LabColor extends ColorBase {
   }
 
   void setIlluminant(illuminant) {
-    illuminant = illuminant.lower();
+    illuminant = illuminant.toLowerCase();
     if(!ILLUMINANTS[observer].containsKey(illuminant)) {
       throw InvalidIlluminantException(illuminant);
     }
@@ -83,7 +83,7 @@ class XYZColor extends ColorBase {
   }
 
   void setIlluminant(illuminant) {
-    illuminant = illuminant.lower();
+    illuminant = illuminant.toLowerCase();
     if(!ILLUMINANTS[observer].containsKey(illuminant)) {
       throw InvalidIlluminantException(illuminant);
     }

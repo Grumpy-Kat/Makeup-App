@@ -5,21 +5,25 @@ import '../Widgets/Swatch.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../theme.dart' as theme;
 
-class Main2Screen extends StatefulWidget {
+class Main3Screen extends StatefulWidget {
   final Future<List<Swatch>> Function() loadFormatted;
 
-  Main2Screen(this.loadFormatted);
+  Main3Screen(this.loadFormatted);
 
   @override
-  Main2ScreenState createState() => Main2ScreenState();
+  Main3ScreenState createState() => Main3ScreenState();
 }
 
-class Main2ScreenState extends State<Main2Screen> with ScreenState {
+class Main3ScreenState extends State<Main3Screen> with ScreenState {
   List<Swatch> swatches = [];
   List<SwatchIcon> swatchIcons = [];
 
   void _addSwatches() async {
+    swatchIcons.clear();
     swatches = await widget.loadFormatted();
+    for(int i = 0; i < swatches.length; i++) {
+      swatchIcons.add(SwatchIcon(swatches[i], i));
+    }
   }
 
   @override
@@ -27,7 +31,7 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
     return buildComplete(
       context,
       widget.loadFormatted,
-      2,
+      3,
       Column(
         children: <Widget>[
 

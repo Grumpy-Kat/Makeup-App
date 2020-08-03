@@ -133,7 +133,7 @@ RGBColor HSVtoRGB(HSVColor color) {
   double v = values[2];
 
   int hFloor = h.floor();
-  int hSubI = ((hFloor / 60) % 6).toInt();
+  int hSubI = (hFloor ~/ 60) % 6;
   double f = (h / 60.0) - (hFloor / 60).floor();
   double p = v * (1.0 - s);
   double q = v * (1.0 - f * s);
@@ -148,7 +148,7 @@ RGBColor HSVtoRGB(HSVColor color) {
   } else if(hSubI == 3) {
     return RGBColor(p, q, v);
   } else if(hSubI == 4) {
-    return RGBColor(v, t, p);
+    return RGBColor(t, p, v);
   } else if(hSubI == 5) {
     return RGBColor(v, p, q);
   } else{

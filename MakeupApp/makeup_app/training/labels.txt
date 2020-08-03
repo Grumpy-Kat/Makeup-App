@@ -1,0 +1,5 @@
+matte
+satin
+shimmer
+metallic
+glitter

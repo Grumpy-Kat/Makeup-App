@@ -1,43 +1,55 @@
 import 'package:flutter/material.dart';
+import '../theme.dart' as theme;
 
 class BorderBox extends StatefulWidget {
-  BorderBox({ Key key, this.width = 1, this.height = 1, this.borderWidth = 1, this.borderColor, this.padding }) : super(key: key);
-
-  GlobalKey _key = GlobalKey();
+  final GlobalKey _key = GlobalKey();
 
   double width;
   double height;
   double borderWidth;
   Color borderColor;
+  EdgeInsets offset;
   EdgeInsets padding;
+
+  BorderBox({ Key key, this.width = 1, this.height = 1, this.borderWidth = 1, this.borderColor, this.offset, this.padding }) : super(key: key);
 
   @override
   BorderBoxState createState() => BorderBoxState();
 
   Offset getPos() {
-    RenderBox renderBox = _key.currentContext.findRenderObject();
-    return renderBox.localToGlobal(Offset.zero);
+    if(_key != null && _key.currentContext != null) {
+      RenderBox renderBox = _key.currentContext.findRenderObject();
+      return renderBox.localToGlobal(Offset.zero);
+    }
+    return Offset.zero;
   }
 }
 
 class BorderBoxState extends State<BorderBox> {
+  void update() {
+    setState(() { });
+  }
+
   @override
   Widget build(BuildContext context) {
     if(widget.borderColor == null) {
-      widget.borderColor = Theme.of(context).primaryColor;
+      widget.borderColor = theme.primaryColorDark;
     }
-    print('${widget.width} ${widget.height} ${widget.padding} ${widget.borderWidth} ${widget.getPos()}');
-    return SizedBox(
+    //print('${widget.width} ${widget.height} ${widget.padding} ${widget.offset}');
+    return Container(
       key: widget._key,
-      width: widget.width,
-      height: widget.height,
-      child: Container(
-        padding: widget.padding,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: widget.borderWidth,
-            color: widget.borderColor,
-          )
+      margin: widget.offset,
+      child: SizedBox(
+        width: widget.width,
+        height: widget.height,
+        child: Container(
+          margin: widget.padding,
+          foregroundDecoration: BoxDecoration(
+            border: Border.all(
+              width: widget.borderWidth,
+              color: widget.borderColor,
+            ),
+          ),
         ),
       ),
     );
