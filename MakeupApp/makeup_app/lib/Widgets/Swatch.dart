@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import '../globals.dart' as globals;
 import '../ColorMath/ColorObjects.dart';
-import '../ColorMath/ColorProcessing.dart';
+import '../globals.dart' as globals;
+import '../theme.dart' as theme;
+import '../allSwatchesIO.dart' as IO;
+import '../types.dart';
 import 'InfoBox.dart';
 
 class Swatch {
+  int id;
   RGBColor color;
   String finish;
+  String brand;
   String palette;
+  String shade = '';
+  int rating = 1;
+  List<String> tags = [];
 
-  Swatch(this.color, this.finish, this.palette);
+  Swatch({ @required this.color, @required this.finish, this.brand = '', this.palette = '', this.id = -1, this.shade = '', this.rating = 1, this.tags});
 
   int compareTo(Swatch other, List<double> Function(Swatch) comparator) {
     List<double> thisValues = comparator(this);
@@ -22,67 +29,144 @@ class Swatch {
     }
     return 0;
   }
+
+  bool operator ==(other) {
+    if(!(other is Swatch)) {
+      return false;
+    }
+    //return id == other.id && color == other.color && finish == other.finish && brand == other.brnd && palette == other.palette && shade == other.shade && rating == other.rating && tags == other.tags;
+    return id == other.id;
+  }
+
+  @override
+  String toString() {
+    return '$id $color $finish $brand $palette $shade';
+  }
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
 
 class SwatchIcon extends StatelessWidget {
   final Swatch swatch;
+  final int id;
+
   final GlobalKey infoBoxKey = GlobalKey();
-  final int index;
+  final GlobalKey childKey = GlobalKey();
+
+  final bool addSwatch;
   final bool showInfoBox;
 
-  SwatchIcon(this.swatch, this.index, { this.showInfoBox = true });
+  final bool showCheck;
+
+  final OnSwatchAction onDelete;
+
+  final bool overrideOnTap;
+  final OnSwatchAction onTap;
+
+  final bool overrideOnDoubleTap;
+  final OnSwatchAction onDoubleTap;
+
+  //assumes there is no id (probably editing swatch)
+  SwatchIcon.swatch(this.swatch, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.id  = -1;
+
+  SwatchIcon.id(this.id, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.swatch = IO.get(id);
 
   @override
   Widget build(BuildContext context) {
     List<double> color = swatch.color.getValues();
-    String colorName = _toTitleCase(getColorName(swatch.color));
-    String finish = _toTitleCase(swatch.finish);
-    String palette = _toTitleCase(swatch.palette);
-    final Widget child = Image(
-      image: AssetImage('imgs/${finish.toLowerCase()}.png'),
+    final Widget swatchImg = Image(
+      key: childKey,
+      image: AssetImage('imgs/${swatch.finish.toLowerCase()}.png'),
       colorBlendMode: BlendMode.modulate,
       color: Color.fromRGBO((color[0] * 255).round(), (color[1] * 255).round(), (color[2] * 255).round(), 1),
     );
+    Widget child;
+    //will not work if both showCheck == true and onDelete != null, most likely not a concern
+    if(showCheck) {
+      child = Stack(
+        children: <Widget>[
+          swatchImg,
+          Align(
+            alignment: Alignment(1.15, 1.15),
+            child: Container(
+              width: 23,
+              height: 23,
+              child: FloatingActionButton(
+                backgroundColor: Colors.green,
+                child: Icon(
+                  Icons.check,
+                  size: 19,
+                  color: theme.primaryColor,
+                ),
+                onPressed: () {
+                  onDelete(swatch.id);
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+    } else if(onDelete != null) {
+      child = Stack(
+        children: <Widget>[
+          swatchImg,
+          Align(
+            alignment: Alignment(1.15, -1.15),
+            child: Container(
+              width: 23,
+              height: 23,
+              child: FloatingActionButton(
+                backgroundColor: theme.errorTextColor,
+                child: Icon(
+                  Icons.clear,
+                  size: 19,
+                  color: theme.primaryColor,
+                ),
+                onPressed: () {
+                  onDelete(swatch.id);
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      child = swatchImg;
+    }
     if(showInfoBox) {
       return InfoBox(
         key: infoBoxKey,
-        color: colorName,
-        finish: finish,
-        palette: palette,
-        verticalOffset: 95.0,
-        onTap: _onTap,
-        onDoubleTap: _onDoubleTap,
-        index: index,
+        swatch: swatch,
+        onTap: overrideOnTap ? () { onTap(id); } : _onTap,
+        onDoubleTap: overrideOnDoubleTap ? () { onDoubleTap(id); } : _onDoubleTap,
         child: child,
+        childKey: childKey,
       );
     }
     return GestureDetector(
-      onTap: _onTap,
-      onDoubleTap: _onDoubleTap,
+      onTap: overrideOnTap ? () { onTap(id); } : _onTap,
+      onDoubleTap: overrideOnDoubleTap ? () { onDoubleTap(id); } : _onDoubleTap,
       child: child,
     );
   }
 
   void _onTap() {
-    (infoBoxKey?.currentState as InfoBoxState).open();
+    if(showInfoBox) {
+      (infoBoxKey?.currentState as InfoBoxState).open();
+    }
+    if(onTap != null) {
+      onTap(id);
+    }
   }
 
   void _onDoubleTap() {
-    if(!globals.currSwatches.currSwatches.contains(this)) {
-      globals.currSwatches.add(swatch);
+    if(addSwatch && id != -1 && !globals.currSwatches.currSwatches.contains(this)) {
+      globals.currSwatches.add(id);
     }
-  }
-
-  String _toTitleCase(String text) {
-    List<String> words = text.split(' ');
-    String result = '';
-    for(int i = 0; i < words.length; i++) {
-      if(words[i].length <= 1) {
-        result += words[i].toUpperCase();
-        continue;
-      }
-      result += words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+    if(onDoubleTap != null) {
+      onDoubleTap(id);
     }
-    return result;
   }
 }

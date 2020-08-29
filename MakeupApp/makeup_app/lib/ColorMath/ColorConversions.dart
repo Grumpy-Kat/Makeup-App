@@ -98,7 +98,7 @@ HSVColor RGBtoHSV(RGBColor color) {
 }
 
 RGBColor XYZtoRGB(XYZColor color) {
-  Map<String, double> illuminant = color.getIlluminantXYZ();
+  //Map<String, double> illuminant = color.getIlluminantXYZ();
   List<double> values = color.getValues();
   double y = (values[0] + 16.0) / 116.0;
   double x = values[1] / 500.0 + y;

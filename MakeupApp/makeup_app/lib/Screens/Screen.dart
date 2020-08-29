@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
 import '../Widgets/SizedSafeArea.dart';
 import '../Widgets/MenuBar.dart';
-import '../Widgets/Swatch.dart';
 import '../Widgets/CurrSwatchBar.dart';
 import '../Widgets/RecommendedSwatchBar.dart';
 import '../Widgets/InfoBox.dart';
 import '../theme.dart' as theme;
-import '../routes.dart' as routes;
 
 mixin ScreenState {
-  Widget buildComplete(BuildContext context, Future<List<Swatch>> Function() loadFormatted, int menu, Widget body) {
+  Size screenSize;
+
+  Widget buildComplete(BuildContext context, int menu, Widget body, { Widget floatingActionButton }) {
     return Scaffold(
       backgroundColor: theme.bgColor,
+      floatingActionButton: floatingActionButton,
+      resizeToAvoidBottomInset: false,
       body: SizedSafeArea(
         builder: (context, screenSize) {
-          InfoBox.screenSize = screenSize.biggest;
+          this.screenSize = screenSize.biggest;
+          InfoBox.screenSize = this.screenSize;
           return Column(
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: MenuBar(menu),
+                child: MenuBar(menu, onExit),
               ),
               Expanded(
                 flex: 8,
                 child: body,
               ),
-              RecommendedSwatchBar(loadFormatted),
+              RecommendedSwatchBar(),
               Expanded(
                 flex: 1,
                 child: CurrSwatchBar(),
@@ -36,4 +39,6 @@ mixin ScreenState {
       ),
     );
   }
+
+  void onExit() async {}
 }

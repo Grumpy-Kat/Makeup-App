@@ -1,0 +1,89 @@
+maxSize: (10, 10), actualImg: (5, 5) => imgSize: (10, 10)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 5), actualImg: (5, 5) => imgSize: (5, 5)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 10), actualImg: (5, 5) => imgSize: (5, 5)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 10), actualImg: (5, 1) => imgSize: (10, 2)
+imgSize = maxCorresponding / min(actualImg.x, actualImg.y) * actualImg
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 5), actualImg: (5, 1) => imgSize: (10, 2)
+imgSize = min(maxSize.x, maxSize.y) / actualCorresponding * actualImg
+imgSize = maxCorresponding / min(actualImg.x, actualImg.y) * actualImg
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 10), actualImg: (5, 1) => imgSize: (5, 1)
+imgSize = min(maxSize.x, maxSize.y) / actualCorresponding * actualImg
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 10), actualImg: (1, 5) => imgSize: (2, 10)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 5), actualImg: (1, 5) => imgSize: (1, 5)
+imgSize = min(maxSize.x, maxSize.y) / actualCorresponding * actualImg
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 10), actualImg: (1, 5) => imgSize: (2, 10)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+
+
+maxSize: (10, 10), actualImg: (15, 15) => imgSize: (10, 10)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 5), actualImg: (15, 15) => imgSize: (5, 5)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 10), actualImg: (15, 15) => imgSize: (5, 5)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 10), actualImg: (15, 1) => imgSize: (10, 0.7)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 5), actualImg: (15, 1) => imgSize: (10, 0.7)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 10), actualImg: (15, 1) => imgSize: (5, 0.3)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 10), actualImg: (1, 15) => imgSize: (0.7, 10)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (10, 5), actualImg: (1, 15) => imgSize: (0.3, 5)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 10), actualImg: (1, 15) => imgSize: (0.7, 10)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+
+
+maxSize: (100, 100), actualImg: (15, 15) => imgSize: (100, 100)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (100, 5), actualImg: (15, 15) => imgSize: (5, 5)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 100), actualImg: (15, 15) => imgSize: (5, 5)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (100, 100), actualImg: (15, 1) => imgSize: (100, 7)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (100, 5), actualImg: (15, 1) => imgSize: (75, 5)
+imgSize = maxCorresponding / min(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 100), actualImg: (15, 1) => imgSize: (5, 0.3)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (100, 100), actualImg: (1, 15) => imgSize: (7, 100)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (100, 5), actualImg: (1, 15) => imgSize: (0.3, 5)
+imgSize = maxCorresponding / max(actualImg.x, actualImg.y) * actualImg
+
+maxSize: (5, 100), actualImg: (1, 15) => imgSize: (5, 75)
+imgSize = maxCorresponding / min(actualImg.x, actualImg.y) * actualImg

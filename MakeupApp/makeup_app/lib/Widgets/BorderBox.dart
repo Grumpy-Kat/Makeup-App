@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import '../theme.dart' as theme;
 
 class BorderBox extends StatefulWidget {
@@ -35,6 +36,8 @@ class BorderBoxState extends State<BorderBox> {
     if(widget.borderColor == null) {
       widget.borderColor = theme.primaryColorDark;
     }
+    widget.padding = maxEdges(widget.padding, EdgeInsets.zero);
+    widget.offset = maxEdges(widget.offset, EdgeInsets.zero);
     //print('${widget.width} ${widget.height} ${widget.padding} ${widget.offset}');
     return Container(
       key: widget._key,
@@ -52,6 +55,36 @@ class BorderBoxState extends State<BorderBox> {
           ),
         ),
       ),
+    );
+  }
+
+  EdgeInsets maxEdges(EdgeInsets a, EdgeInsets b) {
+    if(a == null) {
+      return null;
+    }
+    if(b == null) {
+      return a;
+    }
+    return EdgeInsets.fromLTRB(
+      max(a.left, b.left),
+      max(a.top, b.top),
+      max(a.right, b.right),
+      max(a.bottom, b.bottom),
+    );
+  }
+
+  EdgeInsets minEdges(EdgeInsets a, EdgeInsets b) {
+    if(a == null) {
+      return null;
+    }
+    if(b == null) {
+      return a;
+    }
+    return EdgeInsets.fromLTRB(
+      min(a.left, b.left),
+      min(a.top, b.top),
+      min(a.right, b.right),
+      min(a.bottom, b.bottom),
     );
   }
 }

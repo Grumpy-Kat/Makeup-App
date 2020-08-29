@@ -2,21 +2,32 @@ import 'package:flutter/material.dart' hide HSVColor;
 import 'package:flutter/rendering.dart';
 import '../Widgets/Swatch.dart';
 import '../theme.dart' as theme;
+import '../types.dart';
 
 class SwatchList {
   Future addSwatches;
+
+  final List<int> selectedSwatches;
 
   final bool showInfoBox;
 
   final bool showNoColorsFound;
 
   final bool showPlus;
-  final void Function() onPlusPressed;
+  final OnVoidAction onPlusPressed;
 
-  final Map<String, List<double> Function(Swatch)> sort;
+  final Map<String, OnSortSwatch> sort;
   final String defaultSort;
 
-  SwatchList({ @required this.addSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort});
+  final bool showDelete;
+
+  final bool overrideOnTap;
+  final OnSwatchAction onTap;
+
+  final bool overrideOnDoubleTap;
+  final OnSwatchAction onDoubleTap;
+
+  SwatchList({ @required this.addSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap });
 }
 
 mixin SwatchListState {
@@ -25,10 +36,6 @@ mixin SwatchListState {
 
   void init(SwatchList swatchList) {
     this.swatchList = swatchList;
-  }
-
-  void update(Future addSwatches) {
-    setState(() { swatchList.addSwatches = addSwatches; });
   }
 
   Widget buildComplete(BuildContext context, Widget list) {
@@ -42,13 +49,29 @@ mixin SwatchListState {
     );
   }
 
-  Widget buildSwatchList(BuildContext context, AsyncSnapshot snapshot, List<SwatchIcon> swatchIcons, Axis axis, int crossAxisCount) {
+  Widget buildSwatchList(BuildContext context, AsyncSnapshot snapshot, List<SwatchIcon> swatchIcons, { Axis axis = Axis.vertical, int crossAxisCount = 3, double padding = 20, double spacing = 35 }) {
     int itemCount = 0;
     if(snapshot.connectionState != ConnectionState.active && snapshot.connectionState != ConnectionState.waiting) {
       if(swatchList.showNoColorsFound && swatchIcons.length == 0) {
         //no colors found
-        itemCount = 1;
+        return Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+            child: Text(
+              'No colors found.',
+              style: theme.primaryText,
+              maxLines: 1,
+            ),
+          ),
+        );
       } else {
+        //check if any swatches are null
+        for(int i = swatchIcons.length - 1; i >= 0; i--) {
+          if(swatchIcons[i] == null) {
+            swatchIcons.remove(i);
+          }
+        }
         //swatches
         itemCount = swatchIcons.length;
       }
@@ -63,11 +86,11 @@ mixin SwatchListState {
     return GridView.builder(
       scrollDirection: axis,
       primary: true,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(padding),
       gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 35,
-          crossAxisSpacing: 35,
-          crossAxisCount: crossAxisCount,
+        mainAxisSpacing: spacing,
+        crossAxisSpacing: spacing,
+        crossAxisCount: crossAxisCount,
       ),
       itemCount: itemCount,
       itemBuilder: (BuildContext context, int i) {
@@ -76,9 +99,6 @@ mixin SwatchListState {
             return CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(theme.accentColor),
             );
-          }
-          if(swatchList.showNoColorsFound) {
-            return Text('No colors found!', textAlign: TextAlign.center, style: theme.primaryText);
           }
         }
         if(swatchList.showPlus && swatchIcons.length == i) {
@@ -107,12 +127,12 @@ mixin SwatchListState {
       margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
       child: Row(
         children: <Widget>[
-          Text('Sort by  ', style: theme.primaryTextSmall),
+          Text('Sort by  ', style: theme.primaryTextSmallest),
           SizedBox(
             width: 75,
             child: DropdownButtonFormField<String>(
               isDense: true,
-              style: theme.primaryTextSmall,
+              style: theme.primaryTextSmallest,
               onChanged: (String val) {
                 setState(() {
                   _currentSort = val;
@@ -123,7 +143,7 @@ mixin SwatchListState {
               items: swatchList.sort.keys.map((String val) {
                 return DropdownMenuItem(
                   value: val,
-                  child: Text('$val', style: theme.primaryTextSmall),
+                  child: Text('$val', style: theme.primaryTextSmallest),
                 );
               }).toList(),
             ),
@@ -134,5 +154,5 @@ mixin SwatchListState {
   }
 
   void sortSwatches(String val);
-  void setState(void Function() func);
+  void setState(OnVoidAction func);
 }

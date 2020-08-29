@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import '../Screens/LookScreen.dart';
-import '../Widgets/Swatch.dart';
 import '../globals.dart' as globals;
-import '../theme.dart' as theme;
+import '../navigation.dart' as navigation;
+import '../savedLooksIO.dart' as IO;
 
 class SavedLookScreen extends StatefulWidget {
-  final Future<List<Swatch>> Function() loadFormatted;
-  final void Function(int, String, List<Swatch>) save;
-
   int id;
   String name;
-  List<Swatch> swatches;
+  List<int> swatches;
 
-  //TODO: get saved swatches
-  //TODO: get saved name
-  //TODO: figure out how to alter save
-  SavedLookScreen(this.loadFormatted, this.save, { this.id = -1, this.name = "", this.swatches });
+  SavedLookScreen({ this.id = -1, this.name = "", this.swatches });
 
   @override
   SavedLookScreenState createState() => SavedLookScreenState();
@@ -25,33 +19,36 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
   @override
   Widget build(BuildContext context) {
     return LookScreen(
-      loadFormatted: widget.loadFormatted,
       swatches: widget.swatches,
-      updateSwatches: (List<Swatch> swatches) {
+      updateSwatches: (List<int> swatches) {
         setState(() {
-          widget..swatches = swatches;
+          widget.swatches = swatches;
         });
       },
       name: widget.name,
       showBack: true,
+      askBackSaved: true,
       onBackPressed: () {
-        widget.save(widget.id, widget.name, widget.swatches);
-        Navigator.pop(context);
+        navigation.pop(context, false);
       },
       showClear: true,
       onClearPressed: () {
-        setState(() {
-          //TODO: delete it
-          widget.swatches = [];
-          widget.save(widget.id, widget.name, widget.swatches);
-          Navigator.pop(context);
-        });
+        setState(
+          () {
+            widget.swatches = [];
+            IO.save(widget.id, widget.name, widget.swatches);
+            navigation.pop(context, true);
+          }
+        );
       },
       showAdd: true,
       onAddPressed: () {
-        globals.currSwatches.set(globals.currSwatches.currSwatches + widget.swatches);
+        globals.currSwatches.addMany(widget.swatches);
       },
       showEdit: true,
+      onSavePressed: () {
+        IO.save(widget.id, widget.name, widget.swatches);
+      },
     );
   }
 }

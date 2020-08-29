@@ -1,6 +1,9 @@
-library globals;
-
+import 'ColorMath/ColorObjects.dart';
+import 'ColorMath/ColorProcessing.dart';
 import 'Widgets/Swatch.dart';
+import 'types.dart';
+import 'settingsIO.dart' as IO;
+import 'allSwatchesIO.dart' as allSwatches;
 
 CurrSwatches currSwatches = CurrSwatches.instance;
 
@@ -8,48 +11,89 @@ class CurrSwatches {
   CurrSwatches._privateConstructor();
   static final CurrSwatches instance = CurrSwatches._privateConstructor();
 
-  List<void Function(Swatch)> addListeners = [];
-  List<void Function(Swatch)> removeListeners = [];
-  List<void Function()> setListeners = [];
+  Map<int, OnIntAction> addListeners = {};
+  Map<int, OnIntAction> removeListeners = {};
+  Map<int, OnVoidAction> setListeners = {};
 
-  List<Swatch> _currSwatches = [];
+  List<int> _currSwatches = [];
 
-  void addListener(void Function(Swatch) addListener, void Function(Swatch) removeListener, void Function() setListener) {
-    addListeners.add(addListener);
-    removeListeners.add(removeListener);
-    setListeners.add(setListener);
+  void init() {
+    allSwatches.listenOnSaveChanged(validateAll);
   }
 
-  void add(Swatch swatch) {
-    _currSwatches.add(swatch);
-    for(void Function(Swatch) listener in addListeners) {
-      if(listener != null) {
-        listener(swatch);
+  int addListener(OnIntAction addListener, OnIntAction removeListener, OnVoidAction setListener) {
+    int i = addListeners.length;
+    addListeners[i] = addListener;
+    removeListeners[i] = removeListener;
+    setListeners[i] = setListener;
+    return i;
+  }
+
+  void removeListener(int i) {
+    addListeners.remove(i);
+    removeListeners.remove(i);
+    setListeners.remove(i);
+  }
+
+  void add(int swatch) {
+    if(!_currSwatches.contains(swatch) && allSwatches.isValid(swatch)) {
+      _currSwatches.add(swatch);
+      for(OnIntAction listener in addListeners.values) {
+        if(listener != null) {
+          listener(swatch);
+        }
       }
     }
   }
 
-  void remove(Swatch swatch) {
-    _currSwatches.remove(swatch);
-    for(void Function(Swatch) listener in removeListeners) {
+  void addMany(List<int> swatches) {
+    for(int i = 0; i < swatches.length; i++) {
+      if(!_currSwatches.contains(swatches[i]) && allSwatches.isValid(swatches[i])) {
+        _currSwatches.add(swatches[i]);
+      }
+    }
+    for(OnIntAction listener in addListeners.values) {
       if(listener != null) {
-        listener(swatch);
+        listener(swatches.last);
       }
     }
   }
 
-  void set(List<Swatch> swatches) {
-    _currSwatches = swatches;
-    for(void Function() listener in setListeners) {
+  void remove(int swatch) {
+    if(_currSwatches.contains(swatch)) {
+      _currSwatches.remove(swatch);
+      for(OnIntAction listener in removeListeners.values) {
+        if(listener != null) {
+          listener(swatch);
+        }
+      }
+    }
+  }
+
+  void set(List<int> swatches) {
+    _currSwatches = swatches.toSet().toList();
+    validateAll();
+    for(OnVoidAction listener in setListeners.values) {
       if(listener != null) {
         listener();
       }
     }
   }
 
-  List<Swatch> get currSwatches { return _currSwatches; }
+  void validateAll() {
+    //check to see if all swatches are valid
+    for(int i = _currSwatches.length - 1; i >= 0; i--) {
+      if(!allSwatches.isValid(_currSwatches[i])) {
+        _currSwatches.removeAt(i);
+      }
+    }
+  }
 
-  int get length { return _currSwatches.length; }
+  List<int> get currSwatches {
+    return _currSwatches;
+  }
+
+  int get length { return currSwatches.length; }
 }
 
 String model = '';
@@ -57,7 +101,44 @@ String model = '';
 //settings
 final String appName = 'Makeup App';
 final String appVersion = '0.1';
+final bool debug = true;
+
 final List<String> languages = ['English'];
-String language = 'English';
-final List<String> sortOptions = ['Color', 'Finish', 'Palette'];
-String sort = 'Color';
+String _language = 'English';
+String get language => _language;
+set language(String value) {
+  if(languages.contains(value)) {
+    _language = value;
+    IO.save();
+  }
+}
+
+String _sort = 'Color';
+String get sort => _sort;
+set sort(String value) {
+  _sort = value;
+  IO.save();
+}
+Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step: 8 }) {
+  return {
+    'Color': (Swatch swatch, int i) { return stepSort(swatch.color, step: step); },
+    'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
+    'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
+    'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
+  };
+}
+Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBColor color, { step: 8}) {
+  return {
+    'Color': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
+    'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
+    'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
+    'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
+  };
+}
+
+List<String> _tags = ['Pigmented', 'Sheer', 'Lots of Fallout', 'No Fallout', 'Creamy', 'Dry'];
+List<String> get tags => _tags;
+set tags(List<String> value) {
+  _tags = value.toSet().toList();
+  IO.save();
+}

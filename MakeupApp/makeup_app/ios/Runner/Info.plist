@@ -37,5 +37,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>To be able to upload palettes and swatches.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>To be able to take pictures of palettes and swatches.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>To be able to take videos of palettes and swatches.</string>
 </dict>
 </plist>

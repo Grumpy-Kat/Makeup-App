@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import '../Screens/Screen.dart';
 import '../Widgets/SingleSwatchList.dart';
-import '../Widgets/Swatch.dart';
-import '../ColorMath/ColorProcessing.dart';
+import '../globals.dart' as globals;
 import '../theme.dart' as theme;
+import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
+import '../allSwatchesIO.dart' as IO;
 
 class Main0Screen extends StatefulWidget {
-  final Future<List<Swatch>> Function() loadFormatted;
-
-  Main0Screen(this.loadFormatted);
-
   @override
   Main0ScreenState createState() => Main0ScreenState();
 }
 
 class Main0ScreenState extends State<Main0Screen> with ScreenState {
-  List<Swatch> _swatches = [];
-  Future<List<Swatch>> _swatchesFuture;
+  List<int> _swatches = [];
+  Future<List<int>> _swatchesFuture;
 
   @override
   void initState() {
@@ -25,9 +22,8 @@ class Main0ScreenState extends State<Main0Screen> with ScreenState {
     _swatchesFuture = _addSwatches();
   }
 
-  Future<List<Swatch>> _addSwatches() async {
-    _swatches.clear();
-    _swatches = await widget.loadFormatted();
+  Future<List<int>> _addSwatches() async {
+    _swatches = await IO.loadFormatted();
     return _swatches;
   }
 
@@ -35,43 +31,34 @@ class Main0ScreenState extends State<Main0Screen> with ScreenState {
   Widget build(BuildContext context) {
     return buildComplete(
       context,
-      widget.loadFormatted,
       0,
       SingleSwatchList(
         addSwatches: _swatchesFuture,
-        updateSwatches: (List<Swatch> swatches) { this._swatches = swatches; },
+        updateSwatches: (List<int> swatches) { this._swatches = swatches; },
         showNoColorsFound: false,
-        showPlus: true,
-        onPlusPressed: () {
-          Navigator.pushReplacement(context,
-            PageRouteBuilder(
-              transitionDuration: Duration(milliseconds: 1500),
-              pageBuilder: (context, animation, secondaryAnimation) {
-                return routes.routes['/addPaletteScreen'](context);
-              },
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                return ScaleTransition(
-                  scale: Tween(
-                    begin: 0.0,
-                    end: 1.0,
-                  ).animate(
-                    CurvedAnimation(
-                      parent: animation,
-                      curve: Curves.easeInOutCirc,
-                    ),
-                  ),
-                  child: child,
-                );
-              },
-            ),
-          );
-        },
+        showPlus: false,
         defaultSort: 'Color',
-        sort: {
-          'Color': (Swatch swatch) { return stepSort(swatch.color, step: 8); },
-          'Finish': (Swatch swatch) { return finishSort(swatch, step: 8); },
-          'Palette': (Swatch swatch) { return paletteSort(swatch, _swatches, step: 8); },
-        },
+        sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 8),
+      ),
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
+        width: 75,
+        height: 75,
+        child: FloatingActionButton(
+          child: Icon(
+            Icons.add,
+            color: theme.accentTextColor,
+            size: 50.0,
+          ),
+          onPressed: () {
+            navigation.pushReplacement(
+              context,
+              Offset(1, 0),
+              routes.ScreenRoutes.AddPaletteScreen,
+              routes.routes['/addPaletteScreen'](context),
+            );
+          },
+        ),
       ),
     );
   }

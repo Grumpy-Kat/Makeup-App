@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'dart:math';
-import 'dart:io';
 import 'ColorObjects.dart';
 import 'ColorDifferences.dart';
 import 'ColorConversions.dart';
@@ -118,6 +117,22 @@ List<double> paletteSort(Swatch swatch, List<Swatch> swatches, { int step = 1 })
   //h2: 0 - step
   //v2: 0 - step
   return [palettes.indexOf(swatch.palette).toDouble(), sort[0], sort[1], sort[2], sort[3]];
+}
+
+List<double> brandSort(Swatch swatch, List<Swatch> swatches, { int step = 1 }) {
+  List<double> sort = stepSort(swatch.color, step: step);
+  List<String> brands = [];
+  for(int i = 0; i < swatches.length; i++) {
+    if(!brands.contains(swatches[i].brand)) {
+      brands.add(swatches[i].brand);
+    }
+  }
+  //palette: 0 - (palettes.length - 1)
+  //isGray: 0 - 1
+  //lum2: 0 - (360 * step)
+  //h2: 0 - step
+  //v2: 0 - step
+  return [brands.indexOf(swatch.brand).toDouble(), sort[0], sort[1], sort[2], sort[3]];
 }
 
 List<double> colorSort(RGBColor rgb) {

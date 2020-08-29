@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'Screens/Main0Screen.dart';
 import 'Screens/Main1Screen.dart';
 import 'Screens/Main2Screen.dart';
@@ -7,19 +6,45 @@ import 'Screens/SettingsScreen.dart';
 import 'Screens/AddPaletteScreen.dart';
 import 'Screens/TodayLookScreen.dart';
 import 'Screens/SavedLookScreen.dart';
-import 'Widgets/Swatch.dart';
+import 'Screens/SwatchScreen.dart';
+import 'types.dart';
 
-Map<String, StatefulWidget Function(BuildContext)> routes = {};
+Map<String, OnScreenAction> routes = {};
+Map<ScreenRoutes, OnScreenAction> enumRoutes = {};
 
-void setRoutes(Future<List<Swatch>> Function() loadFormatted, void Function(List<Swatch>) save, void Function(int, String, List<Swatch>) savePast) {
+enum ScreenRoutes {
+  Main0Screen,
+  Main1Screen,
+  Main2Screen,
+  Main3Screen,
+  SettingsScreen,
+  AddPaletteScreen,
+  TodayLookScreen,
+  SavedLookScreen,
+  SwatchScreen,
+}
+
+void setRoutes() {
   routes = {
-    '/main0Screen': (context) => Main0Screen(loadFormatted),
-    '/main1Screen': (context) => Main1Screen(loadFormatted),
-    '/main2Screen': (context) => Main2Screen(loadFormatted),
-    '/main3Screen': (context) => Main3Screen(loadFormatted),
-    '/settingsScreen': (context) => SettingsScreen(loadFormatted),
-    '/addPaletteScreen': (context) => AddPaletteScreen(save),
-    '/todayLookScreen': (context) => TodayLookScreen(loadFormatted, savePast),
-    '/savedLookScreen': (context, { int id = -1, String name = '', List<Swatch> swatches }) => SavedLookScreen(loadFormatted, savePast, id: id, name: name, swatches: (swatches == null ? [] : swatches)),
+    '/main0Screen': (context) => Main0Screen(),
+    '/main1Screen': (context) => Main1Screen(),
+    '/main2Screen': (context) => Main2Screen(),
+    '/main3Screen': (context) => Main3Screen(),
+    '/settingsScreen': (context) => SettingsScreen(),
+    '/addPaletteScreen': (context) => AddPaletteScreen(),
+    '/todayLookScreen': (context) => TodayLookScreen(),
+    '/savedLookScreen': (context) => SavedLookScreen(id: -1, name: '', swatches: []),
+    '/swatchScreen': (context) => SwatchScreen(swatch: null),
+  };
+  enumRoutes = {
+    ScreenRoutes.Main0Screen: routes['/main0Screen'],
+    ScreenRoutes.Main1Screen: routes['/main1Screen'],
+    ScreenRoutes.Main2Screen: routes['/main2Screen'],
+    ScreenRoutes.Main3Screen: routes['/main3Screen'],
+    ScreenRoutes.SettingsScreen: routes['/settingsScreen'],
+    ScreenRoutes.AddPaletteScreen: routes['/addPaletteScreen'],
+    ScreenRoutes.TodayLookScreen: routes['/todayLookScreen'],
+    ScreenRoutes.SavedLookScreen: routes['/savedLookScreen'],
+    ScreenRoutes.SwatchScreen: routes['/swatchScreen'],
   };
 }

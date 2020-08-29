@@ -6,8 +6,10 @@ import '../theme.dart' as theme;
 
 class ColorPicker extends StatefulWidget {
   final void Function(double, double, double) onEnter;
+  final String btnText;
+  final HSVColor initialColor;
 
-  ColorPicker({Key key, @required this.onEnter}) : super(key: key);
+  ColorPicker({Key key, @required this.onEnter, this.btnText = 'Find Colors', this.initialColor }) : super(key: key);
 
   @override
   ColorPickerState createState() => ColorPickerState();
@@ -35,6 +37,17 @@ class ColorPickerState extends State<ColorPicker> {
   double hue = 0;
   double saturation = 1;
   double value = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.initialColor != null) {
+      List<double> values = widget.initialColor.getValues();
+      hue = values[0];
+      saturation = values[1];
+      value = values[2];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +137,7 @@ class ColorPickerState extends State<ColorPicker> {
             color: theme.accentColor,
             onPressed: () { widget.onEnter(hue, saturation, value); },
             child: Text(
-              'Find Colors',
+              widget.btnText,
               style: theme.accentText,
             ),
           ),

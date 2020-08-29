@@ -1,33 +1,43 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import '../Widgets/Swatch.dart';
 import '../Widgets/SwatchList.dart';
-import '../theme.dart' as theme;
+import '../allSwatchesIO.dart' as IO;
+import '../types.dart';
 
 class MultipleSwatchList extends StatefulWidget {
-  final void Function(List<List<Swatch>>) updateSwatches;
-  SwatchList swatchList;
+  final OnDoubleSwatchListAction updateSwatches;
+  final SwatchList swatchList;
 
-  final List<SwatchIcon> swatchLabelsIcon;
-  final List<Text> swatchLabelsText;
+  final int rowCount;
 
-  MultipleSwatchList({ Key key, @required addSwatches, @required this.updateSwatches, showInfoBox = true, showNoColorsFound = false, showPlus = false, onPlusPressed, sort, defaultSort, this.swatchLabelsIcon, this.swatchLabelsText }) : super(key: key) {
-    swatchList = SwatchList(
-      addSwatches: addSwatches,
-      showInfoBox: showInfoBox,
-      showNoColorsFound: showNoColorsFound,
-      showPlus: showPlus,
-      onPlusPressed: onPlusPressed,
-      sort: sort,
-      defaultSort: defaultSort,
-    );
-  }
+  final OnSwatchAction onTap;
+  final OnSwatchAction onDoubleTap;
+
+  MultipleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap }) : this.swatchList = SwatchList(
+    addSwatches: addSwatches,
+    selectedSwatches: selectedSwatches ?? [],
+    showInfoBox: showInfoBox,
+    showNoColorsFound: showNoColorsFound,
+    showPlus: showPlus,
+    onPlusPressed: onPlusPressed,
+    sort: sort,
+    defaultSort: defaultSort,
+    showDelete: showDelete,
+    overrideOnTap: overrideSwatchOnTap,
+    onTap: onSwatchTap,
+    overrideOnDoubleTap: overrideSwatchOnDoubleTap,
+    onDoubleTap: onSwatchDoubleTap,
+  ), super(key: key);
+
   @override
   MultipleSwatchListState createState() => MultipleSwatchListState();
 }
 
 class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListState {
-  List<List<Swatch>> swatches = [];
+  List<List<int>> swatches = [];
   List<List<SwatchIcon>> swatchIcons = [];
+
+  List<Widget> swatchLabels = [];
 
   @override
   void initState() {
@@ -39,8 +49,25 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
     swatchIcons.clear();
     for(int i = 0; i < swatches.length; i++) {
       swatchIcons.add([]);
+      OnSwatchAction onDelete = !widget.swatchList.showDelete ? null : (int id) {
+        if(swatches[i].contains(id)) {
+          swatches[i].remove(id);
+          widget.updateSwatches(swatches);
+        }
+      };
       for(int j = 0; j < swatches[i].length; j++) {
-        swatchIcons[i].add(SwatchIcon(swatches[i][j], j, showInfoBox: widget.swatchList.showInfoBox));
+        swatchIcons[i].add(
+          SwatchIcon.id(
+            swatches[i][j],
+            showInfoBox: widget.swatchList.showInfoBox,
+            showCheck: swatchList.selectedSwatches.contains(swatches[i]),
+            onDelete: onDelete,
+            overrideOnTap: swatchList.overrideOnTap,
+            onTap: swatchList.onTap,
+            overrideOnDoubleTap: swatchList.overrideOnDoubleTap,
+            onDoubleTap: swatchList.onDoubleTap,
+          )
+        );
       }
     }
   }
@@ -49,29 +76,59 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   Widget build(BuildContext context) {
     return buildComplete(
       context,
-      FutureBuilder(
-        future: widget.swatchList.addSwatches,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if(snapshot.connectionState == ConnectionState.done) {
-            swatches = snapshot.data;
-            _addSwatchIcons();
-          }
-          List<Widget> column = [];
-          for(int i = 0; i < swatchIcons.length; i++) {
-            List<Widget> row = [];
-            if(widget.swatchLabelsIcon != null && widget.swatchLabelsIcon.length > i) {
-              row.add(widget.swatchLabelsIcon[i]);
-            }
-            if(widget.swatchLabelsText != null && widget.swatchLabelsText.length > i) {
-              row.add(widget.swatchLabelsText[i]);
-            }
-            column.add(Row(children: row));
-            column.add(buildSwatchList(context, snapshot, swatchIcons[i], Axis.horizontal, 1));
-          }
-          return Column(
-            children: column,
-          );
-        },
+      ListView(
+        children: <Widget>[
+          FutureBuilder(
+            future: widget.swatchList.addSwatches,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              List<Widget> column = [];
+              if(snapshot.connectionState == ConnectionState.done) {
+                swatchLabels = snapshot.data.keys.toList();
+                swatches = snapshot.data.values.toList();
+                _addSwatchIcons();
+                for(int i = 0; i < swatchIcons.length; i++) {
+                  List<Widget> innerColumn = [];
+                  innerColumn.add(
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        padding: EdgeInsets.only(left: 20, right: 20, top: 15),
+                        height: (swatchLabels[i] is SwatchIcon ? 80 : 50),
+                        child: swatchLabels[i],
+                      ),
+                    ),
+                  );
+                  innerColumn.add(
+                    Container(
+                      height: 80,
+                      child: buildSwatchList(
+                        context,
+                        snapshot,
+                        swatchIcons[i],
+                        axis: Axis.horizontal,
+                        crossAxisCount: widget.rowCount,
+                        padding: 20,
+                        spacing: 15,
+                      ),
+                    ),
+                  );
+                  column.add(
+                    GestureDetector(
+                      onTap: () { widget.onTap(i); },
+                      onDoubleTap: () { widget.onDoubleTap(i); },
+                      child: Column(
+                        children: innerColumn,
+                      ),
+                    ),
+                  );
+                }
+              }
+              return Column(
+                children: column,
+              );
+            },
+          ),
+        ],
       ),
     );
   }
@@ -79,7 +136,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   @override
   void sortSwatches(String val) {
     for(int i = 0; i < swatches.length; i++) {
-      swatches[i].sort((a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[val](swatch)));
+      IO.sort(swatches[i], (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[val](swatch, i)));
     }
     widget.updateSwatches(swatches);
   }

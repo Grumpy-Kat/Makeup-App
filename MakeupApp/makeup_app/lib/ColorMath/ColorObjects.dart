@@ -11,6 +11,30 @@ class ColorBase {
   List<double> getValues() {
     return values.values.toList(growable: true);
   }
+
+  bool operator ==(other) {
+    if(runtimeType != other.runtimeType) {
+      return false;
+    }
+    List<double> values = getValues();
+    List<double> otherValues = other.getValues();
+    double threshold = 0.00001;
+    //should be in same order unless something instantiated badly (which will cause any conversions or calculations to be incorrect)
+    for(int i = 0; i < values.length; i++) {
+      if((values[i] - otherValues[i]).abs() > threshold) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @override
+  String toString() {
+    return values.toString();
+  }
+
+  @override
+  int get hashCode => super.hashCode;
 }
 
 class LabColor extends ColorBase {

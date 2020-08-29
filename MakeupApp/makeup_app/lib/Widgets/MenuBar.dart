@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import '../types.dart';
 import '../theme.dart' as theme;
+import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 
 class MenuBar extends StatelessWidget {
   final int currTab;
+  final OnVoidAction onExit;
 
-  MenuBar(this.currTab);
+  MenuBar(this.currTab, this.onExit);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class MenuBar extends StatelessWidget {
           Expanded(
             child: IconButton(
               color: theme.primaryColor,
-              onPressed: () { routePage(context, 0); },
+              onPressed: () { routePage(context, 0, routes.ScreenRoutes.Main0Screen); },
               icon: Icon(
                 Icons.all_inclusive,
                 size: 30.0,
@@ -28,7 +31,7 @@ class MenuBar extends StatelessWidget {
           Expanded(
             child: IconButton(
               color: theme.primaryColor,
-              onPressed: () { routePage(context, 1); },
+              onPressed: () { routePage(context, 1, routes.ScreenRoutes.Main1Screen); },
               icon: Icon(
                 Icons.palette,
                 size: 30.0,
@@ -40,7 +43,7 @@ class MenuBar extends StatelessWidget {
           Expanded(
             child: IconButton(
               color: theme.primaryColor,
-              onPressed: () { routePage(context, 2); },
+              onPressed: () { routePage(context, 2, routes.ScreenRoutes.Main2Screen); },
               icon: Icon(
                 Icons.linked_camera,
                 size: 30.0,
@@ -52,7 +55,7 @@ class MenuBar extends StatelessWidget {
           Expanded(
             child: IconButton(
               color: theme.primaryColor,
-              onPressed: () { routePage(context, 3); },
+              onPressed: () { routePage(context, 3, routes.ScreenRoutes.Main3Screen); },
               icon: Icon(
                 Icons.style,
                 size: 30.0,
@@ -66,31 +69,18 @@ class MenuBar extends StatelessWidget {
     );
   }
 
-  void routePage(BuildContext context, int page) {
+  void routePage(BuildContext context, int page, routes.ScreenRoutes pageEnum) async {
     Offset pos = Offset(-1.0, 0.0);
     if(page > currTab) {
       pos = Offset(1.0, 0.0);
     }
     if(page != currTab) {
-      Navigator.pushReplacement(context,
-        PageRouteBuilder(
-          transitionDuration: Duration(milliseconds: 1500),
-          pageBuilder: (context, animation, secondaryAnimation) { return routes.routes['/main${page}Screen'](context); },
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return SlideTransition(
-              position: Tween(
-                begin: pos,
-                end: Offset.zero,
-              ).animate(
-                CurvedAnimation(
-                  parent: animation,
-                  curve: Curves.easeInOutCirc,
-                ),
-              ),
-              child: child,
-            );
-          },
-        ),
+      await onExit();
+      navigation.pushReplacement(
+        context,
+        pos,
+        pageEnum,
+        routes.routes['/main${page}Screen'](context),
       );
     }
   }

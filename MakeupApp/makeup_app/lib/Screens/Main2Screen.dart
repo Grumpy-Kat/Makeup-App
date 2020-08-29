@@ -1,38 +1,133 @@
 import 'package:flutter/material.dart';
 import '../Screens/Screen.dart';
 import '../Widgets/MultipleSwatchList.dart';
+import '../Widgets/PaletteDivider.dart';
 import '../Widgets/Swatch.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../theme.dart' as theme;
+import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
+import '../allSwatchesIO.dart' as IO;
 
 class Main2Screen extends StatefulWidget {
-  final Future<List<Swatch>> Function() loadFormatted;
-
-  Main2Screen(this.loadFormatted);
-
   @override
   Main2ScreenState createState() => Main2ScreenState();
 }
 
 class Main2ScreenState extends State<Main2Screen> with ScreenState {
-  List<Swatch> swatches = [];
-  List<SwatchIcon> swatchIcons = [];
+  List<Swatch> _labels = [];
+  List<List<int>> _swatches = [];
+  Future<Map<SwatchIcon, List<int>>> _swatchesFuture;
 
-  void _addSwatches() async {
-    swatches = await widget.loadFormatted();
+  bool _openPaletteDivider = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _swatchesFuture = _addSwatches();
+    _openPaletteDivider = _labels.isEmpty;
+  }
+
+  Future<Map<SwatchIcon, List<int>>> _addSwatches() async {
+    _swatches.clear();
+    List<int> allSwatches = await IO.loadFormatted();
+    Map<SwatchIcon, List<int>> returnMap = {};
+    for(int i = 0; i < _labels.length; i++) {
+      _swatches.add(
+        IO.findMany(
+          getSimilarColors(
+            _labels[i].color,
+            _labels[i],
+            IO.getMany(allSwatches),
+            maxDist: 5,
+            getSimilar: false,
+            getOpposite: false,
+          ),
+        ),
+      );
+      returnMap[SwatchIcon.swatch(_labels[i], showInfoBox: false)] = _swatches[i];
+    }
+    return returnMap;
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget content;
+    if(!_openPaletteDivider) {
+      content = Column(
+        children: <Widget>[
+          FlatButton(
+            color: theme.primaryColorDark,
+            onPressed: () {
+              setState(
+                () {
+                  _openPaletteDivider = true;
+                }
+              );
+            },
+            child: Text(
+              'Choose a Different Palette',
+              style: theme.primaryText,
+            ),
+          ),
+          FlatButton(
+            color: theme.primaryColorDark,
+            onPressed: () {
+              onSave(context, _labels);
+            },
+            child: Text(
+              'Save Palette',
+              style: theme.primaryText,
+            ),
+          ),
+          Expanded(
+            child: MultipleSwatchList(
+              addSwatches: _swatchesFuture,
+              updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
+              rowCount: 1,
+              showNoColorsFound: true,
+              showPlus: false,
+              defaultSort: 'Color',
+              sort: globals.defaultSortOptions(IO.getMultiple(_swatches), step: 8),
+            ),
+          ),
+        ],
+      );
+    } else {
+      content = PaletteDivider(
+        onEnter: (List<Swatch> swatches) {
+          setState(
+            () {
+              _labels = swatches;
+              _openPaletteDivider = false;
+              _swatchesFuture = _addSwatches();
+            }
+          );
+        },
+      );
+    }
     return buildComplete(
       context,
-      widget.loadFormatted,
       2,
-      Column(
-        children: <Widget>[
+     content,
+    );
+  }
 
-        ],
-      ),
+  void onSave(BuildContext context, List<Swatch> swatches) {
+    globalWidgets.openTwoTextDialog(
+      context,
+      'Enter a brand and name for this palette:',
+      'Brand', 'Palette',
+      'You must add a brand.',
+      'You must add a palette name.',
+      'Save',
+      (String brand, String palette) {
+        for(int i = 0; i < swatches.length; i++) {
+          swatches[i].brand = brand;
+          swatches[i].palette = palette;
+        }
+        IO.add(swatches);
+      },
     );
   }
 }
