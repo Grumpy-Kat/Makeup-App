@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide HSVColor;
-import 'package:makeupapp/Widgets/SwatchList.dart';
 import '../Screens/Screen.dart';
 import '../Widgets/ColorPicker.dart';
 import '../Widgets/SingleSwatchList.dart';

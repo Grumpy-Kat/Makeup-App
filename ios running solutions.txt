@@ -1,0 +1,61 @@
+Build:
+flutter build ios
+
+Build with specific version:
+flutter build ios --debug
+flutter build ios --release
+
+Run:
+flutter run
+
+Clean/Reset:
+flutter clean
+
+Open in XCode:
+open ios/Runner.xcworkspace
+
+Open Simulator:
+open -a Simulator
+
+
+
+
+Any Errors:
+https://stackoverflow.com/questions/52445519/flutter-build-fails-for-ios-xcode-10/55141200#55141200
+1) Go to File/Workspace Settings
+2) Change "Build System" to "Legacy Build System"
+OR
+1) Open Runner in XCode
+2) Go to Runner/Project/Runner/Build Settings (Basic Combined)/Architecture
+3) Change "Base SDK" to "iOS" only
+4) Change "Build Active Architecture" to "Yes" only
+5) Change "Supported Platforms" to "iOS" only
+OR
+1) Check "iOS Deployment Target" and change to closest to current phone
+
+
+
+Issue with tfLite/'vector file not found'/tflite header not found:
+https://pub.dev/packages/tflite
+1) Open Runner in XCode
+2) Go to Runner/Targets/Runner/Build Settings (All Combined)/Apple Clang - Language
+3) Or search for "Compile Source" in Search bar
+4) Change "Compile Source As" to "Objective-C++"
+
+
+
+Repition in path and longer than filepath buffer size (circular dependency):
+https://stackoverflow.com/questions/38853437/what-can-be-the-possible-cause-of-this-error-in-xcode-pbxcp-main-storyboardc-is
+1) Open Runner in XCode
+2) Go to Runner/Targets/Runner/Build Phases/Copy Bundle Resources
+3) Remove .app from list
+
+
+
+Command PhaseScriptExecution failed with a nonzero exit code:
+https://stackoverflow.com/questions/53289524/xcode-10-2-1-command-phasescriptexecution-failed-with-a-nonzero-exit-code
+1) Go to Keychain Access in Launchpad/Other
+2) Right click "login" on top-left bar and press "Lock"
+3) Right click it again and press "Unlock"
+4) Type in computer password
+5) Search for "Clean" in XCode Help and press it
