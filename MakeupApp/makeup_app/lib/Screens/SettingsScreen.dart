@@ -29,11 +29,20 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
                   alignment: Alignment.centerRight,
                   child: SizedBox(
                     width: 150,
-                    child: DropdownButtonFormField<String>(
+                    child: DropdownButton<String>(
                       isDense: true,
                       style: theme.primaryText,
                       value: globals.language,
                       onChanged: (String val) { globals.language = val; },
+                      underline: Container(
+                        decoration: UnderlineTabIndicator(
+                          insets: EdgeInsets.only(bottom: -10),
+                          borderSide: BorderSide(
+                            color: theme.primaryColorDark,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
                       items: globals.languages.map((String val) {
                         return DropdownMenuItem(
                           value: val,

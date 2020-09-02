@@ -119,6 +119,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         width: 75,
         height: 75,
         child: FloatingActionButton(
+          heroTag: 'LookScreen Plus',
           child: Icon(
             Icons.add,
             color: theme.accentTextColor,

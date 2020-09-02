@@ -352,7 +352,8 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       }
       widgets.add(
         FilterChip(
-          label: Text(options[i]),
+          checkmarkColor: theme.accentColorLight,
+          label: Text(options[i], style: theme.primaryTextSmallest),
           selected: values.contains(options[i]),
           onSelected: (bool selected) {
             if(_isEditing) {
@@ -378,6 +379,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           label: Icon(
             Icons.add,
             size: 15,
+            color: theme.primaryTextColor,
           ),
           onPressed: () {
             if(_isEditing) {
@@ -413,7 +415,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           alignment: Alignment.center,
           padding: EdgeInsets.only(left: 30, right: 30, bottom: 20),
           child: Wrap(
-            children: widgets
+            children: widgets,
           ),
         ),
       ],

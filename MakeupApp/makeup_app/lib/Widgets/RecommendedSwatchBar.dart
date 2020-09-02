@@ -9,6 +9,8 @@ import 'Swatch.dart';
 import 'SwatchList.dart';
 
 class RecommendedSwatchBar extends StatefulWidget {
+  static Size screenSize;
+
   @override
   RecommendedSwatchBarState createState() => RecommendedSwatchBarState();
 }
@@ -24,6 +26,9 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   List<SwatchIcon> _swatchIcons = [];
   Future<List<int>> _swatchesFuture;
 
+  Size _size;
+  Offset _pos;
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +42,8 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
       null,
       null,
     );
+    _size = Size(RecommendedSwatchBar.screenSize.width, RecommendedSwatchBar.screenSize.height * 0.1);
+    _pos = Offset(0, (RecommendedSwatchBar.screenSize.height * 0.1) - 3);
     init(
       SwatchList(
         addSwatches: _swatchesFuture,
@@ -111,10 +118,8 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   void onPointerEvent(PointerEvent event) {
     if(event is PointerUpEvent || event is PointerCancelEvent || event is PointerDownEvent) {
       if(context != null) {
-        double y = MediaQuery.of(context).size.height * 0.8;
-        double height = MediaQuery.of(context).size.height * 0.1;
         Offset pointer = event.position;
-        if(pointer.dy < y || pointer.dy > y + height) {
+        if(pointer.dy < _pos.dy || pointer.dy > _pos.dy + _size.height) {
           close();
         }
       }
@@ -129,10 +134,10 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
       reverseDuration: const Duration(milliseconds: 150),
     ));
     final Widget overlay = Positioned(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.1,
-      bottom: (MediaQuery.of(context).size.height * 0.1) - 3,
-      left: 0,
+      width: _size.width,
+      height: _size.height,
+      left: _pos.dx,
+      bottom: _pos.dy,
       child: FadeTransition(
         opacity: Tween(
           begin: 0.0,
@@ -162,20 +167,6 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
                     );
                   },
                 ),
-                /*ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  primary: false,
-                  padding: const EdgeInsets.all(20),
-                  separatorBuilder: (BuildContext context, int i) {
-                    return SizedBox(
-                      width: 15,
-                    );
-                  },
-                  itemCount: swatchIcons.length,
-                  itemBuilder: (BuildContext context, int i) {
-                    return swatchIcons[i];
-                  },
-                ),*/
               ),
               SizedBox(
                 height: 2.0,

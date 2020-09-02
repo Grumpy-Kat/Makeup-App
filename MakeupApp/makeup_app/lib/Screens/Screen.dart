@@ -18,6 +18,7 @@ mixin ScreenState {
         builder: (context, screenSize) {
           this.screenSize = screenSize.biggest;
           InfoBox.screenSize = this.screenSize;
+          RecommendedSwatchBar.screenSize = this.screenSize;
           return Column(
             children: <Widget>[
               Expanded(

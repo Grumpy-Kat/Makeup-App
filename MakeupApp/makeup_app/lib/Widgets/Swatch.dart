@@ -94,6 +94,7 @@ class SwatchIcon extends StatelessWidget {
               width: 23,
               height: 23,
               child: FloatingActionButton(
+                heroTag: 'Check $id',
                 backgroundColor: Colors.green,
                 child: Icon(
                   Icons.check,
@@ -118,6 +119,7 @@ class SwatchIcon extends StatelessWidget {
               width: 23,
               height: 23,
               child: FloatingActionButton(
+                heroTag: 'Delete $id',
                 backgroundColor: theme.errorTextColor,
                 child: Icon(
                   Icons.clear,

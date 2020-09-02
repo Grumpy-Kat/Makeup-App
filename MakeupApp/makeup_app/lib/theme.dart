@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 bool isDarkTheme = true;
 
-Color get bgColor => isDarkTheme ? Colors.grey[850] : Colors.blueGrey[50];
-Color get primaryColorLight => isDarkTheme ? Color.fromRGBO(45, 45, 45 , 1) : Colors.grey[100];
-Color get primaryColor => isDarkTheme ? Color.fromRGBO(53, 53, 53 , 1) : Colors.grey[200];
-Color get primaryColorDark => isDarkTheme ? Colors.grey[700] : Colors.grey[400];
-Color get primaryTextColor => isDarkTheme ? Colors.blueGrey[200] : Colors.grey[800];
+Color get bgColor => isDarkTheme ? Color.fromRGBO(18, 18, 18, 1) : Color.fromRGBO(248, 249, 251, 1);
+Color get primaryColorLight => isDarkTheme ? Color.fromRGBO(15, 15, 15, 1) : Color.fromRGBO(251, 252, 254, 1);
+Color get primaryColor => isDarkTheme ? Color.fromRGBO(20, 20, 20 , 1) : Color.fromRGBO(244, 245, 247, 1);
+Color get primaryColorDark => isDarkTheme ? Color.fromRGBO(35, 35, 35, 1) : Color.fromRGBO(221, 222, 224, 1);
+Color get primaryTextColor => isDarkTheme ? Color.fromRGBO(221, 222, 224, 1) : Color.fromRGBO(35, 35, 35, 1);
 Color get accentColorLight => isDarkTheme ? Colors.teal[600] : Colors.teal[300];
 Color get accentColor => isDarkTheme ? Colors.teal[400] : Colors.teal[400];
 Color get accentColorDark => isDarkTheme ? Colors.teal[300] : Colors.teal[600];
-Color get accentTextColor => isDarkTheme ? Colors.grey[850] : Colors.blueGrey[50];
-Color get errorTextColor => isDarkTheme ? Colors.red[800] : Colors.red[800];
+Color get accentTextColor => isDarkTheme ? Color.fromRGBO(244, 245, 248, 1) : Color.fromRGBO(248, 249, 251, 1);
+Color get errorTextColor => isDarkTheme ? Color.fromRGBO(207, 73, 80, 1) : Color.fromRGBO(176, 0, 32, 1);
 
 String get fontFamily => 'Arial';
 TextStyle get primaryTitle => TextStyle(color: primaryTextColor, fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: fontFamily);

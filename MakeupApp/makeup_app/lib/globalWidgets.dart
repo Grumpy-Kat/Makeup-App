@@ -22,11 +22,14 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
   String value;
   return openDialog(
     context,
-    title: Text(title),
+    title: Text(title, style: theme.primaryTextBold),
     content: TextField(
       autofocus: true,
       textAlign: TextAlign.left,
+      style: theme.primaryTextSmall,
+      cursorColor: theme.accentColor,
       decoration: InputDecoration(
+        labelStyle: theme.primaryTextSmall,
         errorText: (value == '') ? error : null,
         errorStyle: theme.errorText,
         enabledBorder: UnderlineInputBorder(
@@ -68,14 +71,17 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
   String value2;
   return openDialog(
     context,
-    title: Text(title),
+    title: Text(title, style: theme.primaryTextBold),
     content: Column(
       children: <Widget> [
         TextField(
           autofocus: true,
           textAlign: TextAlign.left,
+          style: theme.primaryTextSmall,
+          cursorColor: theme.accentColor,
           decoration: InputDecoration(
             labelText: label1,
+            labelStyle: theme.primaryTextSmall,
             errorText: (value1 == '') ? error1 : null,
             errorStyle: theme.errorText,
             enabledBorder: UnderlineInputBorder(
@@ -98,8 +104,11 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
         TextField(
           autofocus: true,
           textAlign: TextAlign.left,
+          style: theme.primaryTextSmall,
+          cursorColor: theme.accentColor,
           decoration: InputDecoration(
             labelText: label2,
+            labelStyle: theme.primaryTextSmall,
             errorText: (value2 == '') ? error2 : null,
             errorStyle: theme.errorText,
             enabledBorder: UnderlineInputBorder(
@@ -141,7 +150,7 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
 Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidAction onPressedYes, OnVoidAction onPressedNo) {
   return openDialog(
     context,
-    title: Text(title),
+    title: Text(title, style: theme.primaryText),
     actions: <Widget>[
       FlatButton(
         color: theme.accentColor,

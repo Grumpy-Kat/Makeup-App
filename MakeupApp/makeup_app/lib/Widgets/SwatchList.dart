@@ -130,7 +130,7 @@ mixin SwatchListState {
           Text('Sort by  ', style: theme.primaryTextSmallest),
           SizedBox(
             width: 75,
-            child: DropdownButtonFormField<String>(
+            child: DropdownButton<String>(
               isDense: true,
               style: theme.primaryTextSmallest,
               onChanged: (String val) {
@@ -139,6 +139,15 @@ mixin SwatchListState {
                   sortSwatches(val);
                 });
               },
+              underline: Container(
+                decoration: UnderlineTabIndicator(
+                  insets: EdgeInsets.only(bottom: -5),
+                  borderSide: BorderSide(
+                    color: theme.primaryColorDark,
+                    width: 1.0,
+                  ),
+                ),
+              ),
               value: _currentSort ?? (swatchList.sort.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort.keys.first),
               items: swatchList.sort.keys.map((String val) {
                 return DropdownMenuItem(

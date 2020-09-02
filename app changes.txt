@@ -1,28 +1,27 @@
 Appearance:
-- Make RecommendedSwatchBar smaller (is way more than 10% of the screen, is it using the correct screenSize?)
-- Make dark theme way darker
-- Make menu bar icons closer to background color (look at Reddit)
-- Have input text color on dark theme light
-- Have dropdowns use theme colors
-- Have popups use theme colors
-- Make "Find Colors" button text size smaller on Main1Screen
-- Move "Add Image" button down on PaletteDivider
-- Make plus button on Main0Screen have a white icon?
+-// Make RecommendedSwatchBar smaller (is way more than 10% of the screen, is it using the correct screenSize?)
+-// Make dark theme way darker
+-// Make menu bar icons closer to background color (look at Reddit)
+-// Have input text color on dark theme lighter
+-// Have dropdowns use theme colors
+-// Have popups use theme colors
+-// Make "Find Colors" button text size smaller on Main1Screen
+-// Move "Add Image" button down on PaletteDivider
+-// Make plus button on Main0Screen have a white icon
 
 Bugs:
 - Add a way to close keyboard (probably by clicking off it)
-- Fix app crashing when pressing back when editing is enabled on LookScreen
+-// Fix app crashing when pressing back when editing is enabled on LookScreen
 - Fix being unable to delete first added swatch
 - Fix sorting
 - Reverse vertical dragging of inner borders on PaletteDivider
-- When editing and a swatch and then leaving the swatch screen without leaving edit mode, the edits do not save (at least not when going to AddPaletteScreen after; initially shows visual change when returning to Main0Screen, but does not seem to actually save)
-- Fix Main0Screen not refreshing after adding new palette
+- When editing a swatch and then leaving the swatch screen without leaving edit mode, the edits do not save (at least not when going to AddPaletteScreen after; initially shows visual change when returning to Main0Screen, but does not seem to actually save)
+- Fix Main0Screen sometimes not refreshing after adding new palette
 
 Features:
 - Allow swiping left and right to go to adjacent MainScreen
 - Allow swiping back to go to previous screen?
-- Hookup isDebug in globals to whether the app is actually is debug
-
+-// Hookup isDebug in globals to whether the app is actually is debug
 
 Testing:
 - Test the photo gallery and camera function

@@ -23,7 +23,7 @@ class MenuBar extends StatelessWidget {
               icon: Icon(
                 Icons.all_inclusive,
                 size: 30.0,
-                color: currTab == 0 ? theme.accentColor : theme.primaryTextColor,
+                color: currTab == 0 ? theme.accentColor : theme.primaryColorDark,
                 semanticLabel: 'All Colors',
               ),
             ),
@@ -35,7 +35,7 @@ class MenuBar extends StatelessWidget {
               icon: Icon(
                 Icons.palette,
                 size: 30.0,
-                color: currTab == 1 ? theme.accentColor : theme.primaryTextColor,
+                color: currTab == 1 ? theme.accentColor : theme.primaryColorDark,
                 semanticLabel: 'Color Picker',
               ),
             ),
@@ -47,7 +47,7 @@ class MenuBar extends StatelessWidget {
               icon: Icon(
                 Icons.linked_camera,
                 size: 30.0,
-                color: currTab == 2 ? theme.accentColor : theme.primaryTextColor,
+                color: currTab == 2 ? theme.accentColor : theme.primaryColorDark,
                 semanticLabel: 'Palette Scanner',
               ),
             ),
@@ -59,7 +59,7 @@ class MenuBar extends StatelessWidget {
               icon: Icon(
                 Icons.style,
                 size: 30.0,
-                color: currTab == 3 ? theme.accentColor : theme.primaryTextColor,
+                color: currTab == 3 ? theme.accentColor : theme.primaryColorDark,
                 semanticLabel: 'Lookbook',
               ),
             ),

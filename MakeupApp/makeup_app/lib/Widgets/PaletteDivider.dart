@@ -54,8 +54,9 @@ class PaletteDividerState extends State<PaletteDivider> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         //determine properties
         bool showImg = false;
+        double topPadding = 15;
         Size screenSize = MediaQuery.of(context).size;
-        Size maxSize = Size(screenSize.width * 0.9, screenSize.height * 0.5);
+        Size maxSize = Size(screenSize.width * 0.9, (screenSize.height * 0.5) - topPadding);
         Size actualImg = Size(50, 50);
         imgSize = Size(50, 50);
         if(ImagePicker.img != null && snapshot.connectionState == ConnectionState.done) {
@@ -78,190 +79,197 @@ class PaletteDividerState extends State<PaletteDivider> {
             _borderKeys.add(GlobalKey());
           }
         }
-        return Stack(
-          children: <Widget>[
-            //pick image button
-            Align(
-              alignment: Alignment(0, -1),
-              child: FlatButton(
-                color: (ImagePicker.img == null ? theme.accentColor : theme.primaryColorDark),
-                onPressed: () {
-                  ImagePicker.open(context).then(
-                    (val) {
-                      setState(() {
-                        this.actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
-                        this.numCols = 1;
-                        this.numRows = 1;
-                        this.borders = [0, 0, 0, 0];
-                        this.padding = [5, 5];
-                      });
-                    }
-                  );
-                },
-                child: Text(
-                  'Add Image',
-                  style: (ImagePicker.img == null ? theme.accentText : theme.primaryText),
+        return Padding(
+          padding: EdgeInsets.only(top: topPadding),
+          child: Stack(
+            children: <Widget>[
+              //pick image button
+              Align(
+                alignment: Alignment(0, -1),
+                child: FlatButton(
+                  color: (ImagePicker.img == null ? theme.accentColor : theme.primaryColorDark),
+                  onPressed: () {
+                    ImagePicker.open(context).then(
+                      (val) {
+                        setState(() {
+                          this.actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
+                          this.numCols = 1;
+                          this.numRows = 1;
+                          this.borders = [0, 0, 0, 0];
+                          this.padding = [5, 5];
+                        });
+                      }
+                    );
+                  },
+                  child: Text(
+                    'Add Image',
+                    style: (ImagePicker.img == null ? theme.accentText : theme.primaryText),
+                  ),
                 ),
               ),
-            ),
-            //column input
-            Align(
-              alignment: Alignment(0, -0.77),
-              child: AnimatedOpacity(
-                opacity: (showImg ? 1 : 0),
-                duration: Duration(milliseconds: 300),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      width: (screenSize == null ? 175 : screenSize.width / 2),
-                      child: TextFormField(
-                        textAlign: TextAlign.left,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          WhitelistingTextInputFormatter.digitsOnly
-                        ],
-                        decoration: InputDecoration(
-                          labelText: 'Palette Columns',
-                          labelStyle: theme.primaryText,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: theme.primaryColorDark,
-                              width: 1.0,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: theme.accentColor,
-                              width: 2.5,
-                            ),
-                          ),
-                        ),
-                        initialValue: '1',
-                        onChanged: (String val) { setState(() { numCols = _toInt(val); }); },
-                      ),
-                    ),
-                    //row input
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                      width: (screenSize == null ? 175 : screenSize.width / 2),
-                      child: TextFormField(
-                        textAlign: TextAlign.left,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          WhitelistingTextInputFormatter.digitsOnly
-                        ],
-                        decoration: InputDecoration(
-                          labelText: 'Palette Rows',
-                          labelStyle: theme.primaryText,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: theme.primaryColorDark,
-                              width: 1.0,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: theme.accentColor,
-                              width: 2.5,
-                            ),
-                          ),
-                        ),
-                        initialValue: '1',
-                        onChanged: (String val) { setState(() { numRows = _toInt(val); }); },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //image and borders
-            Align(
-              alignment: Alignment.center,
-              child: AnimatedOpacity(
-                opacity: (showImg ? 1 : 0),
-                duration: Duration(milliseconds: 300),
-                child: Stack(
-                  children: <Widget>[
-                    if(globals.debug) Align(
-                      alignment: Alignment(0, 0.4),
-                      child: Image.asset(
-                        'imgs/test0.jpg',
-                        key: _imgKey,
-                        width: imgSize.width,
-                        height: imgSize.height,
-                      ),
-                    ) else Align(
-                      alignment: Alignment(0, 0.4),
-                      child: Image.file(
-                        (ImagePicker.img == null ? File('imgs/matte.png') : ImagePicker.img),
-                        key: _imgKey,
-                        width: imgSize.width,
-                        height: imgSize.height,
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment(0, 0.4),
-                      child: GestureDetector(
-                        onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
-                        child: BorderBox(
-                          key: _borderKey,
-                          width: width,
-                          height: height,
-                          borderWidth: 2,
-                          borderColor: Colors.black,
-                          padding: EdgeInsets.fromLTRB(borders[0], borders[1], borders[2], borders[3]),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment(0, 0.4),
-                      child: Stack(
-                        children: [
-                          for(int i = 0; i < numCols; i++) for(int j = 0; j < numRows; j++) GestureDetector(
-                            onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
-                            child: BorderBox(
-                              key: _borderKeys[j * numCols + i],
-                              width: boxWidth,
-                              height: boxHeight,
-                              borderWidth: 2,
-                              borderColor: Colors.black,
-                              offset: EdgeInsets.fromLTRB(
-                                (i * boxWidth) + borders[0],
-                                (j * boxHeight) + borders[1],
-                                width - ((i + 1) * boxWidth) - borders[0],
-                                height - ((j + 1) * boxHeight) - borders[1],
+              //column input
+              Align(
+                alignment: Alignment(0, -0.77),
+                child: AnimatedOpacity(
+                  opacity: (showImg ? 1 : 0),
+                  duration: Duration(milliseconds: 300),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        width: (screenSize == null ? 175 : screenSize.width / 2),
+                        child: TextFormField(
+                          textAlign: TextAlign.left,
+                          keyboardType: TextInputType.number,
+                          style: theme.primaryTextSmall,
+                          cursorColor: theme.accentColor,
+                          inputFormatters: <TextInputFormatter>[
+                            WhitelistingTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            labelText: 'Palette Columns',
+                            labelStyle: theme.primaryText,
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: theme.primaryColorDark,
+                                width: 1.0,
                               ),
-                              padding: EdgeInsets.fromLTRB(padding[0], padding[1], padding[0], padding[1]),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: theme.accentColor,
+                                width: 2.5,
+                              ),
                             ),
                           ),
-                        ],
+                          initialValue: '1',
+                          onChanged: (String val) { setState(() { numCols = _toInt(val); }); },
+                        ),
                       ),
-                    ),
-                  ],
+                      //row input
+                      Container(
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        width: (screenSize == null ? 175 : screenSize.width / 2),
+                        child: TextFormField(
+                          textAlign: TextAlign.left,
+                          keyboardType: TextInputType.number,
+                          style: theme.primaryTextSmall,
+                          cursorColor: theme.accentColor,
+                          inputFormatters: <TextInputFormatter>[
+                            WhitelistingTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            labelText: 'Palette Rows',
+                            labelStyle: theme.primaryText,
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: theme.primaryColorDark,
+                                width: 1.0,
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: theme.accentColor,
+                                width: 2.5,
+                              ),
+                            ),
+                          ),
+                          initialValue: '1',
+                          onChanged: (String val) { setState(() { numRows = _toInt(val); }); },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            //enter button
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: AnimatedOpacity(
-                opacity: (showImg ? 1 : 0),
-                duration: Duration(milliseconds: 300),
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  child: FlatButton(
-                    color: theme.accentColor,
-                    onPressed: save,
-                    child: Text(
-                      'Save',
-                      style: theme.accentText,
+              //image and borders
+              Align(
+                alignment: Alignment.center,
+                child: AnimatedOpacity(
+                  opacity: (showImg ? 1 : 0),
+                  duration: Duration(milliseconds: 300),
+                  child: Stack(
+                    children: <Widget>[
+                      if(globals.debug) Align(
+                        alignment: Alignment(0, 0.4),
+                        child: Image.asset(
+                          'imgs/test0.jpg',
+                          key: _imgKey,
+                          width: imgSize.width,
+                          height: imgSize.height,
+                        ),
+                      ) else Align(
+                        alignment: Alignment(0, 0.4),
+                        child: Image.file(
+                          (ImagePicker.img == null ? File('imgs/matte.png') : ImagePicker.img),
+                          key: _imgKey,
+                          width: imgSize.width,
+                          height: imgSize.height,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment(0, 0.4),
+                        child: GestureDetector(
+                          onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
+                          child: BorderBox(
+                            key: _borderKey,
+                            width: width,
+                            height: height,
+                            borderWidth: 2,
+                            borderColor: Colors.black,
+                            padding: EdgeInsets.fromLTRB(borders[0], borders[1], borders[2], borders[3]),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment(0, 0.4),
+                        child: Stack(
+                          children: [
+                            for(int i = 0; i < numCols; i++) for(int j = 0; j < numRows; j++) GestureDetector(
+                              onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
+                              child: BorderBox(
+                                key: _borderKeys[j * numCols + i],
+                                width: boxWidth,
+                                height: boxHeight,
+                                borderWidth: 2,
+                                borderColor: Colors.black,
+                                offset: EdgeInsets.fromLTRB(
+                                  (i * boxWidth) + borders[0],
+                                  (j * boxHeight) + borders[1],
+                                  width - ((i + 1) * boxWidth) - borders[0],
+                                  height - ((j + 1) * boxHeight) - borders[1],
+                                ),
+                                padding: EdgeInsets.fromLTRB(padding[0], padding[1], padding[0], padding[1]),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              //enter button
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: AnimatedOpacity(
+                  opacity: (showImg ? 1 : 0),
+                  duration: Duration(milliseconds: 300),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    child: FlatButton(
+                      color: theme.accentColor,
+                      onPressed: save,
+                      child: Text(
+                        'Save',
+                        style: theme.accentText,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       }
     );

@@ -54,44 +54,47 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
   Widget build(BuildContext context) {
     Widget content;
     if(!_openPaletteDivider) {
-      content = Column(
-        children: <Widget>[
-          FlatButton(
-            color: theme.primaryColorDark,
-            onPressed: () {
-              setState(
-                () {
-                  _openPaletteDivider = true;
-                }
-              );
-            },
-            child: Text(
-              'Choose a Different Palette',
-              style: theme.primaryText,
+      content = Padding(
+        padding: EdgeInsets.only(top: 15),
+        child: Column(
+          children: <Widget>[
+            FlatButton(
+              color: theme.primaryColorDark,
+              onPressed: () {
+                setState(
+                  () {
+                    _openPaletteDivider = true;
+                  }
+                );
+              },
+              child: Text(
+                'Choose a Different Palette',
+                style: theme.primaryText,
+              ),
             ),
-          ),
-          FlatButton(
-            color: theme.primaryColorDark,
-            onPressed: () {
-              onSave(context, _labels);
-            },
-            child: Text(
-              'Save Palette',
-              style: theme.primaryText,
+            FlatButton(
+              color: theme.primaryColorDark,
+              onPressed: () {
+                onSave(context, _labels);
+              },
+              child: Text(
+                'Save Palette',
+                style: theme.primaryText,
+              ),
             ),
-          ),
-          Expanded(
-            child: MultipleSwatchList(
-              addSwatches: _swatchesFuture,
-              updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
-              rowCount: 1,
-              showNoColorsFound: true,
-              showPlus: false,
-              defaultSort: 'Color',
-              sort: globals.defaultSortOptions(IO.getMultiple(_swatches), step: 8),
+            Expanded(
+              child: MultipleSwatchList(
+                addSwatches: _swatchesFuture,
+                updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
+                rowCount: 1,
+                showNoColorsFound: true,
+                showPlus: false,
+                defaultSort: 'Color',
+                sort: globals.defaultSortOptions(IO.getMultiple(_swatches), step: 8),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     } else {
       content = PaletteDivider(

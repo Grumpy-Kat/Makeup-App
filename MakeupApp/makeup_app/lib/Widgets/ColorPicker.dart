@@ -55,6 +55,7 @@ class ColorPickerState extends State<ColorPicker> {
     double wheelDiameter = size.height * 0.225;
     Size sliderSize = Size(wheelDiameter, size.height * 0.03);
     List<int> rgb = HSVtoRGB(HSVColor(hue, saturation, value)).getUpscaledValues();
+    print(size);
     return Stack(
       children: <Widget>[
         Positioned(
@@ -124,13 +125,13 @@ class ColorPickerState extends State<ColorPicker> {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              color: Color.fromARGB(255, rgb[0], rgb[1], rgb[2]),
+              color: Color.fromRGBO(rgb[0], rgb[1], rgb[2], 1),
             ),
           ),
         ),
         Positioned(
           width: size.width * 0.35,
-          height: size.height * 0.07,
+          height: 45,
           top: size.height * 0.325,
           left: size.width * 0.325,
           child: FlatButton(
@@ -138,7 +139,7 @@ class ColorPickerState extends State<ColorPicker> {
             onPressed: () { widget.onEnter(hue, saturation, value); },
             child: Text(
               widget.btnText,
-              style: theme.accentText,
+              style: theme.accentTextSmall,
             ),
           ),
         ),

@@ -22,14 +22,14 @@ class ImagePicker {
               ),
             ),
             FlatButton.icon(
-              icon: Icon(Icons.image),
+              icon: Icon(Icons.image, color: theme.primaryTextColor),
               label: Text('Open Gallery', textAlign: TextAlign.left, style: theme.primaryText),
               onPressed: () {
                 _openGallery(context);
               },
             ),
             FlatButton.icon(
-              icon: Icon(Icons.camera),
+              icon: Icon(Icons.camera, color: theme.primaryTextColor),
               label: Text('Open Camera', textAlign: TextAlign.left, style: theme.primaryText),
               onPressed: () {
                 _openCamera(context);
