@@ -10,7 +10,7 @@ Appearance:
 -// Make plus button on Main0Screen have a white icon
 
 Bugs:
-- Add a way to close keyboard (probably by clicking off it)
+-// Add a way to close number keyboard (probably by clicking off it)
 -// Fix app crashing when pressing back when editing is enabled on LookScreen
 - Fix being unable to delete first added swatch
 - Fix sorting

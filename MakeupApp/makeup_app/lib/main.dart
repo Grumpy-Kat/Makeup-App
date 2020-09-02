@@ -34,6 +34,9 @@ class MakeupApp extends StatelessWidget {
         errorColor: theme.errorTextColor,
         fontFamily: theme.fontFamily,
         dividerColor: theme.accentColorLight,
+        iconTheme: IconThemeData(
+          color: theme.primaryTextColor,
+        ),
         primaryTextTheme: TextTheme(
           headline6: theme.primaryTitle,
           bodyText1: theme.primaryText,

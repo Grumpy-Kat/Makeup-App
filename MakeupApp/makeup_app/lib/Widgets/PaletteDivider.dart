@@ -9,6 +9,7 @@ import '../ColorMath/ColorProcessingTF.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
+import '../types.dart';
 import 'ImagePicker.dart';
 import 'BorderBox.dart';
 import 'Swatch.dart';
@@ -33,6 +34,9 @@ class PaletteDividerState extends State<PaletteDivider> {
   int numCols = 1;
   int numRows = 1;
 
+  TextEditingController colsController;
+  TextEditingController rowsController;
+
   List<double> borders = [0, 0, 0, 0];
   List<double> padding = [5, 5];
 
@@ -45,6 +49,8 @@ class PaletteDividerState extends State<PaletteDivider> {
     super.initState();
     ImagePicker.img = null;
     actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
+    colsController = TextEditingController(text: numCols.toString());
+    rowsController = TextEditingController(text: numRows.toString());
   }
 
   @override
@@ -79,199 +85,216 @@ class PaletteDividerState extends State<PaletteDivider> {
             _borderKeys.add(GlobalKey());
           }
         }
-        return Padding(
-          padding: EdgeInsets.only(top: topPadding),
-          child: Stack(
-            children: <Widget>[
-              //pick image button
-              Align(
-                alignment: Alignment(0, -1),
-                child: FlatButton(
-                  color: (ImagePicker.img == null ? theme.accentColor : theme.primaryColorDark),
-                  onPressed: () {
-                    ImagePicker.open(context).then(
-                      (val) {
-                        setState(() {
-                          this.actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
-                          this.numCols = 1;
-                          this.numRows = 1;
-                          this.borders = [0, 0, 0, 0];
-                          this.padding = [5, 5];
-                        });
-                      }
-                    );
-                  },
-                  child: Text(
-                    'Add Image',
-                    style: (ImagePicker.img == null ? theme.accentText : theme.primaryText),
-                  ),
-                ),
-              ),
-              //column input
-              Align(
-                alignment: Alignment(0, -0.77),
-                child: AnimatedOpacity(
-                  opacity: (showImg ? 1 : 0),
-                  duration: Duration(milliseconds: 300),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        width: (screenSize == null ? 175 : screenSize.width / 2),
-                        child: TextFormField(
-                          textAlign: TextAlign.left,
-                          keyboardType: TextInputType.number,
-                          style: theme.primaryTextSmall,
-                          cursorColor: theme.accentColor,
-                          inputFormatters: <TextInputFormatter>[
-                            WhitelistingTextInputFormatter.digitsOnly
-                          ],
-                          decoration: InputDecoration(
-                            labelText: 'Palette Columns',
-                            labelStyle: theme.primaryText,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: theme.primaryColorDark,
-                                width: 1.0,
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: theme.accentColor,
-                                width: 2.5,
-                              ),
-                            ),
-                          ),
-                          initialValue: '1',
-                          onChanged: (String val) { setState(() { numCols = _toInt(val); }); },
-                        ),
-                      ),
-                      //row input
-                      Container(
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                        width: (screenSize == null ? 175 : screenSize.width / 2),
-                        child: TextFormField(
-                          textAlign: TextAlign.left,
-                          keyboardType: TextInputType.number,
-                          style: theme.primaryTextSmall,
-                          cursorColor: theme.accentColor,
-                          inputFormatters: <TextInputFormatter>[
-                            WhitelistingTextInputFormatter.digitsOnly
-                          ],
-                          decoration: InputDecoration(
-                            labelText: 'Palette Rows',
-                            labelStyle: theme.primaryText,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: theme.primaryColorDark,
-                                width: 1.0,
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: theme.accentColor,
-                                width: 2.5,
-                              ),
-                            ),
-                          ),
-                          initialValue: '1',
-                          onChanged: (String val) { setState(() { numRows = _toInt(val); }); },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              //image and borders
-              Align(
-                alignment: Alignment.center,
-                child: AnimatedOpacity(
-                  opacity: (showImg ? 1 : 0),
-                  duration: Duration(milliseconds: 300),
-                  child: Stack(
-                    children: <Widget>[
-                      if(globals.debug) Align(
-                        alignment: Alignment(0, 0.4),
-                        child: Image.asset(
-                          'imgs/test0.jpg',
-                          key: _imgKey,
-                          width: imgSize.width,
-                          height: imgSize.height,
-                        ),
-                      ) else Align(
-                        alignment: Alignment(0, 0.4),
-                        child: Image.file(
-                          (ImagePicker.img == null ? File('imgs/matte.png') : ImagePicker.img),
-                          key: _imgKey,
-                          width: imgSize.width,
-                          height: imgSize.height,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, 0.4),
-                        child: GestureDetector(
-                          onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
-                          child: BorderBox(
-                            key: _borderKey,
-                            width: width,
-                            height: height,
-                            borderWidth: 2,
-                            borderColor: Colors.black,
-                            padding: EdgeInsets.fromLTRB(borders[0], borders[1], borders[2], borders[3]),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment(0, 0.4),
-                        child: Stack(
-                          children: [
-                            for(int i = 0; i < numCols; i++) for(int j = 0; j < numRows; j++) GestureDetector(
-                              onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
-                              child: BorderBox(
-                                key: _borderKeys[j * numCols + i],
-                                width: boxWidth,
-                                height: boxHeight,
-                                borderWidth: 2,
-                                borderColor: Colors.black,
-                                offset: EdgeInsets.fromLTRB(
-                                  (i * boxWidth) + borders[0],
-                                  (j * boxHeight) + borders[1],
-                                  width - ((i + 1) * boxWidth) - borders[0],
-                                  height - ((j + 1) * boxHeight) - borders[1],
-                                ),
-                                padding: EdgeInsets.fromLTRB(padding[0], padding[1], padding[0], padding[1]),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              //enter button
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: AnimatedOpacity(
-                  opacity: (showImg ? 1 : 0),
-                  duration: Duration(milliseconds: 300),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    child: FlatButton(
-                      color: theme.accentColor,
-                      onPressed: save,
-                      child: Text(
-                        'Save',
-                        style: theme.accentText,
-                      ),
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+              currentFocus.focusedChild.unfocus();
+            }
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top: topPadding),
+            child: Stack(
+              children: <Widget>[
+                getPickImgBtn(),
+                Align(
+                  alignment: Alignment(0, -0.77),
+                  child: getAnimatedOpacity(
+                    showImg,
+                    child: Row(
+                      children: <Widget>[
+                        getTextField(screenSize, 'Palette Columns', colsController, (String val) { setState(() { numCols = _toInt(val); }); }),
+                        getTextField(screenSize, 'Palette Rows', rowsController, (String val) { setState(() { numRows = _toInt(val); }); })
+                      ],
                     ),
                   ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.center,
+                  child: getAnimatedOpacity(
+                    showImg,
+                    child: Stack(
+                      children: <Widget>[
+                        getImg(),
+                        getOuterBorder(width, height),
+                        getInnerBorders(width, height, boxWidth, boxHeight),
+                      ],
+                    ),
+                  ),
+                ),
+                getEnterBtn(showImg),
+              ],
+            ),
           ),
         );
       }
+    );
+  }
+
+  Widget getAnimatedOpacity(bool showImg, { @required Widget child }) {
+    return AnimatedOpacity(
+      opacity: (showImg ? 1 : 0),
+      duration: Duration(milliseconds: 300),
+      child: child,
+    );
+  }
+
+  Widget getTextField(Size screenSize, String label, TextEditingController controller, OnStringAction onStringAction) {
+    print(controller.text);
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      width: (screenSize == null ? 175 : screenSize.width / 2),
+      child: TextFormField(
+        textAlign: TextAlign.left,
+        keyboardType: TextInputType.number,
+        style: theme.primaryTextSmall,
+        cursorColor: theme.accentColor,
+        controller: controller,
+        inputFormatters: <TextInputFormatter>[
+          WhitelistingTextInputFormatter.digitsOnly
+        ],
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: theme.primaryText,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: theme.primaryColorDark,
+              width: 1.0,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: theme.accentColor,
+              width: 2.5,
+            ),
+          ),
+        ),
+        onChanged: onStringAction,
+      ),
+    );
+  }
+
+  Widget getPickImgBtn() {
+    return Align(
+      alignment: Alignment(0, -1),
+      child: FlatButton(
+        color: (ImagePicker.img == null ? theme.accentColor : theme.primaryColorDark),
+        onPressed: () {
+          ImagePicker.open(context).then(
+            (val) {
+              setState(() {
+                this.actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
+                this.numCols = 1;
+                this.colsController.value = TextEditingValue(
+                  text: numCols.toString(),
+                  selection: this.colsController.selection,
+                );
+                this.numRows = 1;
+                this.rowsController.value = TextEditingValue(
+                  text: numRows.toString(),
+                  selection: this.rowsController.selection,
+                );
+                this.borders = [0, 0, 0, 0];
+                this.padding = [5, 5];
+              });
+            }
+          );
+        },
+        child: Text(
+          'Add Image',
+          style: (ImagePicker.img == null ? theme.accentText : theme.primaryText),
+        ),
+      ),
+    );
+  }
+
+  Widget getEnterBtn(bool showImg) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: getAnimatedOpacity(
+        showImg,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          child: FlatButton(
+            color: theme.accentColor,
+            onPressed: save,
+            child: Text(
+              'Save',
+              style: theme.accentText,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getImg() {
+    if(globals.debug) {
+      //debug assumes to use a static image, instead of actual image picked
+      return Align(
+        alignment: Alignment(0, 0.4),
+        child: Image.asset(
+          'imgs/test0.jpg',
+          key: _imgKey,
+          width: imgSize.width,
+          height: imgSize.height,
+        ),
+      );
+    }
+    //release mode uses actual image picked
+    return Align(
+      alignment: Alignment(0, 0.4),
+      child: Image.file(
+        (ImagePicker.img == null ? File('imgs/matte.png') : ImagePicker.img),
+        key: _imgKey,
+        width: imgSize.width,
+        height: imgSize.height,
+      ),
+    );
+  }
+
+  Widget getOuterBorder(double width, double height) {
+    return Align(
+      alignment: Alignment(0, 0.4),
+      child: GestureDetector(
+        onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
+        child: BorderBox(
+          key: _borderKey,
+          width: width,
+          height: height,
+          borderWidth: 2,
+          borderColor: Colors.black,
+          padding: EdgeInsets.fromLTRB(borders[0], borders[1], borders[2], borders[3]),
+        ),
+      ),
+    );
+  }
+
+  Widget getInnerBorders(double width, double height, double boxWidth, double boxHeight) {
+    return Align(
+      alignment: Alignment(0, 0.4),
+      child: Stack(
+        children: [
+          for(int i = 0; i < numCols; i++) for(int j = 0; j < numRows; j++) GestureDetector(
+            onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
+            child: BorderBox(
+              key: _borderKeys[j * numCols + i],
+              width: boxWidth,
+              height: boxHeight,
+              borderWidth: 2,
+              borderColor: Colors.black,
+              offset: EdgeInsets.fromLTRB(
+                (i * boxWidth) + borders[0],
+                (j * boxHeight) + borders[1],
+                width - ((i + 1) * boxWidth) - borders[0],
+                height - ((j + 1) * boxHeight) - borders[1],
+              ),
+              padding: EdgeInsets.fromLTRB(padding[0], padding[1], padding[0], padding[1]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
