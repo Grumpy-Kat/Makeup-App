@@ -441,4 +441,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       await IO.editId(_swatch.id, _swatch);
     }
   }
+
+  @override
+  void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
+    exit();
+  }
 }

@@ -141,7 +141,6 @@ class PaletteDividerState extends State<PaletteDivider> {
   }
 
   Widget getTextField(Size screenSize, String label, TextEditingController controller, OnStringAction onStringAction) {
-    print(controller.text);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
       width: (screenSize == null ? 175 : screenSize.width / 2),

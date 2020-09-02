@@ -267,4 +267,9 @@ class LookScreenState extends State<LookScreen> with ScreenState {
       widget.onBackPressed();
     }
   }
+
+  @override
+  void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
+    onExit();
+  }
 }

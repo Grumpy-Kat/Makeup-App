@@ -55,7 +55,6 @@ class ColorPickerState extends State<ColorPicker> {
     double wheelDiameter = size.height * 0.225;
     Size sliderSize = Size(wheelDiameter, size.height * 0.03);
     List<int> rgb = HSVtoRGB(HSVColor(hue, saturation, value)).getUpscaledValues();
-    print(size);
     return Stack(
       children: <Widget>[
         Positioned(

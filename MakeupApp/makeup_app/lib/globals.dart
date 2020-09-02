@@ -100,7 +100,7 @@ String model = '';
 
 //settings
 final String appName = 'Makeup App';
-final String appVersion = '0.1';
+final String appVersion = '0.2';
 bool debug = true;
 
 final List<String> languages = ['English'];

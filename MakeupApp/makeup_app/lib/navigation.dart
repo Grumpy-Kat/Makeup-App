@@ -20,7 +20,7 @@ void pushReplacement(BuildContext context, Offset offset, routes.ScreenRoutes ne
     globalWidgets.slideTransition(
       context,
       nextScreen,
-      700,
+      500,
       offset,
       Offset.zero,
     ),
@@ -34,7 +34,7 @@ void push(BuildContext context, Offset offset, routes.ScreenRoutes nextScreenEnu
     globalWidgets.slideTransition(
       context,
       nextScreen,
-      700,
+      500,
       offset,
       Offset.zero,
     ),
@@ -52,7 +52,7 @@ void pop(BuildContext context, bool reloadPrev) {
     globalWidgets.slideTransition(
       context,
       routes.enumRoutes[prevScreen](context),
-      700,
+      500,
       Offset(-1, 0),
       Offset.zero,
     ),
