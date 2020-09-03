@@ -39,6 +39,8 @@ class Main3ScreenState extends State<Main3Screen> with ScreenState {
       returnMap[Text(label, textAlign: TextAlign.left, style: theme.primaryTextBold)] = _swatches[i];
       _labels[i] = label;
     }
+    //reloads for sort
+    setState(() {});
     return returnMap;
   }
 

@@ -24,6 +24,8 @@ class Main0ScreenState extends State<Main0Screen> with ScreenState {
 
   Future<List<int>> _addSwatches() async {
     _swatches = await IO.loadFormatted();
+    //reloads for sort
+    setState(() {});
     return _swatches;
   }
 

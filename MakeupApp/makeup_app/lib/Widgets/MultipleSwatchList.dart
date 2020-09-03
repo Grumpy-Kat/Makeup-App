@@ -135,9 +135,6 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
 
   @override
   void sortSwatches(String val) {
-    for(int i = 0; i < swatches.length; i++) {
-      IO.sort(swatches[i], (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[val](swatch, i)));
-    }
-    widget.updateSwatches(swatches);
+    widget.swatchList.addSwatches = IO.sortMultiple(swatchLabels, swatches, widget.swatchList.sort[val]);
   }
 }

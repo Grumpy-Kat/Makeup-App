@@ -13,7 +13,7 @@ Bugs:
 -// Add a way to close number keyboard (probably by clicking off it)
 -// Fix app crashing when pressing back when editing is enabled on LookScreen
 - Fix being unable to delete first added swatch
-- Fix sorting
+-// Fix sorting
 - Reverse vertical dragging of inner borders on PaletteDivider
 -// When editing a swatch and then leaving the swatch screen without leaving edit mode, the edits do not save (at least not when going to AddPaletteScreen after; initially shows visual change when returning to Main0Screen, but does not seem to actually save)
 - Fix Main0Screen sometimes not refreshing after adding new palette

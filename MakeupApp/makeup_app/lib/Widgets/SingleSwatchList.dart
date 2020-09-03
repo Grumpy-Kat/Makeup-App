@@ -34,7 +34,6 @@ class SingleSwatchList extends StatefulWidget {
 class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState {
   List<int> _swatches = [];
   List<SwatchIcon> _swatchIcons = [];
-  Future<List<int>> _swatchesFuture;
 
   @override
   void initState() {
@@ -68,14 +67,13 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
 
   @override
   Widget build(BuildContext context) {
-    _swatchesFuture = widget.swatchList.addSwatches;
     return buildComplete(
       context,
       GestureDetector(
         onTap: widget.onTap,
         onDoubleTap: widget.onDoubleTap,
         child: FutureBuilder(
-          future: _swatchesFuture,
+          future: widget.swatchList.addSwatches,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if(snapshot.connectionState == ConnectionState.done) {
               _swatches = snapshot.data ?? [];
@@ -98,7 +96,6 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
 
   @override
   void sortSwatches(String val) {
-    _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[val](swatch, 0)));
-    widget.updateSwatches(_swatches);
+    widget.swatchList.addSwatches = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[val](swatch, 0)));
   }
 }
