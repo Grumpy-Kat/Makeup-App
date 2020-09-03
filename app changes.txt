@@ -20,7 +20,7 @@ Bugs:
 
 Features:
 -// Allow swiping left and right to go to adjacent MainScreen
--// Allow swiping back to go to previous screen?
+-// Allow swiping back to go to previous screen
 -// Hookup isDebug in globals to whether the app is actually is debug
 
 Testing:

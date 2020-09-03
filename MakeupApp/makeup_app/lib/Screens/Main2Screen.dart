@@ -112,7 +112,8 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
     return buildComplete(
       context,
       2,
-     content,
+      content,
+      includeHorizontalDragging: !_openPaletteDivider,
     );
   }
 
@@ -132,5 +133,13 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
         IO.add(swatches);
       },
     );
+  }
+
+  @override
+  void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
+    //disable dragging when dragging borders
+    if(!_openPaletteDivider) {
+      super.onHorizontalDrag(context, drag);
+    }
   }
 }

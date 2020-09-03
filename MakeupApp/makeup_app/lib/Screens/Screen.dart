@@ -11,38 +11,39 @@ mixin ScreenState {
 
   GlobalKey menuKey = GlobalKey();
 
-  Widget buildComplete(BuildContext context, int menu, Widget body, { Widget floatingActionButton }) {
+  Widget buildComplete(BuildContext context, int menu, Widget body, { Widget floatingActionButton, bool includeHorizontalDragging = true }) {
+    Widget child = SizedSafeArea(
+      builder: (context, screenSize) {
+        this.screenSize = screenSize.biggest;
+        InfoBox.screenSize = this.screenSize;
+        RecommendedSwatchBar.screenSize = this.screenSize;
+        return Column(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: MenuBar(key: menuKey, currTab: menu, onExit: onExit),
+            ),
+            Expanded(
+              flex: 8,
+              child: body,
+            ),
+            RecommendedSwatchBar(),
+            Expanded(
+              flex: 1,
+              child: CurrSwatchBar(),
+            ),
+          ],
+        );
+      },
+    );
     return Scaffold(
       backgroundColor: theme.bgColor,
       floatingActionButton: floatingActionButton,
       resizeToAvoidBottomInset: false,
-      body: GestureDetector(
+      body: includeHorizontalDragging ? GestureDetector(
         onHorizontalDragEnd: (DragEndDetails drag) { onHorizontalDrag(context, drag); },
-        child: SizedSafeArea(
-          builder: (context, screenSize) {
-            this.screenSize = screenSize.biggest;
-            InfoBox.screenSize = this.screenSize;
-            RecommendedSwatchBar.screenSize = this.screenSize;
-            return Column(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: MenuBar(key: menuKey, currTab: menu, onExit: onExit),
-                ),
-                Expanded(
-                  flex: 8,
-                  child: body,
-                ),
-                RecommendedSwatchBar(),
-                Expanded(
-                  flex: 1,
-                  child: CurrSwatchBar(),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
+        child: child,
+      ) : child,
     );
   }
 

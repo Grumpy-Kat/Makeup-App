@@ -21,6 +21,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       PaletteDivider(
         onEnter: (List<Swatch> swatches) { onEnter(context, swatches); },
       ),
+      includeHorizontalDragging: false,
     );
   }
 

@@ -98,6 +98,15 @@ class PaletteDividerState extends State<PaletteDivider> {
             child: Stack(
               children: <Widget>[
                 getPickImgBtn(),
+                if(!showImg) Container(
+                  alignment: Alignment(0, -0.77),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Text(
+                    'If the palette does not have uniform columns and rows, try to add it in sections.',
+                    style: theme.primaryTextSmall,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 Align(
                   alignment: Alignment(0, -0.77),
                   child: getAnimatedOpacity(
@@ -262,7 +271,7 @@ class PaletteDividerState extends State<PaletteDivider> {
           key: _borderKey,
           width: width,
           height: height,
-          borderWidth: 2,
+          borderWidth: 3,
           borderColor: Colors.black,
           padding: EdgeInsets.fromLTRB(borders[0], borders[1], borders[2], borders[3]),
         ),
