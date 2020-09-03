@@ -423,7 +423,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   }
 
   void onChange(bool shouldSetState) {
-    _hasSaved = true;
+    _hasSaved = false;
     _hasChanged = true;
     if(shouldSetState) {
       setState(() {});
@@ -436,7 +436,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   }
 
   @override
-  void onExit() async {
+  Future<bool> onExit() async {
     if(_hasChanged && !_hasSaved) {
       await IO.editId(_swatch.id, _swatch);
     }
