@@ -121,7 +121,7 @@ Future<Map<String, List<int>>> loadFormatted({ bool override = false, overrideIn
         swatchList.add(id);
       }
     }
-    print(swatches.length);
+    print('${swatches.length} looks');
     hasSaveChanged = false;
   }
   return swatches;

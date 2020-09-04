@@ -38,14 +38,15 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
           swatches[i].brand = brand;
           swatches[i].palette = palette;
         }
-        IO.add(swatches);
-        setState(() {
-          navigation.pushReplacement(
-            context,
-            Offset(-1, 0),
-            routes.ScreenRoutes.Main0Screen,
-            routes.routes['/main0Screen'](context),
-          );
+        IO.add(swatches).then((val) {
+          setState(() {
+            navigation.pushReplacement(
+              context,
+              Offset(-1, 0),
+              routes.ScreenRoutes.Main0Screen,
+              routes.routes['/main0Screen'](context),
+            );
+          });
         });
       }
     );

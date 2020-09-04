@@ -33,10 +33,10 @@ void clear() async {
   hasSaveChanged = true;
 }
 
-void add(List<Swatch> swatches) async {
+Future<bool> add(List<Swatch> swatches) async {
   await load();
   List<int> ids = lines.keys.toList();
-  int id  = -1;
+  int id  = 0;
   if(ids.length > 0) {
     id = ids.reduce(max);
   }
@@ -46,6 +46,7 @@ void add(List<Swatch> swatches) async {
     info[id] = await saveSwatch(swatches[i]);
   }
   await save(info);
+  return true;
 }
 
 void editId(int i, Swatch swatch) async {
@@ -165,7 +166,7 @@ Future<List<int>> loadFormatted({ bool override = false, overrideInner = false }
     isLoading = true;
     swatches = {};
     Map<int, String> info = await load(override: overrideInner);
-    print(info.length);
+    print('${info.length} swatches');
     await info.forEach(
       (key, value) async {
         swatches[key] = await loadSwatch(key, value);
