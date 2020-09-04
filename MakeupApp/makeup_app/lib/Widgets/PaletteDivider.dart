@@ -421,9 +421,9 @@ class PaletteDividerState extends State<PaletteDivider> {
       actualImg = await ImagePicker.getActualImgSize(ImagePicker.img);
     }
     double imgScale = imgSize.width / actualImg.width;
-    double width = img.width - (borders[0] + borders[2]);
+    double width = imgSize.width - (borders[0] + borders[2]);
     double boxWidth = width / numCols / imgScale;
-    double height = img.height - (borders[1] + borders[3]);
+    double height = imgSize.height - (borders[1] + borders[3]);
     double boxHeight = height / numRows / imgScale;
     List<double> scaledBorders = [borders[0] / imgScale, borders[1] / imgScale, borders[2] / imgScale, borders[3] / imgScale];
     List<double> scaledPadding = [padding[0] / imgScale, padding[1] / imgScale];
@@ -431,7 +431,10 @@ class PaletteDividerState extends State<PaletteDivider> {
       for(int j = 0; j < numRows; j++) {
         int x = (scaledBorders[0] + (boxWidth * i) + scaledPadding[0]).floor();
         int y = (scaledBorders[1] + (boxHeight * j) + scaledPadding[1]).floor();
-        image.Image cropped = image.copyCrop(img, x, y, (boxWidth - (scaledPadding[0] * 2)).floor(), (boxHeight - (scaledPadding[1] * 2)).floor());
+        int w = (boxWidth - (scaledPadding[0] * 2)).floor();
+        int h = (boxHeight - (scaledPadding[1] * 2)).floor();
+        //print('$x $w ${scaledPadding[0]} $width $numCols $imgScale ${imgSize} ${actualImg}');
+        image.Image cropped = image.copyCrop(img, x, y, w, h);
         RGBColor color = avgColor(cropped);
         String finish = await getFinish(cropped);
         _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: '', rating: 0, tags: []));

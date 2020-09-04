@@ -1,10 +1,13 @@
 import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'dart:math';
+import 'dart:io';
+import 'dart:typed_data';
 import 'ColorObjects.dart';
 import 'ColorDifferences.dart';
 import 'ColorConversions.dart';
 import '../Widgets/Swatch.dart';
+import '../globals.dart' as globals;
 
 Map<String, RGBColor> createColorWheel() {
   Map<String, RGBColor> colorWheel = Map<String, RGBColor>();
@@ -157,7 +160,13 @@ List<double> distanceSort(RGBColor rgb, RGBColor org) {
 
 Future<Image> loadImg(String path) async {
   //return decodeImage(File(path.replaceAll('/', '\\')).readAsBytesSync());
-  ByteData data = await rootBundle.load(path);
+  if(globals.debug) {
+    ByteData data = await rootBundle.load(path);
+    return decodeImage(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  }
+  File f = File(path);
+  Uint8List bytes = await f.readAsBytes();
+  ByteData data = ByteData.view(bytes.buffer);
   return decodeImage(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
 }
 
