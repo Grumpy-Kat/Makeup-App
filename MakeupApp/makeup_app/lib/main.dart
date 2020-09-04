@@ -18,7 +18,8 @@ class MakeupApp extends StatelessWidget {
     routes.setRoutes();
     IO.load();
     globals.currSwatches.init();
-    globals.debug = !kReleaseMode;
+    //globals.debug = !kReleaseMode;
+    globals.debug = false;
     savedLooks.init();
     navigation.init(routes.ScreenRoutes.Main0Screen);
     return MaterialApp(
