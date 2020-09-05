@@ -129,10 +129,10 @@ class ColorPickerState extends State<ColorPicker> {
           ),
         ),
         Positioned(
-          width: size.width * 0.35,
+          width: 150,
           height: 45,
           top: size.height * 0.325,
-          left: size.width * 0.325,
+          left: (size.width * 0.5) - 75,
           child: FlatButton(
             color: theme.accentColor,
             onPressed: () { widget.onEnter(hue, saturation, value); },

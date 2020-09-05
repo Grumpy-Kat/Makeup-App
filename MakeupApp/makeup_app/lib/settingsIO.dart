@@ -36,10 +36,14 @@ void save() async {
 void load() async {
   File file = await getSaveFile();
   List<String> lines = (await file.readAsString()).split('\n');
-  //language
-  globals.language = lines[0];
-  //sort
-  globals.sort = lines[1];
-  //tags
-  globals.tags = lines[2].split(';');
+  if(lines.length > 1) {
+    //language
+    globals.language = lines[0];
+    //sort
+    globals.sort = lines[1];
+    //tags
+    globals.tags = lines[2].split(';');
+  } else {
+    await save();
+  }
 }

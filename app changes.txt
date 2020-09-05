@@ -1,2 +1,0 @@
-Appearance:
-- Fix swatch sort dropwodn horizontally overflowing on smaller screens
