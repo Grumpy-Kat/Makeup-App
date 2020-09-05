@@ -433,8 +433,12 @@ class PaletteDividerState extends State<PaletteDivider> {
         int y = (scaledBorders[1] + (boxHeight * j) + scaledPadding[1]).floor();
         int w = (boxWidth - (scaledPadding[0] * 2)).floor();
         int h = (boxHeight - (scaledPadding[1] * 2)).floor();
-        //print('$x $w ${scaledPadding[0]} $width $numCols $imgScale ${imgSize} ${actualImg}');
-        image.Image cropped = image.copyCrop(img, x, y, w, h);
+        //print('$x $w ${scaledPadding[0]} $width $numCols $imgScale ${imgSize.width} ${actualImg.width}');
+        //print('$y $h ${scaledPadding[1]} $height $numRows $imgScale ${imgSize.height} ${actualImg.height}');
+        image.Image cropped = crop(img, y, x, h, w);
+        if(cropped == null) {
+          return;
+        }
         RGBColor color = avgColor(cropped);
         String finish = await getFinish(cropped);
         _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: '', rating: 0, tags: []));
@@ -442,6 +446,22 @@ class PaletteDividerState extends State<PaletteDivider> {
       }
     }
     widget.onEnter(_swatches);
+  }
+
+  image.Image crop(image.Image src, int x, int y, int w, int h) {
+    image.Image dst = image.Image(w, h, channels: src.channels, exif: src.exif, iccp: src.iccProfile);
+    //height and width are switched?
+    for(int xi = 0, sx = x; xi < w; xi++, sx++) {
+      for(int yi = 0, sy = y; yi < h; yi++, sy++) {
+        try {
+          dst.setPixel(xi, yi, src.getPixel(sx, sy));
+        } catch(e) {
+          print('$xi $yi $sx $sy');
+          return null;
+        }
+      }
+    }
+    return dst;
   }
 
   int _toInt(String val) {

@@ -10,6 +10,7 @@ mixin ScreenState {
   Size screenSize;
 
   GlobalKey menuKey = GlobalKey();
+  GlobalKey recommendedSwatchBarKey = GlobalKey();
 
   Widget buildComplete(BuildContext context, int menu, Widget body, { Widget floatingActionButton, bool includeHorizontalDragging = true }) {
     Widget child = SizedSafeArea(
@@ -27,7 +28,7 @@ mixin ScreenState {
               flex: 8,
               child: body,
             ),
-            RecommendedSwatchBar(),
+            RecommendedSwatchBar(key: recommendedSwatchBarKey),
             Expanded(
               flex: 1,
               child: CurrSwatchBar(),
@@ -47,7 +48,9 @@ mixin ScreenState {
     );
   }
 
-  void onExit() async {}
+  void onExit() async {
+    (recommendedSwatchBarKey.currentState as RecommendedSwatchBarState).close();
+  }
 
   void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
     double threshold = 0.001;

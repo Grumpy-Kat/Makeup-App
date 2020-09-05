@@ -251,6 +251,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
 
   @override
   void onExit() async {
+    super.onExit();
     if(widget.askBackSaved && _hasEdited) {
       await globalWidgets.openTwoButtonDialog(
         context,

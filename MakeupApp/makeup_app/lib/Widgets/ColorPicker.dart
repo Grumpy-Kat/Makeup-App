@@ -136,9 +136,12 @@ class ColorPickerState extends State<ColorPicker> {
           child: FlatButton(
             color: theme.accentColor,
             onPressed: () { widget.onEnter(hue, saturation, value); },
-            child: Text(
-              widget.btnText,
-              style: theme.accentTextSmall,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                widget.btnText,
+                style: theme.accentTextSmall,
+              ),
             ),
           ),
         ),

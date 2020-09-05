@@ -11,6 +11,8 @@ import 'SwatchList.dart';
 class RecommendedSwatchBar extends StatefulWidget {
   static Size screenSize;
 
+  RecommendedSwatchBar({ Key key }) : super(key: key);
+
   @override
   RecommendedSwatchBarState createState() => RecommendedSwatchBarState();
 }
@@ -43,7 +45,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
       null,
     );
     _size = Size(RecommendedSwatchBar.screenSize.width, RecommendedSwatchBar.screenSize.height * 0.1);
-    _pos = Offset(0, (RecommendedSwatchBar.screenSize.height * 0.1) - 3);
+    _pos = Offset(0, _size.height);
     init(
       SwatchList(
         addSwatches: _swatchesFuture,
@@ -109,6 +111,9 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
 
   @override
   Widget build(BuildContext context) {
+    //print(MediaQuery.of(context).padding.bottom);
+    //MediaQuery does not work in init
+    //_pos = Offset(0, _size.height +  MediaQuery.of(context).padding.bottom);
     return Container(
       width: 0,
       height: 0,
@@ -207,4 +212,6 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   void sortSwatches(String val) {
     _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => globals.distanceSortOptions(IO.getMultiple([_swatches]), currSwatch.color, step: 8)[val](swatch, 0)));
   }
+
+
 }

@@ -8,6 +8,7 @@ class SizedSafeArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: LayoutBuilder(
         builder: (context, screenSize) {
           return builder(context, screenSize);
