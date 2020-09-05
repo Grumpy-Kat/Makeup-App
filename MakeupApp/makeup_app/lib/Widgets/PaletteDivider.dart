@@ -435,7 +435,14 @@ class PaletteDividerState extends State<PaletteDivider> {
         int h = (boxHeight - (scaledPadding[1] * 2)).floor();
         //print('$x $w ${scaledPadding[0]} $width $numCols $imgScale ${imgSize.width} ${actualImg.width}');
         //print('$y $h ${scaledPadding[1]} $height $numRows $imgScale ${imgSize.height} ${actualImg.height}');
-        image.Image cropped = crop(img, y, x, h, w);
+        image.Image cropped;
+        if(img.width == actualImg.width) {
+          //correct orientation
+          cropped = crop(img, x, y, w, h);
+        } else {
+          //rotated orientation
+          cropped = crop(img, y, x, h, w);
+        }
         if(cropped == null) {
           return;
         }
@@ -450,7 +457,6 @@ class PaletteDividerState extends State<PaletteDivider> {
 
   image.Image crop(image.Image src, int x, int y, int w, int h) {
     image.Image dst = image.Image(w, h, channels: src.channels, exif: src.exif, iccp: src.iccProfile);
-    //height and width are switched?
     for(int xi = 0, sx = x; xi < w; xi++, sx++) {
       for(int yi = 0, sy = y; yi < h; yi++, sy++) {
         try {
