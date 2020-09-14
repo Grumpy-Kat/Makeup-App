@@ -10,6 +10,7 @@ import os
 
 IMG_ROOT_DIR = r'C:\Users\Luda\Desktop\Makeup\training\finishes'
 IMG_SIZE = 32
+#IMG_SIZE = 45
 LR = 1e-3
 SPLIT_RATE = 0.2
 BATCH_SIZE = 5

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:async';
-import 'ColorMath/ColorProcessing.dart';
+import 'ColorMath/ColorSorting.dart';
 import 'globalIO.dart';
 import 'allSwatchesIO.dart' as allSwatches;
 

@@ -1,5 +1,5 @@
 import 'ColorMath/ColorObjects.dart';
-import 'ColorMath/ColorProcessing.dart';
+import 'ColorMath/ColorSorting.dart';
 import 'Widgets/Swatch.dart';
 import 'types.dart';
 import 'settingsIO.dart' as IO;
@@ -113,7 +113,7 @@ set language(String value) {
   }
 }
 
-String _sort = 'Color';
+String _sort = 'Hue';
 String get sort => _sort;
 set sort(String value) {
   _sort = value;
@@ -121,16 +121,20 @@ set sort(String value) {
 }
 Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step: 8 }) {
   return {
-    'Color': (Swatch swatch, int i) { return stepSort(swatch.color, step: step); },
+    'Hue': (Swatch swatch, int i) { return stepSort(swatch.color, step: step); },
     'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
+    'Lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
+    'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
     'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
     'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
   };
 }
 Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBColor color, { step: 8}) {
   return {
-    'Color': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
+    'Hue': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
     'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
+    'Lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
+    'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
     'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
     'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
   };

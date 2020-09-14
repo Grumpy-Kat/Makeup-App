@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:math';
 import 'Widgets/Swatch.dart';
-import 'ColorMath/ColorProcessing.dart';
+import 'ColorMath/ColorSorting.dart';
 import 'globalIO.dart';
 import 'types.dart';
 
