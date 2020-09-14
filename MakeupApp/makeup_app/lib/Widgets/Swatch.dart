@@ -13,10 +13,10 @@ class Swatch {
   String brand;
   String palette;
   String shade = '';
-  int rating = 1;
+  int rating = 5;
   List<String> tags = [];
 
-  Swatch({ @required this.color, @required this.finish, this.brand = '', this.palette = '', this.id = -1, this.shade = '', this.rating = 1, this.tags});
+  Swatch({ @required this.color, @required this.finish, this.brand = '', this.palette = '', this.id = -1, this.shade = '', this.rating = 5, this.tags});
 
   int compareTo(Swatch other, List<double> Function(Swatch) comparator) {
     List<double> thisValues = comparator(this);
@@ -34,7 +34,7 @@ class Swatch {
     if(!(other is Swatch)) {
       return false;
     }
-    //return id == other.id && color == other.color && finish == other.finish && brand == other.brnd && palette == other.palette && shade == other.shade && rating == other.rating && tags == other.tags;
+    //return id == other.id && color == other.color && finish == other.finish && brand == other.brand && palette == other.palette && shade == other.shade && rating == other.rating && tags == other.tags;
     return id == other.id;
   }
 

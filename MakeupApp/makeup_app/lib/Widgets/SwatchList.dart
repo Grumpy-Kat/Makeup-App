@@ -129,7 +129,7 @@ mixin SwatchListState {
         children: <Widget>[
           Text('Sort by  ', style: theme.primaryTextSmallest),
           SizedBox(
-            width: 80,
+            width: 110,
             child: DropdownButton<String>(
               isDense: true,
               style: theme.primaryTextSmallest,

@@ -114,7 +114,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
                     applicationName: globals.appName,
                     applicationVersion: globals.appVersion,
                     children: <Widget>[
-                      Text('Created by TechneGames', style: theme.primaryTextSmallest, textAlign: TextAlign.center),
+                      Text('Created by TechneGames', style: theme.primaryTextSmaller, textAlign: TextAlign.center),
                     ],
                   );
                 },

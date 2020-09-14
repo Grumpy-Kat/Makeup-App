@@ -127,6 +127,8 @@ Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step
     'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
     'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
     'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
+    'Highest Rated': (Swatch swatch, int i) { return highestRatedSort(swatch, step: step); },
+    'Lowest Rated': (Swatch swatch, int i) { return lowestRatedSort(swatch, step: step); },
   };
 }
 Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBColor color, { step: 8}) {
@@ -137,6 +139,8 @@ Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBCo
     'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
     'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
     'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
+    'Highest Rated': (Swatch swatch, int i) { return highestRatedSort(swatch, step: step); },
+    'Lowest Rated': (Swatch swatch, int i) { return lowestRatedSort(swatch, step: step); },
   };
 }
 

@@ -448,7 +448,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         }
         RGBColor color = avgColor(cropped);
         String finish = await getFinish(cropped);
-        _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: '', rating: 0, tags: []));
+        _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: '', rating: 5, tags: []));
         print('${_swatches.last.color.getValues()} $finish');
       }
     }

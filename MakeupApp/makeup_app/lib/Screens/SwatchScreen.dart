@@ -353,7 +353,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       widgets.add(
         FilterChip(
           checkmarkColor: theme.accentColorLight,
-          label: Text(options[i], style: theme.primaryTextSmallest),
+          label: Text(options[i], style: theme.primaryTextSmaller),
           selected: values.contains(options[i]),
           onSelected: (bool selected) {
             if(_isEditing) {

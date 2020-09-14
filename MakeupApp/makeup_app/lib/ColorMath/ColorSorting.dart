@@ -58,13 +58,13 @@ List<double> stepSort(RGBColor rgb, { int step = 1 }) {
   double lum2 = lum * step;
   double v2 = hsvVal[2] * step;
   //isGray: 0 - 1
-  //lum2: 0 - (360 * step)
-  //h2: 0 - step
   //v2: 0 - step
+  //h2: 0 - step
+  //lum2: 0 - (360 * step)
   if(isGray) {
-    return [1, h2, lum2, v2];
+    return [1, h2, v2, lum2];
   }
-  return [0, h2, lum2, v2];
+  return [0, h2, v2, lum2];
 }
 
 List<double> finishSort(Swatch swatch, { int step = 1, String firstFinish = '' }) {
@@ -95,9 +95,9 @@ List<double> finishSort(Swatch swatch, { int step = 1, String firstFinish = '' }
   }
   //finish: 0 - 10
   //isGray: 0 - 1
-  //lum2: 0 - (360 * step)
   //h2: 0 - step
   //v2: 0 - step
+  //lum2: 0 - (360 * step)
   return [finish, sort[0], sort[1], sort[2], sort[3]];
 }
 
@@ -107,27 +107,27 @@ double round(double val) {
 }
 
 List<double> lightestSort(Swatch swatch, { int step = 1 }) {
+  List<double> sort = darkestSort(swatch, step: step);
+  //v: 0 - 1
+  //s: 0 - step
+  //h2: 0 - step
+  //lum2: 0 - (360 * step)
+  return [step - sort[0], step - sort[1], sort[2], sort[2]];
+}
+
+List<double> darkestSort(Swatch swatch, { int step = 1 }) {
   List<double> sort = stepSort(swatch.color, step: step);
   List<double> hsvVal = RGBtoHSV(swatch.color).getValues();
-  double v = round(1 - hsvVal[2].clamp(0, 1)) * step;
+  double v = ((hsvVal[2] * 2).round().toDouble() / 2) * step;
   double s = hsvVal[1] * step;
   if(v > step / 2) {
     s = step - s;
   }
   //v: 0 - step
   //s: 0 - step
-  //lum2: 0 - (360 * step)
   //h2: 0 - step
+  //lum2: 0 - (360 * step)
   return [v, s, sort[1], sort[2]];
-}
-
-List<double> darkestSort(Swatch swatch, { int step = 1 }) {
-  List<double> sort = lightestSort(swatch, step: step);
-  //v: 0 - 1
-  //s: 0 - step
-  //lum2: 0 - (360 * step)
-  //h2: 0 - step
-  return [step - sort[0], step - sort[1], sort[2], sort[2]];
 }
 
 List<double> paletteSort(Swatch swatch, List<Swatch> swatches, { int step = 1 }) {
@@ -140,9 +140,9 @@ List<double> paletteSort(Swatch swatch, List<Swatch> swatches, { int step = 1 })
   }
   //palette: 0 - (palettes.length - 1)
   //isGray: 0 - 1
-  //lum2: 0 - (360 * step)
   //h2: 0 - step
   //v2: 0 - step
+  //lum2: 0 - (360 * step)
   return [palettes.indexOf(swatch.palette).toDouble(), sort[0], sort[1], sort[2], sort[3]];
 }
 
@@ -156,10 +156,32 @@ List<double> brandSort(Swatch swatch, List<Swatch> swatches, { int step = 1 }) {
   }
   //palette: 0 - (palettes.length - 1)
   //isGray: 0 - 1
-  //lum2: 0 - (360 * step)
   //h2: 0 - step
   //v2: 0 - step
+  //lum2: 0 - (360 * step)
   return [brands.indexOf(swatch.brand).toDouble(), sort[0], sort[1], sort[2], sort[3]];
+}
+
+List<double> highestRatedSort(Swatch swatch, { int step = 1}) {
+  List<double> sort = stepSort(swatch.color, step: step);
+  double rating = 10.0 - swatch.rating;
+  //rating: 1 - 10
+  //isGray: 0 - 1
+  //h2: 0 - step
+  //v2: 0 - step
+  //lum2: 0 - (360 * step)
+  return [rating, sort[0], sort[1], sort[2], sort[3]];
+}
+
+List<double> lowestRatedSort(Swatch swatch, { int step = 1}) {
+  List<double> sort = stepSort(swatch.color, step: step);
+  double rating = swatch.rating.toDouble();
+  //rating: 1 - 10
+  //isGray: 0 - 1
+  //h2: 0 - step
+  //v2: 0 - step
+  //lum2: 0 - (360 * step)
+  return [rating, sort[0], sort[1], sort[2], sort[3]];
 }
 
 List<double> colorSort(RGBColor rgb) {
