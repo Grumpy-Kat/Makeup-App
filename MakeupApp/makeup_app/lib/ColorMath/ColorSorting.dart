@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'ColorObjects.dart';
 import 'ColorDifferences.dart';
 import 'ColorConversions.dart';

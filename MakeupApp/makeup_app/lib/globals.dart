@@ -122,9 +122,9 @@ set sort(String value) {
 Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step: 8 }) {
   return {
     'Hue': (Swatch swatch, int i) { return stepSort(swatch.color, step: step); },
-    'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
     'Lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
     'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
+    'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
     'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
     'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
     'Highest Rated': (Swatch swatch, int i) { return highestRatedSort(swatch, step: step); },
@@ -134,9 +134,9 @@ Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step
 Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBColor color, { step: 8}) {
   return {
     'Hue': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
-    'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
     'Lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
     'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
+    'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
     'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
     'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
     'Highest Rated': (Swatch swatch, int i) { return highestRatedSort(swatch, step: step); },

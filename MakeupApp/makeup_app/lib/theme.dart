@@ -8,10 +8,11 @@ Color get primaryColor => isDarkTheme ? Color.fromRGBO(20, 20, 20 , 1) : Color.f
 Color get primaryColorDark => isDarkTheme ? Color.fromRGBO(35, 35, 35, 1) : Color.fromRGBO(221, 222, 224, 1);
 Color get primaryTextColor => isDarkTheme ? Color.fromRGBO(221, 222, 224, 1) : Color.fromRGBO(35, 35, 35, 1);
 Color get accentColorLight => isDarkTheme ? Colors.teal[600] : Colors.teal[300];
-Color get accentColor => isDarkTheme ? Colors.teal[400] : Colors.teal[400];
+Color get accentColor => isDarkTheme ? Color.fromRGBO(39, 165, 146, 1) : Color.fromRGBO(39, 165, 146, 1);
 Color get accentColorDark => isDarkTheme ? Colors.teal[300] : Colors.teal[600];
 Color get accentTextColor => isDarkTheme ? Color.fromRGBO(244, 245, 248, 1) : Color.fromRGBO(248, 249, 251, 1);
-Color get errorTextColor => isDarkTheme ? Color.fromRGBO(207, 73, 80, 1) : Color.fromRGBO(176, 0, 32, 1);
+Color get checkTextColor => isDarkTheme ? Color.fromRGBO(67, 163, 79, 1) : Color.fromRGBO(27, 132, 39, 1);
+Color get errorTextColor => isDarkTheme ? Color.fromRGBO(209, 82, 88, 1) : Color.fromRGBO(230, 0, 32, 1);
 
 String get fontFamily => 'Arial';
 TextStyle get primaryTitle => TextStyle(color: primaryTextColor, fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: fontFamily);

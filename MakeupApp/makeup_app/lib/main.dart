@@ -18,8 +18,7 @@ class MakeupApp extends StatelessWidget {
     routes.setRoutes();
     IO.load();
     globals.currSwatches.init();
-    //globals.debug = !kReleaseMode;
-    globals.debug = false;
+    globals.debug = !kReleaseMode;
     savedLooks.init();
     navigation.init(routes.ScreenRoutes.Main0Screen);
     return MaterialApp(
@@ -34,7 +33,7 @@ class MakeupApp extends StatelessWidget {
         accentColor: theme.accentColor,
         errorColor: theme.errorTextColor,
         fontFamily: theme.fontFamily,
-        dividerColor: theme.accentColorLight,
+        dividerColor: theme.primaryColorLight,
         iconTheme: IconThemeData(
           color: theme.primaryTextColor,
         ),
