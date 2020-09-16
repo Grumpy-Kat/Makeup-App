@@ -15,15 +15,21 @@ class AddPaletteScreen extends StatefulWidget {
 }
 
 class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
-  bool _hasChosenMode = false;
-  bool _isUsingPaletteDivider = true;
-  bool _displayCheckButton = false;
+  static bool _hasChosenMode = false;
+  static bool _isUsingPaletteDivider = true;
+  static bool _displayCheckButton = false;
 
-  String _brand = '';
-  String _palette = '';
+  static String _brand = '';
+  static String _palette = '';
 
-  List<int> _swatches = [];
-  List<SwatchIcon> _swatchIcons = [];
+  static List<int> _swatches = [];
+  static List<SwatchIcon> _swatchIcons = [];
+
+  @override
+  void initState() {
+    super.initState();
+    print('AddPaletteScreen');
+  }
 
   void _addSwatchIcons() {
     _swatchIcons.clear();
@@ -70,8 +76,8 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                   context,
                   (String brand, String palette) {
                     setState(() {
-                      this._brand = brand;
-                      this._palette = palette;
+                      _brand = brand;
+                      _palette = palette;
                       _isUsingPaletteDivider = false;
                       _hasChosenMode = true;
                     });
@@ -210,15 +216,15 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
     onEnter(
       context,
       (String brand, String palette) {
-        this._brand = brand;
-        this._palette = palette;
+        _brand = brand;
+        _palette = palette;
         for(int i = 0; i < swatches.length; i++) {
           swatches[i].brand = brand;
           swatches[i].palette = palette;
         }
         IO.add(swatches).then((List<int> val) {
           setState(() {
-            this._swatches = val;
+            _swatches = val;
             _addSwatchIcons();
             _displayCheckButton = true;
           });
@@ -228,6 +234,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
   }
 
   void onCheckButton() {
+    onExit();
     setState(() {
       navigation.pushReplacement(
         context,
@@ -236,5 +243,13 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         routes.routes['/main0Screen'](context),
       );
     });
+  }
+
+  @override
+  void onExit() {
+    super.onExit();
+    _hasChosenMode = false;
+    _swatches = [];
+    _swatchIcons = [];
   }
 }

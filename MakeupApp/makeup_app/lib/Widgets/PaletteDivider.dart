@@ -427,8 +427,8 @@ class PaletteDividerState extends State<PaletteDivider> {
     double boxHeight = height / numRows / imgScale;
     List<double> scaledBorders = [borders[0] / imgScale, borders[1] / imgScale, borders[2] / imgScale, borders[3] / imgScale];
     List<double> scaledPadding = [padding[0] / imgScale, padding[1] / imgScale];
-    for(int i = 0; i < numCols; i++) {
-      for(int j = 0; j < numRows; j++) {
+    for(int j = 0; j < numRows; j++) {
+      for(int i = 0; i < numCols; i++) {
         int x = (scaledBorders[0] + (boxWidth * i) + scaledPadding[0]).floor();
         int y = (scaledBorders[1] + (boxHeight * j) + scaledPadding[1]).floor();
         int w = (boxWidth - (scaledPadding[0] * 2)).floor();
