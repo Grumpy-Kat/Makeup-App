@@ -13,7 +13,7 @@ Future<String> getFinish(Image img) async {
   if(globals.model == '') {
     print(await getModel());
   }
-  Image newImg = copyResizeCropSquare(grayscale(img), 32);
+  Image newImg = copyResize(grayscale(img), width: 32, height: 32);
   Float32List convertedBytes = Float32List(1 * newImg.width * newImg.height * 1);
   Float32List buffer = Float32List.view(convertedBytes.buffer);
   int pixelIndex = 0;
