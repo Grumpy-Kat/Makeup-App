@@ -168,19 +168,42 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       return buildComplete(
         context,
         10,
-        GridView.builder(
-          scrollDirection: Axis.vertical,
-          primary: true,
-          padding: EdgeInsets.all(20),
-          gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            mainAxisSpacing: 30,
-            crossAxisSpacing: 30,
-            crossAxisCount: 4,
-          ),
-          itemCount: _swatchIcons.length,
-          itemBuilder: (BuildContext context, int i) {
-            return _swatchIcons[i];
-          },
+        Column(
+          children: <Widget>[
+           Container(
+              padding: EdgeInsets.only(left: 5),
+              alignment: Alignment.topLeft,
+              child: FlatButton.icon(
+                icon: Icon(
+                  Icons.arrow_back,
+                  size: 25.0,
+                  color: theme.primaryTextColor,
+                ),
+                label: Text('Back', textAlign: TextAlign.left, style: theme.primaryText),
+                onPressed: () {
+                  setState(() {
+                    onExit();
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: GridView.builder(
+                scrollDirection: Axis.vertical,
+                primary: true,
+                padding: EdgeInsets.all(20),
+                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 30,
+                  crossAxisSpacing: 30,
+                  crossAxisCount: 4,
+                ),
+                itemCount: _swatchIcons.length,
+                itemBuilder: (BuildContext context, int i) {
+                  return _swatchIcons[i];
+                },
+              ),
+            ),
+          ],
         ),
         includeHorizontalDragging: true,
         floatingActionButton: floatingAction,
@@ -249,6 +272,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
   void onExit() {
     super.onExit();
     _hasChosenMode = false;
+    _displayCheckButton = false;
     _swatches = [];
     _swatchIcons = [];
   }
