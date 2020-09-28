@@ -1,0 +1,25 @@
+Usability:
+- Explain Main2Screen
+- Make "More..." button on InfoBox bigger
+- Make RecommendedSwatchBar delay closing
+- Make menu navigations buttons darker
+- Explain palette divider vs custom
+- Explain columns vs rows are confusing?
+- Add directions for saving palettes
+- Give explicit instructions to drag outer corners first
+- Make dragging inner corners easier
+- Make text fields more explicit in double text popups
+
+Features:
+- Don't show tags when not editing and not selected on SwatchScreen
+- Fix color names (burgundy, cream, peach, rust, taupe, mauve, brown, light brown, dark brown, beige, lighe beige, dark beige)
+- Add instructions (such as touch directions) and splash screen on the first opening
+- Add settings and help page
+- Take center of swatch images in PaletteDivider
+- Lighten images of PaletteDivider
+
+Bugs:
+- Make Main1Screen not do navigation dragging (color wheel can be dragged)
+- Saved looks don't open sometimes (but only for mom)
+- Main2Screen switches to Today's Look Screen when pressing "Use Photo" too quickly
+- When text field is empty, the string becomes null, instead of disallowing enter
