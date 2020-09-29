@@ -98,7 +98,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
     RenderBox childRenderBox = _key.currentContext.findRenderObject();
     Offset childPos = childRenderBox.localToGlobal(Offset.zero);
     Size childSize = childRenderBox.size;
-    _size = Size(InfoBox.screenSize.width * 0.9, (_shade != '' ? 140 :120));
+    _size = Size(InfoBox.screenSize.width * 0.9, (_shade != '' ? 147 : 135));
     _verticalOffset = childSize.height + 5;
     bool isFlipped = false;
     if(pos.dy > 500) {
@@ -150,7 +150,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
             Expanded(
               child: Container(
                 margin: EdgeInsets.only(top: _arrowSize.height),
-                padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 13, vertical: 13),
                 color: theme.primaryColorDark,
                 child: Column(
                   children: <Widget>[
@@ -160,6 +160,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
                     getText('Palette: $_palette'),
                     if(_shade != '') getText('Shade: $_shade'),
                     Expanded(
+                      flex: 4,
                       child: Align(
                         alignment: Alignment(-1, -1),
                         child: FlatButton(
@@ -199,6 +200,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
 
   Widget getText(String text) {
     return Expanded(
+      flex: 3,
       child: Align(
         alignment: Alignment(-1, -1),
         child: Text(

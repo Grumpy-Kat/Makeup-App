@@ -1,10 +1,10 @@
 Usability:
 - Explain Main2Screen
-- Make "More..." button on InfoBox bigger
+-// Make "More..." button on InfoBox bigger
 - Make RecommendedSwatchBar delay closing
-- Make menu navigations buttons darker
+-// Make menu navigations buttons darker
 - Explain palette divider vs custom
-- Explain columns vs rows are confusing?
+- Explain columns vs rows?
 - Add directions for saving palettes
 - Give explicit instructions to drag outer corners first
 - Make dragging inner corners easier
