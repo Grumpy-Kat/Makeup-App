@@ -31,29 +31,12 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
           return getAlertDialog(
             context,
             title: Text(title, style: theme.primaryTextBold),
-            content: TextField(
-              autofocus: true,
-              textAlign: TextAlign.left,
-              style: theme.primaryTextSmall,
-              cursorColor: theme.accentColor,
-              decoration: InputDecoration(
-                labelStyle: theme.primaryTextSmall,
-                errorText: showErrorText ? error : null,
-                errorStyle: theme.errorText,
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: theme.primaryColorDark,
-                    width: 1.0,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: theme.accentColor,
-                    width: 2.5,
-                  ),
-                ),
-              ),
-              onChanged: (String val) {
+            content: getTextField(
+              null,
+              value,
+              error,
+              showErrorText,
+              (String val) {
                 value = val;
                 if(showErrorText && !(val == '' || val == null)) {
                   setState(() { showErrorText = false; });
@@ -100,60 +83,27 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
             title: Text(title, style: theme.primaryTextBold),
             content: Column(
               children: <Widget> [
-                TextField(
-                  autofocus: true,
-                  textAlign: TextAlign.left,
-                  style: theme.primaryTextSmall,
-                  cursorColor: theme.accentColor,
-                  decoration: InputDecoration(
-                    labelText: label1,
-                    labelStyle: theme.primaryTextSmall,
-                    errorText: showErrorText1 ? error2 : null,
-                    errorStyle: theme.errorText,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: theme.primaryColorDark,
-                        width: 1.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: theme.accentColor,
-                        width: 2.5,
-                      ),
-                    ),
-                  ),
-                  onChanged: (String val) {
+                getTextField(
+                  label1,
+                  value1,
+                  error1,
+                  showErrorText1,
+                  (String val) {
                     value1 = val;
                     if(showErrorText1 && !(val == '' || val == null)) {
                       setState(() { showErrorText1 = false; });
                     }
                   },
                 ),
-                TextField(
-                  autofocus: true,
-                  textAlign: TextAlign.left,
-                  style: theme.primaryTextSmall,
-                  cursorColor: theme.accentColor,
-                  decoration: InputDecoration(
-                    labelText: label2,
-                    labelStyle: theme.primaryTextSmall,
-                    errorText: showErrorText2 ? error1 : null,
-                    errorStyle: theme.errorText,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: theme.primaryColorDark,
-                        width: 1.0,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: theme.accentColor,
-                        width: 2.5,
-                      ),
-                    ),
-                  ),
-                  onChanged: (String val) {
+                SizedBox(
+                  height: 20,
+                ),
+                getTextField(
+                  label2,
+                  value2,
+                  error2,
+                  showErrorText2,
+                  (String val) {
                     value2 = val;
                     if(showErrorText2 && !(val == '' || val == null)) {
                       setState(() { showErrorText2 = false; });
@@ -169,7 +119,8 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
                   if(value1 == '' || value1 == null || value2 == '' || value2 == null) {
                     if(value1 == '' || value1 == null) {
                       setState(() { showErrorText1 = true; });
-                    } else {
+                    }
+                    if(value2 == '' || value2 == null) {
                       setState(() { showErrorText2 = true; });
                     }
                   } else {
@@ -246,6 +197,48 @@ PageRouteBuilder slideTransition(BuildContext context, Widget nextScreen, int du
         child: child,
       );
     },
+  );
+}
+
+Widget getTextField(String label, String value, String error, bool showErrorText, onChanged) {
+  return TextField(
+    autofocus: true,
+    textAlign: TextAlign.left,
+    style: theme.primaryTextSmall,
+    textCapitalization: TextCapitalization.words,
+    cursorColor: theme.accentColor,
+    decoration: InputDecoration(
+      fillColor: theme.primaryColor,
+      labelText: label,
+      labelStyle: theme.primaryTextSmall,
+      errorText: showErrorText ? error : null,
+      errorStyle: theme.errorTextSmall,
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: theme.errorTextColor,
+          width: 1.0,
+        ),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: theme.errorTextColor,
+          width: 2.5,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: theme.primaryColorDark,
+          width: 1.0,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: theme.accentColor,
+          width: 2.5,
+        ),
+      ),
+    ),
+    onChanged: onChanged,
   );
 }
 

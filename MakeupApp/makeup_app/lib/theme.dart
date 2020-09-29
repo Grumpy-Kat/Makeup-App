@@ -29,4 +29,5 @@ TextStyle get accentTextSmall => TextStyle(color: accentTextColor, fontSize: 18.
 TextStyle get accentTextSmaller => TextStyle(color: accentTextColor, fontSize: 14.5, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
 TextStyle get accentTextSmallest => TextStyle(color: accentTextColor, fontSize: 13.0, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
 TextStyle get selectedText => TextStyle(color: accentColor, fontSize: 20.0, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
-TextStyle get errorText => TextStyle(color: errorTextColor, fontSize: 15.0, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
+TextStyle get errorText => TextStyle(color: errorTextColor, fontSize: 15.5, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
+TextStyle get errorTextSmall => TextStyle(color: errorTextColor, fontSize: 13.5, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);

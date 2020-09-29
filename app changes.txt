@@ -7,10 +7,10 @@ Usability:
 - Explain columns vs rows?
 - Add directions for PaletteDivider (must input columns and rows, order of steps, explicit instructions to drag outer corners first)
 - Make dragging inner corners easier
-- Make text fields more explicit in double text popups
+-// Make text fields more explicit in double text popups
 
 Features:
-- Don't show tags when not editing and not selected on SwatchScreen
+-// Don't show tags when not editing and not selected on SwatchScreen
 - Fix color names (burgundy, cream, peach, rust, taupe, mauve, brown, light brown, dark brown, beige, lighe beige, dark beige)
 - Add instructions (such as touch directions) and splash screen on the first opening
 - Add settings and help page

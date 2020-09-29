@@ -156,6 +156,7 @@ class PaletteDividerState extends State<PaletteDivider> {
       child: TextFormField(
         textAlign: TextAlign.left,
         keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
         style: theme.primaryTextSmall,
         cursorColor: theme.accentColor,
         controller: controller,

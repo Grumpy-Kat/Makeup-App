@@ -25,12 +25,6 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
   static List<int> _swatches = [];
   static List<SwatchIcon> _swatchIcons = [];
 
-  @override
-  void initState() {
-    super.initState();
-    print('AddPaletteScreen');
-  }
-
   void _addSwatchIcons() {
     _swatchIcons.clear();
     for(int i = 0; i < _swatches.length; i++) {
