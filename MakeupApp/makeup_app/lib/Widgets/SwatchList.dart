@@ -22,10 +22,10 @@ class SwatchList {
   final bool showDelete;
 
   final bool overrideOnTap;
-  final OnSwatchAction onTap;
+  final Function onTap;
 
   final bool overrideOnDoubleTap;
-  final OnSwatchAction onDoubleTap;
+  final Function onDoubleTap;
 
   SwatchList({ @required this.addSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap });
 }

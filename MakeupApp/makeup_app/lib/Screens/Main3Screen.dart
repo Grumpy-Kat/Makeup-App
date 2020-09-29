@@ -59,6 +59,10 @@ class Main3ScreenState extends State<Main3Screen> with ScreenState {
         sort: globals.defaultSortOptions(allSwatchesIO.getMultiple(_swatches), step: 8),
         onTap: _onTap,
         onDoubleTap: _onTap,
+        overrideSwatchOnTap: true,
+        onSwatchTap: (int i, int id) { _onTap(i); },
+        overrideSwatchOnDoubleTap: true,
+        onSwatchDoubleTap: (int i, int id) { _onTap(i); },
       ),
     );
   }

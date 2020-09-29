@@ -39,7 +39,16 @@ class CurrSwatchBarState extends State<CurrSwatchBar> {
     swatchIcons.clear();
     for(int i = 0; i < globals.currSwatches.length; i++) {
       if(globals.currSwatches.currSwatches[i] != null) {
-        swatchIcons.add(SwatchIcon.id(globals.currSwatches.currSwatches[i], showInfoBox: false));
+        swatchIcons.add(
+          SwatchIcon.id(
+            globals.currSwatches.currSwatches[i],
+            showInfoBox: false,
+            overrideOnDoubleTap: true,
+            onDoubleTap: (int i) {
+              _onDoubleTap();
+            },
+          ),
+        );
       }
     }
   }

@@ -13,7 +13,7 @@ class MultipleSwatchList extends StatefulWidget {
   final OnSwatchAction onTap;
   final OnSwatchAction onDoubleTap;
 
-  MultipleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap }) : this.swatchList = SwatchList(
+  MultipleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, void Function(int, int) onSwatchTap, bool overrideSwatchOnDoubleTap = false, void Function(int, int) onSwatchDoubleTap, this.onTap, this.onDoubleTap }) : this.swatchList = SwatchList(
     addSwatches: addSwatches,
     selectedSwatches: selectedSwatches ?? [],
     showInfoBox: showInfoBox,
@@ -63,9 +63,9 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
             showCheck: swatchList.selectedSwatches.contains(swatches[i]),
             onDelete: onDelete,
             overrideOnTap: swatchList.overrideOnTap,
-            onTap: swatchList.onTap,
+            onTap: (int id) { swatchList.onTap(i, id); },
             overrideOnDoubleTap: swatchList.overrideOnDoubleTap,
-            onDoubleTap: swatchList.onDoubleTap,
+            onDoubleTap: (int id) { swatchList.onDoubleTap(i, id); },
           )
         );
       }
