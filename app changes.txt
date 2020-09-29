@@ -4,7 +4,7 @@ Usability:
 - Make RecommendedSwatchBar delay closing
 -// Make menu navigation buttons darker
 - Explain palette divider vs custom
-- Explain columns vs rows
+- Explain columns vs rows?
 - Add directions for PaletteDivider (must input columns and rows, order of steps, explicit instructions to drag outer corners first)
 - Make dragging inner corners easier
 - Make text fields more explicit in double text popups
@@ -19,6 +19,6 @@ Features:
 
 Bugs:
 - Make Main1Screen not do navigation dragging (color wheel can be dragged)
-- Saved looks don't open sometimes (but only for mom)
+- Saved looks don't open sometimes (probably not overriding double clicks)
 - Main2Screen switches to Today's Look Screen when pressing "Use Photo" too quickly
 -// When text field is empty, the string becomes null, instead of disallowing enter

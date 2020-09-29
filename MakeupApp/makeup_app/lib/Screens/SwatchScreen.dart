@@ -350,6 +350,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       if(options[i] == '') {
         continue;
       }
+      if(!_isEditing && !values.contains(options[i])) {
+        continue;
+      }
       widgets.add(
         FilterChip(
           checkmarkColor: theme.accentColor,
@@ -396,6 +399,16 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
               );
             }
           },
+        ),
+      );
+    }
+    if(widgets.length == 0) {
+      widgets.add(
+        FilterChip(
+          checkmarkColor: theme.accentColor,
+          label: Text('None', style: theme.primaryTextSmaller),
+          selected: false,
+          onSelected: (bool selected) { },
         ),
       );
     }
