@@ -77,6 +77,7 @@ class Main1ScreenState extends State<Main1Screen> with ScreenState {
           ),
         ],
       ),
+      includeHorizontalDragging: false,
     );
   }
 }

@@ -1,7 +1,6 @@
 Usability:
 - Explain Main2Screen
 -// Make "More..." button on InfoBox bigger
-- Make RecommendedSwatchBar delay closing
 -// Make menu navigation buttons darker
 - Explain palette divider vs custom
 - Explain columns vs rows?
@@ -18,7 +17,8 @@ Features:
 - Lighten swatch images of PaletteDivider
 
 Bugs:
-- Make Main1Screen not do navigation dragging (color wheel can be dragged)
+- RecommendedSwatchBar closes even when clicked on it (might be a problem with swatches)
+-// Make Main1Screen not do navigation dragging (color wheel can be dragged)
 -// Saved looks don't open sometimes (probably not overriding double clicks)
 - Main2Screen switches to Today's Look Screen when pressing "Use Photo" too quickly
 -// When text field is empty, the string becomes null, instead of disallowing enter
