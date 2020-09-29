@@ -11,33 +11,38 @@ class ImagePicker {
   static Future<void> open(BuildContext context) {
     return globalWidgets.openDialog(
       context,
-      content: Container(
-        height: 150,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Align(
-                alignment: Alignment.center,
-                child: Text('Choose photo from:', style: theme.primaryTextBold),
-              ),
+      (BuildContext context) {
+        return globalWidgets.getAlertDialog(
+          context,
+          content: Container(
+            height: 150,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text('Choose photo from:', style: theme.primaryTextBold),
+                  ),
+                ),
+                FlatButton.icon(
+                  icon: Icon(Icons.image, color: theme.primaryTextColor),
+                  label: Text('Open Gallery', textAlign: TextAlign.left, style: theme.primaryText),
+                  onPressed: () {
+                    _openGallery(context);
+                  },
+                ),
+                FlatButton.icon(
+                  icon: Icon(Icons.camera, color: theme.primaryTextColor),
+                  label: Text('Open Camera', textAlign: TextAlign.left, style: theme.primaryText),
+                  onPressed: () {
+                    _openCamera(context);
+                  },
+                ),
+              ],
             ),
-            FlatButton.icon(
-              icon: Icon(Icons.image, color: theme.primaryTextColor),
-              label: Text('Open Gallery', textAlign: TextAlign.left, style: theme.primaryText),
-              onPressed: () {
-                _openGallery(context);
-              },
-            ),
-            FlatButton.icon(
-              icon: Icon(Icons.camera, color: theme.primaryTextColor),
-              label: Text('Open Camera', textAlign: TextAlign.left, style: theme.primaryText),
-              onPressed: () {
-                _openCamera(context);
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

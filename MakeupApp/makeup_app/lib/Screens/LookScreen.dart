@@ -126,9 +126,9 @@ class LookScreenState extends State<LookScreen> with ScreenState {
             size: 50.0,
           ),
           onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
+            globalWidgets.openDialog(
+              context,
+              (BuildContext context) {
                 return Padding(
                   padding: EdgeInsets.zero,
                   child: Dialog(

@@ -206,9 +206,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         if(_isEditing) IconButton(
           icon: Icon(Icons.colorize),
           onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
+            globalWidgets.openDialog(
+              context,
+              (BuildContext context) {
                 return Padding(
                   padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height * 0.4) - 15),
                   child: Dialog(
