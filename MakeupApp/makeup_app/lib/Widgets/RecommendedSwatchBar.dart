@@ -123,7 +123,8 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   void onPointerEvent(PointerEvent event) {
     if(event is PointerUpEvent || event is PointerCancelEvent || event is PointerDownEvent) {
       if(context != null) {
-        Offset pointer = event.position;
+        //event.position goes top to bottom, _pos and _size go bottom to top
+        Offset pointer = Offset(MediaQuery.of(context).size.width - event.position.dx, MediaQuery.of(context).size.height - event.position.dy);
         if(pointer.dy < _pos.dy || pointer.dy > _pos.dy + _size.height) {
           close();
         }

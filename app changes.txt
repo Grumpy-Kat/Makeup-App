@@ -17,8 +17,8 @@ Features:
 - Lighten swatch images of PaletteDivider
 
 Bugs:
-- RecommendedSwatchBar closes even when clicked on it (might be a problem with swatches)
+-// RecommendedSwatchBar closes even when clicked on it 
 -// Make Main1Screen not do navigation dragging (color wheel can be dragged)
--// Saved looks don't open sometimes (probably not overriding double clicks)
+-// Saved looks don't open sometimes (probably not overriding clicks)
 - Main2Screen switches to Today's Look Screen when pressing "Use Photo" too quickly
 -// When text field is empty, the string becomes null, instead of disallowing enter
