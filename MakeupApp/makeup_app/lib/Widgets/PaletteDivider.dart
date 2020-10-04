@@ -430,25 +430,30 @@ class PaletteDividerState extends State<PaletteDivider> {
     List<double> scaledPadding = [padding[0] / imgScale, padding[1] / imgScale];
     for(int j = 0; j < numRows; j++) {
       for(int i = 0; i < numCols; i++) {
+        //get dimensions
         int x = (scaledBorders[0] + (boxWidth * i) + scaledPadding[0]).floor();
         int y = (scaledBorders[1] + (boxHeight * j) + scaledPadding[1]).floor();
         int w = (boxWidth - (scaledPadding[0] * 2)).floor();
         int h = (boxHeight - (scaledPadding[1] * 2)).floor();
-        //print('$x $w ${scaledPadding[0]} $width $numCols $imgScale ${imgSize.width} ${actualImg.width}');
-        //print('$y $h ${scaledPadding[1]} $height $numRows $imgScale ${imgSize.height} ${actualImg.height}');
+        //crop image
         image.Image cropped;
         if(img.width == actualImg.width) {
           //correct orientation
-          cropped = crop(img, x, y, w, h);
+          cropped = cropWithBorder(img, x, y, w, h);
         } else {
           //rotated orientation
-          cropped = crop(img, y, x, h, w);
+          cropped = cropWithBorder(img, y, x, h, w);
         }
         if(cropped == null) {
           return;
         }
+        //lighten image
+        cropped = image.brightness(cropped, 30);
+        //get color
         RGBColor color = avgColor(cropped);
+        //get finish
         String finish = await getFinish(cropped);
+        //create swatch
         _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: '', rating: 5, tags: []));
         print('${_swatches.last.color.getValues()} $finish');
       }
@@ -456,7 +461,12 @@ class PaletteDividerState extends State<PaletteDivider> {
     widget.onEnter(_swatches);
   }
 
-  image.Image crop(image.Image src, int x, int y, int w, int h) {
+  image.Image cropWithBorder(image.Image src, int x, int y, int w, int h) {
+    //crops with a 10% border
+    x += (w * 0.1).toInt();
+    w = (w * 0.8).toInt();
+    y += (h * 0.1).toInt();
+    h = (h * 0.8).toInt();
     image.Image dst = image.Image(w, h, channels: src.channels, exif: src.exif, iccp: src.iccProfile);
     for(int xi = 0, sx = x; xi < w; xi++, sx++) {
       for(int yi = 0, sy = y; yi < h; yi++, sy++) {
