@@ -70,39 +70,39 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
     int maxSwatches = 10;
     List<int> allSwatches = await IO.loadFormatted();
     List<int> currSwatches = globals.currSwatches.currSwatches;
-    List<int> recommendedSwatches = [];
     _swatchIcons.clear();
+    Map<int, int> occurrences = {};
     for(int i = 0; i < currSwatches.length; i++) {
-      recommendedSwatches.addAll(
-        IO.findMany(
-          getSimilarColors(
-            currSwatch.color,
-            currSwatch,
-            IO.getMany(allSwatches),
-            maxDist: 10,
-            getSimilar: true,
-            getOpposite: true,
-          ),
-        ),
+      Map<Swatch, int> similarSwatches = getSimilarColors(
+        currSwatch.color,
+        currSwatch,
+        IO.getMany(allSwatches),
+        maxDist: 10,
+        getSimilar: true,
+        getOpposite: true,
+      );
+      similarSwatches.forEach(
+        (Swatch key, int value) {
+          int id = IO.find(key);
+          if(currSwatches.contains(id)) {
+            //skip swatches that are already in Today's Look
+            return;
+          }
+          if(occurrences.containsKey(id)) {
+            occurrences[id] += value;
+          } else {
+            occurrences[id] = value;
+          }
+        }
       );
     }
-    Map<int, int> occurrences = {};
-    for(int i = 0; i < recommendedSwatches.length; i++) {
-      //skip swatches that are already in Today's Look
-      if(currSwatches.contains(recommendedSwatches[i])) {
-        continue;
-      }
-      if(occurrences.containsKey(recommendedSwatches[i])) {
-        occurrences[recommendedSwatches[i]]++;
-      } else {
-        occurrences[recommendedSwatches[i]] = 1;
-      }
-    }
-    recommendedSwatches = occurrences.keys.toList(growable: false);
+    List<int> recommendedSwatches = occurrences.keys.toList(growable: false);
     recommendedSwatches.sort((a, b) => occurrences[b].compareTo(occurrences[a]));
     maxSwatches = min(maxSwatches, recommendedSwatches.length);
     for(int i = 0; i < maxSwatches; i++) {
+      //TODO: factor in  swatch rating
       if(recommendedSwatches[i] != null) {
+        _swatches.add(recommendedSwatches[i]);
         _swatchIcons.add(SwatchIcon.id(recommendedSwatches[i], showInfoBox: true));
       }
     }
@@ -213,6 +213,4 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   void sortSwatches(String val) {
     _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => globals.distanceSortOptions(IO.getMultiple([_swatches]), currSwatch.color, step: 8)[val](swatch, 0)));
   }
-
-
 }

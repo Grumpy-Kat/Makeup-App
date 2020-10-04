@@ -77,17 +77,18 @@ String getColorName(RGBColor rgb) {
   return minColor;
 }
 
-List<Swatch> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatches, { double maxDist = 15, bool getSimilar = true, bool getOpposite = true }) {
+Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatches, { double maxDist = 15, bool getSimilar = true, bool getOpposite = true }) {
   String colorName = getColorName(rgb);
   LabColor color0 = RGBtoLab(rgb);
   Map<String, RGBColor> colorWheel = createColorWheel();
-  List<String> categories = colorWheel.keys.toList();
-  int index = categories.indexOf(colorName);
+  //List<String> categories = colorWheel.keys.toList();
+  //int index = categories.indexOf(colorName);
   List<String> similarCategories = [];
   List<String> oppositeCategories = [];
-  List<Swatch> newSwatches = [];
+  Map<Swatch, int> newSwatches = {};
   if(getSimilar) {
-    if(index < 3) {
+    similarCategories = createSimilarColorNames()[colorName];
+    /*if(index < 3) {
       //white/black/gray
       similarCategories = [categories[0], categories[1], categories[2]];
     } else {
@@ -100,10 +101,11 @@ List<Swatch> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatc
           similarCategories.add(categories[i]);
         }
       }
-    }
+    }*/
   }
   if(getOpposite) {
-    if (index < 3) {
+    oppositeCategories = createOppositeColorNames()[colorName];
+    /*if (index < 3) {
       //white/black/gray
       oppositeCategories = [];
     } else {
@@ -117,7 +119,7 @@ List<Swatch> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatc
           oppositeCategories.add(categories[i]);
         }
       }
-    }
+    }*/
   }
   for(int i = 0; i < swatches.length; i++) {
     double dist = deltaECie2000(color0, RGBtoLab(swatches[i].color));
@@ -125,24 +127,20 @@ List<Swatch> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatc
       continue;
     }
     if(dist < maxDist) {
-      newSwatches.add(swatches[i]);
+      newSwatches[swatches[i]] = 10;
       continue;
     }
     String colorName = '';
     if(getSimilar || getOpposite) {
       colorName = getColorName(swatches[i].color);
     }
-    if(getSimilar) {
-      if(similarCategories.contains(colorName)) {
-        newSwatches.add(swatches[i]);
-        continue;
-      }
+    if(getSimilar && similarCategories.contains(colorName)) {
+      newSwatches[swatches[i]] = 5;
+      continue;
     }
-    if(getOpposite) {
-      if(oppositeCategories.contains(colorName)) {
-        newSwatches.add(swatches[i]);
-        continue;
-      }
+    if(getOpposite && oppositeCategories.contains(colorName)) {
+      newSwatches[swatches[i]] = 1;
+      continue;
     }
   }
   return newSwatches;

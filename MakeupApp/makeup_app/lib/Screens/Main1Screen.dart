@@ -40,7 +40,7 @@ class Main1ScreenState extends State<Main1Screen> with ScreenState {
         maxDist: 14,
         getSimilar: false,
         getOpposite: false,
-      ),
+      ).keys,
     );
     return _swatches;
   }

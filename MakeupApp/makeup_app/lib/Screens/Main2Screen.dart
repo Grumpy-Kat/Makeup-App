@@ -42,7 +42,7 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
             maxDist: 5,
             getSimilar: false,
             getOpposite: false,
-          ),
+          ).keys,
         ),
       );
       returnMap[SwatchIcon.swatch(_labels[i], showInfoBox: false)] = _swatches[i];
