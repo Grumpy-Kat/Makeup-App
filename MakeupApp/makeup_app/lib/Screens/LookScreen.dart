@@ -62,8 +62,8 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     row.add(
       Expanded(
         child: Align(
-          alignment: Alignment.center,
-          child: Text(widget.name, style: theme.primaryText),
+          alignment: Alignment.centerLeft,
+          child: Text(widget.name, style: theme.primaryTextBold),
         ),
       ),
     );
@@ -166,10 +166,10 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerLeft,
       child: IconButton(
-        color: theme.primaryTextColor,
+        color: theme.iconTextColor,
         icon: Icon(
           Icons.arrow_back,
-          size: 30.0,
+          size: theme.primaryIconSize,
         ),
         onPressed: () {
           onExit();
@@ -182,10 +182,10 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        color: theme.primaryTextColor,
+        color: theme.iconTextColor,
         icon: Icon(
           Icons.delete,
-          size: 30.0,
+          size: theme.primaryIconSize,
         ),
         onPressed: () {
           if(_swatches.length > 0) {
@@ -207,10 +207,10 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        color: theme.primaryTextColor,
+        color: theme.iconTextColor,
         icon: Icon(
           Icons.library_add,
-          size: 30.0,
+          size: theme.primaryIconSize,
         ),
         onPressed: widget.onAddPressed,
       ),
@@ -221,10 +221,10 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        color: theme.primaryTextColor,
+        color: theme.iconTextColor,
         icon: Icon(
           Icons.save,
-          size: 30.0,
+          size: theme.primaryIconSize,
         ),
         onPressed: widget.onSavePressed,
       ),
@@ -235,10 +235,10 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        color: theme.primaryTextColor,
+        color: theme.iconTextColor,
         icon: Icon(
           Icons.mode_edit,
-          size: 30.0,
+          size: theme.primaryIconSize,
         ),
         onPressed: () {
           setState(() {

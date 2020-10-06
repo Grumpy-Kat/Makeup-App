@@ -69,7 +69,7 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
               },
               child: Text(
                 'Choose a Different Palette',
-                style: theme.primaryText,
+                style: theme.primaryTextPrimary,
               ),
             ),
             FlatButton(
@@ -79,7 +79,7 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
               },
               child: Text(
                 'Save Palette',
-                style: theme.primaryText,
+                style: theme.primaryTextPrimary,
               ),
             ),
             Expanded(

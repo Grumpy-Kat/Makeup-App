@@ -50,7 +50,7 @@ class Main0ScreenState extends State<Main0Screen> with ScreenState {
           child: Icon(
             Icons.add,
             color: theme.accentTextColor,
-            size: 50.0,
+            size: 45.0,
           ),
           onPressed: () {
             navigation.pushReplacement(

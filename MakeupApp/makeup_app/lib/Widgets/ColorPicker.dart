@@ -129,8 +129,8 @@ class ColorPickerState extends State<ColorPicker> {
           ),
         ),
         Positioned(
-          width: 150,
-          height: 45,
+          width: 145,
+          height: 40,
           top: size.height * 0.325,
           left: (size.width * 0.5) - 75,
           child: FlatButton(
@@ -140,7 +140,7 @@ class ColorPickerState extends State<ColorPicker> {
               alignment: Alignment.center,
               child: Text(
                 widget.btnText,
-                style: theme.accentTextSmall,
+                style: theme.accentTextBold,
               ),
             ),
           ),

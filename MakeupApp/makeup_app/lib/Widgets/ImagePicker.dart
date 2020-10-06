@@ -25,15 +25,15 @@ class ImagePicker {
                   ),
                 ),
                 FlatButton.icon(
-                  icon: Icon(Icons.image, color: theme.primaryTextColor),
-                  label: Text('Open Gallery', textAlign: TextAlign.left, style: theme.primaryText),
+                  icon: Icon(Icons.image, color: theme.iconTextColor),
+                  label: Text('Open Gallery', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                   onPressed: () {
                     _openGallery(context);
                   },
                 ),
                 FlatButton.icon(
-                  icon: Icon(Icons.camera, color: theme.primaryTextColor),
-                  label: Text('Open Camera', textAlign: TextAlign.left, style: theme.primaryText),
+                  icon: Icon(Icons.camera, color: theme.iconTextColor),
+                  label: Text('Open Camera', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                   onPressed: () {
                     _openCamera(context);
                   },

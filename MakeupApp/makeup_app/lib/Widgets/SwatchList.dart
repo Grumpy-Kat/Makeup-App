@@ -60,7 +60,7 @@ mixin SwatchListState {
             padding: EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Text(
               'No colors found.',
-              style: theme.primaryText,
+              style: theme.primaryTextPrimary,
               maxLines: 1,
             ),
           ),
@@ -124,15 +124,17 @@ mixin SwatchListState {
 
   Widget buildSortDropdown(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
+      margin: EdgeInsets.fromLTRB(15, 15, 0, 15),
       child: Row(
         children: <Widget>[
-          Text('Sort by  ', style: theme.primaryTextSmallest),
+          Text('Sort by  ', style: theme.primaryTextQuaternary),
           SizedBox(
-            width: 110,
+            width: 120,
             child: DropdownButton<String>(
+              iconSize: theme.quaternaryIconSize,
               isDense: true,
-              style: theme.primaryTextSmallest,
+              style: theme.primaryTextQuaternary,
+              iconEnabledColor: theme.tertiaryTextColor,
               onChanged: (String val) {
                 setState(() {
                   _currentSort = val;
@@ -152,7 +154,7 @@ mixin SwatchListState {
               items: swatchList.sort.keys.map((String val) {
                 return DropdownMenuItem(
                   value: val,
-                  child: Text('$val', style: theme.primaryTextSmallest),
+                  child: Text('$val', style: theme.primaryTextQuaternary),
                 );
               }).toList(),
             ),

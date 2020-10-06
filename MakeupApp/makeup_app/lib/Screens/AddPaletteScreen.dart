@@ -49,12 +49,57 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         Column(
           children: <Widget>[
             Container(
+              padding: EdgeInsets.only(left: 5),
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  Icons.help,
+                  size: 25.0,
+                  color: theme.iconTextColor,
+                ),
+                onPressed: () {
+                  globalWidgets.openDialog(
+                    context,
+                    (BuildContext context) {
+                      return globalWidgets.getAlertDialog(
+                        context,
+                        content: Container(
+                          padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
+                          child: Text(
+                            'Palette Divider allows you to upload a picture and divide the palette into separate swatches. Then, it will automatically detect the colors and finishes for you. It should be used for most shadows and palettes.\n\n'
+                            'Custom allows you to input your own swatches, customizing the colors, finishes, and any other information you want to add. It\'s best for adding irregular palettes that would be difficult to divide into columns and rows.',
+                            style: theme.primaryTextSecondary,
+                          ),
+                        ),
+                        actions: <Widget>[
+                          Container(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+                            child: FlatButton(
+                              color: theme.accentColor,
+                              onPressed: () {
+                                //doesn't use navigation because is popping an Dialog
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Close',
+                                style: theme.accentTextSecondary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              ),
+            ),
+            Container(
               margin: EdgeInsets.only(top: 40, bottom: 20),
               child: Text('Add swatches using: ', style: theme.primaryTextBold),
             ),
             FlatButton.icon(
-              icon: Icon(Icons.crop, size: 20, color: theme.primaryTextColor),
-              label: Text('Palette Divider', textAlign: TextAlign.left, style: theme.primaryText),
+              icon: Icon(Icons.crop, size: 20, color: theme.iconTextColor),
+              label: Text('Palette Divider', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
               onPressed: () {
                 setState(() {
                   _isUsingPaletteDivider = true;
@@ -63,8 +108,8 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
               },
             ),
             FlatButton.icon(
-              icon: Icon(Icons.colorize, size: 20, color: theme.primaryTextColor),
-              label: Text('Custom', textAlign: TextAlign.left, style: theme.primaryText),
+              icon: Icon(Icons.colorize, size: 20, color: theme.iconTextColor),
+              label: Text('Custom', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
               onPressed: () {
                 onEnter(
                   context,
@@ -171,9 +216,9 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                 icon: Icon(
                   Icons.arrow_back,
                   size: 25.0,
-                  color: theme.primaryTextColor,
+                  color: theme.iconTextColor,
                 ),
-                label: Text('Back', textAlign: TextAlign.left, style: theme.primaryText),
+                label: Text('Back', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                 onPressed: () {
                   setState(() {
                     onExit();

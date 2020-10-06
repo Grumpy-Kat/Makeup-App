@@ -178,7 +178,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               'More...',
-                              style: theme.primaryTextSmaller,
+                              style: theme.primaryTextSecondary,
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -205,7 +205,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
         alignment: Alignment(-1, -1),
         child: Text(
           text,
-          style: theme.primaryTextSmaller,
+          style: theme.primaryTextSecondary,
           textAlign: TextAlign.left,
         ),
       ),

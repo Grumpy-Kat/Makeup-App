@@ -103,7 +103,7 @@ class PaletteDividerState extends State<PaletteDivider> {
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
                     'If the palette does not have uniform columns and rows, try to add it in sections.',
-                    style: theme.primaryTextSmall,
+                    style: theme.primaryTextSecondary,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -157,7 +157,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         textAlign: TextAlign.left,
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
-        style: theme.primaryTextSmall,
+        style: theme.primaryTextSecondary,
         cursorColor: theme.accentColor,
         controller: controller,
         inputFormatters: <TextInputFormatter>[
@@ -165,7 +165,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         ],
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: theme.primaryText,
+          labelStyle: theme.primaryTextPrimary,
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
               color: theme.primaryColorDark,
@@ -212,7 +212,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         },
         child: Text(
           'Add Image',
-          style: (ImagePicker.img == null ? theme.accentText : theme.primaryText),
+          style: (ImagePicker.img == null ? theme.accentTextBold : theme.primaryTextPrimary),
         ),
       ),
     );
@@ -230,7 +230,7 @@ class PaletteDividerState extends State<PaletteDivider> {
             onPressed: save,
             child: Text(
               'Save',
-              style: theme.accentText,
+              style: theme.accentTextBold,
             ),
           ),
         ),

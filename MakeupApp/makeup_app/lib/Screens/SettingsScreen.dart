@@ -23,7 +23,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
               children: <Widget>[
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Language ', style: theme.primaryText),
+                  child: Text('Language ', style: theme.primaryTextPrimary),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
@@ -31,7 +31,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
                     width: 150,
                     child: DropdownButton<String>(
                       isDense: true,
-                      style: theme.primaryText,
+                      style: theme.primaryTextPrimary,
                       value: globals.language,
                       onChanged: (String val) { globals.language = val; },
                       underline: Container(
@@ -46,7 +46,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
                       items: globals.languages.map((String val) {
                         return DropdownMenuItem(
                           value: val,
-                          child: Text('$val', style: theme.primaryText),
+                          child: Text('$val', style: theme.primaryTextPrimary),
                         );
                       }).toList(),
                     ),
@@ -61,7 +61,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
               children: <Widget>[
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Allow Notifications ', style: theme.primaryText),
+                  child: Text('Allow Notifications ', style: theme.primaryTextPrimary),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
@@ -86,7 +86,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
                 children: <Widget>[
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('Report a Bug ', style: theme.primaryText),
+                    child: Text('Report a Bug ', style: theme.primaryTextPrimary),
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -94,7 +94,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
                       child: Icon(
                         Icons.bug_report,
                         size: 30.0,
-                        color: theme.primaryTextColor,
+                        color: theme.iconTextColor,
                         semanticLabel: 'Report a Bug',
                       ),
                     ),
@@ -114,11 +114,11 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
                     applicationName: globals.appName,
                     applicationVersion: globals.appVersion,
                     children: <Widget>[
-                      Text('Created by TechneGames', style: theme.primaryTextSmaller, textAlign: TextAlign.center),
+                      Text('Created by TechneGames', style: theme.primaryTextSecondary, textAlign: TextAlign.center),
                     ],
                   );
                 },
-                child: Text('Acknowledgements', style: theme.primaryText),
+                child: Text('Acknowledgements', style: theme.primaryTextPrimary),
               ),
             ),
           ),

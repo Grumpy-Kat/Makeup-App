@@ -66,10 +66,10 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  color: theme.primaryTextColor,
+                  color: theme.iconTextColor,
                   icon: Icon(
                     Icons.arrow_back,
-                    size: 30.0,
+                    size: theme.primaryIconSize,
                   ),
                   onPressed: () {
                     exit();
@@ -79,10 +79,10 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
               Align(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  color: theme.primaryTextColor,
+                  color: theme.iconTextColor,
                   icon: Icon(
                     (_isEditing ? Icons.done : Icons.mode_edit),
-                    size: 30.0,
+                    size: theme.primaryIconSize,
                   ),
                   onPressed: () {
                     setState(
@@ -153,7 +153,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         children: <Widget>[
           Text(
             '$label: ',
-            style: theme.primaryText,
+            style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),
           Expanded(
@@ -169,7 +169,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       55,
       label,
       TextField(
-        style: theme.primaryText,
+        style: theme.primaryTextPrimary,
         controller: TextEditingController()..text = value,
         textAlign: TextAlign.left,
         onChanged: onChange,
@@ -200,11 +200,14 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       children: <Widget>[
         Text(
           colorName,
-          style: theme.primaryText,
+          style: theme.primaryTextPrimary,
           textAlign: TextAlign.left,
         ),
         if(_isEditing) IconButton(
-          icon: Icon(Icons.colorize),
+          icon: Icon(
+            Icons.colorize,
+            size: theme.primaryIconSize,
+          ),
           onPressed: () {
             globalWidgets.openDialog(
               context,
@@ -270,9 +273,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       55,
       label,
       DropdownButton<String>(
-        disabledHint: Text('$value', style: theme.primaryText),
+        disabledHint: Text('$value', style: theme.primaryTextPrimary),
         isDense: true,
-        style: theme.primaryText,
+        style: theme.primaryTextPrimary,
         value: value,
         onChanged: !_isEditing ? null : (String value) {
           if(_isEditing) {
@@ -305,7 +308,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           (String val) {
             return DropdownMenuItem(
               value: val,
-              child: Text('$val', style: theme.primaryText),
+              child: Text('$val', style: theme.primaryTextPrimary),
             );
           }
         ).toList(),
@@ -322,7 +325,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           child: Text(
             '$label: $value/10',
-            style: theme.primaryText,
+            style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),
         ),
@@ -356,7 +359,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       widgets.add(
         FilterChip(
           checkmarkColor: theme.accentColor,
-          label: Text(options[i], style: theme.primaryTextSmaller),
+          label: Text(options[i], style: theme.primaryTextSecondary),
           selected: values.contains(options[i]),
           onSelected: (bool selected) {
             if(_isEditing) {
@@ -382,7 +385,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           label: Icon(
             Icons.add,
             size: 15,
-            color: theme.primaryTextColor,
+            color: theme.iconTextColor,
           ),
           onPressed: () {
             if(_isEditing) {
@@ -406,7 +409,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       widgets.add(
         FilterChip(
           checkmarkColor: theme.accentColor,
-          label: Text('None', style: theme.primaryTextSmaller),
+          label: Text('None', style: theme.primaryTextSecondary),
           selected: false,
           onSelected: (bool selected) { },
         ),
@@ -420,7 +423,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           child: Text(
             '$label: ',
-            style: theme.primaryText,
+            style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),
         ),

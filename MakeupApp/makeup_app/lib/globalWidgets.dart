@@ -57,7 +57,7 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
                 },
                 child: Text(
                   buttonLabel,
-                  style: theme.accentText,
+                  style: theme.accentTextBold,
                 ),
               )
             ],
@@ -131,7 +131,7 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
                 },
                 child: Text(
                   buttonLabel,
-                  style: theme.accentText,
+                  style: theme.accentTextBold,
                 ),
               )
             ],
@@ -148,7 +148,7 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
     (BuildContext context) {
       return getAlertDialog(
         context,
-        title: Text(title, style: theme.primaryText),
+        title: Text(title, style: theme.primaryTextPrimary),
         actions: <Widget>[
           FlatButton(
             color: theme.accentColor,
@@ -159,7 +159,7 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
             },
             child: Text(
               'Yes',
-              style: theme.accentText,
+              style: theme.accentTextBold,
             ),
           ),
           FlatButton(
@@ -170,7 +170,7 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
             },
             child: Text(
               'No',
-              style: theme.accentText,
+              style: theme.accentTextBold,
             ),
           ),
         ],
@@ -204,15 +204,15 @@ Widget getTextField(String label, String value, String error, bool showErrorText
   return TextField(
     autofocus: true,
     textAlign: TextAlign.left,
-    style: theme.primaryTextSmall,
+    style: theme.primaryTextSecondary,
     textCapitalization: TextCapitalization.words,
     cursorColor: theme.accentColor,
     decoration: InputDecoration(
       fillColor: theme.primaryColor,
       labelText: label,
-      labelStyle: theme.primaryTextSmall,
+      labelStyle: theme.primaryTextSecondary,
       errorText: showErrorText ? error : null,
-      errorStyle: theme.errorTextSmall,
+      errorStyle: theme.errorTextLabel,
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: theme.errorTextColor,

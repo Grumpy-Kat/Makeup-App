@@ -14,6 +14,7 @@ class MakeupApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
+    theme.isDarkTheme = true;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     routes.setRoutes();
     IO.load();
@@ -35,19 +36,19 @@ class MakeupApp extends StatelessWidget {
         fontFamily: theme.fontFamily,
         dividerColor: theme.primaryColorLight,
         iconTheme: IconThemeData(
-          color: theme.primaryTextColor,
+          color: theme.iconTextColor,
+          size: theme.primaryIconSize,
         ),
         primaryTextTheme: TextTheme(
           headline6: theme.primaryTitle,
-          bodyText1: theme.primaryText,
-          bodyText2: theme.primaryText,
-          caption: theme.primaryTextSmaller,
+          bodyText1: theme.primaryTextPrimary,
+          bodyText2: theme.primaryTextPrimary,
+          caption: theme.primaryTextSecondary,
         ),
         accentTextTheme: TextTheme(
-          headline6: theme.accentTitle,
-          bodyText1: theme.accentText,
-          bodyText2: theme.accentText,
-          caption: theme.accentTextSmaller,
+          bodyText1: theme.accentTextPrimary,
+          bodyText2: theme.accentTextPrimary,
+          caption: theme.accentTextTertiary,
         ),
       ),
       initialRoute: '/main0Screen',

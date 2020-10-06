@@ -67,7 +67,7 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
           },
           child: Text(
             'Save',
-            style: theme.accentText,
+            style: theme.accentTextBold,
           ),
         )
       ],
