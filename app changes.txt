@@ -2,8 +2,8 @@ Usability:
 -// Make "More..." button on InfoBox bigger
 -// Make menu navigation buttons darker
 -// Explain palette divider vs custom
-- Add directions for PaletteDivider (must input columns and rows, order of steps, explicit instructions to drag outer corners first)
-- Explain Main2Screen
+-// Add directions for PaletteDivider (must input columns and rows, order of steps, explicit instructions to drag outer corners first)
+-// Explain Main2Screen
 - Make dragging inner corners easier
 -// Make text fields more explicit in double text popups
 

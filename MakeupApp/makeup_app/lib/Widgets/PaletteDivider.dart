@@ -9,6 +9,7 @@ import '../ColorMath/ColorProcessingTF.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
 import 'ImagePicker.dart';
 import 'BorderBox.dart';
@@ -16,8 +17,9 @@ import 'Swatch.dart';
 
 class PaletteDivider extends StatefulWidget {
   final void Function(List<Swatch>) onEnter;
+  String helpText;
 
-  PaletteDivider({Key key, @required this.onEnter}) : super(key: key);
+  PaletteDivider({Key key, @required this.onEnter, this.helpText = null }) : super(key: key);
 
   @override
   PaletteDividerState createState() => PaletteDividerState();
@@ -97,6 +99,52 @@ class PaletteDividerState extends State<PaletteDivider> {
             padding: EdgeInsets.only(top: topPadding),
             child: Stack(
               children: <Widget>[
+                if(widget.helpText != null) Container(
+                  padding: EdgeInsets.only(right: 5),
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                      icon: Icon(
+                        Icons.help,
+                        size: 25.0,
+                        color: theme.iconTextColor,
+                      ),
+                      onPressed: () {
+                        globalWidgets.openDialog(
+                          context,
+                          (BuildContext context) {
+                            return globalWidgets.getAlertDialog(
+                              context,
+                              content: SingleChildScrollView(
+                                child: Container(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                  child: Text(
+                                    widget.helpText,
+                                    style: theme.primaryTextSecondary,
+                                  ),
+                                ),
+                              ),
+                              actions: <Widget>[
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                  child: FlatButton(
+                                    color: theme.accentColor,
+                                    onPressed: () {
+                                      //doesn't use navigation because is popping an Dialog
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      'Close',
+                                      style: theme.accentTextSecondary,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                  ),
+                ),
                 getPickImgBtn(),
                 if(!showImg) Container(
                   alignment: Alignment(0, -0.77),

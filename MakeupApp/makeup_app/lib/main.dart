@@ -14,7 +14,6 @@ class MakeupApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
-    theme.isDarkTheme = true;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     routes.setRoutes();
     IO.load();
