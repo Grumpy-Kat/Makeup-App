@@ -49,7 +49,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 5),
+              padding: EdgeInsets.only(right: 5, top: 15),
               alignment: Alignment.topRight,
               child: IconButton(
                 icon: Icon(

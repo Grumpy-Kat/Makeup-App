@@ -106,7 +106,7 @@ class PaletteDividerState extends State<PaletteDivider> {
                       icon: Icon(
                         Icons.help,
                         size: 25.0,
-                        color: theme.iconTextColor,
+                        color: (ImagePicker.img == null ? theme.iconTextColor : theme.primaryColorDark),
                       ),
                       onPressed: () {
                         globalWidgets.openDialog(
@@ -156,7 +156,7 @@ class PaletteDividerState extends State<PaletteDivider> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment(0, -0.77),
+                  alignment: Alignment(0, -0.73),
                   child: getAnimatedOpacity(
                     showImg,
                     child: Row(
@@ -206,21 +206,22 @@ class PaletteDividerState extends State<PaletteDivider> {
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
         style: theme.primaryTextSecondary,
-        cursorColor: theme.accentColor,
         controller: controller,
         inputFormatters: <TextInputFormatter>[
           WhitelistingTextInputFormatter.digitsOnly
         ],
+        cursorColor: theme.accentColor,
         decoration: InputDecoration(
+          fillColor: theme.primaryColor,
           labelText: label,
-          labelStyle: theme.primaryTextPrimary,
-          enabledBorder: UnderlineInputBorder(
+          labelStyle: theme.primaryTextSecondary,
+          enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: theme.primaryColorDark,
               width: 1.0,
             ),
           ),
-          focusedBorder: UnderlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: theme.accentColor,
               width: 2.5,

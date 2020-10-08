@@ -206,7 +206,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         if(_isEditing) IconButton(
           icon: Icon(
             Icons.colorize,
-            size: theme.primaryIconSize,
+            size: theme.secondaryIconSize,
           ),
           onPressed: () {
             globalWidgets.openDialog(
