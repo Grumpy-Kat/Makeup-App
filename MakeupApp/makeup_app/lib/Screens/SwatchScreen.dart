@@ -169,24 +169,35 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       55,
       label,
       TextField(
+        scrollPadding: EdgeInsets.zero,
         style: theme.primaryTextPrimary,
         controller: TextEditingController()..text = value,
         textAlign: TextAlign.left,
         onChanged: onChange,
         enabled: _isEditing,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: -15),
-          disabledBorder: InputBorder.none,
-          enabledBorder: UnderlineInputBorder(
+          fillColor: _isEditing ? theme.primaryColor : theme.bgColor,
+          filled: true,
+          contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3.0),
+            borderSide: BorderSide(
+              color: theme.bgColor,
+              width: 1.0,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3.0),
             borderSide: BorderSide(
               color: theme.primaryColorDark,
               width: 1.0,
             ),
           ),
-          focusedBorder: UnderlineInputBorder(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3.0),
             borderSide: BorderSide(
               color: theme.accentColor,
-              width: 1.0,
+              width: 2.5,
             ),
           ),
         ),
@@ -204,6 +215,8 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           textAlign: TextAlign.left,
         ),
         if(_isEditing) IconButton(
+          padding: EdgeInsets.only(left: 12, bottom: 70),
+          alignment: Alignment.topLeft,
           icon: Icon(
             Icons.colorize,
             size: theme.secondaryIconSize,
@@ -255,16 +268,20 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     return getField(
       55,
       label,
-      (_isEditing ? Container(
-        decoration: UnderlineTabIndicator(
-          insets: EdgeInsets.only(bottom: -5),
-          borderSide: BorderSide(
-            color: theme.primaryColorDark,
-            width: 1.0,
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: _isEditing ? theme.primaryColor : theme.bgColor,
+          borderRadius: BorderRadius.circular(3.0),
+          border: Border.fromBorderSide(
+            BorderSide(
+              color: _isEditing ? theme.primaryColorDark : theme.bgColor,
+              width: 1.0,
+            ),
           ),
         ),
         child: child,
-      ) : child),
+      ),
     );
   }
 
@@ -272,46 +289,40 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     return getField(
       55,
       label,
-      DropdownButton<String>(
-        disabledHint: Text('$value', style: theme.primaryTextPrimary),
-        isDense: true,
-        style: theme.primaryTextPrimary,
-        value: value,
-        onChanged: !_isEditing ? null : (String value) {
-          if(_isEditing) {
-            onChange(value);
-          }
-        },
-        icon: null,
-        iconSize: 0,
-        underline: (_isEditing ?
-          Container(
-            decoration: UnderlineTabIndicator(
-              insets: EdgeInsets.only(bottom: -10),
-              borderSide: BorderSide(
-                color: theme.primaryColorDark,
-                width: 1.0,
-              ),
+      Container(
+        padding:  EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: _isEditing ? theme.primaryColor : theme.bgColor,
+          borderRadius: BorderRadius.circular(3.0),
+          border: Border.fromBorderSide(
+            BorderSide(
+              color: _isEditing ? theme.primaryColorDark : theme.bgColor,
+              width: 1.0,
             ),
-          ) :
-          Container(
-            decoration: UnderlineTabIndicator(
-              insets: EdgeInsets.only(bottom: -10),
-              borderSide: BorderSide(
-                color: Color.fromARGB(0, 0, 0, 0),
-                width: 0.0,
-              ),
-            ),
-          )
+          ),
         ),
-        items: options.map(
-          (String val) {
-            return DropdownMenuItem(
-              value: val,
-              child: Text('$val', style: theme.primaryTextPrimary),
-            );
-          }
-        ).toList(),
+        child: DropdownButton<String>(
+          disabledHint: Text('$value', style: theme.primaryTextPrimary),
+          isDense: true,
+          style: theme.primaryTextPrimary,
+          value: value,
+          onChanged: !_isEditing ? null : (String value) {
+            if(_isEditing) {
+              onChange(value);
+            }
+          },
+          icon: null,
+          iconSize: 0,
+          underline: Container(),
+          items: options.map(
+            (String val) {
+              return DropdownMenuItem(
+                value: val,
+                child: Text('$val', style: theme.primaryTextPrimary),
+              );
+            }
+          ).toList(),
+        ),
       ),
     );
   }

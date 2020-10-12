@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:makeupapp/Widgets/ImagePicker.dart';
+import 'package:GlamKit/Widgets/ImagePicker.dart';
 
 void main() {
   test('(10, 10) (10, 10)', () {
