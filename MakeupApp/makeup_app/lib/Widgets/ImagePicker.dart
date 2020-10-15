@@ -6,9 +6,12 @@ import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 
 class ImagePicker {
+  static File prevImg;
   static File img;
+  static bool isOpen = false;
 
   static Future<void> open(BuildContext context) {
+    isOpen = true;
     return globalWidgets.openDialog(
       context,
       (BuildContext context) {
@@ -47,25 +50,34 @@ class ImagePicker {
   }
 
   static void _openGallery(BuildContext context) async {
-    File before = img;
-    img = await Image_Picker.ImagePicker.pickImage(source: Image_Picker.ImageSource.gallery);
-    if(img != null && before != img) {
-      //doesn't use navigation because is popping an Dialog
-      Navigator.pop(context);
+    File newImg = await Image_Picker.ImagePicker.pickImage(source: Image_Picker.ImageSource.gallery);
+    prevImg = img;
+    if(newImg != null) {
+      img = newImg;
+      if(isOpen) {
+        isOpen = false;
+        //doesn't use navigation because is popping an Dialog
+        Navigator.pop(context);
+      }
     }
   }
 
   static void _openCamera(BuildContext context) async {
-    File before = img;
-    img = await Image_Picker.ImagePicker.pickImage(source: Image_Picker.ImageSource.camera);
-    if(img != null && before != img) {
-      //doesn't use navigation because is popping an Dialog
-      Navigator.pop(context);
+    File newImg = await Image_Picker.ImagePicker.pickImage(source: Image_Picker.ImageSource.camera);
+    prevImg = img;
+    if(newImg != null) {
+      img = newImg;
+      if(isOpen) {
+        isOpen = false;
+        //doesn't use navigation because is popping an Dialog
+        Navigator.pop(context);
+      }
     }
   }
 
   static Future<Size> getActualImgSize(File f) async {
     if(f == null) {
+      print('getActualImgSize: Img is null');
       return Size(0, 0);
     }
     Image decoded = await decodeImageFromList(await f.readAsBytes());
@@ -77,9 +89,15 @@ class ImagePicker {
       return Size(0, 0);
     }
     double multiplier = maxSize.width / actualImg.width;
+    if(actualImg.width == 0) {
+      multiplier = 0;
+    }
     Size imgSize = actualImg * multiplier;
     if(imgSize.height > maxSize.height) {
       multiplier = maxSize.height / actualImg.height;
+      if(actualImg.height == 0) {
+        multiplier = 0;
+      }
       imgSize = actualImg * multiplier;
     }
     return imgSize;

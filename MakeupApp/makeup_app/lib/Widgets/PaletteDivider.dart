@@ -26,6 +26,13 @@ class PaletteDivider extends StatefulWidget {
 }
 
 class PaletteDividerState extends State<PaletteDivider> {
+  static const double minBorders = 0;
+  static const double orgBorders = 0;
+
+  static const double minPadding = 10;
+  static const double orgPadding = 25;
+  static const double maxPadding = 10;
+
   GlobalKey _imgKey = GlobalKey();
   GlobalKey _borderKey = GlobalKey();
   List<GlobalKey> _borderKeys = [];
@@ -39,8 +46,8 @@ class PaletteDividerState extends State<PaletteDivider> {
   TextEditingController colsController;
   TextEditingController rowsController;
 
-  List<double> borders = [0, 0, 0, 0];
-  List<double> padding = [5, 5];
+  List<double> borders = [orgBorders, orgBorders, orgBorders, orgBorders];
+  List<double> padding = [orgPadding, orgPadding];
 
   int _draggingCorner = 0;
 
@@ -65,9 +72,9 @@ class PaletteDividerState extends State<PaletteDivider> {
         double topPadding = 15;
         Size screenSize = MediaQuery.of(context).size;
         Size maxSize = Size(screenSize.width * 0.9, (screenSize.height * 0.5) - topPadding);
-        Size actualImg = Size(50, 50);
-        imgSize = Size(50, 50);
-        if(ImagePicker.img != null && snapshot.connectionState == ConnectionState.done) {
+        Size actualImg = Size(100, 100);
+        imgSize = Size(100, 100);
+        if(snapshot.connectionState == ConnectionState.done && ImagePicker.img != null) {
           showImg = true;
           if(globals.debug) {
             actualImg = Size(355, 355);
@@ -77,6 +84,7 @@ class PaletteDividerState extends State<PaletteDivider> {
           imgSize = ImagePicker.getScaledImgSize(maxSize, actualImg);
         }
         double width = imgSize.width;
+        //print('$showImg ${snapshot.connectionState} $actualImg $imgSize $borders $numCols');
         double boxWidth = (width - (borders[0] + borders[2])) / numCols;
         double height = imgSize.height;
         double boxHeight = (height - (borders[1] + borders[3])) / numRows;
@@ -242,19 +250,21 @@ class PaletteDividerState extends State<PaletteDivider> {
           ImagePicker.open(context).then(
             (val) {
               setState(() {
-                this.actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
-                this.numCols = 1;
-                this.colsController.value = TextEditingValue(
-                  text: numCols.toString(),
-                  selection: this.colsController.selection,
-                );
-                this.numRows = 1;
-                this.rowsController.value = TextEditingValue(
-                  text: numRows.toString(),
-                  selection: this.rowsController.selection,
-                );
-                this.borders = [0, 0, 0, 0];
-                this.padding = [5, 5];
+                if(ImagePicker.prevImg != ImagePicker.img) {
+                  this.actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
+                  this.numCols = 1;
+                  this.colsController.value = TextEditingValue(
+                    text: numCols.toString(),
+                    selection: this.colsController.selection,
+                  );
+                  this.numRows = 1;
+                  this.rowsController.value = TextEditingValue(
+                    text: numRows.toString(),
+                    selection: this.rowsController.selection,
+                  );
+                  this.borders = [orgBorders, orgBorders, orgBorders, orgBorders];
+                  this.padding = [orgPadding, orgPadding];
+                }
               });
             }
           );
@@ -424,10 +434,10 @@ class PaletteDividerState extends State<PaletteDivider> {
   }
 
   void _updateBorders() {
-    borders[0] = max(borders[0], 0);
-    borders[1] = max(borders[1], 0);
-    borders[2] = max(borders[2], 0);
-    borders[3] = max(borders[3], 0);
+    borders[0] = max(borders[0], minBorders);
+    borders[1] = max(borders[1], minBorders);
+    borders[2] = max(borders[2], minBorders);
+    borders[3] = max(borders[3], minBorders);
     BorderBox borderBox = _borderKey.currentWidget as BorderBox;
     borderBox.padding = EdgeInsets.fromLTRB(borders[0], borders[1], borders[2], borders[3]);
     (_borderKey.currentState as BorderBoxState).update();
@@ -438,9 +448,9 @@ class PaletteDividerState extends State<PaletteDivider> {
     double boxWidth = (width - (borders[0] + borders[2])) / numCols;
     double height = imgSize.height;
     double boxHeight = (height - (borders[1] + borders[3])) / numRows;
-    double maxX = (boxWidth - 5) / 2;
-    double maxY = (boxHeight - 5) / 2;
-    padding = [max(min(padding[0], maxX), 5), max(min(padding[1], maxY), 5)];
+    double maxX = (boxWidth - maxPadding) / 2;
+    double maxY = (boxHeight - maxPadding) / 2;
+    padding = [max(min(padding[0], maxX), minPadding), max(min(padding[1], maxY), minPadding)];
     for(int i = 0; i < numCols; i++) {
       for(int j = 0; j < numRows; j++) {
         BorderBox subBorderBox = (_borderKeys[j * numCols + i].currentWidget as BorderBox);
@@ -478,7 +488,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     List<double> scaledBorders = [borders[0] / imgScale, borders[1] / imgScale, borders[2] / imgScale, borders[3] / imgScale];
     List<double> scaledPadding = [padding[0] / imgScale, padding[1] / imgScale];
     for(int j = 0; j < numRows; j++) {
-      for(int i = 0; i < numCols; i++) {
+      for(int i = numCols - 1; i >= 0; i--) {
         //get dimensions
         int x = (scaledBorders[0] + (boxWidth * i) + scaledPadding[0]).floor();
         int y = (scaledBorders[1] + (boxHeight * j) + scaledPadding[1]).floor();

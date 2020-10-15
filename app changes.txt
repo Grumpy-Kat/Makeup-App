@@ -1,26 +1,18 @@
 Usability:
--// Make "More..." button on InfoBox bigger
--// Make menu navigation buttons darker
--// Explain palette divider vs custom
--// Add directions for PaletteDivider (must input columns and rows, order of steps, explicit instructions to drag outer corners first)
--// Explain Main2Screen
-- Make dragging inner corners easier
+-// Make dragging corners easier
 -// Make text fields more explicit in double text popups
 
 Features:
--// Don't show tags when not editing and not selected on SwatchScreen
+- Add instructions (such as touch directions) and splash screen on the first opening
+- Add settings and help page
 -// Add and fix color names
 -// Specify similar and opposite color categories
 -// Add weight to recommended colors (distance has the greatest, similar has the middle, opposite has the least)
-- Add instructions (such as touch directions) and splash screen on the first opening
-- Add settings and help page
 -// Take center of swatch images in PaletteDivider
 -// Lighten swatch images of PaletteDivider
 
 Bugs:
--// Fix turquoise colors being named gray
--// RecommendedSwatchBar closes even when clicked on it 
--// Make Main1Screen not do navigation dragging (color wheel can be dragged)
--// Saved looks don't open sometimes (probably not overriding clicks)
 - Main2Screen switches to Today's Look Screen when pressing "Use Photo" too quickly
--// When text field is empty, the string becomes null, instead of disallowing enter
+-// PaletteDivider goes to weird black screen sometimes when adding a photo (maybe after pressing "Retake", pressing "Use Photo" too quickly, or double clicking "Use Photo")
+-// RecommendedSwatchBar closes even when clicked on it
+-// Saved looks don't open sometimes (probably not overriding clicks)
