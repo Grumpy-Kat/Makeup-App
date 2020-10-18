@@ -10,35 +10,28 @@ Map<String, List<String>> oppositeColorNames;
 Map<String, RGBColor> createColorWheel() {
   if(colorWheel == null) {
     colorWheel = Map<String, RGBColor>();
-    colorWheel['white'] = RGBColor(1, 1, 1);
-    colorWheel['light gray'] = RGBColor(0.25, 0.25, 0.25);
-    colorWheel['gray'] = RGBColor(0.5, 0.5, 0.5);
-    colorWheel['dark gray'] = RGBColor(0.75, 0.75, 0.75);
-    colorWheel['black'] = RGBColor(0, 0, 0);
-    colorWheel['light brown'] = RGBColor(0.851, 0.654, 0.494);
-    colorWheel['brown'] = RGBColor(0.565, 0.350, 0.212);
-    colorWheel['dark brown'] = RGBColor(0.169, 0.114, 0.063);
-    colorWheel['beige'] = RGBColor(0.761, 0.551, 0.471);
-    colorWheel['dark beige'] = RGBColor(0.388, 0.322, 0.240);
-    colorWheel['taupe'] = RGBColor(0.529, 0.475, 0.427);
-    colorWheel['dark taupe'] = RGBColor(0.271, 0.247, 0.227);
-    colorWheel['nude'] = RGBColor(0.920, 0.804, 0.745);
-    colorWheel['cream'] = RGBColor(1, 0.959, 0.851);
-    colorWheel['peach'] = RGBColor(1, 0.882, 0.741);
-    colorWheel['tan'] = RGBColor(0.859, 0.600, 0.318);
-    colorWheel['terracotta'] = RGBColor(0.871, 0.424, 0.333);
-    colorWheel['rust'] = RGBColor(0.600, 0.220, 0.114);
-    colorWheel['chocolate'] = RGBColor(0.251, 0.102, 0.039);
     colorWheel['pastel red'] = RGBColor(1, 0.95, 0.95);
+    colorWheel['nude'] = RGBColor(0.920, 0.804, 0.745);
     colorWheel['light red'] = RGBColor(1, 0.8, 0.8);
     colorWheel['red'] = RGBColor(0.9, 0.3, 0.3);
     colorWheel['dark red'] = RGBColor(0.2, 0, 0);
     colorWheel['burgundy'] = RGBColor(0.322, 0, 0.078);
     colorWheel['pastel orange'] = RGBColor(1, 0.95, 0.85);
+    colorWheel['peach'] = RGBColor(1, 0.882, 0.741);
     colorWheel['light orange'] = RGBColor(1, 0.8, 0.6);
     colorWheel['orange'] = RGBColor(1, 0.5, 0.1);
     colorWheel['dark orange'] = RGBColor(0.2, 0.1, 0);
+    colorWheel['light brown'] = RGBColor(0.851, 0.654, 0.494);
+    colorWheel['beige'] = RGBColor(0.761, 0.551, 0.471);
+    colorWheel['taupe'] = RGBColor(0.529, 0.475, 0.427);
+    colorWheel['tan'] = RGBColor(0.859, 0.600, 0.318);
+    colorWheel['brown'] = RGBColor(0.565, 0.350, 0.212);
+    colorWheel['rust'] = RGBColor(0.600, 0.220, 0.114);
+    colorWheel['dark beige'] = RGBColor(0.388, 0.322, 0.240);
+    colorWheel['dark brown'] = RGBColor(0.169, 0.114, 0.063);
+    colorWheel['chocolate'] = RGBColor(0.251, 0.102, 0.039);
     colorWheel['pastel yellow'] = RGBColor(1, 1, 0.9);
+    colorWheel['cream'] = RGBColor(1, 0.959, 0.851);
     colorWheel['light yellow'] = RGBColor(1, 1, 0.6);
     colorWheel['yellow'] = RGBColor(0.9, 0.9, 0.1);
     colorWheel['light chartreuse'] = RGBColor(0.9, 1, 0.8);
@@ -77,6 +70,12 @@ Map<String, RGBColor> createColorWheel() {
     colorWheel['light pink'] = RGBColor(1, 0.8, 0.9);
     colorWheel['pink'] = RGBColor(0.9, 0.1, 0.5);
     colorWheel['dark pink'] = RGBColor(0.2, 0, 0.1);
+    colorWheel['white'] = RGBColor(1, 1, 1);
+    colorWheel['light gray'] = RGBColor(0.25, 0.25, 0.25);
+    colorWheel['gray'] = RGBColor(0.5, 0.5, 0.5);
+    colorWheel['dark gray'] = RGBColor(0.75, 0.75, 0.75);
+    colorWheel['dark taupe'] = RGBColor(0.271, 0.247, 0.227);
+    colorWheel['black'] = RGBColor(0, 0, 0);
   }
   return colorWheel;
 }
@@ -100,7 +99,6 @@ Map<String, List<String>> createSimilarColorNames() {
     similarColorNames['cream'] = ['white', 'pastel yellow', 'yellow', 'taupe', 'dark taupe'];
     similarColorNames['peach'] = ['light brown', 'brown', 'dark brown', 'chocolate', 'tan', 'light orange', 'orange', 'dark orange'];
     similarColorNames['tan'] = ['light brown', 'brown', 'dark brown', 'peach', 'light orange', 'orange', 'dark orange', 'yellow'];
-    similarColorNames['terracotta'] = ['beige', 'dark beige', 'chocolate', 'light red', 'red', 'dark red', 'burgundy', 'light orange', 'orange', 'dark orange'];
     similarColorNames['rust'] = ['light brown', 'brown', 'dark brown', 'beige', 'dark beige', 'chocolate', 'light red', 'red'];
     similarColorNames['chocolate'] = ['nude', 'light brown', 'brown', 'dark brown', 'beige', 'dark beige', 'rust', 'red', 'dark red', 'burgundy'];
     similarColorNames['pastel red'] = ['white', 'light red', 'red', 'dark red', 'burgundy', 'pastel orange', 'pastel pink', 'pastel lavender'];
@@ -174,7 +172,6 @@ Map<String, List<String>> createOppositeColorNames() {
     oppositeColorNames['cream'] = [];
     oppositeColorNames['peach'] = [];
     oppositeColorNames['tan'] = [];
-    oppositeColorNames['terracotta'] = [];
     oppositeColorNames['rust'] = [];
     oppositeColorNames['chocolate'] = [];
     oppositeColorNames['pastel red'] = ['pastel blue', 'pastel turquoise', 'pastel mint', 'pastel green', 'black'];
@@ -233,25 +230,75 @@ List<double> stepSort(RGBColor rgb, { int step = 1 }) {
   List<double> val = rgb.getValues();
   double threshold = 0.085;
   bool isGray = ((val[0] - val[1]).abs() < threshold && (val[0] - val[2]).abs() < threshold && (val[1] - val[2]).abs() < threshold);
-  List<double> hsvVal = RGBtoHSV(rgb).getValues();
   double lum = 0.241 * val[0] + 0.691 * val[1] + 0.068 * val[2];
-  double h2 = hsvVal[0] * step;
-  double lum2 = lum * step;
-  double v2 = hsvVal[2] * step;
+  List<double> hsvVal = RGBtoHSV(rgb).getValues();
+  double h2 = (hsvVal[0] * step).roundToDouble();
+  double v2 = (hsvVal[2] * step).roundToDouble();
+  double lum2 = (lum * step).roundToDouble();
   //isGray: 0 - 1
-  //v2: 0 - step
   //h2: 0 - step
-  //lum2: 0 - (360 * step)
+  //v2: 0 - step
+  //lum2: 0 - step
   if(isGray) {
-    return [1, h2, v2, lum2];
+    return [1, step - v2, step - lum2, h2];
   }
-  return [0, h2, v2, lum2];
+  return [0, h2, lum2, v2];
+}
+
+List<double> colorWheelSort(RGBColor rgb, { int step = 1 }) {
+  List<double> sort = stepSort(rgb, step: step);
+  Map<String, RGBColor> colorWheel = createColorWheel();
+  double minDist = 1000;
+  int minIndex = 0;
+  LabColor color0 = RGBtoLab(rgb);
+  List<String> keys = colorWheel.keys.toList();
+  for(int i = 0; i < keys.length; i++) {
+    String color = keys[i];
+    LabColor color1 = RGBtoLab(colorWheel[color]);
+    double dist = deltaECie2000(color0, color1);
+    if(dist < minDist) {
+      minDist = dist;
+      minIndex = i;
+    }
+  }
+  //colorName: 0 - colorWheel.length
+  //h: 0 - step
+  //v2: 0 - step
+  //lum2: 0 - step
+  if(sort[0] == 1) {
+    return [minIndex.toDouble(), sort[1], sort[2], sort[3]];
+  }
+  double h = sort[1];
+  if(h < step / 2) {
+    h = step - h;
+  }
+  return [minIndex.toDouble(), h, sort[2], sort[3]];
+}
+
+List<double> colorSort(RGBColor rgb) {
+  List<double> val = rgb.getValues();
+  LabColor color0 = RGBtoLab(rgb);
+  double threshold = 0.085;
+  bool isGray = ((val[0] - val[1]).abs() < threshold && (val[0] - val[2]).abs() < threshold && (val[1] - val[2]).abs() < threshold);
+  //isGray: 0 - 1
+  //diff: 0 - 100
+  if(isGray) {
+    LabColor color1 = RGBtoLab(RGBColor(0, 0, 0));
+    return [0, deltaECie2000(color0, color1)];
+  }
+  LabColor color1 = RGBtoLab(RGBColor(1, 0, 0));
+  return [1, deltaECie2000(color0, color1)];
+}
+
+List<double> distanceSort(RGBColor rgb, RGBColor org) {
+  //diff: 0 - 100
+  return [deltaECie2000(RGBtoLab(rgb), RGBtoLab(org))];
 }
 
 List<double> finishSort(Swatch swatch, { int step = 1, String firstFinish = '' }) {
   List<double> sort = stepSort(swatch.color, step: step);
   double finish = 10;
-  switch(swatch.finish) {
+  switch(swatch.finish.toLowerCase()) {
     case 'matte':
       finish = 1;
       break;
@@ -261,7 +308,7 @@ List<double> finishSort(Swatch swatch, { int step = 1, String firstFinish = '' }
     case 'shimmer':
       finish = 3;
       break;
-    case 'mettallic':
+    case 'metallic':
       finish = 4;
       break;
     case 'glitter':
@@ -271,14 +318,14 @@ List<double> finishSort(Swatch swatch, { int step = 1, String firstFinish = '' }
       finish = 10;
       break;
   }
-  if(swatch.finish == firstFinish) {
+  if(swatch.finish.toLowerCase() == firstFinish) {
     finish = 0;
   }
   //finish: 0 - 10
   //isGray: 0 - 1
   //h2: 0 - step
   //v2: 0 - step
-  //lum2: 0 - (360 * step)
+  //lum2: 0 - step
   return [finish, sort[0], sort[1], sort[2], sort[3]];
 }
 
@@ -292,7 +339,7 @@ List<double> lightestSort(Swatch swatch, { int step = 1 }) {
   //v: 0 - 1
   //s: 0 - step
   //h2: 0 - step
-  //lum2: 0 - (360 * step)
+  //lum2: 0 - step
   return [step - sort[0], step - sort[1], sort[2], sort[2]];
 }
 
@@ -307,7 +354,10 @@ List<double> darkestSort(Swatch swatch, { int step = 1 }) {
   //v: 0 - step
   //s: 0 - step
   //h2: 0 - step
-  //lum2: 0 - (360 * step)
+  //lum2: 0 - step
+  if(sort[0] == 1) {
+    return [v, s, sort[2], sort[3]];
+  }
   return [v, s, sort[1], sort[2]];
 }
 
@@ -363,24 +413,4 @@ List<double> lowestRatedSort(Swatch swatch, { int step = 1}) {
   //v2: 0 - step
   //lum2: 0 - (360 * step)
   return [rating, sort[0], sort[1], sort[2], sort[3]];
-}
-
-List<double> colorSort(RGBColor rgb) {
-  List<double> val = rgb.getValues();
-  LabColor color0 = RGBtoLab(rgb);
-  double threshold = 0.085;
-  bool isGray = ((val[0] - val[1]).abs() < threshold && (val[0] - val[2]).abs() < threshold && (val[1] - val[2]).abs() < threshold);
-  //isGray: 0 - 1
-  //diff: 0 - 100
-  if(isGray) {
-    LabColor color1 = RGBtoLab(RGBColor(0, 0, 0));
-    return [0, deltaECie2000(color0, color1)];
-  }
-  LabColor color1 = RGBtoLab(RGBColor(1, 0, 0));
-  return [1, deltaECie2000(color0, color1)];
-}
-
-List<double> distanceSort(RGBColor rgb, RGBColor org) {
-  //diff: 0 - 100
-  return [deltaECie2000(RGBtoLab(rgb), RGBtoLab(org))];
 }

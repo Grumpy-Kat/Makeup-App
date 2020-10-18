@@ -108,7 +108,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
               showNoColorsFound: false,
               showPlus: false,
               defaultSort: globals.sort,
-              sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 8),
+              sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
               showDelete: _isEditing,
             ),
           ),

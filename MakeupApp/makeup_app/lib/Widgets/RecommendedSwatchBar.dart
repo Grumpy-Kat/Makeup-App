@@ -211,6 +211,6 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
 
   @override
   void sortSwatches(String val) {
-    _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => globals.distanceSortOptions(IO.getMultiple([_swatches]), currSwatch.color, step: 8)[val](swatch, 0)));
+    _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => globals.distanceSortOptions(IO.getMultiple([_swatches]), currSwatch.color, step: 16)[val](swatch, 0)));
   }
 }

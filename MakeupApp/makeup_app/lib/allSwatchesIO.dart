@@ -178,7 +178,7 @@ Future<List<int>> loadFormatted({ bool override = false, overrideInner = false }
     isLoading = false;
   }
   List<int> ret = swatches.keys.toList();
-  return sort(ret, (a, b) => a.compareTo(b, (swatch) => stepSort(swatch.color, step: 8)));
+  return sort(ret, (a, b) => a.compareTo(b, (swatch) => stepSort(swatch.color, step: 16)));
 }
 
 Future<List<int>> sort(List<int> ids, int compare(Swatch a, Swatch b)) async {

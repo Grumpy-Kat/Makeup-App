@@ -106,7 +106,7 @@ Future<Map<String, List<int>>> loadFormatted({ bool override = false, overrideIn
       if(info[i] == "") {
         if(swatchList.length > 0) {
           //contains swatches
-          swatchList = await allSwatches.sort(swatchList, (a, b) => a.compareTo(b, (swatch) => stepSort(swatch.color, step: 8)));
+          swatchList = await allSwatches.sort(swatchList, (a, b) => a.compareTo(b, (swatch) => stepSort(swatch.color, step: 16)));
           swatches[lastLabel] = swatchList;
         }
         swatchList = [];

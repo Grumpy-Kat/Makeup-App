@@ -40,7 +40,7 @@ class Main0ScreenState extends State<Main0Screen> with ScreenState {
         showNoColorsFound: false,
         showPlus: false,
         defaultSort: 'Color',
-        sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 8),
+        sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
       ),
       floatingActionButton: Container(
         margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),

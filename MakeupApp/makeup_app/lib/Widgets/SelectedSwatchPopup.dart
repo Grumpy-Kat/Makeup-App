@@ -45,7 +45,7 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
             showNoColorsFound: false,
             showPlus: false,
             defaultSort: globals.sort,
-            sort: globals.defaultSortOptions(IO.getMultiple([_allSwatches]), step: 8),
+            sort: globals.defaultSortOptions(IO.getMultiple([_allSwatches]), step: 16),
             overrideSwatchOnDoubleTap: true,
             onSwatchDoubleTap: (int id) {
               setState(() {

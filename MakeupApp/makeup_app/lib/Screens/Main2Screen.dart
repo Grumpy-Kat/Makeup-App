@@ -90,7 +90,7 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
                 showNoColorsFound: true,
                 showPlus: false,
                 defaultSort: 'Color',
-                sort: globals.defaultSortOptions(IO.getMultiple(_swatches), step: 8),
+                sort: globals.defaultSortOptions(IO.getMultiple(_swatches), step: 16),
               ),
             ),
           ],

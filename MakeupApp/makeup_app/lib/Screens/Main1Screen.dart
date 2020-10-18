@@ -40,7 +40,7 @@ class Main1ScreenState extends State<Main1Screen> with ScreenState {
         maxDist: 14,
         getSimilar: false,
         getOpposite: false,
-      ).keys,
+      ).keys.toList(),
     );
     return _swatches;
   }
@@ -72,7 +72,7 @@ class Main1ScreenState extends State<Main1Screen> with ScreenState {
               showNoColorsFound: (_pickedColor != null),
               showPlus: false,
               defaultSort: 'Color',
-              sort: globals.distanceSortOptions(IO.getMultiple([_swatches]), _pickedColor, step: 8),
+              sort: globals.distanceSortOptions(IO.getMultiple([_swatches]), _pickedColor, step: 16),
             ),
           ),
         ],

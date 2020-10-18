@@ -56,7 +56,7 @@ class Main3ScreenState extends State<Main3Screen> with ScreenState {
         showNoColorsFound: false,
         showPlus: false,
         defaultSort: 'Color',
-        sort: globals.defaultSortOptions(allSwatchesIO.getMultiple(_swatches), step: 8),
+        sort: globals.defaultSortOptions(allSwatchesIO.getMultiple(_swatches), step: 16),
         onTap: _onTap,
         onDoubleTap: _onTap,
         overrideSwatchOnTap: true,
