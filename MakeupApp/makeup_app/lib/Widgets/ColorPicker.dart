@@ -78,7 +78,9 @@ class ColorPickerState extends State<ColorPicker> {
               ),
               child: GestureDetector(
                 onTapDown: (TapDownDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
-                onPanUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
+                onHorizontalDragUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
+                onVerticalDragUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
+                //onPanUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
                 child: CustomPaint(
                   painter: _WheelPickerPainter(
                     radius: wheelDiameter / 2,

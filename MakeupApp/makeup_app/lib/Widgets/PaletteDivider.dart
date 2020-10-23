@@ -326,7 +326,8 @@ class PaletteDividerState extends State<PaletteDivider> {
     return Align(
       alignment: Alignment(0, 0.4),
       child: GestureDetector(
-        onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
+        onHorizontalDragUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
+        onVerticalDragUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
         child: BorderBox(
           key: _borderKey,
           width: width,
@@ -345,7 +346,8 @@ class PaletteDividerState extends State<PaletteDivider> {
       child: Stack(
         children: [
           for(int i = 0; i < numCols; i++) for(int j = 0; j < numRows; j++) GestureDetector(
-            onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
+            onHorizontalDragUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
+            onVerticalDragUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
             child: BorderBox(
               key: _borderKeys[j * numCols + i],
               width: boxWidth,

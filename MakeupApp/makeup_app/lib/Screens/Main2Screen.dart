@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Screens/Screen.dart';
 import '../Widgets/MultipleSwatchList.dart';
 import '../Widgets/PaletteDivider.dart';
+import '../Widgets/NoScreenSwipe.dart';
 import '../Widgets/Swatch.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../theme.dart' as theme;
@@ -97,28 +98,30 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
         ),
       );
     } else {
-      content = PaletteDivider(
-        onEnter: (List<Swatch> swatches) {
-          setState(
-            () {
-              _labels = swatches;
-              _openPaletteDivider = false;
-              _swatchesFuture = _addSwatches();
-            }
-          );
-        },
-        helpText: 'This screen can be used to compare other palettes to your existing collection. For example, when shopping, you can take a picture of a palette and compare it to your collection to see if you want to buy it. Or when recreating a look, you can find a picture of the original palettes and compare dupes in your collection.\n\n'
-        'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections.\n\n'
-        'Then, type in the number of columns and rows in the palette.\n\n'
-        'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
-        'Last, press "Save". All the swatches\' colors and finishes will be detected. You\'ll be taken to a screen to compare each of the palette\'s swatches to your current collection. They will be arranged by the palette\'s rows.',
+      content = NoScreenSwipe(
+          parent: this,
+          child: PaletteDivider(
+          onEnter: (List<Swatch> swatches) {
+            setState(
+              () {
+                _labels = swatches;
+                _openPaletteDivider = false;
+                _swatchesFuture = _addSwatches();
+              }
+            );
+          },
+          helpText: 'This screen can be used to compare other palettes to your existing collection. For example, when shopping, you can take a picture of a palette and compare it to your collection to see if you want to buy it. Or when recreating a look, you can find a picture of the original palettes and compare dupes in your collection.\n\n'
+          'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections.\n\n'
+          'Then, type in the number of columns and rows in the palette.\n\n'
+          'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
+          'Last, press "Save". All the swatches\' colors and finishes will be detected. You\'ll be taken to a screen to compare each of the palette\'s swatches to your current collection. They will be arranged by the palette\'s rows.',
+        ),
       );
     }
     return buildComplete(
       context,
       2,
       content,
-      includeHorizontalDragging: !_openPaletteDivider,
     );
   }
 
@@ -141,10 +144,12 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
   }
 
   @override
-  void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
+  void onHorizontalDragStart(BuildContext context, DragStartDetails drag) {
     //disable dragging when dragging borders
     if(!_openPaletteDivider) {
-      super.onHorizontalDrag(context, drag);
+      super.onHorizontalDragStart(context, drag);
+    } else {
+      isDragging = false;
     }
   }
 }

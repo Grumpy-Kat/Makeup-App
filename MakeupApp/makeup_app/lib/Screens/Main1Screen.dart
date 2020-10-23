@@ -1,3 +1,4 @@
+import 'package:GlamKit/Widgets/NoScreenSwipe.dart';
 import 'package:flutter/material.dart' hide HSVColor;
 import '../Screens/Screen.dart';
 import '../Widgets/ColorPicker.dart';
@@ -54,13 +55,16 @@ class Main1ScreenState extends State<Main1Screen> with ScreenState {
         children: <Widget>[
           Expanded(
             flex: 4,
-            child: ColorPicker(
-              onEnter: (double hue, double saturation, double value) {
-                setState(() {
-                  _pickedColor = HSVtoRGB(HSVColor(hue, saturation, value));
-                  _swatchesFuture = _addSwatches();
-                });
-              },
+            child: NoScreenSwipe(
+              parent: this,
+              child: ColorPicker(
+                onEnter: (double hue, double saturation, double value) {
+                  setState(() {
+                    _pickedColor = HSVtoRGB(HSVColor(hue, saturation, value));
+                    _swatchesFuture = _addSwatches();
+                  });
+                },
+              ),
             ),
           ),
           Expanded(
@@ -77,7 +81,6 @@ class Main1ScreenState extends State<Main1Screen> with ScreenState {
           ),
         ],
       ),
-      includeHorizontalDragging: false,
     );
   }
 }

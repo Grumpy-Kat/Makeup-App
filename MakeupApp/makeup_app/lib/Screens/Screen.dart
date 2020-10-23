@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import '../Widgets/SizedSafeArea.dart';
 import '../Widgets/MenuBar.dart';
 import '../Widgets/CurrSwatchBar.dart';
@@ -9,8 +10,12 @@ import '../theme.dart' as theme;
 mixin ScreenState {
   Size screenSize;
 
+  List<Rectangle<double>> noScreenSwipes = List<Rectangle<double>>();
+
   GlobalKey menuKey = GlobalKey();
   GlobalKey recommendedSwatchBarKey = GlobalKey();
+
+  bool isDragging = false;
 
   Widget buildComplete(BuildContext context, int menu, Widget body, { Widget floatingActionButton, bool includeHorizontalDragging = true }) {
     Widget child = SizedSafeArea(
@@ -42,7 +47,9 @@ mixin ScreenState {
       floatingActionButton: floatingActionButton,
       resizeToAvoidBottomInset: false,
       body: includeHorizontalDragging ? GestureDetector(
-        onHorizontalDragEnd: (DragEndDetails drag) { onHorizontalDrag(context, drag); },
+        behavior: HitTestBehavior.translucent,
+        onHorizontalDragStart: (DragStartDetails drag) { onHorizontalDragStart(context, drag); },
+        onHorizontalDragEnd: (DragEndDetails drag) { onHorizontalDragEnd(context, drag); },
         child: child,
       ) : child,
     );
@@ -52,8 +59,18 @@ mixin ScreenState {
     (recommendedSwatchBarKey.currentState as RecommendedSwatchBarState).close();
   }
 
-  void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
+  void onHorizontalDragStart(BuildContext context, DragStartDetails drag) {
+    isDragging = true;
+    for(int i = 0; i < noScreenSwipes.length; i++) {
+      if(noScreenSwipes[i].containsPoint(Point<double>(drag.globalPosition.dx, drag.globalPosition.dy))) {
+        isDragging = false;
+      }
+    }
+  }
+
+  void onHorizontalDragEnd(BuildContext context, DragEndDetails drag) {
     double threshold = 0.001;
+    isDragging = false;
     if(drag.primaryVelocity < -threshold) {
       (menuKey.currentWidget as MenuBar).plusPage(context);
     } else if(drag.primaryVelocity > threshold) {
