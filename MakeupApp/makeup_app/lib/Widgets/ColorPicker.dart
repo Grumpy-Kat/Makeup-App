@@ -108,7 +108,8 @@ class ColorPickerState extends State<ColorPicker> {
             ),
             child: GestureDetector(
               onTapDown: (TapDownDetails details) { onSliderChange(details.globalPosition, sliderSize); },
-              onPanUpdate: (DragUpdateDetails details) { onSliderChange(details.globalPosition, sliderSize); },
+              onHorizontalDragUpdate: (DragUpdateDetails details) { onSliderChange(details.globalPosition, sliderSize); },
+              onVerticalDragUpdate: (DragUpdateDetails details) { onSliderChange(details.globalPosition, sliderSize); },
               child: CustomPaint(
                 painter: _SliderPickerPainter(
                   size: sliderSize,
