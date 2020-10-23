@@ -1,18 +1,16 @@
 Usability:
--// Make dragging corners easier
--// Make text fields more explicit in double text popups
+- Make ColorPicker's value slider a little taller to make it easier to move
+- Change Main3Screen tab icon to save/save_outlined
 
 Features:
 - Add instructions (such as touch directions) and splash screen on the first opening
 - Add settings and help page
--// Add and fix color names
--// Specify similar and opposite color categories
--// Add weight to recommended colors (distance has the greatest, similar has the middle, opposite has the least)
--// Take center of swatch images in PaletteDivider
--// Lighten swatch images of PaletteDivider
+- Add photo lightness and brightness controls to settings
+- Add instructions to PaletteDivider to take photos in bright lighting, preferably by an open window
 
 Bugs:
-- Main2Screen switches to Today's Look Screen when pressing "Use Photo" too quickly
--// PaletteDivider goes to weird black screen sometimes when adding a photo (maybe after pressing "Retake", pressing "Use Photo" too quickly, or double clicking "Use Photo")
--// RecommendedSwatchBar closes even when clicked on it
--// Saved looks don't open sometimes (probably not overriding clicks)
+- Investigate occasional black-screen bug when first downloading or updating app and then taking picture of palette
+- Increase Main2Screen color distance
+- PaletteDivider does not allow for diagonal dragging, only horizontal or vertical
+- RecommendedSwatchBar sometimes closes while the second swatch's is opening
+- Phone recieves error if photo or camera access is not allowed (this disables other features, so catch error and give user message)
