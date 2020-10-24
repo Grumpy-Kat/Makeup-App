@@ -24,34 +24,7 @@ class MakeupApp extends StatelessWidget {
     navigation.init(routes.ScreenRoutes.Main0Screen);
     return MaterialApp(
       title: globals.appName,
-      theme: ThemeData(
-        backgroundColor: theme.bgColor,
-        canvasColor: theme.bgColor,
-        dialogBackgroundColor: theme.bgColor,
-        primaryColorLight: theme.primaryColorLight,
-        primaryColor: theme.primaryColor,
-        primaryColorDark: theme.primaryColorDark,
-        accentColor: theme.accentColor,
-        errorColor: theme.errorTextColor,
-        fontFamily: theme.fontFamily,
-        dividerColor: theme.primaryColorLight,
-        splashColor: theme.accentColor,
-        iconTheme: IconThemeData(
-          color: theme.iconTextColor,
-          size: theme.primaryIconSize,
-        ),
-        primaryTextTheme: TextTheme(
-          headline6: theme.primaryTitle,
-          bodyText1: theme.primaryTextPrimary,
-          bodyText2: theme.primaryTextPrimary,
-          caption: theme.primaryTextSecondary,
-        ),
-        accentTextTheme: TextTheme(
-          bodyText1: theme.accentTextPrimary,
-          bodyText2: theme.accentTextPrimary,
-          caption: theme.accentTextTertiary,
-        ),
-      ),
+      theme: theme.themeData,
       initialRoute: '/main0Screen',
       routes: routes.routes,
       debugShowCheckedModeBanner: false,

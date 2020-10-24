@@ -40,7 +40,7 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
             _labels[i].color,
             _labels[i],
             IO.getMany(allSwatches),
-            maxDist: 10,
+            maxDist: 9,
             getSimilar: false,
             getOpposite: false,
           ).keys.toList(),

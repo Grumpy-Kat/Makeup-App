@@ -43,3 +43,32 @@ TextStyle get accentTextTertiary => TextStyle(color: accentTextColor, fontSize: 
 TextStyle get selectedText => TextStyle(color: accentColor, fontSize: primaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
 TextStyle get errorText => TextStyle(color: errorTextColor, fontSize: primaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
 TextStyle get errorTextLabel => TextStyle(color: errorTextColor, fontSize: secondaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
+
+ThemeData get themeData => ThemeData(
+  backgroundColor: bgColor,
+  canvasColor: bgColor,
+  dialogBackgroundColor: bgColor,
+  primaryColorLight: primaryColorLight,
+  primaryColor: primaryColor,
+  primaryColorDark: primaryColorDark,
+  accentColor: accentColor,
+  errorColor: errorTextColor,
+  fontFamily: fontFamily,
+  dividerColor: primaryColorLight,
+  splashColor: accentColor,
+  iconTheme: IconThemeData(
+    color: iconTextColor,
+    size: primaryIconSize,
+  ),
+  primaryTextTheme: TextTheme(
+    headline6: primaryTitle,
+    bodyText1: primaryTextPrimary,
+    bodyText2: primaryTextPrimary,
+    caption: primaryTextSecondary,
+  ),
+  accentTextTheme: TextTheme(
+    bodyText1: accentTextPrimary,
+    bodyText2: accentTextPrimary,
+    caption: accentTextTertiary,
+  ),
+);

@@ -196,16 +196,11 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
       for(int i = 0; i < _controllers.length; i++) {
         _controllers[i].reverse();
       }
-      Future.delayed(
-        const Duration(milliseconds: 200),
-        () {
-          for(int i = 0; i < _overlayEntries.length; i++) {
-            _overlayEntries[i]?.remove();
-          }
-          _overlayEntries = [];
-          _controllers.clear();
-        }
-      );
+      for(int i = 0; i < _overlayEntries.length; i++) {
+        _overlayEntries[i]?.remove();
+      }
+      _overlayEntries = [];
+      _controllers.clear();
     }
   }
 
