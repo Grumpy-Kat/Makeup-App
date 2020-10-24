@@ -31,14 +31,22 @@ class ImagePicker {
                   icon: Icon(Icons.image, color: theme.iconTextColor),
                   label: Text('Open Gallery', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                   onPressed: () {
-                    _openGallery(context);
+                    try {
+                      _openGallery(context);
+                    } catch(e) {
+                      print('_openGallery $e');
+                    }
                   },
                 ),
                 FlatButton.icon(
                   icon: Icon(Icons.camera, color: theme.iconTextColor),
                   label: Text('Open Camera', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                   onPressed: () {
-                    _openCamera(context);
+                    try {
+                      _openCamera(context);
+                    } catch(e) {
+                      print('_openCamera $e');
+                    }
                   },
                 ),
               ],

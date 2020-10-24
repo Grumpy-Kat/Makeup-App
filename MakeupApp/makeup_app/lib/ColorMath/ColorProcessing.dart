@@ -130,22 +130,32 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
     oppositeCategories = createOppositeColorNames()[colorName];
   }
   for(int i = 0; i < swatches.length; i++) {
+    //find color dist
     double dist = deltaECie2000(color0, RGBtoLab(swatches[i].color));
-    if(rgbSwatch != null && dist == 0 && swatches[i].finish == rgbSwatch.finish && swatches[i].palette == rgbSwatch.palette) {
+    //check if same swatch
+    if(rgbSwatch != null && dist == 0 && swatches[i].finish == rgbSwatch.finish && swatches[i].brand == rgbSwatch.brand && swatches[i].palette == rgbSwatch.palette) {
       continue;
     }
-    if(dist < maxDist) {
-      newSwatches[swatches[i]] = 10;
-      continue;
-    }
+
+    //find color name
     String colorName = '';
     if(getSimilar || getOpposite) {
       colorName = getColorName(swatches[i].color);
     }
+
+    //check if similar
     if(getSimilar && similarCategories.contains(colorName)) {
-      newSwatches[swatches[i]] = 5;
+      newSwatches[swatches[i]] = 10;
       continue;
     }
+
+    //check if less than maxDist
+    if(dist < maxDist) {
+      newSwatches[swatches[i]] = 7;
+      continue;
+    }
+
+    //check if opposite
     if(getOpposite && oppositeCategories.contains(colorName)) {
       newSwatches[swatches[i]] = 1;
       continue;
