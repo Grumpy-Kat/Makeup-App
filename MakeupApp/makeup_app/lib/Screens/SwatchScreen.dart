@@ -471,7 +471,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   }
 
   @override
-  void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
+  void onHorizontalDragEnd(BuildContext context, DragEndDetails drag) {
     exit();
   }
 }

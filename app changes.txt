@@ -1,6 +1,5 @@
 Usability:
-- Make ColorPicker's value slider a little taller to make it easier to move
-- Change Main3Screen tab icon to save/save_outlined
+-// Make ColorPicker's value slider a little taller to make it easier to move
 
 Features:
 - Add instructions (such as touch directions) and splash screen on the first opening

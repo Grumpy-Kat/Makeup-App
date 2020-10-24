@@ -67,7 +67,7 @@ class MenuBar extends StatelessWidget {
               color: theme.primaryColor,
               onPressed: () { routePage(context, 3); },
               icon: Icon(
-                Icons.style,
+                Icons.save,
                 size: 30.0,
                 color: currTab == 3 ? selectedColor : unselectedColor,
                 semanticLabel: 'Lookbook',

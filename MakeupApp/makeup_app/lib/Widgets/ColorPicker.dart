@@ -51,104 +51,120 @@ class ColorPickerState extends State<ColorPicker> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double wheelDiameter = size.height * 0.225;
-    Size sliderSize = Size(wheelDiameter, size.height * 0.03);
-    List<int> rgb = HSVtoRGB(HSVColor(hue, saturation, value)).getUpscaledValues();
+    Size screenSize = MediaQuery.of(context).size;
+    double wheelDiameter = screenSize.height * 0.225;
     return Stack(
       children: <Widget>[
-        Positioned(
-          width: wheelDiameter,
-          height: wheelDiameter,
-          top: size.height * 0.025,
-          left: ((size.width * 0.8) - wheelDiameter) / 2,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: SweepGradient(
-                colors: hueColors,
-              ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: saturationColors,
-                ),
-              ),
-              child: GestureDetector(
-                onTapDown: (TapDownDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
-                onHorizontalDragUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
-                onVerticalDragUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
-                //onPanUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
-                child: CustomPaint(
-                  painter: _WheelPickerPainter(
-                    radius: wheelDiameter / 2,
-                    center: Offset(wheelDiameter / 2, size.height * 0.125),
-                    hue: hue,
-                    saturation: saturation,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          width: sliderSize.width,
-          height: sliderSize.height,
-          top: size.height * 0.265,
-          left: ((size.width * 0.8) - wheelDiameter) / 2,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.all(Radius.circular(7.0)),
-              gradient: LinearGradient(
-                colors: valueColors,
-              ),
-            ),
-            child: GestureDetector(
-              onTapDown: (TapDownDetails details) { onSliderChange(details.globalPosition, sliderSize); },
-              onHorizontalDragUpdate: (DragUpdateDetails details) { onSliderChange(details.globalPosition, sliderSize); },
-              onVerticalDragUpdate: (DragUpdateDetails details) { onSliderChange(details.globalPosition, sliderSize); },
-              child: CustomPaint(
-                painter: _SliderPickerPainter(
-                  size: sliderSize,
-                  value: value,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          width: size.width * 0.2,
-          height: size.height * 0.27,
-          top: size.height * 0.025,
-          left: size.width * 0.77,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              color: Color.fromRGBO(rgb[0], rgb[1], rgb[2], 1),
-            ),
-          ),
-        ),
-        Positioned(
-          width: 145,
-          height: 40,
-          top: size.height * 0.325,
-          left: (size.width * 0.5) - 75,
-          child: FlatButton(
-            color: theme.accentColor,
-            onPressed: () { widget.onEnter(hue, saturation, value); },
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                widget.btnText,
-                style: theme.accentTextBold,
-              ),
-            ),
-          ),
-        ),
+        buildColorWheel(context, screenSize, wheelDiameter),
+        buildValueSlider(context, screenSize, wheelDiameter),
+        buildColorPreview(context, screenSize),
+        buildEnterBtn(context, screenSize),
       ],
+    );
+  }
+
+  Widget buildColorWheel(BuildContext context, Size screenSize, double wheelDiameter) {
+    return Positioned(
+      width: wheelDiameter,
+      height: wheelDiameter,
+      top: screenSize.height * 0.025,
+      left: ((screenSize.width * 0.8) - wheelDiameter) / 2,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: SweepGradient(
+            colors: hueColors,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: RadialGradient(
+              colors: saturationColors,
+            ),
+          ),
+          child: GestureDetector(
+            onTapDown: (TapDownDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
+            onHorizontalDragUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
+            onVerticalDragUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
+            //onPanUpdate: (DragUpdateDetails details) { onWheelChange(details.globalPosition, wheelDiameter / 2); },
+            child: CustomPaint(
+              painter: _WheelPickerPainter(
+                radius: wheelDiameter / 2,
+                center: Offset(wheelDiameter / 2, screenSize.height * 0.125),
+                hue: hue,
+                saturation: saturation,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildValueSlider(BuildContext context, Size screenSize, double wheelDiameter) {
+    Size sliderSize = Size(wheelDiameter, screenSize.height * 0.035);
+    return Positioned(
+      width: sliderSize.width,
+      height: sliderSize.height,
+      top: screenSize.height * 0.265,
+      left: ((screenSize.width * 0.8) - wheelDiameter) / 2,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.all(Radius.circular(7.0)),
+          gradient: LinearGradient(
+            colors: valueColors,
+          ),
+        ),
+        child: GestureDetector(
+          onTapDown: (TapDownDetails details) { onSliderChange(details.globalPosition, sliderSize); },
+          onHorizontalDragUpdate: (DragUpdateDetails details) { onSliderChange(details.globalPosition, sliderSize); },
+          onVerticalDragUpdate: (DragUpdateDetails details) { onSliderChange(details.globalPosition, sliderSize); },
+          child: CustomPaint(
+            painter: _SliderPickerPainter(
+              size: sliderSize,
+              value: value,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildColorPreview(BuildContext context, Size screenSize) {
+    List<int> rgb = HSVtoRGB(HSVColor(hue, saturation, value)).getUpscaledValues();
+    return Positioned(
+      width: screenSize.width * 0.2,
+      height: screenSize.height * 0.27,
+      top: screenSize.height * 0.025,
+      left: screenSize.width * 0.77,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          color: Color.fromRGBO(rgb[0], rgb[1], rgb[2], 1),
+        ),
+      ),
+    );
+  }
+
+  Widget buildEnterBtn(BuildContext context, Size screenSize) {
+    return Positioned(
+      width: 145,
+      height: 40,
+      top: screenSize.height * 0.325,
+      left: (screenSize.width * 0.5) - 75,
+      child: FlatButton(
+        color: theme.accentColor,
+        onPressed: () { widget.onEnter(hue, saturation, value); },
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            widget.btnText,
+            style: theme.accentTextBold,
+          ),
+        ),
+      ),
     );
   }
 

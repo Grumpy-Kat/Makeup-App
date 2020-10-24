@@ -19,7 +19,7 @@ class PaletteDivider extends StatefulWidget {
   final void Function(List<Swatch>) onEnter;
   String helpText;
 
-  PaletteDivider({Key key, @required this.onEnter, this.helpText = null }) : super(key: key);
+  PaletteDivider({Key key, @required this.onEnter, this.helpText }) : super(key: key);
 
   @override
   PaletteDividerState createState() => PaletteDividerState();
