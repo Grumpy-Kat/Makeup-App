@@ -10,12 +10,12 @@ import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../allSwatchesIO.dart' as IO;
 
-class Main2Screen extends StatefulWidget {
+class PaletteScannerScreen extends StatefulWidget {
   @override
-  Main2ScreenState createState() => Main2ScreenState();
+  PaletteScannerScreenState createState() => PaletteScannerScreenState();
 }
 
-class Main2ScreenState extends State<Main2Screen> with ScreenState {
+class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenState {
   List<Swatch> _labels = [];
   List<List<int>> _swatches = [];
   Future<Map<SwatchIcon, List<int>>> _swatchesFuture;
@@ -103,7 +103,7 @@ class Main2ScreenState extends State<Main2Screen> with ScreenState {
     } else {
       return buildComplete(
         context,
-        2,
+        3,
         NoScreenSwipe(
           parent: this,
           child: PaletteDivider(

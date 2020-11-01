@@ -7,12 +7,12 @@ import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../allSwatchesIO.dart' as IO;
 
-class Main0Screen extends StatefulWidget {
+class AllSwatchesScreen extends StatefulWidget {
   @override
-  Main0ScreenState createState() => Main0ScreenState();
+  AllSwatchesScreenState createState() => AllSwatchesScreenState();
 }
 
-class Main0ScreenState extends State<Main0Screen> with ScreenState {
+class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
   List<int> _swatches = [];
   Future<List<int>> _swatchesFuture;
 

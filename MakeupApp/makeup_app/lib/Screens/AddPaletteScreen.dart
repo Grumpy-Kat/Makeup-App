@@ -306,7 +306,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       navigation.pushReplacement(
         context,
         Offset(-1, 0),
-        routes.ScreenRoutes.Main0Screen,
+        routes.ScreenRoutes.AllSwatchesScreen,
         routes.routes['/main0Screen'](context),
       );
     });

@@ -9,12 +9,12 @@ import '../allSwatchesIO.dart' as allSwatchesIO;
 import 'Screen.dart';
 import 'SavedLookScreen.dart';
 
-class Main3Screen extends StatefulWidget {
+class SavedLooksScreen extends StatefulWidget {
   @override
-  Main3ScreenState createState() => Main3ScreenState();
+  SavedLooksScreenState createState() => SavedLooksScreenState();
 }
 
-class Main3ScreenState extends State<Main3Screen> with ScreenState {
+class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
   List<int> _ids = [];
   List<String> _labels = [];
   List<List<int>> _swatches = [];
@@ -48,7 +48,7 @@ class Main3ScreenState extends State<Main3Screen> with ScreenState {
   Widget build(BuildContext context) {
     return buildComplete(
       context,
-      3,
+      1,
       MultipleSwatchList(
         addSwatches: _swatchesFuture,
         updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },

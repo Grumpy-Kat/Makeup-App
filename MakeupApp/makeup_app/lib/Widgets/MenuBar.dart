@@ -15,10 +15,11 @@ class MenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     menus = {
-      0: routes.ScreenRoutes.Main0Screen,
-      1: routes.ScreenRoutes.Main1Screen,
-      2: routes.ScreenRoutes.Main2Screen,
-      3: routes.ScreenRoutes.Main3Screen,
+      0: routes.ScreenRoutes.AllSwatchesScreen,
+      1: routes.ScreenRoutes.SavedLooksScreen,
+      2: routes.ScreenRoutes.ColorPickerScreen,
+      3: routes.ScreenRoutes.PaletteScannerScreen,
+      4: routes.ScreenRoutes.SettingsScreen,
     };
     Color selectedColor = theme.accentColor;
     Color unselectedColor = theme.primaryColorDarkest;
@@ -34,7 +35,7 @@ class MenuBar extends StatelessWidget {
                 Icons.all_inclusive,
                 size: 30.0,
                 color: currTab == 0 ? selectedColor : unselectedColor,
-                semanticLabel: 'All Colors',
+                semanticLabel: 'All Swatches',
               ),
             ),
           ),
@@ -43,10 +44,10 @@ class MenuBar extends StatelessWidget {
               color: theme.primaryColor,
               onPressed: () { routePage(context, 1); },
               icon: Icon(
-                Icons.palette,
+                Icons.save,
                 size: 30.0,
                 color: currTab == 1 ? selectedColor : unselectedColor,
-                semanticLabel: 'Color Picker',
+                semanticLabel: 'Saved Looks',
               ),
             ),
           ),
@@ -55,10 +56,10 @@ class MenuBar extends StatelessWidget {
               color: theme.primaryColor,
               onPressed: () { routePage(context, 2); },
               icon: Icon(
-                Icons.linked_camera,
+                Icons.palette,
                 size: 30.0,
                 color: currTab == 2 ? selectedColor : unselectedColor,
-                semanticLabel: 'Palette Scanner',
+                semanticLabel: 'Color Picker',
               ),
             ),
           ),
@@ -67,10 +68,10 @@ class MenuBar extends StatelessWidget {
               color: theme.primaryColor,
               onPressed: () { routePage(context, 3); },
               icon: Icon(
-                Icons.save,
+                Icons.linked_camera,
                 size: 30.0,
                 color: currTab == 3 ? selectedColor : unselectedColor,
-                semanticLabel: 'Lookbook',
+                semanticLabel: 'Palette Scanner',
               ),
             ),
           ),
@@ -93,7 +94,7 @@ class MenuBar extends StatelessWidget {
         context,
         pos,
         menus[page],
-        routes.routes['/main${page}Screen'](context),
+        routes.enumRoutes[menus[page]](context),
       );
     }
   }
