@@ -31,6 +31,14 @@ void save() async {
     tags += '${globals.tags[i]};';
   }
   await f.writeString('$tags\n');
+  //brightness offset
+  await f.writeString('${globals.brightnessOffset}\n');
+  //red offset
+  await f.writeString('${globals.redOffset}\n');
+  //green offset
+  await f.writeString('${globals.greenOffset}\n');
+  //blue offset
+  await f.writeString('${globals.blueOffset}\n');
 }
 
 void load() async {
@@ -43,6 +51,16 @@ void load() async {
     globals.sort = lines[1];
     //tags
     globals.tags = lines[2].split(';');
+    if(lines.length > 4) {
+      //brightness offset
+      globals.brightnessOffset = int.parse(lines[3]);
+      //red offset
+      globals.redOffset = int.parse(lines[4]);
+      //green offset
+      globals.greenOffset = int.parse(lines[5]);
+      //blue offset
+      globals.blueOffset = int.parse(lines[6]);
+    }
   } else {
     await save();
   }

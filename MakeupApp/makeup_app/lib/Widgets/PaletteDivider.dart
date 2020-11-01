@@ -326,8 +326,8 @@ class PaletteDividerState extends State<PaletteDivider> {
     return Align(
       alignment: Alignment(0, 0.4),
       child: GestureDetector(
-        onHorizontalDragUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
-        onVerticalDragUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
+        behavior: HitTestBehavior.translucent,
+        onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
         child: BorderBox(
           key: _borderKey,
           width: width,
@@ -346,8 +346,7 @@ class PaletteDividerState extends State<PaletteDivider> {
       child: Stack(
         children: [
           for(int i = 0; i < numCols; i++) for(int j = 0; j < numRows; j++) GestureDetector(
-            onHorizontalDragUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
-            onVerticalDragUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
+            onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
             child: BorderBox(
               key: _borderKeys[j * numCols + i],
               width: boxWidth,
@@ -508,14 +507,18 @@ class PaletteDividerState extends State<PaletteDivider> {
         if(cropped == null) {
           return;
         }
-        //lighten image
-        cropped = image.brightness(cropped, 30);
+        //lighten/recolor image
+        cropped = image.brightness(cropped, globals.brightnessOffset);
+        cropped = image.colorOffset(cropped, red: globals.redOffset, green: globals.greenOffset, blue: globals.blueOffset);
         //get color
         RGBColor color = avgColor(cropped);
         //get finish
         String finish = await getFinish(cropped);
+        //get shade name
+        List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        String shade = '${j + 1}${letters[(numCols - i - 1) % letters.length]}';
         //create swatch
-        _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: '', rating: 5, tags: []));
+        _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: shade, rating: 5, tags: []));
         print('${_swatches.last.color.getValues()} $finish');
       }
     }

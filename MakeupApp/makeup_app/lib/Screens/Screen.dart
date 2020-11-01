@@ -47,7 +47,7 @@ mixin ScreenState {
       floatingActionButton: floatingActionButton,
       resizeToAvoidBottomInset: false,
       body: includeHorizontalDragging ? GestureDetector(
-        behavior: HitTestBehavior.translucent,
+        behavior: HitTestBehavior.deferToChild,
         onHorizontalDragStart: (DragStartDetails drag) { onHorizontalDragStart(context, drag); },
         onHorizontalDragEnd: (DragEndDetails drag) { onHorizontalDragEnd(context, drag); },
         child: child,
@@ -61,6 +61,7 @@ mixin ScreenState {
 
   void onHorizontalDragStart(BuildContext context, DragStartDetails drag) {
     isDragging = true;
+    print(drag.globalPosition);
     for(int i = 0; i < noScreenSwipes.length; i++) {
       if(noScreenSwipes[i].containsPoint(Point<double>(drag.globalPosition.dx, drag.globalPosition.dy))) {
         isDragging = false;

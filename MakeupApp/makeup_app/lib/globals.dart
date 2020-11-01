@@ -150,3 +150,31 @@ set tags(List<String> value) {
   _tags = value.toSet().toList();
   IO.save();
 }
+
+int _brightnessOffset = 30;
+int get brightnessOffset => _brightnessOffset;
+set brightnessOffset(int value) {
+  _brightnessOffset = value;
+  IO.save();
+}
+
+int _redOffset = 0;
+int get redOffset => _redOffset;
+set redOffset(int value) {
+  _redOffset = value;
+  IO.save();
+}
+
+int _greenOffset = 0;
+int get greenOffset => _greenOffset;
+set greenOffset(int value) {
+  _greenOffset = value;
+  IO.save();
+}
+
+int _blueOffset = 0;
+int get blueOffset => _blueOffset;
+set blueOffset(int value) {
+  _blueOffset = value;
+  IO.save();
+}

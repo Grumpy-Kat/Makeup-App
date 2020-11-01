@@ -127,6 +127,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             ),
           ],
         ),
+        includeHorizontalDragging: false,
       );
     }
     //using palette divider, but hasn't finished
@@ -134,17 +135,15 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       return buildComplete(
         context,
         10,
-        NoScreenSwipe(
-          parent: this,
-          child: PaletteDivider(
-            onEnter: (List<Swatch> swatches) { onEnterPaletteDivider(context, swatches); },
-            helpText: 'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections.\n\n'
-            'Then, type in the number of columns and rows in the palette.\n\n'
-            'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
-            'Last, press "Save". It will prompt you to add a brand and name for the palette. All the swatches\' colors and finishes will be detected and they will be added to your collection.\n\n'
-            'You\'ll be taken to a screen to look over the added swatches. They will be arranged by the palette\'s rows. You can edit any of their information, leave ratings, or add tags if you wish to.',
-          ),
+        PaletteDivider(
+          onEnter: (List<Swatch> swatches) { onEnterPaletteDivider(context, swatches); },
+          helpText: 'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections. It is best to take the pictures in bright lighting, preferably near an open window.\n\n'
+          'Then, type in the number of columns and rows in the palette.\n\n'
+          'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
+          'Last, press "Save". It will prompt you to add a brand and name for the palette. All the swatches\' colors and finishes will be detected and they will be added to your collection.\n\n'
+          'You\'ll be taken to a screen to look over the added swatches. They will be arranged by the palette\'s rows. You can edit any of their information, leave ratings, or add tags if you wish to.',
         ),
+        includeHorizontalDragging: false,
       );
     }
     //using palette divider, but has finished OR not using palette divider
@@ -252,6 +251,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
           ],
         ),
         floatingActionButton: floatingAction,
+        includeHorizontalDragging: false,
       );
     }
     //error
