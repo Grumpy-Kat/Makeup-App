@@ -1,5 +1,5 @@
 import 'Screens/AllSwatchesScreen.dart';
-import 'Screens/ColorPickerScreen.dart';
+import 'Screens/ColorWheelScreen.dart';
 import 'Screens/PaletteScannerScreen.dart';
 import 'Screens/SavedLooksScreen.dart';
 import 'Screens/SettingsScreen.dart';
@@ -15,7 +15,7 @@ Map<ScreenRoutes, OnScreenAction> enumRoutes = {};
 enum ScreenRoutes {
   AllSwatchesScreen,
   SavedLooksScreen,
-  ColorPickerScreen,
+  ColorWheelScreen,
   PaletteScannerScreen,
   SettingsScreen,
   AddPaletteScreen,
@@ -28,7 +28,7 @@ void setRoutes() {
   routes = {
     '/allSwatchesScreen': (context) => AllSwatchesScreen(),
     '/savedLooksScreen': (context) => SavedLooksScreen(),
-    '/colorPickerScreen': (context) => ColorPickerScreen(),
+    '/colorWheelScreen': (context) => ColorWheelScreen(),
     '/paletteScannerScreen': (context) => PaletteScannerScreen(),
     '/settingsScreen': (context) => SettingsScreen(),
     '/addPaletteScreen': (context) => AddPaletteScreen(),
@@ -39,7 +39,7 @@ void setRoutes() {
   enumRoutes = {
     ScreenRoutes.AllSwatchesScreen: routes['/allSwatchesScreen'],
     ScreenRoutes.SavedLooksScreen: routes['/savedLooksScreen'],
-    ScreenRoutes.ColorPickerScreen: routes['/colorPickerScreen'],
+    ScreenRoutes.ColorWheelScreen: routes['/colorWheelScreen'],
     ScreenRoutes.PaletteScannerScreen: routes['/paletteScannerScreen'],
     ScreenRoutes.SettingsScreen: routes['/settingsScreen'],
     ScreenRoutes.AddPaletteScreen: routes['/addPaletteScreen'],

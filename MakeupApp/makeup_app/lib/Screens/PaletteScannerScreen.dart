@@ -1,3 +1,4 @@
+import 'package:GlamKit/Widgets/ImagePicker.dart';
 import 'package:flutter/material.dart';
 import '../Screens/Screen.dart';
 import '../Widgets/MultipleSwatchList.dart';
@@ -56,7 +57,9 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
     if(!_openPaletteDivider) {
       return buildComplete(
         context,
-        2,
+        'Palette Scanner',
+        3,
+        [],
         Padding(
           padding: EdgeInsets.only(top: 15),
           child: Column(
@@ -103,25 +106,66 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
     } else {
       return buildComplete(
         context,
+        'Palette Scanner',
         3,
-        NoScreenSwipe(
-          parent: this,
-          child: PaletteDivider(
-            onEnter: (List<Swatch> swatches) {
-              setState(
-                () {
-                  _labels = swatches;
-                  _openPaletteDivider = false;
-                  _swatchesFuture = _addSwatches();
-                }
+        [
+          IconButton(
+            icon: Icon(
+              Icons.help,
+              size: 25.0,
+              color: theme.iconTextColor,
+            ),
+            onPressed: () {
+              globalWidgets.openDialog(
+                context,
+                    (BuildContext context) {
+                  return globalWidgets.getAlertDialog(
+                    context,
+                    content: SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                        child: Text(
+                          'This screen can be used to compare other palettes to your existing collection. For example, when shopping, you can take a picture of a palette and compare it to your collection to see if you want to buy it. Or when recreating a look, you can find a picture of the original palettes and compare dupes in your collection.\n\n'
+                          'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections. It is best to take the pictures in bright lighting, preferably near an open window\n\n'
+                          'Then, type in the number of columns and rows in the palette.\n\n'
+                          'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
+                          'Last, press "Save". All the swatches\' colors and finishes will be detected. You\'ll be taken to a screen to compare each of the palette\'s swatches to your current collection. They will be arranged by the palette\'s rows.',
+                          style: theme.primaryTextSecondary,
+                        ),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+                        child: FlatButton(
+                          color: theme.accentColor,
+                          onPressed: () {
+                            //doesn't use navigation because is popping an Dialog
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Close',
+                            style: theme.accentTextSecondary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               );
-            },
-            helpText: 'This screen can be used to compare other palettes to your existing collection. For example, when shopping, you can take a picture of a palette and compare it to your collection to see if you want to buy it. Or when recreating a look, you can find a picture of the original palettes and compare dupes in your collection.\n\n'
-            'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections. It is best to take the pictures in bright lighting, preferably near an open window\n\n'
-            'Then, type in the number of columns and rows in the palette.\n\n'
-            'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
-            'Last, press "Save". All the swatches\' colors and finishes will be detected. You\'ll be taken to a screen to compare each of the palette\'s swatches to your current collection. They will be arranged by the palette\'s rows.',
+            }
           ),
+        ],
+        PaletteDivider(
+          onEnter: (List<Swatch> swatches) {
+            setState(
+              () {
+                _labels = swatches;
+                _openPaletteDivider = false;
+                _swatchesFuture = _addSwatches();
+              }
+            );
+          },
         ),
       );
     }
@@ -145,7 +189,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
     );
   }
 
-  @override
+  /*@override
   void onHorizontalDragStart(BuildContext context, DragStartDetails drag) {
     //disable dragging when dragging borders
     if(!_openPaletteDivider) {
@@ -153,5 +197,5 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
     } else {
       isDragging = false;
     }
-  }
+  }*/
 }

@@ -33,7 +33,9 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
   Widget build(BuildContext context) {
     return buildComplete(
       context,
+      'All Swatches',
       0,
+      [],
       SingleSwatchList(
         addSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) { this._swatches = swatches; },

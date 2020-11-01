@@ -14,7 +14,9 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState {
     EdgeInsets padding = EdgeInsets.all(20);
     return buildComplete(
       context,
+      'Settings',
       4,
+      [],
       Column(
         children: <Widget>[
           Padding(

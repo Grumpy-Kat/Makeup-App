@@ -57,7 +57,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     List<String> tags = globals.tags;
     return buildComplete(
       context,
+      'Edit Swatch',
       20,
+      [],
       Column(
         children: <Widget>[
           Row(

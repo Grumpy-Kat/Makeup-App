@@ -90,7 +90,9 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     );
     return buildComplete(
       context,
+      widget.name,
       10,
+      [],
       Column(
         children: <Widget>[
           Row(

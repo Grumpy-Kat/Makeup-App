@@ -48,7 +48,9 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
   Widget build(BuildContext context) {
     return buildComplete(
       context,
+      'Saved Looks',
       1,
+      [],
       MultipleSwatchList(
         addSwatches: _swatchesFuture,
         updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },

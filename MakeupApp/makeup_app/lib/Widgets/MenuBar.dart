@@ -17,7 +17,7 @@ class MenuBar extends StatelessWidget {
     menus = {
       0: routes.ScreenRoutes.AllSwatchesScreen,
       1: routes.ScreenRoutes.SavedLooksScreen,
-      2: routes.ScreenRoutes.ColorPickerScreen,
+      2: routes.ScreenRoutes.ColorWheelScreen,
       3: routes.ScreenRoutes.PaletteScannerScreen,
       4: routes.ScreenRoutes.SettingsScreen,
     };

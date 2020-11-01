@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../Widgets/SizedSafeArea.dart';
-import '../Widgets/MenuBar.dart';
+import '../Widgets/NavigationDrawer.dart';
 import '../Widgets/CurrSwatchBar.dart';
 import '../Widgets/RecommendedSwatchBar.dart';
 import '../Widgets/InfoBox.dart';
@@ -12,12 +12,13 @@ mixin ScreenState {
 
   List<Rectangle<double>> noScreenSwipes = List<Rectangle<double>>();
 
+  GlobalKey scaffoldKey = GlobalKey();
   GlobalKey menuKey = GlobalKey();
   GlobalKey recommendedSwatchBarKey = GlobalKey();
 
   bool isDragging = false;
 
-  Widget buildComplete(BuildContext context, int menu, Widget body, { Widget floatingActionButton, bool includeHorizontalDragging = true }) {
+  Widget buildComplete(BuildContext context, String title, int menu, List<Widget> bar, Widget body, { Widget floatingActionButton }) {
     Widget child = SizedSafeArea(
       builder: (context, screenSize) {
         this.screenSize = screenSize.biggest;
@@ -27,7 +28,40 @@ mixin ScreenState {
           children: <Widget>[
             Expanded(
               flex: 1,
-              child: MenuBar(key: menuKey, currTab: menu, onExit: onExit),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.menu,
+                        size: theme.primaryIconSize,
+                        color: theme.iconTextColor,
+                        semanticLabel: 'Menu',
+                      ),
+                      onPressed: () {
+                        (scaffoldKey.currentState as ScaffoldState).openDrawer();
+                      },
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 7, right: 7, top: 3),
+                    child: Text(title, style: theme.primaryTextBold),
+                  ),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: bar,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               flex: 8,
@@ -43,15 +77,12 @@ mixin ScreenState {
       },
     );
     return Scaffold(
+      key: scaffoldKey,
+      drawer: NavigationDrawer(key: menuKey, currTab: menu, onExit: onExit),
       backgroundColor: theme.bgColor,
       floatingActionButton: floatingActionButton,
       resizeToAvoidBottomInset: false,
-      body: includeHorizontalDragging ? GestureDetector(
-        behavior: HitTestBehavior.deferToChild,
-        onHorizontalDragStart: (DragStartDetails drag) { onHorizontalDragStart(context, drag); },
-        onHorizontalDragEnd: (DragEndDetails drag) { onHorizontalDragEnd(context, drag); },
-        child: child,
-      ) : child,
+      body: child,
     );
   }
 
@@ -59,7 +90,7 @@ mixin ScreenState {
     (recommendedSwatchBarKey.currentState as RecommendedSwatchBarState).close();
   }
 
-  void onHorizontalDragStart(BuildContext context, DragStartDetails drag) {
+  /*void onHorizontalDragStart(BuildContext context, DragStartDetails drag) {
     isDragging = true;
     print(drag.globalPosition);
     for(int i = 0; i < noScreenSwipes.length; i++) {
@@ -77,5 +108,5 @@ mixin ScreenState {
     } else if(drag.primaryVelocity > threshold) {
       (menuKey.currentWidget as MenuBar).minusPage(context);
     }
-  }
+  }*/
 }

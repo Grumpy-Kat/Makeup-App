@@ -9,12 +9,12 @@ import '../ColorMath/ColorProcessing.dart';
 import '../globals.dart' as globals;
 import '../allSwatchesIO.dart' as IO;
 
-class ColorPickerScreen extends StatefulWidget {
+class ColorWheelScreen extends StatefulWidget {
   @override
-  ColorPickerScreenState createState() => ColorPickerScreenState();
+  ColorWheelScreenState createState() => ColorWheelScreenState();
 }
 
-class ColorPickerScreenState extends State<ColorPickerScreen> with ScreenState {
+class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
   List<int> _swatches = [];
   Future<List<int>> _swatchesFuture;
 
@@ -50,7 +50,9 @@ class ColorPickerScreenState extends State<ColorPickerScreen> with ScreenState {
   Widget build(BuildContext context) {
     return buildComplete(
       context,
+      'Color Wheel',
       2,
+      [],
       Column(
         children: <Widget>[
           Expanded(

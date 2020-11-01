@@ -4,11 +4,11 @@ Features:
 - Add settings and help page
 - Add photo lightness and brightness controls to settings
 -// Auto set shade name to position in palette
-- Add whether row or column is letter in shade name to settings
+- Add whether row or column (or neither) is letter in shade name to settings
 - Sort Main2Screen by similar finish?
 
 Bugs:
-- PaletteDivider does not allow for diagonal dragging, only horizontal or vertical
+-// PaletteDivider does not allow for diagonal dragging, only horizontal or vertical
 -// Phone recieves error if photo or camera access is not allowed (this disables other features, so catch error)
 - Give user message if any permission is denied (such as camera or gallery)
 -// RecommendedSwatchBar sometimes closes while the second swatch's is opening
