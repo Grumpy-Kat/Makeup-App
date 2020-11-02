@@ -28,39 +28,42 @@ mixin ScreenState {
           children: <Widget>[
             Expanded(
               flex: 1,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        size: theme.primaryIconSize,
-                        color: theme.iconTextColor,
-                        semanticLabel: 'Menu',
-                      ),
-                      onPressed: () {
-                        (scaffoldKey.currentState as ScaffoldState).openDrawer();
-                      },
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 7, right: 7, top: 3),
-                    child: Text(title, style: theme.primaryTextBold),
-                  ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
+              child: Container(
+                color: theme.primaryColor,
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.centerLeft,
                       padding: EdgeInsets.symmetric(horizontal: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: bar,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.menu,
+                          size: theme.primaryIconSize,
+                          color: theme.iconTextColor,
+                          semanticLabel: 'Menu',
+                        ),
+                        onPressed: () {
+                          (scaffoldKey.currentState as ScaffoldState).openDrawer();
+                        },
                       ),
                     ),
-                  ),
-                ],
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.only(left: 7, right: 7, top: 3),
+                      child: Text(title, style: theme.primaryTextBold),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: bar,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(

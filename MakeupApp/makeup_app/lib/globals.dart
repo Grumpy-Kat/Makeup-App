@@ -99,11 +99,11 @@ class CurrSwatches {
 String model = '';
 
 //settings
-final String appName = 'Makeup App';
-final String appVersion = '0.2';
+final String appName = 'GlamKit';
+final String appVersion = '0.4';
 bool debug = true;
 
-final List<String> languages = ['English'];
+final List<String> languages = ['English', 'Spanish'];
 String _language = 'English';
 String get language => _language;
 set language(String value) {

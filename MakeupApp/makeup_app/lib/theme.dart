@@ -56,19 +56,41 @@ ThemeData get themeData => ThemeData(
   fontFamily: fontFamily,
   dividerColor: primaryColorLight,
   splashColor: accentColor,
+  textSelectionColor: accentColor,
+  indicatorColor: accentColor,
+  appBarTheme: AppBarTheme(
+    color: primaryColor,
+
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all<Color>(accentColor),
+    ),
+  ),
   iconTheme: IconThemeData(
     color: iconTextColor,
     size: primaryIconSize,
   ),
   primaryTextTheme: TextTheme(
-    headline6: primaryTitle,
     bodyText1: primaryTextPrimary,
     bodyText2: primaryTextPrimary,
+    headline1: primaryTitle,
+    headline2: primaryTextBold,
+    headline3: primaryTextBold,
+    headline4: primaryTextBold,
+    headline5: primaryTextBold,
+    headline6: primaryTextBold,
     caption: primaryTextSecondary,
   ),
   accentTextTheme: TextTheme(
     bodyText1: accentTextPrimary,
     bodyText2: accentTextPrimary,
+    headline1: accentTextBold,
+    headline2: accentTextBold,
+    headline3: accentTextBold,
+    headline4: accentTextBold,
+    headline5: accentTextBold,
+    headline6: accentTextBold,
     caption: accentTextTertiary,
   ),
 );

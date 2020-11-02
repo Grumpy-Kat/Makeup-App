@@ -292,7 +292,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       55,
       label,
       Container(
-        padding:  EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
           color: _isEditing ? theme.primaryColor : theme.bgColor,
           borderRadius: BorderRadius.circular(3.0),
