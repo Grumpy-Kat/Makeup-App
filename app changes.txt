@@ -5,8 +5,8 @@ Features:
 -// Add settings page
 -// Add notifications to settings
 -// Add default sort to settings
-- Add photo lightness and brightness controls to settings
-- Add whether row or column (or neither) is letter in shade name to settings
+-// Add photo lightness and brightness controls to settings
+-// Add whether row or column (or neither) is letter in shade name to settings
 - Add help page to settings
 - Sort PalettScannerScreen by similar finish?
 

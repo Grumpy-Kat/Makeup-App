@@ -1,9 +1,7 @@
-import 'package:GlamKit/Widgets/ImagePicker.dart';
 import 'package:flutter/material.dart';
 import '../Screens/Screen.dart';
 import '../Widgets/MultipleSwatchList.dart';
 import '../Widgets/PaletteDivider.dart';
-import '../Widgets/NoScreenSwipe.dart';
 import '../Widgets/Swatch.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../theme.dart' as theme;

@@ -39,8 +39,6 @@ void save() async {
   await f.writeString('${globals.greenOffset}\n');
   //blue offset
   await f.writeString('${globals.blueOffset}\n');
-  //blue offset
-  await f.writeString('${globals.blueOffset}\n');
   //auto shade name mode
   await f.writeString('${globals.AutoShadeNameMode.values.indexOf(globals.autoShadeNameMode)}\n');
 }

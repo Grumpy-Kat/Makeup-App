@@ -199,7 +199,7 @@ set autoShadeNameMode(AutoShadeNameMode value) {
 int _brightnessOffset = 30;
 int get brightnessOffset => _brightnessOffset;
 set brightnessOffset(int value) {
-  _brightnessOffset = value;
+  _brightnessOffset = value.clamp(-255, 255);
   IO.save();
 }
 
@@ -207,7 +207,7 @@ set brightnessOffset(int value) {
 int _redOffset = 0;
 int get redOffset => _redOffset;
 set redOffset(int value) {
-  _redOffset = value;
+  _redOffset = value.clamp(-255, 255);
   IO.save();
 }
 
@@ -215,7 +215,7 @@ set redOffset(int value) {
 int _greenOffset = 0;
 int get greenOffset => _greenOffset;
 set greenOffset(int value) {
-  _greenOffset = value;
+  _greenOffset = value.clamp(-255, 255);
   IO.save();
 }
 
@@ -223,6 +223,6 @@ set greenOffset(int value) {
 int _blueOffset = 0;
 int get blueOffset => _blueOffset;
 set blueOffset(int value) {
-  _blueOffset = value;
+  _blueOffset = value.clamp(-255, 255);
   IO.save();
 }

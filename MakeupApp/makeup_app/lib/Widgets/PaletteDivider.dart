@@ -168,7 +168,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         style: theme.primaryTextSecondary,
         controller: controller,
         inputFormatters: <TextInputFormatter>[
-          WhitelistingTextInputFormatter.digitsOnly
+          FilteringTextInputFormatter.digitsOnly,
         ],
         cursorColor: theme.accentColor,
         decoration: InputDecoration(
@@ -468,7 +468,15 @@ class PaletteDividerState extends State<PaletteDivider> {
         String finish = await getFinish(cropped);
         //get shade name
         List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-        String shade = '${j + 1}${letters[(numCols - i - 1) % letters.length]}';
+        String shade = '';
+        switch(globals.autoShadeNameMode) {
+          case globals.AutoShadeNameMode.ColLetters:
+            shade = '${j + 1}${letters[(numCols - i - 1) % letters.length]}';
+            break;
+          case globals.AutoShadeNameMode.RowLetters:
+            shade = '${letters[(numRows - j - 1) % letters.length]}${i + 1}';
+            break;
+        }
         //create swatch
         _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: shade, rating: 5, tags: []));
         print('${_swatches.last.color.getValues()} $finish');

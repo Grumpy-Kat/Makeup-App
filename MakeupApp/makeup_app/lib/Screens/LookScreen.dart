@@ -271,8 +271,8 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     }
   }
 
-  @override
+  /*@override
   void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
     onExit();
-  }
+  }*/
 }
