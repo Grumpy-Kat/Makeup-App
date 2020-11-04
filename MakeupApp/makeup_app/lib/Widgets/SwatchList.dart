@@ -133,6 +133,7 @@ mixin SwatchListState {
             child: DropdownButton<String>(
               iconSize: theme.quaternaryIconSize,
               isDense: true,
+              isExpanded: true,
               style: theme.primaryTextQuaternary,
               iconEnabledColor: theme.tertiaryTextColor,
               onChanged: (String val) {

@@ -39,12 +39,6 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
 
   List<Widget> swatchLabels = [];
 
-  @override
-  void initState() {
-    super.initState();
-    init(widget.swatchList);
-  }
-
   void _addSwatchIcons() {
     swatchIcons.clear();
     for(int i = 0; i < swatches.length; i++) {
@@ -74,6 +68,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
 
   @override
   Widget build(BuildContext context) {
+    init(widget.swatchList);
     return buildComplete(
       context,
       ListView(

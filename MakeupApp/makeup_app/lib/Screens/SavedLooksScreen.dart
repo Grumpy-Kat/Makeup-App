@@ -57,7 +57,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
         rowCount: 1,
         showNoColorsFound: false,
         showPlus: false,
-        defaultSort: 'Color',
+        defaultSort: globals.sort,
         sort: globals.defaultSortOptions(allSwatchesIO.getMultiple(_swatches), step: 16),
         onTap: _onTap,
         onDoubleTap: _onTap,

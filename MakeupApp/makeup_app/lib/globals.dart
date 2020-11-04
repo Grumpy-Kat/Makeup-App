@@ -5,6 +5,7 @@ import 'types.dart';
 import 'settingsIO.dart' as IO;
 import 'allSwatchesIO.dart' as allSwatches;
 
+//curr swatches in today's look
 CurrSwatches currSwatches = CurrSwatches.instance;
 
 class CurrSwatches {
@@ -96,13 +97,39 @@ class CurrSwatches {
   int get length { return currSwatches.length; }
 }
 
+//finish prediction model
 String model = '';
 
+//has settings loaded and listener
+bool _hasLoaded = false;
+bool get hasLoaded => _hasLoaded;
+set hasLoaded(bool value) {
+  if(!_hasLoaded && value) {
+    for(OnVoidAction listener in _hasLoadedListeners) {
+      if(listener != null) {
+        listener();
+      }
+    }
+    _hasLoadedListeners.clear();
+  }
+  _hasLoaded = value;
+}
+
+List<OnVoidAction> _hasLoadedListeners = [];
+
+void addHasLoadedListener(OnVoidAction hasLoadedListener) {
+  if(!_hasLoaded) {
+    _hasLoadedListeners.add(hasLoadedListener);
+  }
+}
+
 //settings
+//basic app info
 final String appName = 'GlamKit';
 final String appVersion = '0.4';
 bool debug = true;
 
+//languages
 final List<String> languages = ['English', 'Spanish'];
 String _language = 'English';
 String get language => _language;
@@ -113,6 +140,7 @@ set language(String value) {
   }
 }
 
+//default sort and sort options
 String _sort = 'Hue';
 String get sort => _sort;
 set sort(String value) {
@@ -144,6 +172,7 @@ Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBCo
   };
 }
 
+//all eyeshadow tags
 List<String> _tags = ['Pigmented', 'Sheer', 'Lots of Fallout', 'No Fallout', 'Creamy', 'Dry'];
 List<String> get tags => _tags;
 set tags(List<String> value) {
@@ -151,6 +180,22 @@ set tags(List<String> value) {
   IO.save();
 }
 
+//auto shade name lettering for new palettes
+enum AutoShadeNameMode {
+  ColLetters,
+  RowLetters,
+  None,
+}
+final Map<AutoShadeNameMode, String> autoShadeNameModeNames = {AutoShadeNameMode.ColLetters: 'Column Letters', AutoShadeNameMode.RowLetters: 'Row Letters', AutoShadeNameMode.None: 'None'};
+final Map<AutoShadeNameMode, String> autoShadeNameModeDescriptions = {AutoShadeNameMode.ColLetters: 'Columns will be assigned letters and rows will be assigned numbers.', AutoShadeNameMode.RowLetters: 'Columns will be assigned numbers and rows will be assigned letters.', AutoShadeNameMode.None: 'Will not auto assign a shade name.'};
+AutoShadeNameMode _autoShadeNameMode = AutoShadeNameMode.ColLetters;
+AutoShadeNameMode get autoShadeNameMode => _autoShadeNameMode;
+set autoShadeNameMode(AutoShadeNameMode value) {
+   _autoShadeNameMode = value;
+   IO.save();
+}
+
+//brightness offset for making new swatches from photos
 int _brightnessOffset = 30;
 int get brightnessOffset => _brightnessOffset;
 set brightnessOffset(int value) {
@@ -158,6 +203,7 @@ set brightnessOffset(int value) {
   IO.save();
 }
 
+//red offset for making new swatches from photos
 int _redOffset = 0;
 int get redOffset => _redOffset;
 set redOffset(int value) {
@@ -165,6 +211,7 @@ set redOffset(int value) {
   IO.save();
 }
 
+//green offset for making new swatches from photos
 int _greenOffset = 0;
 int get greenOffset => _greenOffset;
 set greenOffset(int value) {
@@ -172,6 +219,7 @@ set greenOffset(int value) {
   IO.save();
 }
 
+//blue offset for making new swatches from photos
 int _blueOffset = 0;
 int get blueOffset => _blueOffset;
 set blueOffset(int value) {

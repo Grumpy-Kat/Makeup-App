@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:async';
-import 'ColorMath/ColorSorting.dart';
 import 'globalIO.dart';
 import 'allSwatchesIO.dart' as allSwatches;
+import 'globals.dart' as globals;
 
 List<String> lines;
 Map<String, List<int>> swatches;
@@ -106,7 +106,7 @@ Future<Map<String, List<int>>> loadFormatted({ bool override = false, overrideIn
       if(info[i] == "") {
         if(swatchList.length > 0) {
           //contains swatches
-          swatchList = await allSwatches.sort(swatchList, (a, b) => a.compareTo(b, (swatch) => stepSort(swatch.color, step: 16)));
+          swatchList = await allSwatches.sort(swatchList, (a, b) => a.compareTo(b, (swatch) => globals.defaultSortOptions([allSwatches.getMany(swatchList)])[globals.sort](swatch, 0)));
           swatches[lastLabel] = swatchList;
         }
         swatchList = [];

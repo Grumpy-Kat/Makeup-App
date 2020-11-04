@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:math';
 import 'Widgets/Swatch.dart';
-import 'ColorMath/ColorSorting.dart';
 import 'globalIO.dart';
+import 'globals.dart' as globals;
 import 'types.dart';
 
 Map<int, String> lines;
@@ -178,7 +178,7 @@ Future<List<int>> loadFormatted({ bool override = false, overrideInner = false }
     isLoading = false;
   }
   List<int> ret = swatches.keys.toList();
-  return sort(ret, (a, b) => a.compareTo(b, (swatch) => stepSort(swatch.color, step: 16)));
+  return sort(ret, (a, b) => a.compareTo(b, (swatch) => globals.defaultSortOptions([swatches.values.toList()])[globals.sort](swatch, 0)));
 }
 
 Future<List<int>> sort(List<int> ids, int compare(Swatch a, Swatch b)) async {

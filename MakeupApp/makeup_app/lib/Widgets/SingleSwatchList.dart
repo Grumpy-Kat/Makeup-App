@@ -35,12 +35,6 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   List<int> _swatches = [];
   List<SwatchIcon> _swatchIcons = [];
 
-  @override
-  void initState() {
-    super.initState();
-    init(widget.swatchList);
-  }
-
   void _addSwatchIcons() {
     OnSwatchAction onDelete = !widget.swatchList.showDelete ? null : (int id) {
       if(_swatches.contains(id)) {
@@ -67,6 +61,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
 
   @override
   Widget build(BuildContext context) {
+    init(widget.swatchList);
     return buildComplete(
       context,
       GestureDetector(

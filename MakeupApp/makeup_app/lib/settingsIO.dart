@@ -39,6 +39,10 @@ void save() async {
   await f.writeString('${globals.greenOffset}\n');
   //blue offset
   await f.writeString('${globals.blueOffset}\n');
+  //blue offset
+  await f.writeString('${globals.blueOffset}\n');
+  //auto shade name mode
+  await f.writeString('${globals.AutoShadeNameMode.values.indexOf(globals.autoShadeNameMode)}\n');
 }
 
 void load() async {
@@ -60,8 +64,11 @@ void load() async {
       globals.greenOffset = int.parse(lines[5]);
       //blue offset
       globals.blueOffset = int.parse(lines[6]);
+      //auto shade name mode
+      globals.autoShadeNameMode = globals.AutoShadeNameMode.values[int.parse(lines[7])];
     }
   } else {
     await save();
   }
+  globals.hasLoaded = true;
 }

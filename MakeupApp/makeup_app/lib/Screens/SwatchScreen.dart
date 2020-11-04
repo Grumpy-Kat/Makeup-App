@@ -306,6 +306,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         child: DropdownButton<String>(
           disabledHint: Text('$value', style: theme.primaryTextPrimary),
           isDense: true,
+          isExpanded: true,
           style: theme.primaryTextPrimary,
           value: value,
           onChanged: !_isEditing ? null : (String value) {

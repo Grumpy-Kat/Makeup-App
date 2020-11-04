@@ -22,14 +22,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if(state == AppLifecycleState.resumed) {
-      setState(() {
-        getNotificationStatus();
-      });
+      getNotificationStatus();
     }
   }
 
   void getNotificationStatus() {
-    NotificationPermissions.getNotificationPermissionStatus().then((status) { print(status); notificationStatus = status; });
+    NotificationPermissions.getNotificationPermissionStatus().then((status) {
+      setState(() {
+        notificationStatus = status;
+      });
+    });
   }
 
   @override
@@ -64,6 +66,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
         children: <Widget>[
           getLanguageField(context, height, decoration, padding, margin),
           getNotificationsField(context, height, decoration, padding, margin),
+          getSortField(context, height, decorationNoBottom, padding, margin),
           getShadeField(context, height, decorationNoBottom, padding, margin),
           getPhotoField(context, height, decoration, padding, margin),
           getHelpField(context, height, decorationNoBottom, padding, margin),
@@ -91,10 +94,11 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
-                width: 100,
+                width: 135,
                 child: DropdownButton<String>(
                   iconSize: theme.primaryIconSize,
                   isDense: true,
+                  isExpanded: true,
                   style: theme.primaryTextSecondary,
                   iconEnabledColor: theme.iconTextColor,
                   value: globals.language,
@@ -144,16 +148,62 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   inactiveThumbColor: theme.primaryColorLight,
                   value: (notificationStatus == PermissionStatus.granted),
                   onChanged: (bool val) {
-                    setState(() {
-                      NotificationPermissions.requestNotificationPermissions(
-                        iosSettings: NotificationSettingsIos(
-                          sound: val,
-                          badge: val,
-                          alert: val,
-                        ),
-                      ).then((value) { getNotificationStatus(); });
-                    });
+                    NotificationPermissions.requestNotificationPermissions(
+                      iosSettings: NotificationSettingsIos(
+                        sound: val,
+                        badge: val,
+                        alert: val,
+                      ),
+                    ).then((value) { getNotificationStatus(); });
                   },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getSortField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
+    return Container(
+      height: height,
+      decoration: decoration,
+      padding: padding,
+      child: Row(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(right: 3),
+            child: Text('Default Sort ', style: theme.primaryTextSecondary),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                width: 135,
+                child: DropdownButton<String>(
+                  iconSize: theme.primaryIconSize,
+                  isDense: true,
+                  isExpanded: true,
+                  style: theme.primaryTextSecondary,
+                  iconEnabledColor: theme.iconTextColor,
+                  value: globals.sort,
+                  onChanged: (String val) { setState(() { globals.sort = val; }); },
+                  underline: Container(
+                    decoration: UnderlineTabIndicator(
+                      borderSide: BorderSide(
+                        color: theme.primaryColorDark,
+                        width: 0.0,
+                      ),
+                    ),
+                  ),
+                  items: globals.defaultSortOptions([]).keys.map((String val) {
+                    return DropdownMenuItem(
+                      value: val,
+                      child: Text('$val', style: theme.primaryTextSecondary),
+                    );
+                  }).toList(),
                 ),
               ),
             ),
@@ -183,7 +233,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   child: Icon(
                     Icons.arrow_forward_ios,
                     size: theme.tertiaryTextSize,
-                    color: theme.tertiaryTextColor,
+                    color: theme.secondaryTextColor,
                     semanticLabel: 'Auto Shade Naming',
                   ),
                 ),
@@ -216,7 +266,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   child: Icon(
                     Icons.arrow_forward_ios,
                     size: theme.tertiaryTextSize,
-                    color: theme.tertiaryTextColor,
+                    color: theme.secondaryTextColor,
                     semanticLabel: 'Photo Upload',
                   ),
                 ),

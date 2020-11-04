@@ -95,7 +95,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                   rowCount: 1,
                   showNoColorsFound: true,
                   showPlus: false,
-                  defaultSort: 'Color',
+                  defaultSort: globals.sort,
                   sort: globals.defaultSortOptions(IO.getMultiple(_swatches), step: 16),
                 ),
               ),

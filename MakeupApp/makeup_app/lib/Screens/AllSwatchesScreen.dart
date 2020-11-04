@@ -20,6 +20,9 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
   void initState() {
     super.initState();
     _swatchesFuture = _addSwatches();
+    if(!globals.hasLoaded) {
+      globals.addHasLoadedListener(() { setState(() {}); });
+    }
   }
 
   Future<List<int>> _addSwatches() async {
@@ -41,7 +44,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
         updateSwatches: (List<int> swatches) { this._swatches = swatches; },
         showNoColorsFound: false,
         showPlus: false,
-        defaultSort: 'Color',
+        defaultSort: globals.sort,
         sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
       ),
       floatingActionButton: Container(
