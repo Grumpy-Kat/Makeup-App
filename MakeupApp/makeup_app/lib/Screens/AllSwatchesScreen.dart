@@ -38,8 +38,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
       context,
       'All Swatches',
       0,
-      [],
-      SingleSwatchList(
+      body: SingleSwatchList(
         addSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) { this._swatches = swatches; },
         showNoColorsFound: false,

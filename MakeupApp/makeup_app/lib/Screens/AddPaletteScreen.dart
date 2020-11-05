@@ -47,7 +47,22 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         context,
         'Add Palette',
         10,
-        [
+        leftBar: IconButton(
+          color: theme.iconTextColor,
+          icon: Icon(
+            Icons.arrow_back,
+            size: theme.primaryIconSize,
+          ),
+          onPressed: () {
+            navigation.pushReplacement(
+              context,
+              Offset(-1, 0),
+              routes.ScreenRoutes.AllSwatchesScreen,
+              routes.routes['/allSwatchesScreen'](context),
+            );
+          },
+        ),
+        rightBar: [
           IconButton(
             icon: Icon(
               Icons.help,
@@ -90,7 +105,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             }
           ),
         ],
-        Column(
+        body: Column(
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 40, bottom: 20),
@@ -133,7 +148,19 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         context,
         'Add Palette',
         10,
-        [
+        leftBar: IconButton(
+          color: theme.iconTextColor,
+          icon: Icon(
+            Icons.arrow_back,
+            size: theme.primaryIconSize,
+          ),
+          onPressed: () {
+            setState(() {
+              _hasChosenMode = false;
+            });
+          },
+        ),
+        rightBar: [
           IconButton(
             icon: Icon(
               Icons.help,
@@ -181,7 +208,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             }
           ),
         ],
-        PaletteDivider(
+        body: PaletteDivider(
           onEnter: (List<Swatch> swatches) { onEnterPaletteDivider(context, swatches); },
         ),
       );
@@ -254,43 +281,31 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         context,
         'Add Palette',
         10,
-        [],
-        Column(
-          children: <Widget>[
-           Container(
-              padding: EdgeInsets.only(left: 5),
-              alignment: Alignment.topLeft,
-              child: FlatButton.icon(
-                icon: Icon(
-                  Icons.arrow_back,
-                  size: 25.0,
-                  color: theme.iconTextColor,
-                ),
-                label: Text('Back', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
-                onPressed: () {
-                  setState(() {
-                    onExit();
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: GridView.builder(
-                scrollDirection: Axis.vertical,
-                primary: true,
-                padding: EdgeInsets.all(20),
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 30,
-                  crossAxisSpacing: 30,
-                  crossAxisCount: 4,
-                ),
-                itemCount: _swatchIcons.length,
-                itemBuilder: (BuildContext context, int i) {
-                  return _swatchIcons[i];
-                },
-              ),
-            ),
-          ],
+        leftBar: IconButton(
+          color: theme.iconTextColor,
+          icon: Icon(
+            Icons.arrow_back,
+            size: theme.primaryIconSize,
+          ),
+          onPressed: () {
+            setState(() {
+              _hasChosenMode = false;
+            });
+          },
+        ),
+        body: GridView.builder(
+          scrollDirection: Axis.vertical,
+          primary: true,
+          padding: EdgeInsets.all(20),
+          gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisSpacing: 30,
+            crossAxisSpacing: 30,
+            crossAxisCount: 4,
+          ),
+          itemCount: _swatchIcons.length,
+          itemBuilder: (BuildContext context, int i) {
+            return _swatchIcons[i];
+          },
         ),
         floatingActionButton: floatingAction,
       );
@@ -301,8 +316,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       context,
       'Add Palette',
       10,
-      [],
-      Text(
+      body: Text(
         'Error',
         style: theme.errorText,
       ),

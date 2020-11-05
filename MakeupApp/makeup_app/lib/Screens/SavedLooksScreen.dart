@@ -50,8 +50,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
       context,
       'Saved Looks',
       1,
-      [],
-      MultipleSwatchList(
+      body: MultipleSwatchList(
         addSwatches: _swatchesFuture,
         updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
         rowCount: 1,

@@ -52,8 +52,7 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
       context,
       'Color Wheel',
       2,
-      [],
-      Column(
+      body: Column(
         children: <Widget>[
           Expanded(
             flex: 4,

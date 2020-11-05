@@ -55,66 +55,41 @@ class LookScreenState extends State<LookScreen> with ScreenState {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> row = [];
+    Widget leftBar;
     if(widget.showBack) {
-      row.add(buildBack(context));
+      leftBar = buildBack(context);
     }
-    row.add(
-      Expanded(
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(widget.name, style: theme.primaryTextBold),
-        ),
-      ),
-    );
-    List<Widget> innerRow = [];
+    List<Widget> rightBar = [];
     if(widget.showClear) {
-      innerRow.add(buildClear(context));
+      rightBar.add(buildClear(context));
     }
     if(widget.showAdd) {
-      innerRow.add(buildAdd(context));
+      rightBar.add(buildAdd(context));
     }
     if(widget.showSave) {
-      innerRow.add(buildSave(context));
+      rightBar.add(buildSave(context));
     }
     if(widget.showEdit) {
-      innerRow.add(buildEdit(context));
+      rightBar.add(buildEdit(context));
     }
-    row.add(
-      Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: innerRow,
-        ),
-      ),
-    );
     return buildComplete(
       context,
       widget.name,
       10,
-      [],
-      Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: row,
-          ),
-          Expanded(
-            child: SingleSwatchList(
-              addSwatches: _swatchesFuture,
-              updateSwatches: (List<int> swatches) {
-                this._swatches = swatches;
-                widget.updateSwatches(swatches);
-                _hasEdited = true;
-              },
-              showNoColorsFound: false,
-              showPlus: false,
-              defaultSort: globals.sort,
-              sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
-              showDelete: _isEditing,
-            ),
-          ),
-        ],
+      leftBar: leftBar,
+      rightBar: rightBar,
+      body: SingleSwatchList(
+        addSwatches: _swatchesFuture,
+        updateSwatches: (List<int> swatches) {
+          this._swatches = swatches;
+          widget.updateSwatches(swatches);
+          _hasEdited = true;
+        },
+        showNoColorsFound: false,
+        showPlus: false,
+        defaultSort: globals.sort,
+        sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
+        showDelete: _isEditing,
       ),
       floatingActionButton: !_isEditing ? null : Container(
         margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),

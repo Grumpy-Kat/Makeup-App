@@ -59,47 +59,37 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       context,
       'Edit Swatch',
       20,
-      [],
-      Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  color: theme.iconTextColor,
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: theme.primaryIconSize,
-                  ),
-                  onPressed: () {
-                    exit();
-                  },
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                  color: theme.iconTextColor,
-                  icon: Icon(
-                    (_isEditing ? Icons.done : Icons.mode_edit),
-                    size: theme.primaryIconSize,
-                  ),
-                  onPressed: () {
-                    setState(
-                      () {
-                        _isEditing = !_isEditing;
-                        if(!_isEditing) {
-                          IO.editId(_swatch.id, _swatch);
-                        }
-                      }
-                    );
-                  },
-                ),
-              ),
-            ],
+      leftBar: IconButton(
+        color: theme.iconTextColor,
+        icon: Icon(
+          Icons.arrow_back,
+          size: theme.primaryIconSize,
+        ),
+        onPressed: () {
+          exit();
+        },
+      ),
+      rightBar: [
+        IconButton(
+          color: theme.iconTextColor,
+          icon: Icon(
+            (_isEditing ? Icons.done : Icons.mode_edit),
+            size: theme.primaryIconSize,
           ),
+          onPressed: () {
+            setState(
+                    () {
+                  _isEditing = !_isEditing;
+                  if(!_isEditing) {
+                    IO.editId(_swatch.id, _swatch);
+                  }
+                }
+            );
+          },
+        ),
+      ],
+      body: Column(
+        children: <Widget>[
           Container(
             height: 150,
             margin: EdgeInsets.only(top: 20, bottom: 50),

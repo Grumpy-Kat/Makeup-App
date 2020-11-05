@@ -85,7 +85,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
         );
         break;
       case Mode.Shade:
-        title = 'Auto Shade Naming Settings';
+        title = 'Auto Shade Name Settings';
         body = getShadeScreen(context, height, decoration, decorationNoBottom, padding, margin);
         break;
       case Mode.Photo:
@@ -97,8 +97,19 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       context,
       title,
       4,
-      [],
-      body,
+      leftBar: (mode == Mode.Default) ? null : IconButton(
+        color: theme.iconTextColor,
+        icon: Icon(
+          Icons.arrow_back,
+          size: theme.primaryIconSize,
+        ),
+        onPressed: () {
+          setState(() {
+            mode = Mode.Default;
+          });
+        },
+      ),
+      body: body,
     );
   }
 

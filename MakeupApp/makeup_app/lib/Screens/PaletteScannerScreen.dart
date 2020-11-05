@@ -57,8 +57,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         context,
         'Palette Scanner',
         3,
-        [],
-        Padding(
+        body: Padding(
           padding: EdgeInsets.only(top: 15),
           child: Column(
             children: <Widget>[
@@ -106,7 +105,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         context,
         'Palette Scanner',
         3,
-        [
+        rightBar: [
           IconButton(
             icon: Icon(
               Icons.help,
@@ -154,7 +153,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
             }
           ),
         ],
-        PaletteDivider(
+        body: PaletteDivider(
           onEnter: (List<Swatch> swatches) {
             setState(
               () {

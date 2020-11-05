@@ -18,7 +18,7 @@ mixin ScreenState {
 
   bool isDragging = false;
 
-  Widget buildComplete(BuildContext context, String title, int menu, List<Widget> bar, Widget body, { Widget floatingActionButton }) {
+  Widget buildComplete(BuildContext context, String title, int menu, { @required Widget body, Widget leftBar, List<Widget> rightBar,Widget floatingActionButton }) {
     Widget child = SizedSafeArea(
       builder: (context, screenSize) {
         this.screenSize = screenSize.biggest;
@@ -35,16 +35,22 @@ mixin ScreenState {
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.symmetric(horizontal: 5),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          size: theme.primaryIconSize,
-                          color: theme.iconTextColor,
-                          semanticLabel: 'Menu',
-                        ),
-                        onPressed: () {
-                          (scaffoldKey.currentState as ScaffoldState).openDrawer();
-                        },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(
+                              Icons.menu,
+                              size: theme.primaryIconSize,
+                              color: theme.iconTextColor,
+                              semanticLabel: 'Menu',
+                            ),
+                            onPressed: () {
+                              (scaffoldKey.currentState as ScaffoldState).openDrawer();
+                            },
+                          ),
+                          if(leftBar != null) leftBar,
+                        ],
                       ),
                     ),
                     Container(
@@ -58,7 +64,7 @@ mixin ScreenState {
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: bar,
+                          children: rightBar ?? [],
                         ),
                       ),
                     ),

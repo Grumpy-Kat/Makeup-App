@@ -129,6 +129,8 @@ class NavigationDrawer extends StatelessWidget {
         menus[page],
         routes.enumRoutes[menus[page]](context),
       );
+    } else {
+      Navigator.of(context).pop();
     }
   }
 }
