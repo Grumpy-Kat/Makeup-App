@@ -18,7 +18,7 @@ mixin ScreenState {
 
   bool isDragging = false;
 
-  Widget buildComplete(BuildContext context, String title, int menu, { @required Widget body, Widget leftBar, List<Widget> rightBar,Widget floatingActionButton }) {
+  Widget buildComplete(BuildContext context, String title, int menu, { @required Widget body, Widget leftBar, List<Widget> rightBar, Widget floatingActionButton }) {
     Widget child = SizedSafeArea(
       builder: (context, screenSize) {
         this.screenSize = screenSize.biggest;
@@ -85,6 +85,33 @@ mixin ScreenState {
         );
       },
     );
+    /*Widget appBar = AppBar(
+      automaticallyImplyLeading: false,
+      leadingWidth: (leftBar == null ? (theme.primaryIconSize * 2) + 5 : (theme.primaryIconSize * 4) + 5),
+      leading: Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(left: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.menu,
+                size: theme.primaryIconSize,
+                color: theme.iconTextColor,
+                semanticLabel: 'Menu',
+              ),
+              onPressed: () {
+                (scaffoldKey.currentState as ScaffoldState).openDrawer();
+              },
+            ),
+            if(leftBar != null) leftBar,
+          ],
+        ),
+      ),
+      title: Text(title, style: theme.primaryTextBold),
+      actions: rightBar,
+    );*/
     return Scaffold(
       key: scaffoldKey,
       drawer: NavigationDrawer(key: menuKey, currTab: menu, onExit: onExit),

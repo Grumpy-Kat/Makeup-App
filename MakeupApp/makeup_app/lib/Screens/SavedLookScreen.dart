@@ -5,11 +5,19 @@ import '../navigation.dart' as navigation;
 import '../savedLooksIO.dart' as IO;
 
 class SavedLookScreen extends StatefulWidget {
-  int id;
-  String name;
-  List<int> swatches;
+  static int id;
+  static String name;
+  static List<int> swatches;
 
-  SavedLookScreen({ this.id = -1, this.name = "", this.swatches });
+  SavedLookScreen({ int id, String name, List<int> swatches }) {
+    if(id == null || id == -1) {
+      swatches = IO.swatches['$id|$name'];
+    } else {
+      SavedLookScreen.id = id;
+      SavedLookScreen.name = name;
+      SavedLookScreen.swatches = swatches;
+    }
+  }
 
   @override
   SavedLookScreenState createState() => SavedLookScreenState();
@@ -19,13 +27,13 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
   @override
   Widget build(BuildContext context) {
     return LookScreen(
-      swatches: widget.swatches,
+      swatches: SavedLookScreen.swatches,
       updateSwatches: (List<int> swatches) {
         setState(() {
-          widget.swatches = swatches;
+          SavedLookScreen.swatches = swatches;
         });
       },
-      name: widget.name,
+      name: SavedLookScreen.name,
       showBack: true,
       askBackSaved: true,
       onBackPressed: () {
@@ -35,19 +43,19 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
       onClearPressed: () {
         setState(
           () {
-            widget.swatches = [];
-            IO.save(widget.id, widget.name, widget.swatches);
+            SavedLookScreen.swatches = [];
+            IO.save(SavedLookScreen.id, SavedLookScreen.name, SavedLookScreen.swatches);
             navigation.pop(context, true);
           }
         );
       },
       showAdd: true,
       onAddPressed: () {
-        globals.currSwatches.addMany(widget.swatches);
+        globals.currSwatches.addMany(SavedLookScreen.swatches);
       },
       showEdit: true,
       onSavePressed: () {
-        IO.save(widget.id, widget.name, widget.swatches);
+        IO.save(SavedLookScreen.id, SavedLookScreen.name, SavedLookScreen.swatches);
       },
     );
   }

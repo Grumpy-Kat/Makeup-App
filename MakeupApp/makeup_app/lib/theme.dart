@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 bool isDarkTheme = true;
 
+Brightness get brightness => isDarkTheme ? Brightness.dark : Brightness.light;
+
 Color get bgColor => isDarkTheme ? Color.fromRGBO(18, 18, 18, 1) : Color.fromRGBO(248, 249, 251, 1);
 Color get primaryColorLight => isDarkTheme ? Color.fromRGBO(15, 15, 15, 1) : Color.fromRGBO(251, 252, 254, 1);
 Color get primaryColor => isDarkTheme ? Color.fromRGBO(20, 20, 20 , 1) : Color.fromRGBO(244, 245, 247, 1);
@@ -58,9 +60,33 @@ ThemeData get themeData => ThemeData(
   splashColor: accentColor,
   textSelectionColor: accentColor,
   indicatorColor: accentColor,
+  dialogTheme: DialogTheme(
+    backgroundColor: bgColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    ),
+  ),
+  popupMenuTheme: PopupMenuThemeData(
+    color: bgColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    ),
+  ),
   appBarTheme: AppBarTheme(
     color: primaryColor,
-
+    elevation: 0,
+    centerTitle: false,
+    textTheme: TextTheme(
+      bodyText1: primaryTextPrimary,
+      bodyText2: primaryTextPrimary,
+      headline1: primaryTextBold,
+      headline2: primaryTextBold,
+      headline3: primaryTextBold,
+      headline4: primaryTextBold,
+      headline5: primaryTextBold,
+      headline6: primaryTextBold,
+      caption: primaryTextSecondary,
+    ),
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
@@ -71,9 +97,26 @@ ThemeData get themeData => ThemeData(
     color: iconTextColor,
     size: primaryIconSize,
   ),
+  colorScheme: ColorScheme(
+    background: bgColor,
+    onBackground: primaryTextColor,
+    surface: bgColor,
+    onSurface: primaryTextColor,
+    primary: primaryColor,
+    primaryVariant: primaryColorDark,
+    onPrimary: primaryTextColor,
+    secondary: accentColor,
+    secondaryVariant: accentColorDark,
+    onSecondary: accentTextColor,
+    error: errorTextColor,
+    onError: accentTextColor,
+    brightness: brightness,
+  ),
   primaryTextTheme: TextTheme(
     bodyText1: primaryTextPrimary,
     bodyText2: primaryTextPrimary,
+    subtitle1: primaryTextSecondary,
+    subtitle2: primaryTextSecondary,
     headline1: primaryTitle,
     headline2: primaryTextBold,
     headline3: primaryTextBold,
@@ -85,6 +128,8 @@ ThemeData get themeData => ThemeData(
   accentTextTheme: TextTheme(
     bodyText1: accentTextPrimary,
     bodyText2: accentTextPrimary,
+    subtitle1: accentTextSecondary,
+    subtitle2: accentTextSecondary,
     headline1: accentTextBold,
     headline2: accentTextBold,
     headline3: accentTextBold,
