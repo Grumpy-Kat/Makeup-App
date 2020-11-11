@@ -20,6 +20,7 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
   @override
   void initState() {
     super.initState();
+    //add listener to currSwatches
     _listenerIndex = globals.currSwatches.addListener(
       (swatch) => setState(() { }),
       (swatch) => setState(() { }),
@@ -29,6 +30,7 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
 
   @override
   Widget build(BuildContext context) {
+    //utilizes LookScreen for all functionality
     return LookScreen(
       swatches: globals.currSwatches.currSwatches,
       updateSwatches: (List<int> swatches) {
@@ -42,12 +44,14 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
       onBackPressed: exit,
       showClear: true,
       onClearPressed: () {
+        //clear currSwatches
         globals.currSwatches.set([]);
         exit();
       },
       showAdd: false,
       showSave: true,
       onSavePressed: () {
+        //saving for first time, so open dialog for name of the look
         globalWidgets.openTextDialog(
           context,
           'Enter a name for this look:',
@@ -67,7 +71,9 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
   }
 
   void exit() {
+    //remove listener to avoid errors
     globals.currSwatches.removeListener(_listenerIndex);
+    //return to previous screen
     navigation.pop(context, false);
   }
 }

@@ -26,6 +26,7 @@ mixin ScreenState {
         RecommendedSwatchBar.screenSize = this.screenSize;
         return Column(
           children: <Widget>[
+            //top bar, including menu button, right bar, left bar, and title, takes up top 10%
             Expanded(
               flex: 1,
               child: Container(
@@ -72,11 +73,14 @@ mixin ScreenState {
                 ),
               ),
             ),
+            //body is determined by screen subclassing, takes up middle 80%
             Expanded(
               flex: 8,
               child: body,
             ),
+            //RecommendedSwatchBar takes up no space, just placeholder
             RecommendedSwatchBar(key: recommendedSwatchBarKey),
+            //CurrSwatchBar takes up bottom 10%
             Expanded(
               flex: 1,
               child: CurrSwatchBar(),
@@ -116,6 +120,7 @@ mixin ScreenState {
       key: scaffoldKey,
       drawer: NavigationDrawer(key: menuKey, currTab: menu, onExit: onExit),
       backgroundColor: theme.bgColor,
+      //floatingActionButton is determined by screen subclassing
       floatingActionButton: floatingActionButton,
       resizeToAvoidBottomInset: false,
       body: child,
@@ -123,6 +128,7 @@ mixin ScreenState {
   }
 
   void onExit() async {
+    //closes RecommendedSwatchBar manually, to prevent bugs
     (recommendedSwatchBarKey.currentState as RecommendedSwatchBarState).close();
   }
 

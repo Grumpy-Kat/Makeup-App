@@ -27,6 +27,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
 
   void _addSwatchIcons() {
     _swatchIcons.clear();
+    //create icon widgets for all swatch data
     for(int i = 0; i < _swatches.length; i++) {
       _swatchIcons.add(
         SwatchIcon.id(
@@ -47,6 +48,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         context,
         'Add Palette',
         10,
+        //back button
         leftBar: IconButton(
           color: theme.iconTextColor,
           icon: Icon(
@@ -62,6 +64,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             );
           },
         ),
+        //help button
         rightBar: [
           IconButton(
             icon: Icon(
@@ -70,16 +73,17 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
               color: theme.iconTextColor,
             ),
             onPressed: () {
+              //help button
               globalWidgets.openDialog(
                 context,
-                    (BuildContext context) {
+                (BuildContext context) {
                   return globalWidgets.getAlertDialog(
                     context,
                     content: Container(
                       padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
                       child: Text(
                         'Palette Divider allows you to upload a picture and divide the palette into separate swatches. Then, it will automatically finds the colors and finishes for you. It should be used for most shadows and palettes.\n\n'
-                            'Custom allows you to input your own swatches, customizing the colors, finishes, and any other information you want to add. It\'s best for adding irregular palettes that would be difficult to divide into columns and rows.',
+                        'Custom allows you to input your own swatches, customizing the colors, finishes, and any other information you want to add. It\'s best for adding irregular palettes that would be difficult to divide into columns and rows.',
                         style: theme.primaryTextSecondary,
                       ),
                     ),
@@ -107,10 +111,12 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         ],
         body: Column(
           children: <Widget>[
+            //text
             Container(
               margin: EdgeInsets.only(top: 40, bottom: 20),
               child: Text('Add swatches using: ', style: theme.primaryTextBold),
             ),
+            //sets mode ot palette divider
             FlatButton.icon(
               icon: Icon(Icons.crop, size: 20, color: theme.iconTextColor),
               label: Text('Palette Divider', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
@@ -121,6 +127,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                 });
               },
             ),
+            //sets mode to custom
             FlatButton.icon(
               icon: Icon(Icons.colorize, size: 20, color: theme.iconTextColor),
               label: Text('Custom', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
@@ -148,6 +155,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         context,
         'Add Palette',
         10,
+        //back button
         leftBar: IconButton(
           color: theme.iconTextColor,
           icon: Icon(
@@ -160,6 +168,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             });
           },
         ),
+        //help button
         rightBar: [
           IconButton(
             icon: Icon(
@@ -168,6 +177,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
               color: theme.iconTextColor,
             ),
             onPressed: () {
+              //opens help dialog
               globalWidgets.openDialog(
                 context,
                 (BuildContext context) {
@@ -208,6 +218,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             }
           ),
         ],
+        //palette divider
         body: PaletteDivider(
           onEnter: (List<Swatch> swatches) { onEnterPaletteDivider(context, swatches); },
         ),
@@ -215,6 +226,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
     }
     //using palette divider, but has finished OR not using palette divider
     if(_hasChosenMode && ((_isUsingPaletteDivider && _displayCheckButton) || !_isUsingPaletteDivider)) {
+      //check button to complete
       Widget checkButton = Container(
         margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
         width: 75,
@@ -230,9 +242,11 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
           onPressed: onCheckButton,
         ),
       );
+      //total floating action buttons, can change based on condition
       Widget floatingAction;
       if(!_isUsingPaletteDivider) {
         //column of check and plus button
+        //if using custom, need to have plus button to add swatches
         floatingAction = Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -275,12 +289,14 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         );
       } else {
         //only check button
+        //if using palette divider, does not need plus button
         floatingAction = checkButton;
       }
       return buildComplete(
         context,
         'Add Palette',
         10,
+        //back button
         leftBar: IconButton(
           color: theme.iconTextColor,
           icon: Icon(
@@ -293,6 +309,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             });
           },
         ),
+        //scroll view to show all swatches
         body: GridView.builder(
           scrollDirection: Axis.vertical,
           primary: true,
@@ -310,7 +327,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         floatingActionButton: floatingAction,
       );
     }
-    //error
+    //show error because condition shouldn't be reachable
     print('Has reached impossible point!');
     return buildComplete(
       context,
@@ -324,6 +341,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
   }
 
   void onEnter(BuildContext context, void Function(String, String) onPressed) {
+    //open dialog to enter palette name and brand
     globalWidgets.openTwoTextDialog(
       context,
       'Enter a brand and name for this palette:',
@@ -342,10 +360,12 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       (String brand, String palette) {
         _brand = brand;
         _palette = palette;
+        //assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {
           swatches[i].brand = brand;
           swatches[i].palette = palette;
         }
+        //saves swatches and adds them to final list to display
         IO.add(swatches).then((List<int> val) {
           setState(() {
             _swatches = val;
@@ -359,6 +379,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
 
   void onCheckButton() {
     onExit();
+    //return to AllSwatchesScreen
     setState(() {
       navigation.pushReplacement(
         context,
@@ -372,6 +393,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
   @override
   void onExit() {
     super.onExit();
+    //reset all modes and data
     _hasChosenMode = false;
     _displayCheckButton = false;
     _swatches = [];

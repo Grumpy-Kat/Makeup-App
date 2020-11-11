@@ -24,20 +24,25 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
   @override
   void initState() {
     super.initState();
+    //start getting notification status, as soon as possible
     getNotificationStatus();
+    //add observer for when user leaves and returns to app
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    //update notification status if user leaves and returns to app
     if(state == AppLifecycleState.resumed) {
       getNotificationStatus();
     }
   }
 
   void getNotificationStatus() {
+    //use notification_permissions library to get notification status
     NotificationPermissions.getNotificationPermissionStatus().then((status) {
       setState(() {
+        //set state when finished getting notification status
         notificationStatus = status;
       });
     });
@@ -45,13 +50,18 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
 
   @override
   Widget build(BuildContext context) {
+    //height of field
     double height = 60;
+    //almost every field has padding
     EdgeInsets padding = EdgeInsets.symmetric(horizontal: 15, vertical: 10);
+    //outer container includes margin if no field below
     EdgeInsets margin = EdgeInsets.only(bottom: 10);
+    //border and color if no field below
     Decoration decoration = BoxDecoration(
       color: theme.primaryColor,
       border: Border.all(color: theme.primaryColorDark),
     );
+    //border and color if field below
     Decoration decorationNoBottom = BoxDecoration(
       color: theme.primaryColor,
       border: Border(
@@ -66,23 +76,13 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
         ),
       ),
     );
+    //title and body determined by mode
     String title;
     Widget body;
     switch(mode) {
       case Mode.Default:
         title = 'Settings';
-        body = Column(
-          children: <Widget>[
-            getDefaultLanguageField(context, height, decoration, padding, margin),
-            getDefaultNotificationsField(context, height, decoration, padding, margin),
-            getDefaultSortField(context, height, decorationNoBottom, padding, margin),
-            getDefaultShadeField(context, height, decorationNoBottom, padding, margin),
-            getDefaultPhotoField(context, height, decoration, padding, margin),
-            getDefaultHelpField(context, height, decorationNoBottom, padding, margin),
-            getDefaultReportField(context, height, decorationNoBottom, padding, margin),
-            getDefaultAboutField(context, height, decoration, padding, margin),
-          ],
-        );
+        body = getDefaultScreen(context, height, decoration, decorationNoBottom, padding, margin);
         break;
       case Mode.Shade:
         title = 'Auto Shade Name Settings';
@@ -97,6 +97,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       context,
       title,
       4,
+      //back button
       leftBar: (mode == Mode.Default) ? null : IconButton(
         color: theme.iconTextColor,
         icon: Icon(
@@ -113,6 +114,23 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //shows all fields for default mode
+  Widget getDefaultScreen(BuildContext context, double height, Decoration decoration, Decoration noBottomDecoration, EdgeInsets padding, EdgeInsets margin) {
+    return  Column(
+      children: <Widget>[
+        getDefaultLanguageField(context, height, decoration, padding, margin),
+        getDefaultNotificationsField(context, height, decoration, padding, margin),
+        getDefaultSortField(context, height, noBottomDecoration, padding, margin),
+        getDefaultShadeField(context, height, noBottomDecoration, padding, margin),
+        getDefaultPhotoField(context, height, decoration, padding, margin),
+        getDefaultHelpField(context, height, noBottomDecoration, padding, margin),
+        getDefaultReportField(context, height, noBottomDecoration, padding, margin),
+        getDefaultAboutField(context, height, decoration, padding, margin),
+      ],
+    );
+  }
+
+  //field to choose localization language, shown in default mode
   Widget getDefaultLanguageField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -162,6 +180,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to choose whether to show notifications, shown in default mode
   Widget getDefaultNotificationsField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -201,6 +220,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to choose default sort of swatch lists, shown in default mode
   Widget getDefaultSortField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -249,6 +269,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to go to auto shade naming mode, shown in default mode
   Widget getDefaultShadeField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -257,6 +278,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       child: InkWell(
         onTap: () {
           setState(() {
+            //change mode
             mode = Mode.Shade;
           });
         },
@@ -285,6 +307,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //shows all fields for auto shade name mode
   Widget getShadeScreen(BuildContext context, double height, Decoration decoration, Decoration noBottomDecoration, EdgeInsets padding, EdgeInsets margin) {
     return Column(
       children: <Widget>[
@@ -301,6 +324,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to choose auto shade name mode, shown in auto shade name mode
   Widget getShadeShadeField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -357,6 +381,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to go to photo upload settings mode, shown in default mode
   Widget getDefaultPhotoField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -394,6 +419,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //shows all fields for photo upload settings mode
   Widget getPhotoScreen(BuildContext context, double height, Decoration decoration, Decoration noBottomDecoration, EdgeInsets padding, EdgeInsets margin) {
     return Column(
       children: <Widget>[
@@ -408,6 +434,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to choose brightness changes of photos, shown in photo upload settings mode
   Widget getPhotoBrightnessField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -467,6 +494,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to choose red changes of photos, shown in photo upload settings mode
   Widget getPhotoRedField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -526,6 +554,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to choose green changes of photos, shown in photo upload settings mode
   Widget getPhotoGreenField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -585,6 +614,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to choose blue changes of photos, shown in photo upload settings mode
   Widget getPhotoBlueField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -645,6 +675,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //shows labels for swatch examples, shown in photo upload settings mode
   Widget getPhotoTitleField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height / 2,
@@ -681,6 +712,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //shows horizontal row of swatch examples, shown in photo upload settings mode
   Widget getPhotoExsField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin, Color color1, Color color2) {
     return Container(
       height: height,
@@ -698,6 +730,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //shows swatch examples to display change settings, shown in photo upload settings mode
   Widget getPhotoExField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin, Color color) {
     return Row(
       children: <Widget>[
@@ -730,6 +763,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  //field to open help menu, shown in default mode
   Widget getDefaultHelpField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -763,7 +797,8 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       ),
     );
   }
-  
+
+  //field to go to bug report link, shown in default mode
   Widget getDefaultReportField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,
@@ -794,7 +829,8 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       ),
     );
   }
-  
+
+  //field to open about menu, shown in default mode
   Widget getDefaultAboutField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
     return Container(
       height: height,

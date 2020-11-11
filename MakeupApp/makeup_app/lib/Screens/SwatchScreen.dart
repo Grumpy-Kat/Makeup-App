@@ -17,9 +17,7 @@ import 'Screen.dart';
 class SwatchScreen extends StatefulWidget {
   final int swatch;
 
-  final routes.ScreenRoutes prevScreen;
-
-  SwatchScreen({ this.swatch, this.prevScreen });
+  SwatchScreen({ this.swatch });
 
   @override
   SwatchScreenState createState() => SwatchScreenState();
@@ -35,17 +33,13 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   @override
   void initState() {
     super.initState();
+    //get swatch from id
     _swatch = IO.get(widget.swatch);
   }
 
   @override
   Widget build(BuildContext context) {
-    SwatchIcon swatchIcon = SwatchIcon.swatch(_swatch, showInfoBox: false, overrideOnDoubleTap: true, onDoubleTap: (int id) {});
-    RGBColor color = _swatch.color;
-    String finish = globalWidgets.toTitleCase(_swatch.finish).trimRight();
-    String brand = globalWidgets.toTitleCase(_swatch.brand).trimRight();
-    String palette = globalWidgets.toTitleCase(_swatch.palette).trimRight();
-    String shade = globalWidgets.toTitleCase(_swatch.shade).trimRight();
+    //divider to mark new section
     Widget divider = Divider(
       color: theme.primaryColorDark,
       height: 17,
@@ -53,12 +47,21 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       indent: 37,
       endIndent: 37,
     );
+    //all swatch data
+    SwatchIcon swatchIcon = SwatchIcon.swatch(_swatch, showInfoBox: false, overrideOnDoubleTap: true, onDoubleTap: (int id) {});
+    RGBColor color = _swatch.color;
+    String finish = globalWidgets.toTitleCase(_swatch.finish).trimRight();
+    String brand = globalWidgets.toTitleCase(_swatch.brand).trimRight();
+    String palette = globalWidgets.toTitleCase(_swatch.palette).trimRight();
+    String shade = globalWidgets.toTitleCase(_swatch.shade).trimRight();
+    //various options
     List<String> finishes = ['Matte', 'Satin', 'Shimmer', 'Metallic', 'Glitter'];
     List<String> tags = globals.tags;
     return buildComplete(
       context,
       'Edit Swatch',
       20,
+      //back button
       leftBar: IconButton(
         color: theme.iconTextColor,
         icon: Icon(
@@ -69,6 +72,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           exit();
         },
       ),
+      //edit button
       rightBar: [
         IconButton(
           color: theme.iconTextColor,
@@ -90,24 +94,34 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       ],
       body: Column(
         children: <Widget>[
+          //swatch preview
           Container(
             height: 150,
             margin: EdgeInsets.only(top: 20, bottom: 50),
             child: swatchIcon,
           ),
+          //all fields
           Expanded(
             child: ListView(
               children: <Widget>[
+                //color
                 getColorField('Color', color, (RGBColor value) { _swatch.color = value; onChange(true); }),
+                //finish
                 getDropdownField('Finish', finishes, finish, (String value) { _swatch.finish = value; onChange(true); }),
+                //brand name
                 getTextField('Brand', brand, (String value) { _swatch.brand = value; onChange(false); }),
+                //palette name
                 getTextField('Palette', palette, (String value) { _swatch.palette = value; onChange(false); }),
+                //shade name
                 getTextField('Shade', shade, (String value) { _swatch.shade = value; onChange(false); }),
                 divider,
+                //rating
                 getStarField('Rating', _swatch.rating, (int value) { _swatch.rating = value; onChange(false); }),
                 divider,
+                //tags
                 getChipField('Tags', tags, _swatch.tags, (String value) { tags.add(value); globals.tags = tags; }, (List<String> value) { _swatch.tags = value; onChange(true); }),
                 divider,
+                //delete button
                 Container(
                   height: 70,
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -136,6 +150,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     );
   }
 
+  //generic field with just a label and input on opposite horizontal sides
+  //utilized by other varieties of fields
+  //everything displays as plain text when not editing, but is more unique during editing
   Widget getField(double height, String label, Widget child) {
     return Container(
       height: height,
@@ -156,6 +173,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     );
   }
 
+  //text field, ex for brand or palette name
   Widget getTextField(String label, String value, OnStringAction onChange) {
     return getField(
       55,
@@ -197,6 +215,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     );
   }
 
+  //color field that displays color name and opens popup to color picker
   Widget getColorField(String label, RGBColor color, OnRGBColorAction onChange) {
     String colorName = globalWidgets.toTitleCase(getColorName(_swatch.color)).trimRight();
     Widget child = Row(
@@ -219,6 +238,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
               (BuildContext context) {
                 return Padding(
                   padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height * 0.4) - 15),
+                  //need custom dialog due to size constraints to work with positioning of color picker cursor
                   child: Dialog(
                     insetPadding: EdgeInsets.symmetric(horizontal: 0),
                     shape: RoundedRectangleBorder(
@@ -277,6 +297,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     );
   }
 
+  //dropdown field, ex for finish
   Widget getDropdownField(String label, List<String> options, String value, OnStringAction onChange) {
     return getField(
       55,
@@ -320,6 +341,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     );
   }
 
+  //star rating field
   Widget getStarField(String label, int value, OnIntAction onChange) {
     return Column(
       children: <Widget> [
@@ -351,6 +373,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     );
   }
 
+  //many choice selection field with ability to add more choices
   Widget getChipField(String label, List<String> options, List<String> values, OnStringAction onAddOption, OnStringListAction onChange) {
     List<Widget> widgets = [];
     for(int i = 0; i < options.length; i++) {
@@ -445,26 +468,26 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   void onChange(bool shouldSetState) {
     _hasSaved = false;
     _hasChanged = true;
+    //update screen and swatch icon if needed, such as with finish or color changes
+    //only needed if swatch icon requires visual changes, so is false for something like brand or rating
     if(shouldSetState) {
       setState(() {});
     }
   }
 
   void exit() async {
+    //save data
     await onExit();
+    //actually return to previous screen and reload if any changes were made
     navigation.pop(context, _hasChanged);
   }
 
   @override
   void onExit() async {
     super.onExit();
+    //save changes to swatch
     if(_hasChanged && !_hasSaved) {
       await IO.editId(_swatch.id, _swatch);
     }
-  }
-
-  @override
-  void onHorizontalDragEnd(BuildContext context, DragEndDetails drag) {
-    exit();
   }
 }

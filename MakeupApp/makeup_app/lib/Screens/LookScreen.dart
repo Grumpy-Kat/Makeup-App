@@ -45,16 +45,19 @@ class LookScreenState extends State<LookScreen> with ScreenState {
   @override
   void initState() {
     super.initState();
+    //create future to get all swatches
     _swatchesFuture = _addSwatches();
   }
 
   Future<List<int>> _addSwatches() async {
+    //swatches are determined by the screen using it
     _swatches = widget.swatches;
     return _swatches;
   }
 
   @override
   Widget build(BuildContext context) {
+    //checks which buttons are necessary
     Widget leftBar;
     if(widget.showBack) {
       leftBar = buildBack(context);
@@ -78,6 +81,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
       10,
       leftBar: leftBar,
       rightBar: rightBar,
+      //scroll view to show all swatches
       body: SingleSwatchList(
         addSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) {
@@ -91,6 +95,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
         showDelete: _isEditing,
       ),
+      //if is in edit mode, show floating action button to add or remove swatches
       floatingActionButton: !_isEditing ? null : Container(
         margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
         width: 75,
@@ -140,6 +145,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
   }
 
   Widget buildBack(BuildContext context) {
+    //creates back button
     return Align(
       alignment: Alignment.centerLeft,
       child: IconButton(
@@ -156,6 +162,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
   }
 
   Widget buildClear(BuildContext context) {
+    //creates clear button
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
@@ -165,11 +172,14 @@ class LookScreenState extends State<LookScreen> with ScreenState {
           size: theme.primaryIconSize,
         ),
         onPressed: () {
+          //no need to clear if empty look
           if(_swatches.length > 0) {
+            //confirms clearing
             globalWidgets.openTwoButtonDialog(
               context,
               'Are you sure you want to clear the look?',
               () {
+                //action determined by screen that uses it
                 widget.onClearPressed();
               },
               () { },
@@ -181,6 +191,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
   }
 
   Widget buildAdd(BuildContext context) {
+    //creates add button
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
@@ -189,12 +200,14 @@ class LookScreenState extends State<LookScreen> with ScreenState {
           Icons.library_add,
           size: theme.primaryIconSize,
         ),
+        //action determined by screen that uses it
         onPressed: widget.onAddPressed,
       ),
     );
   }
 
   Widget buildSave(BuildContext context) {
+    //creates save button
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
@@ -203,12 +216,14 @@ class LookScreenState extends State<LookScreen> with ScreenState {
           Icons.save,
           size: theme.primaryIconSize,
         ),
+        //action determined by screen that uses it
         onPressed: widget.onSavePressed,
       ),
     );
   }
 
   Widget buildEdit(BuildContext context) {
+    //creates edit button
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
@@ -219,6 +234,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         ),
         onPressed: () {
           setState(() {
+            //switches whether in edit mode, which allows user to add or delete swatches from list
             this._isEditing = !this._isEditing;
           });
         },
@@ -229,6 +245,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
   @override
   void onExit() async {
     super.onExit();
+    //ensures that the changes to the look save before exiting
     if(widget.askBackSaved && _hasEdited) {
       await globalWidgets.openTwoButtonDialog(
         context,
@@ -245,9 +262,4 @@ class LookScreenState extends State<LookScreen> with ScreenState {
       widget.onBackPressed();
     }
   }
-
-  /*@override
-  void onHorizontalDrag(BuildContext context, DragEndDetails drag) {
-    onExit();
-  }*/
 }

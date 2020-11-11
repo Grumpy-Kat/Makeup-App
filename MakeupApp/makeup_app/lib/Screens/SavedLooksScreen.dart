@@ -23,23 +23,27 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
   @override
   void initState() {
     super.initState();
+    //create future to get all swatches
     _swatchesFuture = _addSwatches();
   }
 
   Future<Map<Text, List<int>>> _addSwatches() async {
+    //gets all saved looks
     Map<String, List<int>> map = await IO.loadFormatted();
     _labels = map.keys.toList();
     _swatches = map.values.toList();
     Map<Text, List<int>> returnMap = {};
     for(int i = 0; i < _labels.length; i++) {
+      //separate id and label
       String label = _labels[i];
       List<String> labelSplit = label.split('|');
       _ids.add(int.parse(labelSplit[0]));
       label = label.substring(labelSplit[0].length + 1);
+      //create text for label and add saved look list
       returnMap[Text(label, textAlign: TextAlign.left, style: theme.primaryTextBold)] = _swatches[i];
       _labels[i] = label;
     }
-    //reloads for sort
+    //reload for sort
     setState(() {});
     return returnMap;
   }
@@ -50,6 +54,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
       context,
       'Saved Looks',
       1,
+      //scroll view to show all look names as labels and looks as horizontal bodies
       body: MultipleSwatchList(
         addSwatches: _swatchesFuture,
         updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
@@ -69,6 +74,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
   }
 
   void _onTap(int i) {
+    //goes to SavedLookScreen for look pressed or double pressed
     navigation.push(
       context,
       Offset(1, 0),

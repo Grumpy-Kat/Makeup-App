@@ -476,6 +476,9 @@ class PaletteDividerState extends State<PaletteDivider> {
           case globals.AutoShadeNameMode.RowLetters:
             shade = '${letters[(numRows - j - 1) % letters.length]}${i + 1}';
             break;
+          default:
+            shade = '';
+            break;
         }
         //create swatch
         _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: shade, rating: 5, tags: []));

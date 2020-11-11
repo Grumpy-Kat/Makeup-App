@@ -24,23 +24,29 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   @override
   void initState() {
     super.initState();
+    //creates future, mostly to not make something null
     _swatchesFuture = _addSwatches();
+    //set mode to palette divider
     _openPaletteDivider = _labels.isEmpty;
   }
 
   Future<Map<SwatchIcon, List<int>>> _addSwatches() async {
     _swatches.clear();
+    //gets all swatches
     List<int> allSwatches = await IO.loadFormatted();
+    //final list of labels and swatch bodies
     Map<SwatchIcon, List<int>> returnMap = {};
     for(int i = 0; i < _labels.length; i++) {
       _swatches.add(
+        //converts swatches to ints
         IO.findMany(
+          //gets the similar swatches
           getSimilarColors(
             _labels[i].color,
             _labels[i],
-            IO.getMany(allSwatches),
+            IO.getMany(allSwatches), //converts swatch ids to swatches
             maxDist: 9,
-            getSimilar: false,
+            getSimilar: false, //only get by color distance, not categories
             getOpposite: false,
           ).keys.toList(),
         ),
@@ -53,6 +59,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   @override
   Widget build(BuildContext context) {
     if(!_openPaletteDivider) {
+      //has finished using palette divider and displays similar swatches
       return buildComplete(
         context,
         'Palette Scanner',
@@ -61,6 +68,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
           padding: EdgeInsets.only(top: 15),
           child: Column(
             children: <Widget>[
+              //return to palette divider
               FlatButton(
                 color: theme.primaryColorDark,
                 onPressed: () {
@@ -75,6 +83,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                   style: theme.primaryTextPrimary,
                 ),
               ),
+              //save palette to collection
               FlatButton(
                 color: theme.primaryColorDark,
                 onPressed: () {
@@ -85,6 +94,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                   style: theme.primaryTextPrimary,
                 ),
               ),
+              //scroll view to show all swatches as labels and similar swatches as horizontal bodies
               Expanded(
                 child: MultipleSwatchList(
                   addSwatches: _swatchesFuture,
@@ -101,10 +111,12 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         ),
       );
     } else {
+      //using palette divider
       return buildComplete(
         context,
         'Palette Scanner',
         3,
+        //help button
         rightBar: [
           IconButton(
             icon: Icon(
@@ -113,9 +125,10 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
               color: theme.iconTextColor,
             ),
             onPressed: () {
+              //opens help dialog
               globalWidgets.openDialog(
                 context,
-                    (BuildContext context) {
+                (BuildContext context) {
                   return globalWidgets.getAlertDialog(
                     context,
                     content: SingleChildScrollView(
@@ -153,10 +166,12 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
             }
           ),
         ],
+        //palette divider
         body: PaletteDivider(
           onEnter: (List<Swatch> swatches) {
             setState(
               () {
+                //sets mode and future
                 _labels = swatches;
                 _openPaletteDivider = false;
                 _swatchesFuture = _addSwatches();
@@ -169,6 +184,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   }
 
   void onSave(BuildContext context, List<Swatch> swatches) {
+    //open dialog to enter palette name and brand
     globalWidgets.openTwoTextDialog(
       context,
       'Enter a brand and name for this palette:',
@@ -177,22 +193,14 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
       'You must add a palette name.',
       'Save',
       (String brand, String palette) {
+        //assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {
           swatches[i].brand = brand;
           swatches[i].palette = palette;
         }
+        //saves swatches
         IO.add(swatches);
       },
     );
   }
-
-  /*@override
-  void onHorizontalDragStart(BuildContext context, DragStartDetails drag) {
-    //disable dragging when dragging borders
-    if(!_openPaletteDivider) {
-      super.onHorizontalDragStart(context, drag);
-    } else {
-      isDragging = false;
-    }
-  }*/
 }
