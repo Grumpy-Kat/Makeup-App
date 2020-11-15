@@ -14,6 +14,9 @@ import 'types.dart';
 Map<String, OnScreenAction> routes = {};
 Map<ScreenRoutes, OnScreenAction> enumRoutes = {};
 
+String defaultRoute = '/allSwatchesScreen';
+ScreenRoutes defaultEnumRoute = ScreenRoutes.AllSwatchesScreen;
+
 enum ScreenRoutes {
   TutorialScreen,
   AllSwatchesScreen,

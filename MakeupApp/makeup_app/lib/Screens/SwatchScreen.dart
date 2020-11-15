@@ -159,7 +159,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     return Container(
       height: height,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 30, right: 30, bottom: 15),
+      padding: EdgeInsets.only(left: 30, right: 30, bottom: 10),
       child: Row(
         children: <Widget>[
           Text(

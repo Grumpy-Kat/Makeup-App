@@ -47,7 +47,7 @@ void save() async {
   await f.writeString('${globals.hasDoneTutorial}\n');
 }
 
-void load() async {
+Future<bool> load() async {
   File file = await getSaveFile();
   List<String> lines = (await file.readAsString()).split('\n');
   if(lines.length > 1) {
@@ -77,4 +77,5 @@ void load() async {
     await save();
   }
   globals.hasLoaded = true;
+  return globals.hasLoaded;
 }

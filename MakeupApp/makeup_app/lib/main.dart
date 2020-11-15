@@ -1,5 +1,3 @@
-import 'package:GlamKit/Screens/AllSwatchesScreen.dart';
-import 'package:GlamKit/Screens/TutorialScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
@@ -10,18 +8,19 @@ import 'navigation.dart' as navigation;
 import 'settingsIO.dart' as IO;
 import 'savedLooksIO.dart' as savedLooks;
 
-void main() => runApp(MakeupApp());
+void main() => runApp(GlamKitApp());
 
-class MakeupApp extends StatelessWidget {
+class GlamKitApp extends StatefulWidget {
+  @override
+  GlamKitAppState createState() => GlamKitAppState();
+}
+
+class GlamKitAppState extends State<GlamKitApp> {
   @override
   Widget build(BuildContext context) {
-    IO.load();
-    theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    routes.setRoutes();
-    globals.currSwatches.init();
-    globals.debug = !kReleaseMode;
-    savedLooks.init();
+    if(!globals.hasLoaded) {
+      load();
+    }
     return MaterialApp(
       title: globals.appName,
       theme: theme.themeData,
@@ -31,11 +30,21 @@ class MakeupApp extends StatelessWidget {
     );
   }
 
+  void load() {
+    theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    routes.setRoutes();
+    globals.currSwatches.init();
+    globals.debug = !kReleaseMode;
+    savedLooks.init();
+    IO.load().then((value) { setState(() { }); });
+  }
+
   Widget _getHome() {
     if(globals.hasLoaded) {
       if(globals.hasDoneTutorial) {
         navigation.init(routes.ScreenRoutes.AllSwatchesScreen);
-        return routes.routes['/allSwatchesScreen'](null);
+        return routes.routes[routes.defaultRoute](null);
       } else {
         navigation.init(routes.ScreenRoutes.TutorialScreen);
         return routes.routes['/tutorialScreen'](null);

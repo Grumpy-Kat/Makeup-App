@@ -43,6 +43,7 @@ void push(BuildContext context, Offset offset, routes.ScreenRoutes nextScreenEnu
 
 void pop(BuildContext context, bool reloadPrev) {
   if(_history.length <= 1) {
+    push(context, Offset(-1, 0), routes.defaultEnumRoute, routes.routes[routes.defaultRoute](context));
     return;
   }
   _history.removeLast();
