@@ -7,6 +7,7 @@ import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorConversions.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../allSwatchesIO.dart' as IO;
 
 class ColorWheelScreen extends StatefulWidget {
@@ -43,7 +44,7 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
         _pickedColor,
         null,
         IO.getMany(allSwatches), //converts swatch ids to swatches
-        maxDist: 14,
+        maxDist: 13,
         getSimilar: false, //only get by color distance, not categories
         getOpposite: false,
       ).keys.toList(),
@@ -57,6 +58,15 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
       context,
       'Color Wheel',
       2,
+      //help button
+      rightBar: [
+        globalWidgets.getHelpBtn(
+          context,
+          'This screen allows you to find the nearest swatch to the color you choose on a color wheel. This is helpful if you may be copying a face chart or have a specific color in mind.\n\n'
+          'To use the color wheel, first drag over the wheel to select the color. The further from the center you go, the more bright and saturated the color is. Then, drag the bar below it to select how dark or light the shade. The color to the right of this shows the final color.\n\n'
+          'Press "Find Colors" to find the closest swatches in your collection. Repeat this process until you find a swatch you like.',
+        ),
+      ],
       body: Column(
         children: <Widget>[
           //color picker

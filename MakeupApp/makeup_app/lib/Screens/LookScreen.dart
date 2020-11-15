@@ -14,6 +14,8 @@ class LookScreen extends StatefulWidget {
 
   final String name;
 
+  final String helpText;
+
   final bool showBack;
   final bool askBackSaved;
   final OnVoidAction onBackPressed;
@@ -29,7 +31,7 @@ class LookScreen extends StatefulWidget {
 
   final bool showEdit;
 
-  LookScreen({ @required this.swatches, @required this.updateSwatches, @required this.name, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true });
+  LookScreen({ @required this.swatches, @required this.updateSwatches, @required this.name, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true });
 
   @override
   LookScreenState createState() => LookScreenState();
@@ -74,6 +76,14 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     }
     if(widget.showEdit) {
       rightBar.add(buildEdit(context));
+    }
+    if(widget.helpText != null) {
+      rightBar.add(
+        globalWidgets.getHelpBtn(
+          context,
+          widget.helpText,
+        ),
+      );
     }
     return buildComplete(
       context,
@@ -149,10 +159,11 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerLeft,
       child: IconButton(
-        color: theme.iconTextColor,
+        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.arrow_back,
           size: theme.primaryIconSize,
+          color: theme.iconTextColor,
         ),
         onPressed: () {
           onExit();
@@ -166,10 +177,11 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        color: theme.iconTextColor,
+        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.delete,
           size: theme.primaryIconSize,
+          color: theme.iconTextColor,
         ),
         onPressed: () {
           //no need to clear if empty look
@@ -195,10 +207,11 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        color: theme.iconTextColor,
+        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.library_add,
           size: theme.primaryIconSize,
+          color: theme.iconTextColor,
         ),
         //action determined by screen that uses it
         onPressed: widget.onAddPressed,
@@ -208,13 +221,14 @@ class LookScreenState extends State<LookScreen> with ScreenState {
 
   Widget buildSave(BuildContext context) {
     //creates save button
-    return Align(
+    return Container(
       alignment: Alignment.centerRight,
       child: IconButton(
-        color: theme.iconTextColor,
+        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.save,
           size: theme.primaryIconSize,
+          color: theme.iconTextColor,
         ),
         //action determined by screen that uses it
         onPressed: widget.onSavePressed,
@@ -227,10 +241,11 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        color: theme.iconTextColor,
+        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.mode_edit,
           size: theme.primaryIconSize,
+          color: theme.iconTextColor,
         ),
         onPressed: () {
           setState(() {

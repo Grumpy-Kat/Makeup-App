@@ -101,10 +101,11 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       4,
       //back button
       leftBar: (mode == Mode.Default) ? null : IconButton(
-        color: theme.iconTextColor,
+        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.arrow_back,
           size: theme.primaryIconSize,
+          color: theme.iconTextColor,
         ),
         onPressed: () {
           setState(() {

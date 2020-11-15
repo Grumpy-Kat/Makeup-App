@@ -35,11 +35,12 @@ mixin ScreenState {
                   children: <Widget>[
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      padding: EdgeInsets.symmetric(horizontal: 7),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           IconButton(
+                            constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
                             icon: Icon(
                               Icons.menu,
                               size: theme.primaryIconSize,
@@ -62,7 +63,7 @@ mixin ScreenState {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        padding: EdgeInsets.symmetric(horizontal: 7),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: rightBar ?? [],

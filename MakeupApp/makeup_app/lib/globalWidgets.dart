@@ -32,6 +32,7 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
             context,
             title: Text(title, style: theme.primaryTextBold),
             content: getTextField(
+              context,
               null,
               value,
               error,
@@ -84,6 +85,7 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
             content: Column(
               children: <Widget> [
                 getTextField(
+                  context,
                   label1,
                   value1,
                   error1,
@@ -99,6 +101,7 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
                   height: 20,
                 ),
                 getTextField(
+                  context,
                   label2,
                   value2,
                   error2,
@@ -179,6 +182,50 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
   );
 }
 
+Widget getHelpBtn(BuildContext context, String text) {
+  return IconButton(
+    constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+    icon: Icon(
+      Icons.help,
+      size: 25.0,
+      color: theme.iconTextColor,
+    ),
+    onPressed: () {
+      //opens help dialog
+      openDialog(
+        context,
+        (BuildContext context) {
+          return getAlertDialog(
+            context,
+            content: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                child: Text(text, style: theme.primaryTextSecondary),
+              ),
+            ),
+            actions: <Widget>[
+              Container(
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+                child: FlatButton(
+                  color: theme.accentColor,
+                  onPressed: () {
+                    //doesn't use navigation because is popping an Dialog
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Close',
+                    style: theme.accentTextSecondary,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  );
+}
+
 PageRouteBuilder slideTransition(BuildContext context, Widget nextScreen, int duration, Offset begin, Offset end) {
   return PageRouteBuilder(
     transitionDuration: Duration(milliseconds: duration),
@@ -200,7 +247,7 @@ PageRouteBuilder slideTransition(BuildContext context, Widget nextScreen, int du
   );
 }
 
-Widget getTextField(String label, String value, String error, bool showErrorText, onChanged) {
+Widget getTextField(BuildContext context, String label, String value, String error, bool showErrorText, onChanged) {
   return TextField(
     autofocus: true,
     textAlign: TextAlign.left,

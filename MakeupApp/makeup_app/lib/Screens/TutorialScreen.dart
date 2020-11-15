@@ -188,7 +188,7 @@ class TutorialScreenState extends State<TutorialScreen> {
         'Click on the menu icon in top left to open the navigation to all the other menus.\n\n'
         '"All Swatches" is the screen you have currently been on.\n\n'
         '"Saved Looks" has all the looks that you\'ve saved from "Today\'s Look. Tap or double tap on the looks to open them. That screen will have more directions if you press the help icon in the top left corner."\n\n'
-        '"Color Wheel" allows you to choose finds the nearest swatch to the color you choose on a color wheel. This is helpful if you may be copying a face chart or have a specific color in mind. The screen will have more directions if you press the help icon in the top left corner.',
+        '"Color Wheel" allows you to find the nearest swatch to the color you choose on a color wheel. This is helpful if you may be copying a face chart or have a specific color in mind. The screen will have more directions if you press the help icon in the top left corner.',
         style: theme.primaryTextPrimary,
       ),
     );

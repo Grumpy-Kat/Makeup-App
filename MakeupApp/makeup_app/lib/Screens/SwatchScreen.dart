@@ -63,10 +63,11 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       20,
       //back button
       leftBar: IconButton(
-        color: theme.iconTextColor,
+        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.arrow_back,
           size: theme.primaryIconSize,
+          color: theme.iconTextColor,
         ),
         onPressed: () {
           exit();
@@ -75,10 +76,11 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       //edit button
       rightBar: [
         IconButton(
-          color: theme.iconTextColor,
+          constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
           icon: Icon(
             (_isEditing ? Icons.done : Icons.mode_edit),
             size: theme.primaryIconSize,
+            color: theme.iconTextColor,
           ),
           onPressed: () {
             setState(

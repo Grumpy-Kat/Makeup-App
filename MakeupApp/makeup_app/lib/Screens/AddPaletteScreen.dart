@@ -50,10 +50,11 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         10,
         //back button
         leftBar: IconButton(
-          color: theme.iconTextColor,
+          constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
           icon: Icon(
             Icons.arrow_back,
             size: theme.primaryIconSize,
+            color: theme.iconTextColor,
           ),
           onPressed: () {
             navigation.pushReplacement(
@@ -66,47 +67,10 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         ),
         //help button
         rightBar: [
-          IconButton(
-            icon: Icon(
-              Icons.help,
-              size: 25.0,
-              color: theme.iconTextColor,
-            ),
-            onPressed: () {
-              //help button
-              globalWidgets.openDialog(
-                context,
-                (BuildContext context) {
-                  return globalWidgets.getAlertDialog(
-                    context,
-                    content: Container(
-                      padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                      child: Text(
-                        'Palette Divider allows you to upload a picture and divide the palette into separate swatches. Then, it will automatically finds the colors and finishes for you. It should be used for most shadows and palettes.\n\n'
-                        'Custom allows you to input your own swatches, customizing the colors, finishes, and any other information you want to add. It\'s best for adding irregular palettes that would be difficult to divide into columns and rows.',
-                        style: theme.primaryTextSecondary,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      Container(
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
-                        child: FlatButton(
-                          color: theme.accentColor,
-                          onPressed: () {
-                            //doesn't use navigation because is popping an Dialog
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Close',
-                            style: theme.accentTextSecondary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
+          globalWidgets.getHelpBtn(
+            context,
+            'Palette Divider allows you to upload a picture and divide the palette into separate swatches. Then, it will automatically finds the colors and finishes for you. It should be used for most shadows and palettes.\n\n'
+            'Custom allows you to input your own swatches, customizing the colors, finishes, and any other information you want to add. It\'s best for adding irregular palettes that would be difficult to divide into columns and rows.',
           ),
         ],
         body: Column(
@@ -157,10 +121,11 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         10,
         //back button
         leftBar: IconButton(
-          color: theme.iconTextColor,
+          constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
           icon: Icon(
             Icons.arrow_back,
             size: theme.primaryIconSize,
+            color: theme.iconTextColor,
           ),
           onPressed: () {
             setState(() {
@@ -170,52 +135,13 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         ),
         //help button
         rightBar: [
-          IconButton(
-            icon: Icon(
-              Icons.help,
-              size: 25.0,
-              color: theme.iconTextColor,
-            ),
-            onPressed: () {
-              //opens help dialog
-              globalWidgets.openDialog(
-                context,
-                (BuildContext context) {
-                  return globalWidgets.getAlertDialog(
-                    context,
-                    content: SingleChildScrollView(
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                        child: Text(
-                          'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections. It is best to take the pictures in bright lighting, preferably near an open window.\n\n'
-                          'Then, type in the number of columns and rows in the palette.\n\n'
-                          'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
-                          'Last, press "Save". It will prompt you to add a brand and name for the palette. All the swatches\' colors and finishes will be detected and they will be added to your collection.\n\n'
-                          'You\'ll be taken to a screen to look over the added swatches. They will be arranged by the palette\'s rows. You can edit any of their information, leave ratings, or add tags if you wish to.',
-                          style: theme.primaryTextSecondary,
-                        ),
-                      ),
-                    ),
-                    actions: <Widget>[
-                      Container(
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
-                        child: FlatButton(
-                          color: theme.accentColor,
-                          onPressed: () {
-                            //doesn't use navigation because is popping an Dialog
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Close',
-                            style: theme.accentTextSecondary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
+          globalWidgets.getHelpBtn(
+            context,
+            'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections. It is best to take the pictures in bright lighting, preferably near an open window.\n\n'
+            'Then, type in the number of columns and rows in the palette.\n\n'
+            'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
+            'Last, press "Save". It will prompt you to add a brand and name for the palette. All the swatches\' colors and finishes will be detected and they will be added to your collection.\n\n'
+            'You\'ll be taken to a screen to look over the added swatches. They will be arranged by the palette\'s rows. You can edit any of their information, leave ratings, or add tags if you wish to.',
           ),
         ],
         //palette divider
@@ -298,10 +224,11 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         10,
         //back button
         leftBar: IconButton(
-          color: theme.iconTextColor,
+          constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
           icon: Icon(
             Icons.arrow_back,
             size: theme.primaryIconSize,
+            color: theme.iconTextColor,
           ),
           onPressed: () {
             setState(() {

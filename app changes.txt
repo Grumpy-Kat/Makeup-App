@@ -6,9 +6,10 @@ Features:
 -// Add default sort to settings
 -// Add photo lightness and brightness controls to settings
 -// Add whether row or column (or neither) is letter in shade name to settings
+- Add sensitivty setting for ColorWheelScreen, maybe with a min of 5 and max of 20
 -// Add help page to settings
 -// Add instructions (such as touch directions) on the first opening
-- Add directions to more screens, such as Today's Look, Saved Look, and Color Wheel
+-// Add directions to more screens, such as Today's Look, Saved Look, and Color Wheel
 - Add splash screen, maybe only on first opening
 - Sort PalettScannerScreen by similar finish?
 

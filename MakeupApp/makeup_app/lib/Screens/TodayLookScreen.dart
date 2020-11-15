@@ -39,6 +39,10 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
         });
       },
       name: 'Today\'s Look',
+      helpText: 'This all the swatches in the current look. You can press on any swatch for information about it. Press the "More..." button for more extensive information.\n\n'
+      'The delete icon in the upper right corner clears the look.\n\n'
+      'The save icon in the upper right corner saves the look. It\'ll prompt uou to input a name. You will then be able to find the look on the "Saved Looks" screen. It will allow you to revisit, remember, and redo old looks.\n\n'
+      'The edit icon in the upper right corner allows you to add or remove swatches. Press the red "X" in the upper right corner of the swatch to remove it from the look. Press the plus button to see your full collection. Tap on any of the swatches to see information on them. Double tap on them to add them to the look. Double tap on them again to remove them from the look.',
       showBack: true,
       askBackSaved: hasSaved,
       onBackPressed: exit,
