@@ -44,7 +44,7 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
         _pickedColor,
         null,
         IO.getMany(allSwatches), //converts swatch ids to swatches
-        maxDist: 13,
+        maxDist: globals.colorWheelDistance,
         getSimilar: false, //only get by color distance, not categories
         getOpposite: false,
       ).keys.toList(),

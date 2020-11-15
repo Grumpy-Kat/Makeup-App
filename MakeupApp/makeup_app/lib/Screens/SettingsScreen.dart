@@ -53,9 +53,9 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
   @override
   Widget build(BuildContext context) {
     //height of field
-    double height = 60;
+    double height = 55;
     //almost every field has padding
-    EdgeInsets padding = EdgeInsets.symmetric(horizontal: 15, vertical: 10);
+    EdgeInsets padding = EdgeInsets.symmetric(horizontal: 15, vertical: 7);
     //outer container includes margin if no field below
     EdgeInsets margin = EdgeInsets.only(bottom: 10);
     //border and color if no field below
@@ -126,7 +126,8 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           getDefaultNotificationsField(context, height, decoration, padding, margin),
           getDefaultSortField(context, height, noBottomDecoration, padding, margin),
           getDefaultShadeField(context, height, noBottomDecoration, padding, margin),
-          getDefaultPhotoField(context, height, decoration, padding, margin),
+          getDefaultPhotoField(context, height, noBottomDecoration, padding, margin),
+          getDefaultDistanceField(context, height, decoration, padding, margin),
           getDefaultHelpField(context, height, noBottomDecoration, padding, margin),
           getDefaultRequestField(context, height, noBottomDecoration, padding, margin),
           getDefaultReportField(context, height, noBottomDecoration, padding, margin),
@@ -393,7 +394,6 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       height: height,
       decoration: decoration,
       padding: padding,
-      margin: margin,
       child: InkWell(
         onTap: () {
           setState(() {
@@ -766,6 +766,67 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           ),
         ),
       ],
+    );
+  }
+
+  //field to choose brightness changes of photos, shown in photo upload settings mode
+  Widget getDefaultDistanceField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
+    return Container(
+      height: height,
+      decoration: decoration,
+      padding: padding,
+      margin: margin,
+      child: Row(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(right: 3),
+            child: Text('Color Wheel Screen Sensitivity ', style: theme.primaryTextSecondary),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                width: 135,
+                height: height - (padding.vertical * 1.5),
+                child: TextFormField(
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
+                  initialValue: globals.colorWheelDistance.toString(),
+                  textInputAction: TextInputAction.done,
+                  style: theme.primaryTextSecondary,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+                  ],
+                  maxLines: 1,
+                  textAlignVertical: TextAlignVertical.center,
+                  cursorColor: theme.accentColor,
+                  decoration: InputDecoration(
+                    fillColor: theme.primaryColor,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: theme.primaryColorDark,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: theme.accentColor,
+                        width: 2.5,
+                      ),
+                    ),
+                  ),
+                  onChanged: (String val) {
+                    setState(() {
+                      globals.colorWheelDistance = double.parse(val).clamp(3, 25);
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
