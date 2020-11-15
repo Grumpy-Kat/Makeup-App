@@ -129,6 +129,14 @@ final String appName = 'GlamKit';
 final String appVersion = '0.4';
 bool debug = true;
 
+//has done initial tutorial
+bool _hasDoneTutorial = false;
+bool get hasDoneTutorial => _hasDoneTutorial;
+set hasDoneTutorial(bool value) {
+  _hasDoneTutorial = value;
+  IO.save();
+}
+
 //languages
 final List<String> languages = ['English', 'Spanish'];
 String _language = 'English';

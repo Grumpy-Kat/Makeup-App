@@ -27,7 +27,7 @@ double get primaryIconSize => 24.0;
 double get secondaryTextSize => 15.0;
 double get secondaryIconSize => 22.0;
 double get tertiaryTextSize => 13.0;
-double get tertiaryIconSize => 21.0;
+double get tertiaryIconSize => 18.0;
 double get quaternaryTextSize => 12.0;
 double get quaternaryIconSize => 23.0;
 
@@ -60,6 +60,10 @@ ThemeData get themeData => ThemeData(
   splashColor: accentColor,
   textSelectionColor: accentColor,
   indicatorColor: accentColor,
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: accentColor,
+    foregroundColor: accentTextColor,
+  ),
   dialogTheme: DialogTheme(
     backgroundColor: bgColor,
     shape: RoundedRectangleBorder(

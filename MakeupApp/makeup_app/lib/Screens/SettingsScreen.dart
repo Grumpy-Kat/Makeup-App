@@ -4,6 +4,8 @@ import 'package:notification_permissions/notification_permissions.dart';
 import '../Screens/Screen.dart';
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
+import '../navigation.dart' as navigation;
+import '../routes.dart' as routes;
 
 enum Mode {
   Default,
@@ -116,17 +118,20 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
 
   //shows all fields for default mode
   Widget getDefaultScreen(BuildContext context, double height, Decoration decoration, Decoration noBottomDecoration, EdgeInsets padding, EdgeInsets margin) {
-    return  Column(
-      children: <Widget>[
-        getDefaultLanguageField(context, height, decoration, padding, margin),
-        getDefaultNotificationsField(context, height, decoration, padding, margin),
-        getDefaultSortField(context, height, noBottomDecoration, padding, margin),
-        getDefaultShadeField(context, height, noBottomDecoration, padding, margin),
-        getDefaultPhotoField(context, height, decoration, padding, margin),
-        getDefaultHelpField(context, height, noBottomDecoration, padding, margin),
-        getDefaultReportField(context, height, noBottomDecoration, padding, margin),
-        getDefaultAboutField(context, height, decoration, padding, margin),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          getDefaultLanguageField(context, height, decoration, padding, margin),
+          getDefaultNotificationsField(context, height, decoration, padding, margin),
+          getDefaultSortField(context, height, noBottomDecoration, padding, margin),
+          getDefaultShadeField(context, height, noBottomDecoration, padding, margin),
+          getDefaultPhotoField(context, height, decoration, padding, margin),
+          getDefaultHelpField(context, height, noBottomDecoration, padding, margin),
+          getDefaultRequestField(context, height, noBottomDecoration, padding, margin),
+          getDefaultReportField(context, height, noBottomDecoration, padding, margin),
+          getDefaultAboutField(context, height, decoration, padding, margin),
+        ],
+      ),
     );
   }
 
@@ -772,7 +777,14 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       child: Align(
         alignment: Alignment.centerLeft,
         child: InkWell(
-          onTap: () { },
+          onTap: () {
+            navigation.push(
+              context,
+              Offset(1, 0),
+              routes.ScreenRoutes.TutorialScreen,
+              routes.routes['/tutorialScreen'](context),
+            );
+          },
           child: Row(
             children: <Widget>[
               Container(
@@ -793,6 +805,38 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  //field to go to feature request link, shown in default mode
+  Widget getDefaultRequestField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
+    return Container(
+      height: height,
+      decoration: decoration,
+      padding: padding,
+      child: InkWell(
+        onTap: () { },
+        child: Row(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: Text('Request a Feature', style: theme.primaryTextSecondary),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                child: Icon(
+                  Icons.lightbulb,
+                  size: theme.primaryIconSize,
+                  color: theme.tertiaryTextColor,
+                  semanticLabel: 'Request a Feature',
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

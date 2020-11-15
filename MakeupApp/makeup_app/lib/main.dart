@@ -1,3 +1,5 @@
+import 'package:GlamKit/Screens/AllSwatchesScreen.dart';
+import 'package:GlamKit/Screens/TutorialScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
@@ -13,20 +15,33 @@ void main() => runApp(MakeupApp());
 class MakeupApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    IO.load();
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     routes.setRoutes();
-    IO.load();
     globals.currSwatches.init();
     globals.debug = !kReleaseMode;
     savedLooks.init();
-    navigation.init(routes.ScreenRoutes.AllSwatchesScreen);
     return MaterialApp(
       title: globals.appName,
       theme: theme.themeData,
-      initialRoute: '/allSwatchesScreen',
+      home: _getHome(),
       routes: routes.routes,
       debugShowCheckedModeBanner: false,
     );
+  }
+
+  Widget _getHome() {
+    if(globals.hasLoaded) {
+      if(globals.hasDoneTutorial) {
+        navigation.init(routes.ScreenRoutes.AllSwatchesScreen);
+        return routes.routes['/allSwatchesScreen'](null);
+      } else {
+        navigation.init(routes.ScreenRoutes.TutorialScreen);
+        return routes.routes['/tutorialScreen'](null);
+      }
+    }
+    //TODO: add splash screen
+    return Container();
   }
 }

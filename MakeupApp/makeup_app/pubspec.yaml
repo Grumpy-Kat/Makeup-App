@@ -28,6 +28,7 @@ dependencies:
   tflite: ^1.0.04
   image_picker:
   notification_permissions: ^0.4.8
+  transformer_page_view:
 
 flutter_icons:
   ios: true

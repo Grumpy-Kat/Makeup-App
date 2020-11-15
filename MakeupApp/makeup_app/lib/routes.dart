@@ -1,3 +1,5 @@
+import 'package:GlamKit/Screens/TutorialScreen.dart';
+
 import 'Screens/AllSwatchesScreen.dart';
 import 'Screens/ColorWheelScreen.dart';
 import 'Screens/PaletteScannerScreen.dart';
@@ -13,6 +15,7 @@ Map<String, OnScreenAction> routes = {};
 Map<ScreenRoutes, OnScreenAction> enumRoutes = {};
 
 enum ScreenRoutes {
+  TutorialScreen,
   AllSwatchesScreen,
   SavedLooksScreen,
   ColorWheelScreen,
@@ -26,6 +29,7 @@ enum ScreenRoutes {
 
 void setRoutes() {
   routes = {
+    '/tutorialScreen': (context) => TutorialScreen(),
     '/allSwatchesScreen': (context) => AllSwatchesScreen(),
     '/savedLooksScreen': (context) => SavedLooksScreen(),
     '/colorWheelScreen': (context) => ColorWheelScreen(),
@@ -37,6 +41,7 @@ void setRoutes() {
     '/swatchScreen': (context) => SwatchScreen(swatch: null),
   };
   enumRoutes = {
+    ScreenRoutes.TutorialScreen: routes['/tutorialScreen'],
     ScreenRoutes.AllSwatchesScreen: routes['/allSwatchesScreen'],
     ScreenRoutes.SavedLooksScreen: routes['/savedLooksScreen'],
     ScreenRoutes.ColorWheelScreen: routes['/colorWheelScreen'],

@@ -41,6 +41,8 @@ void save() async {
   await f.writeString('${globals.blueOffset}\n');
   //auto shade name mode
   await f.writeString('${globals.AutoShadeNameMode.values.indexOf(globals.autoShadeNameMode)}\n');
+  //has done initial tutorial
+  await f.writeString('${globals.hasDoneTutorial}\n');
 }
 
 void load() async {
@@ -64,6 +66,8 @@ void load() async {
       globals.blueOffset = int.parse(lines[6]);
       //auto shade name mode
       globals.autoShadeNameMode = globals.AutoShadeNameMode.values[int.parse(lines[7])];
+      //has done initial tutorial
+      globals.hasDoneTutorial = (lines[8].toLowerCase() == 'true');
     }
   } else {
     await save();
