@@ -55,6 +55,7 @@ class PaletteDividerState extends State<PaletteDivider> {
   void initState() {
     super.initState();
     ImagePicker.img = null;
+    ImagePicker.error = '';
     actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
     colsController = TextEditingController(text: numCols.toString());
     rowsController = TextEditingController(text: numRows.toString());
@@ -199,6 +200,7 @@ class PaletteDividerState extends State<PaletteDivider> {
       child: FlatButton(
         color: (ImagePicker.img == null ? theme.accentColor : theme.primaryColorDark),
         onPressed: () {
+          ImagePicker.error = '';
           ImagePicker.open(context).then(
             (val) {
               setState(() {

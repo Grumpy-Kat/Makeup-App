@@ -16,6 +16,6 @@ Features:
 Bugs:
 -// PaletteDivider does not allow for diagonal dragging, only horizontal or vertical
 -// Phone recieves error if photo or camera access is not allowed (this disables other features, so catch error)
-- Give user message if any permission is denied (such as camera or gallery)
+-// Give user message if any permission is denied (such as camera or gallery)
 -// RecommendedSwatchBar sometimes closes while the second swatch's is opening
 - Investigate occasional black-screen bug when first downloading or updating app and then taking picture of palette

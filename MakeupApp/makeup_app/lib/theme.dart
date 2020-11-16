@@ -44,7 +44,8 @@ TextStyle get accentTextSecondary => TextStyle(color: accentTextColor, fontSize:
 TextStyle get accentTextTertiary => TextStyle(color: accentTextColor, fontSize: secondaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
 TextStyle get selectedText => TextStyle(color: accentColor, fontSize: primaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
 TextStyle get errorText => TextStyle(color: errorTextColor, fontSize: primaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
-TextStyle get errorTextLabel => TextStyle(color: errorTextColor, fontSize: secondaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
+TextStyle get errorTextSecondary => TextStyle(color: errorTextColor, fontSize: secondaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
+TextStyle get errorTextTertiary => TextStyle(color: errorTextColor, fontSize: tertiaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
 
 ThemeData get themeData => ThemeData(
   backgroundColor: bgColor,

@@ -259,7 +259,7 @@ Widget getTextField(BuildContext context, String label, String value, String err
       labelText: label,
       labelStyle: theme.primaryTextSecondary,
       errorText: showErrorText ? error : null,
-      errorStyle: theme.errorTextLabel,
+      errorStyle: theme.errorTextSecondary,
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: theme.errorTextColor,

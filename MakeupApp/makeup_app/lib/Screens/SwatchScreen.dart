@@ -8,7 +8,6 @@ import '../ColorMath/ColorConversions.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import '../navigation.dart' as navigation;
 import '../theme.dart' as theme;
-import '../routes.dart' as routes;
 import '../globals.dart' as globals;
 import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
