@@ -61,19 +61,20 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     //border and color if no field below
     Decoration decoration = BoxDecoration(
       color: theme.primaryColor,
-      border: Border.all(color: theme.primaryColorDark),
+      border: Border(
+        top: BorderSide(
+          color: theme.primaryColorDark,
+        ),
+        bottom: BorderSide(
+          color: theme.primaryColorDark,
+        ),
+      ),
     );
     //border and color if field below
     Decoration decorationNoBottom = BoxDecoration(
       color: theme.primaryColor,
       border: Border(
         top: BorderSide(
-          color: theme.primaryColorDark,
-        ),
-        left: BorderSide(
-          color: theme.primaryColorDark,
-        ),
-        right: BorderSide(
           color: theme.primaryColorDark,
         ),
       ),
@@ -461,7 +462,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(signed: true),
                   initialValue: globals.brightnessOffset.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -521,7 +522,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(signed: true),
                   initialValue: globals.redOffset.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -581,7 +582,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(signed: true),
                   initialValue: globals.greenOffset.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -642,7 +643,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(signed: true),
                   initialValue: globals.blueOffset.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -791,7 +792,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                   initialValue: globals.colorWheelDistance.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,

@@ -157,7 +157,6 @@ set sort(String value) {
 }
 Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step: 16 }) {
   return {
-    '': (Swatch swatch, int i) { return stepSort(swatch.color, step: step); },
     'Hue': (Swatch swatch, int i) { return stepSort(swatch.color, step: step); },
     'Lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
     'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
@@ -170,7 +169,6 @@ Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step
 }
 Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBColor color, { step: 16 }) {
   return {
-    '': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
     'Hue': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
     'Lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
     'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },

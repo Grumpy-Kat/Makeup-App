@@ -93,7 +93,7 @@ class ImagePicker {
   }
 
   static void _openCamera(BuildContext context, void Function(void Function()) setState) async {
-    PermissionStatus status = await Permission.photos.request();
+    PermissionStatus status = await Permission.camera.request();
     if(status.isGranted) {
       if(error != '') {
         setState(() { error = ''; });
