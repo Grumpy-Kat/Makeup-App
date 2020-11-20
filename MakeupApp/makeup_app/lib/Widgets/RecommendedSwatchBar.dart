@@ -91,7 +91,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
           if(occurrences.containsKey(id)) {
             occurrences[id] += value;
           } else {
-            occurrences[id] = value;
+            occurrences[id] = value + key.rating;
           }
         }
       );
@@ -100,7 +100,6 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
     recommendedSwatches.sort((a, b) => occurrences[b].compareTo(occurrences[a]));
     maxSwatches = min(maxSwatches, recommendedSwatches.length);
     for(int i = 0; i < maxSwatches; i++) {
-      //TODO: factor in  swatch rating
       if(recommendedSwatches[i] != null) {
         _swatches.add(recommendedSwatches[i]);
         _swatchIcons.add(SwatchIcon.id(recommendedSwatches[i], showInfoBox: true));
