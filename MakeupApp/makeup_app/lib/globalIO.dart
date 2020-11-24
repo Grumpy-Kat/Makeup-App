@@ -1,4 +1,6 @@
 import 'package:path_provider/path_provider.dart';
+import 'package:archive/archive.dart';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import 'Widgets/Swatch.dart';
@@ -7,6 +9,24 @@ import 'ColorMath/ColorObjects.dart';
 Future<String> getLocalPath() async {
   final Directory directory = await getApplicationDocumentsDirectory();
   return directory.path;
+}
+
+String compress(String string) {
+  if(string == '') {
+    return '';
+  }
+  List<int> bytes = utf8.encode(string);
+  String compressed = base64.encode(ZLibCodec().encode(bytes));
+  return compressed;
+}
+
+String decompress(String compressed) {
+  if(compressed == '') {
+    return '';
+  }
+  List<int> bytes = base64.decode(compressed);
+  String string  = utf8.decode(ZLibDecoder().decodeBytes(bytes));
+  return string;
 }
 
 Future<String> saveSwatch(Swatch swatch) async {

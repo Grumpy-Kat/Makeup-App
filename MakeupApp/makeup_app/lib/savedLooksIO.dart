@@ -47,10 +47,11 @@ void clear(int id) async {
 Future<int> save(int id, String name, List<int> info) async  {
   print('save $id');
   hasSaveChanged = true;
+  //add to master list
   if(id == -1) {
     //creating new saved look
     File fileAll = await getSaveFileIds();
-    List<String> ids = (await fileAll.readAsString()).split('\n');
+    List<String> ids = await loadIds(fileAll: fileAll);
     int newId;
     if(ids.length == 0 || ids.length == 1) {
       //first id
@@ -58,36 +59,52 @@ Future<int> save(int id, String name, List<int> info) async  {
     } else {
       newId = int.parse(ids[ids.length - 2] == '' ? '0' : ids[ids.length - 2]) + 1;
     }
-    RandomAccessFile fAll = await fileAll.open(mode: FileMode.writeOnlyAppend);
-    await fAll.writeString(newId.toString() + '\n');
+    ids.add(newId.toString());
+    String string = '';
+    for(int i = 0; i < ids.length; i++) {
+      string += '${ids[i]}\n';
+    }
+    RandomAccessFile f = await fileAll.open(mode: FileMode.writeOnly);
+    String compressed = compress(string);
+    await f.writeString(compressed);
     id = newId;
+  }
+  //save individual look
+  String string = '';
+  string += '$name\n';
+  for(int i = 0; i < info.length; i++) {
+    string += '${info[i]}\n';
   }
   File file = await getSaveFile(id);
   RandomAccessFile f = await file.open(mode: FileMode.writeOnly);
-  await f.writeString(name + '\n');
-  for(int i = 0; i < info.length; i++) {
-    await f.writeString('${info[i]}\n');
-  }
+  String compressed = compress(string);
+  await f.writeString(compressed);
   return id;
+}
+
+Future<List<String>> loadIds({ File fileAll = null }) async {
+  fileAll = await getSaveFileIds();
+  List<String> ids = decompress(await fileAll.readAsString()).split('\n');
+  ids = ids.toSet().toList();
+  return ids;
 }
 
 Future<List<String>> load({ bool override = false }) async {
   if(lines == null || hasSaveChanged || override) {
-    File fileAll = await getSaveFileIds();
-    List<String> ids = (await fileAll.readAsString()).split('\n');
-    ids = ids.toSet().toList();
+    List<String> ids = await loadIds();
     lines = [];
     for(int i = 0; i < ids.length; i++) {
       if(ids[i] == '') {
         continue;
       }
       File file = await getSaveFile(int.parse(ids[i]));
-      List<String> fileLines = (await file.readAsString()).split('\n');
+      List<String> fileLines = decompress(await file.readAsString()).split('\n');
       for(int j = 0; j < fileLines.length; j++) {
+        String line = fileLines[j];
         if(j == 0) {
-          lines.add('${ids[i]}|${fileLines[j]}');
+          lines.add('${ids[i]}|$line');
         } else {
-          lines.add(fileLines[j]);
+          lines.add(line);
         }
       }
       lines.add('');

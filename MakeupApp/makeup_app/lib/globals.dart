@@ -150,7 +150,7 @@ set language(String value) {
 
 //default sort and sort options
 String _sort = 'Hue';
-String get sort => _sort;
+String get sort => _sort == '' ? 'Hue' : _sort;
 set sort(String value) {
   _sort = value;
   IO.save();

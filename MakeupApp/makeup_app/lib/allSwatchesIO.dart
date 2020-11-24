@@ -132,12 +132,15 @@ bool isValid(int i) {
 }
 
 void save(Map<int, String> info) async {
+  List<int> keys = info.keys.toList();
+  String string = '';
+  for(int i = 0; i < keys.length; i++) {
+    string += '${keys[i]}|${info[keys[i]]}\n';
+  }
+  String compressed = compress(string);
   File file = await getSaveFile();
   RandomAccessFile f = await file.open(mode: FileMode.writeOnly);
-  List<int> keys = info.keys.toList();
-  for(int i = 0; i < keys.length; i++) {
-    await f.writeString('${keys[i]}|${info[keys[i]]}\n');
-  }
+  await f.writeString(compressed);
   await loadFormatted(override: true, overrideInner: true);
   for(int i = 0; i < onSaveChanged.length; i++) {
     onSaveChanged[i]();
@@ -148,13 +151,14 @@ Future<Map<int, String>> load({ bool override = false }) async {
   if(lines == null || hasSaveChanged || override) {
     isLoading = true;
     File file = await getSaveFile();
-    List<String> fileLines = (await file.readAsString()).split('\n');
+    List<String> fileLines = decompress(await file.readAsString()).split('\n');
     lines = {};
     for(int i = 0; i < fileLines.length; i++) {
-      if(fileLines[i] != '') {
-        List<String> lineSplit = fileLines[i].split('|');
+      String line = fileLines[i];
+      if(line != '') {
+        List<String> lineSplit = line.split('|');
         if(lineSplit.length > 1) {
-          lines[int.parse(lineSplit[0])] = fileLines[i].substring(lineSplit[0].length + 1);
+          lines[int.parse(lineSplit[0])] = line.substring(lineSplit[0].length + 1);
         }
       }
     }

@@ -6,7 +6,8 @@ import 'theme.dart' as theme;
 import 'routes.dart' as routes;
 import 'navigation.dart' as navigation;
 import 'settingsIO.dart' as IO;
-import 'savedLooksIO.dart' as savedLooks;
+import 'savedLooksIO.dart' as savedLooksIO;
+import 'allSwatchesIO.dart' as allSwatchesIO;
 
 void main() => runApp(GlamKitApp());
 
@@ -36,8 +37,21 @@ class GlamKitAppState extends State<GlamKitApp> {
     routes.setRoutes();
     globals.currSwatches.init();
     globals.debug = !kReleaseMode;
-    savedLooks.init();
+    savedLooksIO.init();
+    //newSave();
     IO.load().then((value) { setState(() { }); });
+  }
+
+  void newSave() async {
+    //allSwatchesIO
+    await allSwatchesIO.loadFormatted();
+    allSwatchesIO.save(await allSwatchesIO.load());
+    //savedLooksIO
+    Map<String, List<int>> savedLooks = await savedLooksIO.loadFormatted();
+    for(int i = 0; i < savedLooks.keys.length; i++) {
+      List<String> labelSplit = savedLooks.keys.toList()[i].split('|');
+      savedLooksIO.save(int.parse(labelSplit[0]), labelSplit[1], savedLooks[savedLooks.keys.toList()[i]]);
+    }
   }
 
   Widget _getHome() {
@@ -50,7 +64,6 @@ class GlamKitAppState extends State<GlamKitApp> {
         return routes.routes['/tutorialScreen'](null);
       }
     }
-    //TODO: add splash screen
     return Container();
   }
 }
