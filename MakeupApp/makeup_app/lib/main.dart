@@ -36,22 +36,18 @@ class GlamKitAppState extends State<GlamKitApp> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     routes.setRoutes();
     globals.currSwatches.init();
-    globals.debug = !kReleaseMode;
+    //globals.debug = !kReleaseMode;
+    globals.debug = false;
     savedLooksIO.init();
-    //newSave();
+    //clearSave();
     IO.load().then((value) { setState(() { }); });
   }
 
-  void newSave() async {
+  void clearSave() async {
     //allSwatchesIO
-    await allSwatchesIO.loadFormatted();
-    allSwatchesIO.save(await allSwatchesIO.load());
+    allSwatchesIO.clear();
     //savedLooksIO
-    Map<String, List<int>> savedLooks = await savedLooksIO.loadFormatted();
-    for(int i = 0; i < savedLooks.keys.length; i++) {
-      List<String> labelSplit = savedLooks.keys.toList()[i].split('|');
-      savedLooksIO.save(int.parse(labelSplit[0]), labelSplit[1], savedLooks[savedLooks.keys.toList()[i]]);
-    }
+    savedLooksIO.clearIds();
   }
 
   Widget _getHome() {
