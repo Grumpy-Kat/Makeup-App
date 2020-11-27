@@ -1,0 +1,62 @@
+html {
+	-webkit-overflow-scrolling: touch;
+}
+html, body {
+	height: 100%;
+	color: var(--primaryTextColor);
+	overflow-x: hidden;
+	font-family: Montserrat, sans-serif;
+}
+body {
+	background-color: var(--bgColor);
+}
+a {
+	color: var(--primaryTextColor);
+}
+a:hover {
+	color: var(--primaryTextColor);
+}
+
+.main1 {
+	margin: 0;
+	padding: 30px;
+	padding-top: 50px;
+	width: 100%;
+	background-color: var(--bgColor);
+	background: linear-gradient(346deg, rgba(234, 254, 251, 0.5) 0%, rgba(156, 231, 219, 0.5) 35%, rgba(187, 230, 223, 0.5) 100%);
+}
+.main1 .phone {
+    background-image: url("../imgs/iconBackground.png");
+	background-size: auto 250px;
+	background-repeat: no-repeat;
+	background-position: center;
+    height: 250px;
+    margin: 30px;
+	vertical-align: middle;
+}
+.buttons {
+	width: 100%;
+	margin: 0px;
+	margin-top: 40px;
+	padding: 0px 50px;
+}
+.buttons .btn {
+	height: 67px;
+	background-color: transparent;
+	background-size: 225px 67px;
+	background-repeat: no-repeat;
+	background-position: center;
+	vertical-align: middle;
+}
+.buttons .iOS {
+    background-image: url("../imgs/iOSButton.png");
+}
+.buttons .android {
+    background-image: url("../imgs/androidButton.png");
+}
+.main1 h1 {
+	font: var(--title);
+}
+.main1 h2 {
+	font: var(--textBold);
+}

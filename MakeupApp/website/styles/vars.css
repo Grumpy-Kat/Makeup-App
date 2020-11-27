@@ -1,0 +1,19 @@
+:root {
+  --bgColor: rgba(244, 245, 247, 1);
+  --primaryColorLight: rgba(251, 252, 254, 1);
+  --primaryColor: rgba(248, 249, 251, 1);
+  --primaryColorDark: rgba(219, 220, 222, 1);
+  --primaryColorDarkest: rgba(153, 154, 156, 1);
+  --primaryTextColor: rgba(0, 0, 0, 1);
+  --secondaryTextColor: rgba(54, 54, 54, 1);
+  --tertiaryTextColor: rgba(109, 109, 114, 1);
+  --accentColor: rgba(39, 165, 146, 1);
+  --accentTextColor: rgba(248, 249, 251, 1);
+  
+  --title: normal bold 30px Montserrat, sans-serif;
+  --textBold: normal 500 17px Montserrat, sans-serif;
+  --textPrimary: 15px Montserrat, sans-serif;
+  --textSecondary: 13px Montserrat, sans-serif;
+  --textTertiary: 11px Montserrat, sans-serif;
+  --textQuaternary: 10px Montserrat, sans-serif;
+}

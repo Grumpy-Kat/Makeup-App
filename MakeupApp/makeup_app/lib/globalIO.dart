@@ -45,8 +45,10 @@ Future<String> saveSwatch(Swatch swatch) async {
   String rating = swatch.rating.toString();
   //tags
   String tags = '';
-  for(int i = 0; i < swatch.tags.length; i++) {
-    tags += swatch.tags[i] + ',';
+  if(swatch.tags != null) {
+    for (int i = 0; i < swatch.tags.length; i++) {
+      tags += swatch.tags[i] + ',';
+    }
   }
   //combined
   return '$color;$finish;$brand;$palette;$shade;$rating;$tags\n';
