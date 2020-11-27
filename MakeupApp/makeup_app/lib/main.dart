@@ -37,9 +37,9 @@ class GlamKitAppState extends State<GlamKitApp> {
   }
 
   void load() {
-    generateRainbow();
-    //theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
-    theme.isDarkTheme = true;
+    //generateRainbow();
+    theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
+    //theme.isDarkTheme = true;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     routes.setRoutes();
     globals.currSwatches.init();

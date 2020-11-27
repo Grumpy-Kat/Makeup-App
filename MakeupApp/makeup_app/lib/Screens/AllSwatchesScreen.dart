@@ -51,7 +51,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
         sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
       ),
       //floating plus button to go to AddPaletteScreen
-      /*floatingActionButton: Container(
+      floatingActionButton: Container(
         margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
         width: 75,
         height: 75,
@@ -70,7 +70,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
             );
           },
         ),
-      ),*/
+      ),
     );
   }
 }
