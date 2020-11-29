@@ -58,9 +58,10 @@ class GlamKitAppState extends State<GlamKitApp> {
     int swatches = 100;
     for(int i = 0; i < swatches; i++) {
       double hue = (341 / swatches * i).floorToDouble();
-      double saturation = 100;
-      double value = 50;
+      double saturation = 0.7;
+      double value = 0.7;
       RGBColor color = HSVtoRGB(HSVColor(hue, saturation, value));
+      //print('$hue $saturation $value | ${color.getValues()[0]} ${color.getValues()[1]} ${color.getValues()[2]}');
       String finish = finishes[random.nextInt(finishes.length)];
       info[i] = await globalIO.saveSwatch(Swatch(color:color, finish: finish));
     }
