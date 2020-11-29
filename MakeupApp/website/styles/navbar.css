@@ -11,35 +11,21 @@
 }
 .navbar .container {
 	margin: 20px;
+	margin-top: 15px;
 	width: 100%;
-}
-.navbar-nav {
-    float: right;
-    vertical-align: middle;
-    margin: 12px 0px;
-    padding-left: 30px;
-	
-}
-.navbar-nav li {
-    width: 100px;
-    text-align: center;
 }
 .navbar-brand {
     float: left;
     display: table-cell;
-    vertical-align: middle;
-    padding: 10px 0px 0px 0px;
-    max-width: 300px
-}
-.navbar-brand {
+    max-width: 300px;
     background-image: url("../imgs/iconForeground.png");
-	background-size: 55px 55px;
+	background-size: 60px 60px;
 	background-repeat: no-repeat;
 	background-position: center;
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     margin: 12px 0px;
-    padding: 20px 0px;
+    padding: 15px 0px;
     display: block;
 	position: absolute;
     vertical-align: middle;
@@ -47,17 +33,16 @@
 }
 .navbar-brand-background {
     background-image: url("../imgs/iconBackground.png");
-	background-size: 45px 45px;
-	
+	background-size: 50px 50px;
 }
 .navbar-brand-title {
 	background-image: none;
 	position: relative;
 	border-radius: 0px;
-	margin-left: 55px!important;
-	margin-top: 6px;
+	margin-left: 60px!important;
 	width: 100px;
-	font-weight: bold;
+	height: 50px;
+	font: var(--subTitle);
 }
 .navbar-toggler-icon {
 	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0,1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
@@ -68,8 +53,8 @@
 	width: 30px;
 	height: 30px;
     vertical-align: middle;
-    padding: 20px 0px;
-	margin-right: 20px;
+    padding: 0px!important;
+	margin: 5px 20px!important;
 }
 .nav-link a::after {
 	position: absolute;
@@ -86,6 +71,16 @@
 	-webkit-transform: translateY(10px);
 	-moz-transform: translateY(10px);
 	transform: translateY(10px);
+}
+.navbar-nav {
+    float: right;
+    vertical-align: middle;
+    margin: 12px 0px;
+    padding-left: 30px;
+}
+.navbar-nav li {
+    width: 100px;
+    text-align: center;
 }
 .navbar-nav a:hover, .navbar-nav a:focus {
 	text-decoration: none;

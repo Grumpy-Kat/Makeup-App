@@ -1,0 +1,91 @@
+.footerSection {
+	margin-top: 20px;
+	width: 100%;
+	padding: 30px 0%;
+	width: 100%;
+	background-color: var(--bgColor);
+	background: linear-gradient(346deg, rgba(234, 254, 251, 0.5) 0%, rgba(156, 231, 219, 0.5) 35%, rgba(187, 230, 223, 0.5) 100%);
+}
+@media (min-width: 768px) {
+	.footerSection {
+		padding: 30px 10%;
+	}
+}
+@media (min-width: 992px) {
+	.footerSection {
+		padding: 30px 17%;
+	}
+}
+@media (min-width: 1250px) {
+	.footerSection {
+		padding: 30px 27%;
+	}
+}
+.footerSection .text {
+	text-align: center;
+}
+.footerSection h2 {
+	margin-bottom: 5px;
+}
+.footerSection h3 {
+	margin-top: 0px;
+}
+.mailingListForm {
+	margin: 30px 0px 70px 0px;
+	padding: 0px 30px;
+}
+.mailingListForm input, .mailingListForm button {
+	font: var(--textBold);
+	height: 50px;
+	line-height: 16px;
+	border-style: solid;
+}
+.mailingListForm input {
+	padding: 17px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border-width: 1px;
+	border-right-width: 0px;
+	border-color: rgba(219, 220, 222, 0.3);
+}
+.mailingListForm input::placeholder {
+	color: var(--secondaryTextColor);
+	opacity: 0.4;
+}
+.mailingListForm button {
+	padding: 0px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-width: 0px;
+	background-color: var(--accentColor);
+}
+.mailingListForm input:focus {
+	padding: 16px;
+	padding-right: 17px;
+	border-width: 2px;
+	border-right-width: 0px;
+	border-color: var(--accentColor);
+}
+.mailingListForm .shine {
+	padding: 17px;
+	width: 100%;
+	height: 100%;
+	color: var(--accentTextColor);
+}
+.mailingListForm .shine:hover {
+	color: var(--accentTextColor);
+}
+.mailingListForm .shine:after {
+	top: 70%;
+	left: -200%;
+}
+.mailingListForm .shine:hover:after {
+	top: -320%;
+	left: -110%;
+}
+@media (max-width: 675px) {
+	.mailingListForm input, .mailingListForm button {
+		font: var(--primaryText);
+		font-weight: 500;
+	}
+}

@@ -1,0 +1,127 @@
+.screenSection {
+	margin: 20px 0px;
+	width: 100%;
+	padding: 30px;
+}
+.screenSection .phone div {
+	background-size: auto 400px;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 189px;
+    height: 400px;
+	text-align: center;
+	vertical-align: middle;
+	margin: auto;
+	overflow: hidden;
+	border-radius: 19px;
+}
+.screenSection .text {
+	background-color: var(--primaryColorDark);
+	height: 170px;
+	margin: 100px 10px;
+	padding: 10px 15px;
+}
+.screenSection h3 {
+	margin-top: 0px;
+}
+.screenSection-leftArrow .phone {
+	margin-left: 5px;
+}
+.screenSection-rightArrow .phone {
+	margin-right: 5px;
+}
+.screenSection-leftArrow .text {
+	margin-right: 0px;
+}
+.screenSection-rightArrow .text {
+	margin-left: 0px;
+}
+@media (min-width: 768px) {
+	.screenSection-leftArrow .phone {
+		margin-left: 25px;
+	}
+	.screenSection-rightArrow .phone {
+		margin-right: 25px;
+	}
+	.screenSection-leftArrow .text {
+		margin-right: 10px;
+	}
+	.screenSection-rightArrow .text {
+		margin-left: 10px;
+	}
+}
+@media (min-width: 992px) {
+	.screenSection-leftArrow .phone {
+		margin-left: 100px;
+	}
+	.screenSection-rightArrow .phone {
+		margin-right: 100px;
+	}
+	.screenSection-leftArrow .text {
+		margin-right: 117px;
+	}
+	.screenSection-rightArrow .text {
+		margin-left: 117px;
+	}
+}
+@media (min-width: 1200px) {
+	.screenSection-leftArrow .phone {
+		margin-left: 150px;
+	}
+	.screenSection-rightArrow .phone {
+		margin-right: 150px;
+	}
+	.screenSection-leftArrow .text {
+		margin-right: 167px;
+	}
+	.screenSection-rightArrow .text {
+		margin-left: 167px;
+	}
+}
+.screenSection-leftArrow .text:before {
+	z-index: -1;
+	content: "";
+	position: absolute;
+	background-color: var(--primaryColorDark);
+	top: 170px;
+	left: 15px;
+	width: 30px;
+	height: 30px;
+	transform: rotate(135deg);
+	-webkit-transform: rotate(135deg);
+}
+.screenSection-rightArrow .text:before {
+	z-index: 1;
+	content: "";
+	position: absolute;
+	background-color: var(--primaryColorDark);
+	top: 170px;
+	right: 15px;
+	width: 30px;
+	height: 30px;
+	transform: rotate(315deg);
+	-webkit-transform: rotate(315deg);
+}
+.allSwatches .phone div {
+    background-image: url("../imgs/rainbowSwatches4-2.png");
+}
+.savedLooks .phone div {
+    background-image: url("../imgs/rainbowSwatches4-2.png");
+}
+.colorWheel .phone div {
+    background-image: url("../imgs/rainbowSwatches4-2.png");
+}
+.paletteDivider .phone div {
+    background-image: url("../imgs/rainbowSwatches4-2.png");
+}
+@media (max-width: 768px) {
+	.screenSection {
+		padding: 0px 30px;
+	}
+	.screenSection .text {
+		margin: 20px 10px;
+	}
+	.screenSection .text:before {
+		display: none;
+	}
+}

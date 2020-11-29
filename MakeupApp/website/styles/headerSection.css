@@ -1,0 +1,125 @@
+.headerSection {
+	margin: 0px;
+	margin-bottom: 20px;
+	padding: 90px 30px 10px 30px;
+	width: 100%;
+	background-color: var(--bgColor);
+	background: linear-gradient(346deg, rgba(234, 254, 251, 0.5) 0%, rgba(156, 231, 219, 0.5) 35%, rgba(187, 230, 223, 0.5) 100%);
+}
+.headerSection .phone {
+    background-image: url("../imgs/rainbowSwatchesScreen2.png");
+	background-size: auto 520px;
+	background-repeat: no-repeat;
+	background-position: center;
+    height: 520px;
+	vertical-align: middle;
+	margin: 50px 0px 45px 0px;
+}
+.headerSection .text {
+	margin-top: 70px;
+	padding: 50px 30px 0px 30px;
+}
+.buttons {
+	width: 100%;
+	margin: 0px;
+	margin-top: 50px;
+	padding: 0px 0px;
+}
+.buttons .btn {
+	height: 57px;
+	background-size: 190px 57px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	vertical-align: middle;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+.buttons .shine {
+	width: 190px;
+	height: 57px;
+}
+@media (min-width: 576px) {
+	.buttons {
+		padding: 0px 18px;
+	}
+	.buttons .btn {
+		height: 63px;
+		background-size: 210px 63px;
+	}
+	.buttons .shine {
+		width: 210px;
+		height: 63px;
+	}
+}
+@media (min-width: 768px) {
+	.buttons {
+		padding: 0px 80px;
+	}
+	.buttons .btn {
+		height: 67px;
+		background-size: 225px 67px;
+	}
+	.buttons .shine {
+		width: 225px;
+		height: 67px;
+	}
+}
+@media (min-width: 992px) {
+	.buttons {
+		padding: 0px 0px;
+	}
+	.buttons .btn {
+		height: 63px;
+		background-size: 210px 63px;
+	}
+	.buttons .shine {
+		width: 210px;
+		height: 63px;
+	}
+}
+@media (min-width: 1100px) {
+	.buttons {
+		padding: 0px 18px;
+	}
+	.buttons .btn {
+		height: 65px;
+		background-size: 217px 65px;
+	}
+	.buttons .shine {
+		width: 217px;
+		height: 65px;
+	}
+}
+@media (min-width: 1200px) {
+	.buttons {
+		padding: 0px 35px;
+	}
+	.buttons .btn {
+		height: 67px;
+		background-size: 225px 67px;
+	}
+	.buttons .shine {
+		width: 225px;
+		height: 67px;
+	}
+}
+@media (min-width: 1400px) {
+	.buttons {
+		padding: 0px 70px;
+	}
+	.buttons .btn {
+		height: 67px;
+		background-size: 225px 67px;
+	}
+	.buttons .shine {
+		width: 225px;
+		height: 67px;
+	}
+}
+.buttons .iOS {
+    background-image: url("../imgs/iOSButton.png");
+}
+.buttons .android {
+    background-image: url("../imgs/androidButton.png");
+}
