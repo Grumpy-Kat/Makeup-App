@@ -92,6 +92,9 @@
 	-moz-transform: translateY(0px);
 	transform: translateY(0px);
 }
+#navbar:not(.in), #navbar:not(.collapsing) {
+	margin-right: 30px;
+}
 #navbar.in, #navbar.collapsing {
 	float: right;
 	margin: 0;
@@ -99,7 +102,7 @@
 	height: 100%;
 	overflow-y: hidden;
 	background-color: var(--primaryColor);
-	box-shadow: 10px 10px 20px var(--primaryColorDark);
+	box-shadow: 10px 10px 20px rgba(153, 154, 156, 0.4);
 }
 #navbar.in ul, #navbar.collapsing ul {
 	margin-left: 20px;
@@ -108,4 +111,33 @@
 	width: 150px;
 	text-align: right;
 	padding: 0px 15px 15px 30px;
+}
+@media (max-width: 400px) {
+	.navbar {
+		height: 70px;
+	}
+	.navbar .container {
+		margin-top: 10.5px;
+	}
+	.navbar-brand {
+		background-size: 45px 45px;
+		width: 35px;
+		height: 35px;
+		margin: 10px 0px;
+		padding: 10px 0px;
+	}
+	.navbar-brand-background {
+		background-size: 35px 35px;
+	}
+	.navbar-brand-title {
+		width: 70px;
+		height: 35px;
+		font-size: 17px;
+		margin-left: 45px!important;
+	}
+	.navbar-toggler-icon {
+		width: 21px;
+		height: 21px;
+		margin: 0px 20px!important;
+	}
 }

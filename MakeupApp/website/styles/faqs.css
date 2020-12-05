@@ -1,0 +1,56 @@
+.faqsSection {
+	margin: 0px;
+	padding: 120px 30px 40px 30px;
+	width: 100%;
+}
+.faqsSection .card {
+	margin: 15px 5%;
+	width: 90%;
+}
+.faqsSection .card-header {
+	font: var(--textBold);
+	padding: 21px;
+	background-color: var(--primaryColorDark);
+	color: var(--primaryTextColor);
+}
+.faqsSection button {
+	color: var(--primaryTextColor);
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	display: inline;
+}
+.faqsSection button:hover, .faqsSection button:focus {
+	color: var(--primaryTextColor);
+	text-decoration: none!important;
+}
+.faqsSection h2 {
+	margin: 0px;
+	padding: 0px;
+	font-size: 16px!important;
+}
+.faqsSection .card-header:not(.active) h2:after {
+	content: '\02795';
+	font-size: 12px;
+	color: var(--primaryTextColor);
+	float: right;
+	margin: 0px;
+	margin-right: 10px;
+	padding: 0px;
+}
+.faqsSection .card-header.active h2:after {
+	content: "\2796";
+	font-size: 12px;
+	color: var(--primaryTextColor);
+	float: right;
+	margin: 0px;
+	margin-right: 10px;
+	padding: 0px;
+}
+.faqsSection .card-body {
+	font: var(--textPrimary);
+	font-size: 15px;
+	padding: 21px;
+}

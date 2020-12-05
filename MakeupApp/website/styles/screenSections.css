@@ -1,127 +1,310 @@
 .screenSection {
-	margin: 20px 0px;
-	width: 100%;
-	padding: 30px;
+	margin: 60px 7% 70px 7%;
+	width: 86%;
+	padding: 40px 0px;
+	border-radius: 17px;
+	box-shadow: 7px 7px 11px rgba(153, 154, 156, 0.35);
+}
+.screenSection div {
+	z-index: 500;
+}
+.screenSection .phone {
+	padding: 0px;
 }
 .screenSection .phone div {
-	background-size: auto 400px;
+	position: relative;
 	background-repeat: no-repeat;
 	background-position: center;
-	width: 189px;
-    height: 400px;
 	text-align: center;
 	vertical-align: middle;
 	margin: auto;
+	padding: 0px;
 	overflow: hidden;
 	border-radius: 19px;
+	border: 1px rgba(128, 128, 128, 0.3) solid;
+}
+.screenSection .frontPhone div {
+	z-index: 20;
+	background-size: 189px 400px;
+	width: 189px;
+    height: 400px;
+}
+.screenSection .backPhone div {
+	z-index: 10;
+	background-size: 162px 350px;
+	width: 162px;
+    height: 350px;
+	margin-top: 25px;
 }
 .screenSection .text {
 	background-color: var(--primaryColorDark);
-	height: 170px;
-	margin: 100px 10px;
+	min-height: 170px;
+	margin: 100px 35px;
 	padding: 10px 15px;
 }
 .screenSection h3 {
 	margin-top: 0px;
 }
-.screenSection-leftArrow .phone {
-	margin-left: 5px;
+.screenSection-leftArrow .phones .row {
+	padding-left: 0px;
+	padding-right: auto;
+}
+.screenSection-rightArrow .phones .row {
+	padding-left: 0px;
+	padding-right: auto;
 }
 .screenSection-rightArrow .phone {
-	margin-right: 5px;
+	float: right;
+}
+.screenSection-leftArrow .frontPhone {
+	margin-left: 100px;
+}
+.screenSection-rightArrow .frontPhone {
+	margin-right: 100px;
+}
+.screenSection-leftArrow .backPhone {
+	margin-right: -180px;
+}
+.screenSection-rightArrow .backPhone {
+	margin-left: -180px;
 }
 .screenSection-leftArrow .text {
 	margin-right: 0px;
+	box-shadow: 5px 5px 8px rgba(153, 154, 156, 0.25);
 }
 .screenSection-rightArrow .text {
 	margin-left: 0px;
-}
-@media (min-width: 768px) {
-	.screenSection-leftArrow .phone {
-		margin-left: 25px;
-	}
-	.screenSection-rightArrow .phone {
-		margin-right: 25px;
-	}
-	.screenSection-leftArrow .text {
-		margin-right: 10px;
-	}
-	.screenSection-rightArrow .text {
-		margin-left: 10px;
-	}
+	box-shadow: -5px 5px 8px rgba(153, 154, 156, 0.25);
 }
 @media (min-width: 992px) {
-	.screenSection-leftArrow .phone {
-		margin-left: 100px;
+	.screenSection-leftArrow .phones .row {
+		padding-left: 40px;
 	}
-	.screenSection-rightArrow .phone {
-		margin-right: 100px;
-	}
-	.screenSection-leftArrow .text {
-		margin-right: 117px;
-	}
-	.screenSection-rightArrow .text {
-		margin-left: 117px;
-	}
-}
-@media (min-width: 1200px) {
-	.screenSection-leftArrow .phone {
-		margin-left: 150px;
-	}
-	.screenSection-rightArrow .phone {
-		margin-right: 150px;
+	.screenSection-rightArrow .phones .row {
+		padding-right: 40px;
 	}
 	.screenSection-leftArrow .text {
-		margin-right: 167px;
+		margin-right: 10%;
 	}
 	.screenSection-rightArrow .text {
-		margin-left: 167px;
+		margin-left: 10%;
+	}
+	.screenSection-leftArrow .frontPhone {
+		margin-left: 35%;
+	}
+	.screenSection-rightArrow .frontPhone {
+		margin-right: 35%;
+	}
+	.screenSection-leftArrow .backPhone {
+		margin-right: -120px;
+	}
+	.screenSection-rightArrow .backPhone {
+		margin-left: -120px;
+	}
+	.screenSection-leftArrow .text:before {
+		z-index: -1;
+		content: "";
+		position: absolute;
+		background-color: var(--primaryColorDark);
+		top: 170px;
+		left: 40px;
+		width: 30px;
+		height: 30px;
+		transform: rotate(135deg);
+		-webkit-transform: rotate(135deg);
+	}
+	.screenSection-rightArrow .text:before {
+		z-index: -1;
+		content: "";
+		position: absolute;
+		background-color: var(--primaryColorDark);
+		top: 170px;
+		right: 40px;
+		width: 30px;
+		height: 30px;
+		transform: rotate(315deg);
+		-webkit-transform: rotate(315deg);
 	}
 }
-.screenSection-leftArrow .text:before {
-	z-index: -1;
-	content: "";
-	position: absolute;
-	background-color: var(--primaryColorDark);
-	top: 170px;
-	left: 15px;
-	width: 30px;
-	height: 30px;
-	transform: rotate(135deg);
-	-webkit-transform: rotate(135deg);
-}
-.screenSection-rightArrow .text:before {
-	z-index: 1;
-	content: "";
-	position: absolute;
-	background-color: var(--primaryColorDark);
-	top: 170px;
-	right: 15px;
-	width: 30px;
-	height: 30px;
-	transform: rotate(315deg);
-	-webkit-transform: rotate(315deg);
-}
-.allSwatches .phone div {
-    background-image: url("../imgs/rainbowSwatches4-2.png");
-}
-.savedLooks .phone div {
-    background-image: url("../imgs/rainbowSwatches4-2.png");
-}
-.colorWheel .phone div {
-    background-image: url("../imgs/rainbowSwatches4-2.png");
-}
-.paletteDivider .phone div {
-    background-image: url("../imgs/rainbowSwatches4-2.png");
-}
-@media (max-width: 768px) {
-	.screenSection {
-		padding: 0px 30px;
+@media (min-width: 1300px) {
+	.screenSection-leftArrow .phones .row {
+		padding-left: 90px;
 	}
+	.screenSection-rightArrow .phones .row {
+		padding-right: 90px;
+	}
+	.screenSection-leftArrow .frontPhone {
+		margin-left: 80px;
+	}
+	.screenSection-rightArrow .frontPhone {
+		margin-right: 80px;
+	}
+}
+.allSwatches {
+	background: -webkit-linear-gradient(50deg, rgba(255, 195, 100, 0.7), rgba(255, 95, 149, 0.7));
+	background: linear-gradient(50deg, rgba(255, 195, 100, 0.7), rgba(255, 95, 149, 0.7));
+}
+.allSwatches .frontPhone div {
+    background-image: url("../imgs/screenshots/light AllSwatches 7-1.png");
+}
+.allSwatches .backPhone div {
+    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+}
+.savedLooks {
+	background: -webkit-linear-gradient(50deg, rgba(5, 117, 230, 0.7), rgba(0, 242, 96, 0.7));
+	background: linear-gradient(50deg, rgba(5, 117, 230, 0.7), rgba(0, 242, 96, 0.7));
+}
+.savedLooks .frontPhone div {
+    background-image: url("../imgs/screenshots/dark SavedLooks 2-1.png");
+}
+.savedLooks .backPhone div {
+    background-image: url("../imgs/screenshots/light SavedLooks 6-1.png");
+}
+.colorWheel {
+	background: -webkit-linear-gradient(50deg, rgba(236, 110, 173, 0.7), rgba(52, 148, 230, 0.7));
+	background: linear-gradient(50deg, rgba(236, 110, 173, 0.7), rgba(52, 148, 230, 0.7));
+}
+.colorWheel .frontPhone div {
+    background-image: url("../imgs/screenshots/light ColorWheel 1-1.png");
+}
+.colorWheel .backPhone div {
+    background-image: url("../imgs/screenshots/dark ColorWheel 3-1.png");
+}
+.paletteDivider {
+	background: -webkit-linear-gradient(50deg, rgba(230, 90, 36, 0.7), rgba(240, 203, 53, 0.7));
+	background: linear-gradient(50deg, rgba(230, 90, 36, 0.7), rgba(240, 203, 53, 0.7));
+}
+.paletteDivider .frontPhone div {
+    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+}
+.paletteDivider .backPhone div {
+    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+}
+.editSwatch {
+	background: -webkit-linear-gradient(50deg, rgba(219, 223, 78, 0.7), rgba(86, 171, 47, 0.7));
+	background: linear-gradient(50deg, rgba(219, 223, 78, 0.7), rgba(86, 171, 47, 0.7));
+}
+.editSwatch .frontPhone div {
+    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+}
+.editSwatch .backPhone div {
+    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+}
+@media (max-width: 992px) {
 	.screenSection .text {
-		margin: 20px 10px;
+		width: 86%;
+		margin: 15px 7% 30px 7%;
 	}
-	.screenSection .text:before {
-		display: none;
+	.screenSection .frontPhone {
+		margin-right: 50%;
+	}
+	.screenSection .frontPhone div {
+		background-size: 196px 425px;
+		width: 196px;
+		height: 425px;
+	}
+	.screenSection .backPhone div {
+		background-size: 173px 375px;
+		width: 173px;
+		height: 375px;
+	}
+	.screenSection .phones .row {
+		padding-left: 25%;
+		padding-right: 25%;
+	}
+	.screenSection-rightArrow .phones .row {
+		padding-left: 23%;
+		padding-right: 37%;
+	}
+	.screenSection-leftArrow .backPhone {
+		margin-right: -50%;
+	}
+	.screenSection-rightArrow .backPhone {
+		margin-left: -50%;
 	}
 }
+@media (max-width: 650px) {
+	.screenSection .phones .row {
+		padding-left: 15%;
+		padding-right: 15%;
+	}
+	.screenSection-rightArrow .phones .row {
+		padding-right: calc(15% + 43px);
+	}
+}
+@media (max-width: 450px) {
+	.screenSection .phones .row {
+		padding-left: 7%;
+		padding-right: 27%;
+	}
+	.screenSection-leftArrow .frontPhone {
+		margin-left: 40%;
+	}
+	.screenSection .frontPhone div {
+		background-size: 189px 400px;
+		width: 189px;
+		height: 400px;
+	}
+	.screenSection .backPhone div {
+		background-size: 162px 350px;
+		width: 162px;
+		height: 350px;
+	}
+}
+@media (max-width: 350px) {
+	.screenSection .phones .row {
+		padding-left: 7%;
+		padding-right: 33%;
+	}
+	.screenSection-leftArrow .frontPhone {
+		margin-left: 35%;
+	}
+}
+/*@media (min-width: 550px) {
+	.screenSection-leftArrow .frontPhone {
+		margin-left: 80px;
+	}
+	.screenSection-rightArrow .frontPhone {
+		margin-right: 80px;
+	}
+	.screenSection-leftArrow .backPhone {
+		margin-right: -200px;
+	}
+	.screenSection-rightArrow .backPhone {
+		margin-left: -200px;
+	}
+}
+@media (min-width: 650px) {
+	.screenSection-leftArrow .backPhone {
+		margin-right: -270px;
+	}
+	.screenSection-rightArrow .backPhone {
+		margin-left: -270px;
+	}
+}*/
+/*@media (min-width: 768px) {
+	.screenSection-leftArrow .phones .row {
+		padding-left: 20px;
+	}
+	.screenSection-rightArrow .phones .row {
+		padding-right: 20px;
+	}
+	.screenSection-leftArrow .text {
+		margin-right: 5%;
+	}
+	.screenSection-rightArrow .text {
+		margin-left: 5%;
+	}
+	.screenSection-leftArrow .frontPhone {
+		margin-left: 37%;
+	}
+	.screenSection-rightArrow .frontPhone {
+		margin-right: 37%;
+	}
+	.screenSection-leftArrow .backPhone {
+		margin-right: -120px;
+	}
+	.screenSection-rightArrow .backPhone {
+		margin-left: -120px;
+	}
+}*/

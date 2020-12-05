@@ -1,0 +1,93 @@
+.contactForm {
+	margin: 0px;
+	padding: 120px 40px 40px 40px!important;
+	width: 100%;
+}
+.input {
+	margin: 40px 0px;
+	max-width: 500px;
+}
+.input input, .input select, .input textarea, .input label {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	padding: 0px 0px 7px 0px;
+}
+.input input, .input select, .input textarea {
+	font: var(--textPrimary);
+	z-index: 10;
+	background: transparent;
+	margin-bottom: 5px;
+	outline: none;
+	border: none;
+	border-bottom: 1px var(--primaryColorDark) solid;
+	color: var(--primaryTextColor);
+	height: 28px;
+	text-indent: 0px;
+	transition: box-shadow 0.2s ease-in-out, border 0.2s ease-in-out;
+	border-radius: 0px;
+}
+.input select {
+    cursor:pointer;
+}
+.input option {
+	width: 100%;
+	background-color: var(--bgColor);
+}
+.input input, .input textarea {
+	text-indent: 3px;
+}
+.input textarea {
+	overflow: hidden;
+}
+.input input:focus, .input select:focus, .input textarea:focus {
+	outline: none;
+	border: none;
+	border-bottom: 2.5px var(--accentColor) solid;
+	box-shadow: 0px 10px 15px -10px rgba(39, 165, 146, 0.7);
+}
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+	font: var(--textPrimary);
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+}
+.input label {
+	margin: 0 auto;
+	z-index: 1;
+	top: 23px;
+	transition: all 0.2s ease-in-out;
+	font: var(--textPrimary);
+	color: var(--primaryTextColor);
+}
+.input.filled label {
+	top: 0;
+	font: var(--textTertiary);
+	color: var(--secondaryTextColor);
+}
+.contactForm button {
+	font: var(--textBold);
+	height: 41px;
+	width: 120px;
+	line-height: 17px;
+	padding: 0px;
+	border-radius: 5px;
+	border-width: 0px;
+	background-color: var(--accentColor);
+}
+.contactForm .shine {
+	padding: 12px;
+	width: 100%;
+	height: 100%;
+	color: var(--accentTextColor);
+}
+.contactForm .shine:hover {
+	color: var(--accentTextColor);
+}
+.contactForm .shine:after {
+	top: 70%;
+	left: -200%;
+}
+.contactForm .shine:hover:after {
+	top: -320%;
+	left: -110%;
+}

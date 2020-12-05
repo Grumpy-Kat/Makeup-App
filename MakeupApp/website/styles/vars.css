@@ -1,8 +1,8 @@
 :root {
-  --bgColor: rgba(244, 245, 247, 1);
+  --bgColor: rgba(251, 252, 254, 1);
   --primaryColorLight: rgba(251, 252, 254, 1);
   --primaryColor: rgba(248, 249, 251, 1);
-  --primaryColorDark: rgba(219, 220, 222, 1);
+  --primaryColorDark: rgba(231, 232, 234, 1);
   --primaryColorDarkest: rgba(153, 154, 156, 1);
   --primaryTextColor: rgba(0, 0, 0, 1);
   --secondaryTextColor: rgba(54, 54, 54, 1);

@@ -26,10 +26,12 @@ h2 {
 h3, h4, h5, h6 {
 	font: var(--textPrimary);
 }
-p {
+p, label {
 	font: var(--textSecondary);
 }
-
+textarea {
+	resize: none;
+}
 input:focus, button:focus {
 	outline: none !important;
 	box-shadow: none;
@@ -61,4 +63,9 @@ input:focus, button:focus {
 }
 .shineBtn .shine:active:after {
 	opacity: 0;
+}
+p.errorText {
+	margin-top: 10px;
+	color: rgba(230, 0, 32, 1);
+	font-weight: 500;
 }
