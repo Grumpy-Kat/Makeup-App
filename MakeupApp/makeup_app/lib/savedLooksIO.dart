@@ -57,7 +57,7 @@ Future<int> save(int id, String name, List<int> info) async  {
       //first id
       newId = 0;
     } else {
-      newId = int.parse(ids[ids.length - 2] == '' ? '0' : ids[ids.length - 2]) + 1;
+      newId = int.parse(ids[ids.length - 1] == '' ? '0' : ids[ids.length - 1]) + 1;
     }
     ids.add(newId.toString());
     String string = '';

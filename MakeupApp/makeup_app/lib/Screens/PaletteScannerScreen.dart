@@ -114,7 +114,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
       //using palette divider
       return buildComplete(
         context,
-        'Palette Scanner',d
+        'Palette Scanner',
         3,
         //help button
         rightBar: [
