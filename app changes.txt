@@ -1,5 +1,4 @@
 Features:
--// Auto set shade name to position in palette
 -// Add instructions (such as touch directions) on the first opening
 -// Add directions to more screens, such as Today's Look, Saved Look, and Color Wheel
 -// Add splash screen, maybe only on first opening
