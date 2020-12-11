@@ -142,7 +142,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                       style: theme.errorText,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

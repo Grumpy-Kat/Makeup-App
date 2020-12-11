@@ -3,9 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import '../Screens/Screen.dart';
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
+import '../settingsIO.dart' as settingsIO;
+import '../allSwatchesIO.dart' as allSwatchesIO;
+import '../savedLooksIO.dart' as savedLooksIO;
 
 enum Mode {
   Default,
@@ -133,6 +137,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           getDefaultRequestField(context, height, noBottomDecoration, padding, margin),
           getDefaultReportField(context, height, noBottomDecoration, padding, margin),
           getDefaultAboutField(context, height, decoration, padding, margin),
+          getDefaultResetField(context, height, decoration, padding, margin),
         ],
       ),
     );
@@ -943,6 +948,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       height: height,
       decoration: decoration,
       padding: padding,
+      margin: margin,
       child: Align(
         alignment: Alignment.centerLeft,
         child: InkWell(
@@ -977,6 +983,51 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  //button to reset all saved looks and saved swatches
+  Widget getDefaultResetField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
+    return Container(
+      height: height,
+      decoration: decoration,
+      padding: padding,
+      margin: margin,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: FlatButton(
+              splashColor: theme.errorTextColor.withAlpha(130),
+              onPressed: () async {
+                //confirms clearing
+                globalWidgets.openTwoButtonDialog(
+                  context,
+                  'Are you sure you want to reset the entire app, including settings, swatches, and looks? This can not be undone.',
+                  () async {
+                    await settingsIO.clear();
+                    await allSwatchesIO.clear();
+                    await savedLooksIO.clearIds();
+                    globals.hasDoneTutorial = true;
+                    navigation.pushReplacement(
+                      context,
+                      Offset(1.0, 0.0),
+                      routes.ScreenRoutes.AllSwatchesScreen,
+                      routes.routes['/allSwatchesScreen'](context),
+                    );
+                  },
+                  () { },
+                );
+                print('reset all');
+              },
+              child: Text(
+                'Reset App',
+                textAlign: TextAlign.center,
+                style: theme.errorText,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
