@@ -1009,6 +1009,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                     await allSwatchesIO.clear();
                     await savedLooksIO.clearIds();
                     globals.hasDoneTutorial = true;
+                    globals.currSwatches.set([]);
                     navigation.pushReplacement(
                       context,
                       Offset(1.0, 0.0),
