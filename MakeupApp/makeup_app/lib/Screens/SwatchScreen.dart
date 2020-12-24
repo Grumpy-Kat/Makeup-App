@@ -77,6 +77,19 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         IconButton(
           constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
           icon: Icon(
+            Icons.library_add,
+            size: theme.primaryIconSize,
+            color: theme.iconTextColor,
+          ),
+          onPressed: () {
+            if(!globals.currSwatches.currSwatches.contains(this)) {
+              globals.currSwatches.add(_swatch.id);
+            }
+          },
+        ),
+        IconButton(
+          constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+          icon: Icon(
             (_isEditing ? Icons.done : Icons.mode_edit),
             size: theme.primaryIconSize,
             color: theme.iconTextColor,
