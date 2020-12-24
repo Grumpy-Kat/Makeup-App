@@ -40,10 +40,29 @@
 	background-color: var(--primaryColorDark);
 	min-height: 170px;
 	margin: 100px 35px;
-	padding: 10px 15px;
+	padding: 10px 17px;
+}
+.screenSection .textSubsection.active {
+	display: block;
+}
+.screenSection .textSubsection:not(.active) {
+	display: none;
+}
+.screenSection ul {
+	margin-top: 20px;
+	padding-inline-start: 10px;
+	margin-bottom: 7px;
+}
+.screenSection li {
+	margin-bottom: 3px;
 }
 .screenSection h3 {
 	margin-top: 0px;
+}
+.screenSection h3 a {
+	margin-top: 0px;
+	font: var(--textPrimary);
+	color: var(--secondaryTextColor);
 }
 .screenSection-leftArrow .phones .row {
 	padding-left: 0px;
@@ -145,7 +164,7 @@
 	background: linear-gradient(50deg, rgba(255, 195, 100, 0.7), rgba(255, 95, 149, 0.7));
 }
 .allSwatches .frontPhone div {
-    background-image: url("../imgs/screenshots/light AllSwatches 7-1.png");
+    background-image: url("../imgs/screenshots/light AllSwatches 5-1.png");
 }
 .allSwatches .backPhone div {
     background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
@@ -155,10 +174,10 @@
 	background: linear-gradient(50deg, rgba(5, 117, 230, 0.7), rgba(0, 242, 96, 0.7));
 }
 .savedLooks .frontPhone div {
-    background-image: url("../imgs/screenshots/dark SavedLooks 2-1.png");
+    background-image: url("../imgs/screenshots/dark SavedLooks 3-1.png");
 }
 .savedLooks .backPhone div {
-    background-image: url("../imgs/screenshots/light SavedLooks 6-1.png");
+    background-image: url("../imgs/screenshots/light SavedLooks 7-1.png");
 }
 .colorWheel {
 	background: -webkit-linear-gradient(50deg, rgba(236, 110, 173, 0.7), rgba(52, 148, 230, 0.7));
@@ -168,7 +187,7 @@
     background-image: url("../imgs/screenshots/light ColorWheel 1-1.png");
 }
 .colorWheel .backPhone div {
-    background-image: url("../imgs/screenshots/dark ColorWheel 3-1.png");
+    background-image: url("../imgs/screenshots/dark ColorWheel 4-1.png");
 }
 .paletteDivider {
 	background: -webkit-linear-gradient(50deg, rgba(230, 90, 36, 0.7), rgba(240, 203, 53, 0.7));
@@ -178,17 +197,17 @@
     background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
 }
 .paletteDivider .backPhone div {
-    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+    background-image: url("../imgs/screenshots/light AllSwatches 4-1.png");
 }
 .editSwatch {
 	background: -webkit-linear-gradient(50deg, rgba(219, 223, 78, 0.7), rgba(86, 171, 47, 0.7));
 	background: linear-gradient(50deg, rgba(219, 223, 78, 0.7), rgba(86, 171, 47, 0.7));
 }
 .editSwatch .frontPhone div {
-    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+    background-image: url("../imgs/screenshots/light EditSwatch 2-1.png");
 }
 .editSwatch .backPhone div {
-    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+    background-image: url("../imgs/screenshots/dark EditSwatch 11-1.png");
 }
 @media (max-width: 992px) {
 	.screenSection .text {
@@ -260,51 +279,3 @@
 		margin-left: 35%;
 	}
 }
-/*@media (min-width: 550px) {
-	.screenSection-leftArrow .frontPhone {
-		margin-left: 80px;
-	}
-	.screenSection-rightArrow .frontPhone {
-		margin-right: 80px;
-	}
-	.screenSection-leftArrow .backPhone {
-		margin-right: -200px;
-	}
-	.screenSection-rightArrow .backPhone {
-		margin-left: -200px;
-	}
-}
-@media (min-width: 650px) {
-	.screenSection-leftArrow .backPhone {
-		margin-right: -270px;
-	}
-	.screenSection-rightArrow .backPhone {
-		margin-left: -270px;
-	}
-}*/
-/*@media (min-width: 768px) {
-	.screenSection-leftArrow .phones .row {
-		padding-left: 20px;
-	}
-	.screenSection-rightArrow .phones .row {
-		padding-right: 20px;
-	}
-	.screenSection-leftArrow .text {
-		margin-right: 5%;
-	}
-	.screenSection-rightArrow .text {
-		margin-left: 5%;
-	}
-	.screenSection-leftArrow .frontPhone {
-		margin-left: 37%;
-	}
-	.screenSection-rightArrow .frontPhone {
-		margin-right: 37%;
-	}
-	.screenSection-leftArrow .backPhone {
-		margin-right: -120px;
-	}
-	.screenSection-rightArrow .backPhone {
-		margin-left: -120px;
-	}
-}*/

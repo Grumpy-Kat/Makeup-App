@@ -1,5 +1,267 @@
 .pressSection {
-	margin: 0px;
-	padding: 120px 30px 40px 30px;
-	width: 100%;
+	margin: 40px 6% 70px 6%;
+	width: 88%;
+	padding: 40px 35px 20px 35px;
+	border-radius: 5px;
+	box-shadow: 7px 7px 11px rgba(153, 154, 156, 0.35);
+}
+.title {
+	margin: 140px calc(7% + 35px) 0px calc(7% + 35px);
+	font: var(--subTitle);
+}
+.pressSection h2 {
+	margin: 15px 0px;
+}
+.pressSection p, .pressSection li {
+	line-height: 18px;
+	margin: 5px;
+}
+.pressSection li {
+	margin: 3px;
+}
+.pressSection .download {
+	margin-bottom: 20px;
+}
+.carousel-inner {
+	margin: 0px 15px;
+	width: calc(100% - 30px)
+}
+.carousel .item {
+	transition-duration: 0.5s;
+}
+.carousel img {
+	max-height: 250px;
+	margin: auto;
+	border-radius: 19px;
+	border: 1px rgba(128, 128, 128, 0.3) solid;
+}
+.carousel-control {
+	background: transparent;
+	background-image: none!important;
+	color: black;
+	width: 7%;
+}
+/*due to conflicts with the last visible element, need to use exclusive media queries*/
+@media (max-width: 576px) {
+	.carousel .item {
+		width: 50%;
+	}
+	.carousel-inner .active, .carousel-inner .active + .item {
+		display: block;
+	}
+	.carousel-inner .item.active:not(.right):not(.left), .carousel-inner .item.active:not(.right):not(.left) + .item{
+		transition: none;
+	}
+	.carousel-inner .next {
+		position: relative;
+		transform: translate3d(0, 0, 0)!important;
+		width: 50%;
+	}
+	.carousel-inner .active.item + .item + .item {
+		position: absolute;
+		top: 0px;
+		right: -50%;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	.active.left + .next.left, .next.left + .item, .next.left + .item + .item {
+		position: relative;
+		transform: translate3d(-100%, 0, 0)!important;
+		visibility: visible;
+	}
+	.carousel-inner .prev {
+		position: relative;
+		transform: translate3d(0, 0, 0);
+		width: 50%;
+	}
+	.carousel-inner .prev.right {
+		position: absolute;
+        top: 0px;
+        left: 0px;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	.active.right + .prev.right, .prev.right + .item, .prev.right + .item + .item {
+		position: relative;
+		transform: translate3d(100%, 0, 0);
+		display: block;
+		visibility: visible;
+	}
+}
+/*due to conflicts with the last visible element, need to use exclusive media queries*/
+@media (min-width: 576px) and (max-width: 768px) {
+	.carousel .item {
+		width: 33.33333%;
+	}
+	.carousel-inner .active, .carousel-inner .active + .item, .carousel-inner .active + .item + .item {
+		display: block;
+	}
+	.carousel-inner .item.active:not(.right):not(.left), .carousel-inner .item.active:not(.right):not(.left) + .item, .carousel-inner .item.active:not(.right):not(.left) + .item + .item {
+		transition: none;
+	}
+	.carousel-inner .next {
+		position: relative;
+		transform: translate3d(0, 0, 0)!important;
+		width: 33.33333%;
+	}
+	.carousel-inner .active.item + .item + .item + .item {
+		position: absolute;
+		top: 0px;
+		right: -33.33333%;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	.active.left + .next.left, .next.left + .item, .next.left + .item + .item, .next.left + .item + .item + .item {
+		position: relative;
+		transform: translate3d(-100%, 0, 0)!important;
+		visibility: visible;
+	}
+	.carousel-inner .prev {
+		position: relative;
+		transform: translate3d(0, 0, 0);
+		width: 33.33333%;
+	}
+	.carousel-inner .prev.right {
+		position: absolute;
+        top: 0px;
+        left: 0px;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	.active.right + .prev.right, .prev.right + .item, .prev.right + .item + .item, .prev.right + .item + .item + .item {
+		position: relative;
+		transform: translate3d(100%, 0, 0);
+		display: block;
+		visibility: visible;
+	}
+}
+/*due to conflicts with the last visible element, need to use exclusive media queries*/
+@media (min-width: 769px) and (max-width: 992px) {
+	.carousel .item {
+		width: 25%;
+	}
+	.carousel-inner .active, .carousel-inner .active + .item, .carousel-inner .active + .item + .item, .carousel-inner .active + .item + .item + .item {
+		display: block;
+	}
+	.carousel-inner .item.active:not(.right):not(.left), .carousel-inner .item.active:not(.right):not(.left) + .item, .carousel-inner .item.active:not(.right):not(.left) + .item + .item, .carousel-inner .item.active:not(.right):not(.left) + .item + .item + .item {
+		transition: none;
+	}
+	.carousel-inner .next {
+		position: relative;
+		transform: translate3d(0, 0, 0)!important;
+		width: 25%;
+	}
+	.carousel-inner .active.item + .item + .item + .item + .item {
+		position: absolute;
+		top: 0px;
+		right: -25%;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	.active.left + .next.left, .next.left + .item, .next.left + .item + .item, .next.left + .item + .item + .item, .next.left + .item + .item + .item + .item {
+		position: relative;
+		transform: translate3d(-100%, 0, 0)!important;
+		visibility: visible;
+	}
+	.carousel-inner .prev {
+		position: relative;
+		transform: translate3d(0, 0, 0);
+		width: 25%;
+	}
+	.carousel-inner .prev.right {
+		position: absolute;
+        top: 0px;
+        left: 0px;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	.active.right + .prev.right, .prev.right + .item, .prev.right + .item + .item, .prev.right + .item + .item + .item, .prev.right + .item + .item + .item + .item {
+		position: relative;
+		transform: translate3d(100%, 0, 0);
+		display: block;
+		visibility: visible;
+	}
+	.carousel-control {
+		width: 3%;
+	}
+}
+/*due to conflicts with the last visible element, need to use exclusive media queries*/
+@media (min-width: 993px) {
+	.carousel .item {
+		width: 20%;
+	}
+	.carousel-inner .active, .carousel-inner .active + .item, .carousel-inner .active + .item + .item, .carousel-inner .active + .item + .item +.item, .carousel-inner .active + .item + .item + .item + .item  {
+		display: block;
+	}
+	.carousel-inner .item.active:not(.right):not(.left), .carousel-inner .item.active:not(.right):not(.left) + .item, .carousel-inner .item.active:not(.right):not(.left) + .item + .item, .carousel-inner .item.active:not(.right):not(.left) + .item + .item + .item, .carousel-inner .item.active:not(.right):not(.left) + .item + .item + .item + .item {
+		transition: none;
+	}
+	.carousel-inner .next {
+		position: relative;
+		transform: translate3d(0, 0, 0)!important;
+		width: 20%;
+	}
+	.carousel-inner .active.item + .item + .item + .item + .item + .item {
+		position: absolute;
+		top: 0px;
+		right: -20%;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	.active.left + .next.left, .next.left + .item, .next.left + .item + .item, .next.left + .item + .item + .item, .next.left + .item + .item + .item + .item, .next.left + .item + .item + .item + .item + .item {
+		position: relative;
+		transform: translate3d(-100%, 0, 0)!important;
+		visibility: visible;
+	}
+	.carousel-inner .prev {
+		position: relative;
+		transform: translate3d(0, 0, 0);
+		width: 20%;
+	}
+	.carousel-inner .prev.right {
+		position: absolute;
+        top: 0px;
+        left: 0px;
+		z-index: -1;
+		display: block;
+		visibility: visible;
+	}
+	.active.right + .prev.right, .prev.right + .item, .prev.right + .item + .item, .prev.right + .item + .item + .item, .prev.right + .item + .item + .item + .item, .prev.right + .item + .item + .item + .item + .item {
+		position: relative;
+		transform: translate3d(100%, 0, 0);
+		display: block;
+		visibility: visible;
+	}
+	.carousel-control {
+		width: 3%;
+	}
+}
+@media (min-width: 1225px) {
+	.carousel-control {
+		width: 7%;
+	}
+}
+.graphicsSection img {
+	display: block;
+	max-height: 100px;
+	margin: auto;
+}
+@media (max-width: 780px) {
+	.graphicsSection .graphicsLogo {
+		width: 33%;
+		margin: 7px auto;
+	}
+}
+@media (max-width: 450px) {
+	.graphicsSection .graphicsLogo {
+		width: 50%;
+		margin: 7px auto;
+	}
 }

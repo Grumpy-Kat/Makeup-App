@@ -53,6 +53,7 @@
 			<h2>Contact</h2>
 			<div class="input filled">
 				<label for="type">Reason for Message</label>
+				<?php if(!isset($_GET["type"])) { $_GET["type"] = "feature"; } ?>
 				<select name="type" id="type" required>
 					<option value="feature" <?php if($_GET["type"] == "feature") { echo "selected"; } ?>>Request a Feature</option>
 					<option value="bug" <?php if($_GET["type"] == "bug") { echo "selected"; } ?>>Report a Bug</option>

@@ -19,29 +19,30 @@
     display: table-cell;
     max-width: 300px;
     background-image: url("../imgs/iconForeground.png");
-	background-size: 60px 60px;
+	background-size: 70px 70px;
 	background-repeat: no-repeat;
 	background-position: center;
-    width: 50px;
-    height: 50px;
-    margin: 12px 0px;
+    width: 47px;
+    height: 47px;
+    margin: 13px 0px;
     padding: 15px 0px;
     display: block;
 	position: absolute;
     vertical-align: middle;
-	border-radius: 25px;
+	border-radius: 15px;
 }
 .navbar-brand-background {
     background-image: url("../imgs/iconBackground.png");
-	background-size: 50px 50px;
+	background-size: 47px 47px;
 }
 .navbar-brand-title {
 	background-image: none;
 	position: relative;
 	border-radius: 0px;
-	margin-left: 60px!important;
+    margin: 12px 0px;
+	margin-left: 55px!important;
 	width: 100px;
-	height: 50px;
+	height: 47px;
 	font: var(--subTitle);
 }
 .navbar-toggler-icon {

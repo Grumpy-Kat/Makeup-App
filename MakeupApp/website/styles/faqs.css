@@ -51,6 +51,11 @@
 }
 .faqsSection .card-body {
 	font: var(--textPrimary);
-	font-size: 15px;
+	font-size: 14px;
 	padding: 21px;
+}
+.faqsSection p, .faqsSection li {
+	line-height: 18px;
+	margin: 3px;
+	font-size: 14px;
 }

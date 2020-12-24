@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:math';
 import '../Widgets/SizedSafeArea.dart';
 import '../Widgets/NavigationDrawer.dart';
@@ -55,19 +56,26 @@ mixin ScreenState {
                         ],
                       ),
                     ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(left: 7, right: 7, top: 3),
-                      child: Text(title, style: theme.primaryTextBold),
-                    ),
                     Expanded(
                       child: Container(
-                        alignment: Alignment.centerRight,
-                        padding: EdgeInsets.symmetric(horizontal: 7),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: rightBar ?? [],
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(left: 2, right: 2, top: 3),
+                        child: AutoSizeText(
+                          title,
+                          style: theme.primaryTextBold,
+                          minFontSize: 11,
+                          maxFontSize: theme.primaryTextBold.fontSize,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.symmetric(horizontal: 7),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: rightBar ?? [],
                       ),
                     ),
                   ],

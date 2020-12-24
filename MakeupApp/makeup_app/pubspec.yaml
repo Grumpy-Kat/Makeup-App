@@ -30,6 +30,7 @@ dependencies:
   notification_permissions: ^0.4.8
   permission_handler:
   transformer_page_view:
+  auto_size_text: ^2.1.0
 
 flutter_icons:
   ios: true

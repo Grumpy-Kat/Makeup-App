@@ -31,8 +31,21 @@
 		<div class="container-fluid row screenSection screenSection-leftArrow allSwatches">
 			<div class="col-md-8 col-md-push-4">
 				<div class="text">
-					<h2>See all your eyeshadow in one place.</h2>
-					<h3>No more searching through endless palettes for that perfect shade.</h3>
+					<div class="minimized textSubsection active">
+						<h2>See all your eyeshadow in one place.</h2>
+						<h3>No more searching through endless palettes for that perfect shade.</h3>
+						<h3><a class="toggle">Show more...</a></h3>
+					</div>
+					<div class="expanded textSubsection">
+						<ul>
+							<li>Easily import a picture of your eyeshadow palettes and divide up the shades. GlamKit will do the rest for you, finding the color and finish of each shade.</li>
+							<li>Then, you can see all your eyeshadow in one scrollable list. You no longer have to open all your palettes as you decide on your look. It's basically like shopping your own collection.</li>
+							<li>Scrolling through the list is also a great way to get inspiration directly from your collection. It helps you get more creative with your looks.</li>
+							<li>Sort the shades however you want, such as by color, finish, or palette. You can also sort by your favorite shades, darkest shades, or lightest shades. It's makes it much easier to find the shade you're looking for.</li>
+							<li>No more forgetting shades. It helps you not use the same few palettes over and over because you're not planning based on palettes. You might just find your new favorite shade.</li>
+						</ul>
+						<p><a class="toggle">Show less...</a></p>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-4 col-md-pull-8 phones">
@@ -50,8 +63,20 @@
 		<div class="container-fluid row screenSection screenSection-rightArrow savedLooks">
 			<div class="col-md-8">
 				<div class="text">
-					<h2>Create looks and save them for another day.</h2>
-					<h3>It makes recreating your favorite looks so easy.</h3>
+					<div class="minimized textSubsection active">
+						<h2>Create looks and save them for another day.</h2>
+						<h3>It makes recreating your favorite looks so easy.</h3>
+						<h3><a class="toggle">Show more...</a></h3>
+					</div>
+					<div class="expanded textSubsection">
+						<ul>
+							<li>Simply double click on all the shades you want to add to Today's Look. You can also save it to recreate another day.</li>
+							<li>You can name your looks to make them easier to remember and recreate.</li>
+							<li>Doing your makeup will be quicker because you've already saved plenty of looks.</li>
+							<li>You can now plan your makeup anytime, even when you're not home.</li>
+						</ul>
+						<p><a class="toggle">Show less...</a></p>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-4 phones">
@@ -69,8 +94,18 @@
 		<div class="container-fluid row screenSection screenSection-leftArrow colorWheel">
 			<div class="col-md-8 col-md-push-4">
 				<div class="text">
-					<h2>Find your precise color using a color wheel.</h2>
-					<h3>Perfect if you're copying a face chart or have a dream color in mind.</h3>
+					<div class="minimized textSubsection active">
+						<h2>Find your precise color using a color wheel.</h2>
+						<h3>Perfect if you're copying a face chart or have a dream color in mind.</h3>
+						<h3><a class="toggle">Show more...</a></h3>
+					</div>
+					<div class="expanded textSubsection">
+						<ul>
+							<li>Have you ever had a very specific shade in mind for a look? Or maybe you're copying an inspiration?</li>
+							<li>Instead of searching through endless palettes, simply find the color on the color wheel. Then, you'll see all the closest shades in your collection.</p>
+						</ul>
+						<p><a class="toggle">Show less...</a></p>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-4 col-md-pull-8 phones">
@@ -88,8 +123,18 @@
 		<div class="container-fluid row screenSection screenSection-rightArrow paletteDivider">
 			<div class="col-md-8">
 				<div class="text">
-					<h2>Compare other palettes to your collection.</h2>
-					<h3>Useful for comparing to other palettes while shopping or finding dupes when recreating a look.</h3>
+					<div class="minimized textSubsection active">
+						<h2>Compare other palettes to your collection.</h2>
+						<h3>Useful for comparing to other palettes while shopping or finding dupes when recreating a look.</h3>
+						<h3><a class="toggle">Show more...</a></h3>
+					</div>
+					<div class="expanded textSubsection">
+						<ul>
+							<li>If you're shopping, you can just upload a picture of a palette you're considering. GlamKit will show you all the similar shades in your collection. It's great way to save some money and avoid buying an almost identical shade for the hundredth time.</li>
+							<li>If you're trying to recreate a look that you saw on Instagram or Youtube, just upload a picture of a palette that the original artist used. You can easily find dupes in your collection. It saves you time because you no longer have to spend time comparing swatches or Googling dupes that you might not even own.</li>
+						</ul>
+						<p><a class="toggle">Show less...</a></p>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-4 phones">	
@@ -107,8 +152,18 @@
 		<div class="container-fluid row screenSection screenSection-leftArrow editSwatch">
 			<div class="col-md-8 col-md-push-4">
 				<div class="text">
-					<h2>Find your precise color using a color wheel.</h2>
-					<h3>Perfect if you're copying a face chart or have a dream color in mind.</h3>
+					<div class="minimized textSubsection active">
+						<h2>Customize details about each shade.</h2>
+						<h3>Add details, such as shade name, rating, tags, and more, to make it easier to remember which shades you love to use.</h3>
+						<h3><a class="toggle">Show more...</a></h3>
+					</div>
+					<div class="expanded textSubsection">
+						<ul>
+							<li>Clicking on any shade will give you basic information about it, such as color, finish, palette, and brand. There you can click on the "More..." button to get all the information about it.</li>
+							<li>You can edit the basic information. You can also add more details, such as tags, rating, and shade name. This makes it easier to remember how a shade performs, which shades you love, and find the perfect shade for your look.</li>
+						</ul>
+						<p><a class="toggle">Show less...</a></p>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-4 col-md-pull-8 phones">
@@ -122,6 +177,19 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			$(".textSubsection .toggle").on(
+				"click",
+				function(e) {
+					let $textSubsection = $(this).closest(".textSubsection.active");
+					let $otherTextSubsection = $textSubsection.siblings(".textSubsection:not(.active)");
+					$textSubsection.hide(400);
+					$textSubsection.removeClass("active");
+					$otherTextSubsection.show(600);
+					$otherTextSubsection.addClass("active");
+				}
+			);
+		</script>
 		<?php include "includes/footer.php" ?>
 	</body>
 </html>

@@ -96,12 +96,12 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           ),
           onPressed: () {
             setState(
-                    () {
-                  _isEditing = !_isEditing;
-                  if(!_isEditing) {
-                    IO.editId(_swatch.id, _swatch);
-                  }
+              () {
+                _isEditing = !_isEditing;
+                if(!_isEditing) {
+                  IO.editId(_swatch.id, _swatch);
                 }
+              }
             );
           },
         ),
