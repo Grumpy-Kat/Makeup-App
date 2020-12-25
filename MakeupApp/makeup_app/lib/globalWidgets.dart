@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'theme.dart' as theme;
 import 'types.dart';
+import 'localizationIO.dart';
 
 Future<void> openDialog(BuildContext context, Widget Function(BuildContext) builder) {
   return showDialog(
@@ -161,7 +162,7 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
               onPressedYes();
             },
             child: Text(
-              'Yes',
+              getString('yes'),
               style: theme.accentTextBold,
             ),
           ),
@@ -172,7 +173,7 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
               onPressedNo();
             },
             child: Text(
-              'No',
+              getString('no'),
               style: theme.accentTextBold,
             ),
           ),
@@ -213,7 +214,7 @@ Widget getHelpBtn(BuildContext context, String text) {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'Close',
+                    getString('close'),
                     style: theme.accentTextSecondary,
                   ),
                 ),

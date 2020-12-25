@@ -13,6 +13,7 @@ import 'settingsIO.dart' as IO;
 import 'globalIO.dart' as globalIO;
 import 'savedLooksIO.dart' as savedLooksIO;
 import 'allSwatchesIO.dart' as allSwatchesIO;
+import 'localizationIO.dart' as localizationIO;
 
 void main() => runApp(GlamKitApp());
 
@@ -37,23 +38,25 @@ class GlamKitAppState extends State<GlamKitApp> {
   }
 
   void load() {
+    localizationIO.load();
     //generateRainbow();
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
     //theme.isDarkTheme = true;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     routes.setRoutes();
     globals.currSwatches.init();
-    //globals.debug = !kReleaseMode;
-    globals.debug = false;
+    globals.debug = !kReleaseMode;
+    //globals.debug = false;
     savedLooksIO.init();
     //clearSave();
+    //IO.clear();
     IO.load().then((value) { setState(() { }); });
   }
 
   void generateRainbow() async {
     await clearSave();
     Random random = Random();
-    List<String> finishes = ['Matte', 'Satin', 'Shimmer', 'Metallic', 'Glitter'];
+    List<String> finishes = ['finish_matte', 'finish_satin', 'finish_shimmer', 'finish_metallic', 'finish_glitter'];
     Map<int, String> info = {};
     int swatches = 100;
     for(int i = 0; i < swatches; i++) {
@@ -65,36 +68,6 @@ class GlamKitAppState extends State<GlamKitApp> {
       String finish = finishes[random.nextInt(finishes.length)];
       info[i] = await globalIO.saveSwatch(Swatch(color:color, finish: finish));
     }
-    /*//red
-    for(int i = 0; i < swatchesPerColor; i++) {
-      String finish = finishes[random.nextInt(finishes.length)];
-      info[(swatchesPerColor * 0) + i] = await globalIO.saveSwatch(Swatch(color: RGBColor(125 + (130 / swatchesPerColor * i), 0, 0), finish: finish));
-    }
-    //orange
-    for(int i = 0; i < swatchesPerColor; i++) {
-      String finish = finishes[random.nextInt(finishes.length)];
-      info[(swatchesPerColor * 1) + i] = await globalIO.saveSwatch(Swatch(color: RGBColor(125 + (130 / swatchesPerColor * i), (130 / swatchesPerColor * i), 0), finish: finish));
-    }
-    //yellow
-    for(int i = 0; i < swatchesPerColor; i++) {
-      String finish = finishes[random.nextInt(finishes.length)];
-      info[(swatchesPerColor * 2) + i] = await globalIO.saveSwatch(Swatch(color: RGBColor(125 + (130 / swatchesPerColor * i), 125 + (130 / swatchesPerColor * i), 0), finish: finish));
-    }
-    //green
-    for(int i = 0; i < swatchesPerColor; i++) {
-      String finish = finishes[random.nextInt(finishes.length)];
-      info[(swatchesPerColor * 3) + i] = await globalIO.saveSwatch(Swatch(color: RGBColor(0, 125 + (130 / swatchesPerColor * i), 0), finish: finish));
-    }
-    //blue
-    for(int i = 0; i < swatchesPerColor; i++) {
-      String finish = finishes[random.nextInt(finishes.length)];
-      info[(swatchesPerColor * 3) + i] = await globalIO.saveSwatch(Swatch(color: RGBColor(0, 0, 125 + (130 / swatchesPerColor * i)), finish: finish));
-    }
-    //purple
-    for(int i = 0; i < swatchesPerColor; i++) {
-      String finish = finishes[random.nextInt(finishes.length)];
-      info[(swatchesPerColor * 4) + i] = await globalIO.saveSwatch(Swatch(color: RGBColor((130 / swatchesPerColor * i), 0, 125 + (130 / swatchesPerColor * i)), finish: finish));
-    }*/
     await allSwatchesIO.save(info);
   }
 

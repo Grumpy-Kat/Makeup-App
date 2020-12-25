@@ -7,6 +7,7 @@ import '../globalWidgets.dart' as globalWidgets;
 import '../routes.dart' as routes;
 import '../navigation.dart' as navigation;
 import '../types.dart';
+import '../localizationIO.dart';
 import 'Swatch.dart';
 
 class InfoBox extends StatefulWidget {
@@ -52,8 +53,8 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     GestureBinding.instance.pointerRouter.addGlobalRoute(onPointerEvent);
-    _colorName = globalWidgets.toTitleCase(getColorName(widget.swatch.color));
-    _finish = globalWidgets.toTitleCase(widget.swatch.finish);
+    _colorName = globalWidgets.toTitleCase(getString(getColorName(widget.swatch.color)));
+    _finish = globalWidgets.toTitleCase(getString(widget.swatch.finish));
     _brand = globalWidgets.toTitleCase(widget.swatch.brand);
     _palette = globalWidgets.toTitleCase(widget.swatch.palette);
     _shade = globalWidgets.toTitleCase(widget.swatch.shade);
@@ -154,11 +155,11 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
                 color: theme.primaryColorDark,
                 child: Column(
                   children: <Widget>[
-                    getText('Color: $_colorName'),
-                    getText('Finish: $_finish'),
-                    getText('Brand: $_brand'),
-                    getText('Palette: $_palette'),
-                    if(_shade != '') getText('Shade: $_shade'),
+                    getText('${getString('infoBox_color')} $_colorName'),
+                    getText('${getString('infoBox_finish')} $_finish'),
+                    getText('${getString('infoBox_brand')} $_brand'),
+                    getText('${getString('infoBox_palette')} $_palette'),
+                    if(_shade != '') getText('${getString('infoBox_shade')} $_shade'),
                     Expanded(
                       flex: 4,
                       child: Align(
@@ -177,7 +178,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
                           child: Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'More...',
+                              getString('infoBox_more'),
                               style: theme.primaryTextSecondary,
                               textAlign: TextAlign.left,
                             ),

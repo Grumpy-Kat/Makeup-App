@@ -10,6 +10,7 @@ import '../ColorMath/ColorObjects.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../types.dart';
+import '../localizationIO.dart';
 import 'ImagePicker.dart';
 import 'BorderBox.dart';
 import 'Swatch.dart';
@@ -111,7 +112,7 @@ class PaletteDividerState extends State<PaletteDivider> {
                   alignment: Alignment(0, -0.77),
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
-                    'If the palette does not have uniform columns and rows, try to add it in sections.',
+                    getString('paletteDivider_warning'),
                     style: theme.primaryTextSecondary,
                     textAlign: TextAlign.center,
                   ),
@@ -122,8 +123,8 @@ class PaletteDividerState extends State<PaletteDivider> {
                     showImg,
                     child: Row(
                       children: <Widget>[
-                        getTextField(screenSize, 'Palette Columns', colsController, (String val) { setState(() { numCols = _toInt(val); }); }),
-                        getTextField(screenSize, 'Palette Rows', rowsController, (String val) { setState(() { numRows = _toInt(val); }); })
+                        getTextField(screenSize, getString('paletteDivider_columns'), colsController, (String val) { setState(() { numCols = _toInt(val); }); }),
+                        getTextField(screenSize, getString('paletteDivider_rows'), rowsController, (String val) { setState(() { numRows = _toInt(val); }); })
                       ],
                     ),
                   ),
@@ -224,7 +225,7 @@ class PaletteDividerState extends State<PaletteDivider> {
           );
         },
         child: Text(
-          'Add Image',
+          getString('paletteDivider_add'),
           style: (ImagePicker.img == null ? theme.accentTextBold : theme.primaryTextPrimary),
         ),
       ),
@@ -242,7 +243,7 @@ class PaletteDividerState extends State<PaletteDivider> {
             color: theme.accentColor,
             onPressed: save,
             child: Text(
-              'Save',
+              getString('save'),
               style: theme.accentTextBold,
             ),
           ),

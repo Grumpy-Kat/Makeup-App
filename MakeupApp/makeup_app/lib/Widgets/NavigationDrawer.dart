@@ -3,6 +3,7 @@ import '../theme.dart' as theme;
 import '../types.dart';
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
+import '../localizationIO.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final int currTab;
@@ -48,7 +49,7 @@ class NavigationDrawer extends StatelessWidget {
               semanticLabel: 'All Swatches',
             ),
             title: Text(
-              'All Swatches',
+              getString('screen_allSwatches'),
               style: currTab == 0 ? selectedText : unselectedText,
             ),
             onTap: () { routePage(context, 0); },
@@ -62,7 +63,7 @@ class NavigationDrawer extends StatelessWidget {
               semanticLabel: 'Saved Looks',
             ),
             title: Text(
-              'Saved Looks',
+              getString('screen_savedLooks'),
               style: currTab == 1 ? selectedText : unselectedText,
             ),
             onTap: () { routePage(context, 1); },
@@ -76,7 +77,7 @@ class NavigationDrawer extends StatelessWidget {
               semanticLabel: 'Color Wheel',
             ),
             title: Text(
-              'Color Wheel',
+              getString('screen_colorWheel'),
               style: currTab == 2 ? selectedText : unselectedText,
             ),
             onTap: () { routePage(context, 2); },
@@ -90,7 +91,7 @@ class NavigationDrawer extends StatelessWidget {
               semanticLabel: 'Palette Scanner',
             ),
             title: Text(
-              'Palette Scanner',
+              getString('screen_paletteScanner'),
               style: currTab == 3 ? selectedText : unselectedText,
             ),
             onTap: () { routePage(context, 3); },
@@ -104,7 +105,7 @@ class NavigationDrawer extends StatelessWidget {
               semanticLabel: 'Settings',
             ),
             title: Text(
-              'Settings',
+              getString('screen_settings'),
               style: currTab == 4 ? selectedText : unselectedText,
             ),
             onTap: () { routePage(context, 4); },

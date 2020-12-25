@@ -8,6 +8,7 @@ import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../allSwatchesIO.dart' as IO;
+import '../localizationIO.dart';
 
 class PaletteScannerScreen extends StatefulWidget {
   @override
@@ -62,7 +63,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
       //has finished using palette divider and displays similar swatches
       return buildComplete(
         context,
-        'Palette Scanner',
+        getString('screen_paletteScanner'),
         3,
         body: Padding(
           padding: EdgeInsets.only(top: 15),
@@ -79,7 +80,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                   );
                 },
                 child: Text(
-                  'Choose a Different Palette',
+                  getString('paletteScanner_chooseDifferent'),
                   style: theme.primaryTextPrimary,
                 ),
               ),
@@ -90,7 +91,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                   onSave(context, _labels);
                 },
                 child: Text(
-                  'Save Palette',
+                  getString('paletteScanner_savePalette'),
                   style: theme.primaryTextPrimary,
                 ),
               ),
@@ -114,17 +115,17 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
       //using palette divider
       return buildComplete(
         context,
-        'Palette Scanner',
+        getString('screen_paletteScanner'),
         3,
         //help button
         rightBar: [
           globalWidgets.getHelpBtn(
             context,
-            'This screen can be used to compare other palettes to your existing collection. For example, when shopping, you can take a picture of a palette and compare it to your collection to see if you want to buy it. Or when recreating a look, you can find a picture of the original palettes and compare dupes in your collection.\n\n'
-            'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections. It is best to take the pictures in bright lighting, preferably near an open window\n\n'
-            'Then, type in the number of columns and rows in the palette.\n\n'
-            'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
-            'Last, press "Save". All the swatches\' colors and finishes will be detected. You\'ll be taken to a screen to compare each of the palette\'s swatches to your current collection. They will be arranged by the palette\'s rows.',
+            '${getString('help_paletteScanner_0')}\n\n'
+            '${getString('help_paletteScanner_1')}\n\n'
+            '${getString('help_paletteScanner_2')}\n\n'
+            '${getString('help_paletteScanner_3')}\n\n'
+            '${getString('help_paletteScanner_4')}\n\n',
           ),
         ],
         //palette divider
@@ -148,11 +149,12 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
     //open dialog to enter palette name and brand
     globalWidgets.openTwoTextDialog(
       context,
-      'Enter a brand and name for this palette:',
-      'Brand', 'Palette',
-      'You must add a brand.',
-      'You must add a palette name.',
-      'Save',
+      getString('paletteScanner_popupInstructions'),
+      getString('paletteScanner_brand'),
+      getString('paletteScanner_palette'),
+      getString('paletteScanner_brandError'),
+      getString('paletteScanner_paletteError'),
+      getString('save'),
       (String brand, String palette) {
         //assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {

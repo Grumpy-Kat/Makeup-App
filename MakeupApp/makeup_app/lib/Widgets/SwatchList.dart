@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import '../Widgets/Swatch.dart';
 import '../theme.dart' as theme;
 import '../types.dart';
+import '../localizationIO.dart';
 
 class SwatchList {
   Future addSwatches;
@@ -59,7 +60,7 @@ mixin SwatchListState {
           child: Padding(
             padding: EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Text(
-              'No colors found.',
+              getString('noColorsFound'),
               style: theme.primaryTextPrimary,
               maxLines: 1,
             ),
@@ -127,7 +128,7 @@ mixin SwatchListState {
       margin: EdgeInsets.fromLTRB(15, 15, 0, 15),
       child: Row(
         children: <Widget>[
-          Text('Sort by  ', style: theme.primaryTextQuaternary),
+          Text('${getString('sort_sortBy')}  ', style: theme.primaryTextQuaternary),
           SizedBox(
             width: 120,
             child: DropdownButton<String>(
@@ -155,7 +156,7 @@ mixin SwatchListState {
               items: swatchList.sort.keys.map((String val) {
                 return DropdownMenuItem(
                   value: val,
-                  child: Text('$val', style: theme.primaryTextQuaternary),
+                  child: Text('${getString(val)}', style: theme.primaryTextQuaternary),
                 );
               }).toList(),
             ),

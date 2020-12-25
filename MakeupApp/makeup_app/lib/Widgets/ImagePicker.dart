@@ -4,8 +4,8 @@ import 'package:flutter/material.dart' hide Image;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart' as Image_Picker;
 import '../theme.dart' as theme;
-import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
+import '../localizationIO.dart';
 
 class ImagePicker {
   static BuildContext _context;
@@ -31,19 +31,19 @@ class ImagePicker {
                     Expanded(
                       child: Align(
                         alignment: Alignment.center,
-                        child: Text('Choose photo from:', style: theme.primaryTextBold),
+                        child: Text(getString('imagePicker_chooseMode'), style: theme.primaryTextBold),
                       ),
                     ),
                     FlatButton.icon(
                       icon: Icon(Icons.image, color: theme.iconTextColor),
-                      label: Text('Open Gallery', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
+                      label: Text(getString('imagePicker_gallery'), textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                       onPressed: () {
                         _openGallery(context, setState);
                       },
                     ),
                     FlatButton.icon(
                       icon: Icon(Icons.camera, color: theme.iconTextColor),
-                      label: Text('Open Camera', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
+                      label: Text(getString('imagePicker_camera'), textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                       onPressed: () {
                         _openCamera(context, setState);
                       },
@@ -87,7 +87,7 @@ class ImagePicker {
     } else {
       //reopen and reload
       if(isOpen) {
-        setState(() { error = 'Gallery permissions are denied. Please open your phone\'s settings to allow ${globals.appName} to access your gallery.'; });
+        setState(() { error = getString('imagePicker_galleryError'); });
       }
     }
   }
@@ -115,7 +115,7 @@ class ImagePicker {
     } else {
       //reopen and reload
       if(isOpen) {
-        setState(() { error = 'Camera permissions are denied. Please open your phone\'s settings to allow ${globals.appName} to access your camera.'; });
+        setState(() { error = getString('imagePicker_cameraError'); });
       }
     }
   }

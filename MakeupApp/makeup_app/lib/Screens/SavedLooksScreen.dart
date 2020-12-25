@@ -6,6 +6,7 @@ import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../savedLooksIO.dart' as IO;
 import '../allSwatchesIO.dart' as allSwatchesIO;
+import '../localizationIO.dart';
 import 'Screen.dart';
 import 'SavedLookScreen.dart';
 
@@ -52,7 +53,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
   Widget build(BuildContext context) {
     return buildComplete(
       context,
-      'Saved Looks',
+      getString('screen_savedLooks'),
       1,
       //scroll view to show all look names as labels and looks as horizontal bodies
       body: MultipleSwatchList(

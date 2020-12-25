@@ -4,6 +4,7 @@ import '../allSwatchesIO.dart' as IO;
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
 import '../types.dart';
+import '../localizationIO.dart';
 
 class SelectedSwatchPopup extends StatefulWidget {
   final List<int> swatches;
@@ -66,7 +67,7 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
             Navigator.pop(context);
           },
           child: Text(
-            'Save',
+            getString('save'),
             style: theme.accentTextBold,
           ),
         )

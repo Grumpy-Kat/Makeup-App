@@ -4,6 +4,7 @@ import 'Widgets/Swatch.dart';
 import 'types.dart';
 import 'settingsIO.dart' as IO;
 import 'allSwatchesIO.dart' as allSwatches;
+import 'localizationIO.dart';
 
 //curr swatches in today's look
 CurrSwatches currSwatches = CurrSwatches.instance;
@@ -138,50 +139,50 @@ set hasDoneTutorial(bool value) {
 }
 
 //languages
-final List<String> languages = ['English', 'Spanish'];
-String _language = 'English';
+String _language = 'en';
 String get language => _language;
 set language(String value) {
-  if(languages.contains(value)) {
+  if(getLanguages().contains(value)) {
     _language = value;
+    setLanguage(value);
     IO.save();
   }
 }
 
 //default sort and sort options
-String _sort = 'Hue';
-String get sort => _sort == '' ? 'Hue' : _sort;
+String _sort = 'sort_hue';
+String get sort => _sort == '' ? 'sort_hue' : _sort;
 set sort(String value) {
   _sort = value;
   IO.save();
 }
 Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step: 16 }) {
   return {
-    'Hue': (Swatch swatch, int i) { return stepSort(swatch.color, step: step); },
-    'Lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
-    'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
-    'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
-    'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
-    'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
-    'Highest Rated': (Swatch swatch, int i) { return highestRatedSort(swatch, step: step); },
-    'Lowest Rated': (Swatch swatch, int i) { return lowestRatedSort(swatch, step: step); },
+    'sort_hue': (Swatch swatch, int i) { return stepSort(swatch.color, step: step); },
+    'sort_lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
+    'sort_darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
+    'sort_finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
+    'sort_palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
+    'sort_brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
+    'sort_highestRated': (Swatch swatch, int i) { return highestRatedSort(swatch, step: step); },
+    'sort_lowestRated': (Swatch swatch, int i) { return lowestRatedSort(swatch, step: step); },
   };
 }
 Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBColor color, { step: 16 }) {
   return {
-    'Hue': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
-    'Lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
-    'Darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
-    'Finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
-    'Palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
-    'Brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
-    'Highest Rated': (Swatch swatch, int i) { return highestRatedSort(swatch, step: step); },
-    'Lowest Rated': (Swatch swatch, int i) { return lowestRatedSort(swatch, step: step); },
+    'sort_hue': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
+    'sort_lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
+    'sort_darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
+    'sort_finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
+    'sort_palette': (Swatch swatch, int i) { return paletteSort(swatch, swatches[i], step: step); },
+    'sort_brand': (Swatch swatch, int i) { return brandSort(swatch, swatches[i], step: step); },
+    'sort_highestRated': (Swatch swatch, int i) { return highestRatedSort(swatch, step: step); },
+    'sort_lowestRated': (Swatch swatch, int i) { return lowestRatedSort(swatch, step: step); },
   };
 }
 
 //all eyeshadow tags
-List<String> _tags = ['Pigmented', 'Sheer', 'Lots of Fallout', 'No Fallout', 'Creamy', 'Dry'];
+List<String> _tags = ['tags_pigmented', 'tags_sheer', 'tags_lotsFallout', 'tags_noFallout', 'tags_soft', 'tags_creamy', 'tags_dry'];
 List<String> get tags => _tags;
 set tags(List<String> value) {
   _tags = value.toSet().toList();
@@ -194,8 +195,8 @@ enum AutoShadeNameMode {
   RowLetters,
   None,
 }
-final Map<AutoShadeNameMode, String> autoShadeNameModeNames = {AutoShadeNameMode.ColLetters: 'Column Letters', AutoShadeNameMode.RowLetters: 'Row Letters', AutoShadeNameMode.None: 'None'};
-final Map<AutoShadeNameMode, String> autoShadeNameModeDescriptions = {AutoShadeNameMode.ColLetters: 'Columns will be assigned letters and rows will be assigned numbers.', AutoShadeNameMode.RowLetters: 'Columns will be assigned numbers and rows will be assigned letters.', AutoShadeNameMode.None: 'Will not auto assign a shade name.'};
+final Map<AutoShadeNameMode, String> autoShadeNameModeNames = {AutoShadeNameMode.ColLetters: getString( 'nameMode_column'), AutoShadeNameMode.RowLetters: getString('nameMode_row'), AutoShadeNameMode.None: getString('nameMode_none')};
+final Map<AutoShadeNameMode, String> autoShadeNameModeDescriptions = {AutoShadeNameMode.ColLetters: getString('nameDescription_column'), AutoShadeNameMode.RowLetters: getString('nameDescription_row'), AutoShadeNameMode.None: getString('nameDescription_none')};
 AutoShadeNameMode _autoShadeNameMode = AutoShadeNameMode.ColLetters;
 AutoShadeNameMode get autoShadeNameMode => _autoShadeNameMode;
 set autoShadeNameMode(AutoShadeNameMode value) {

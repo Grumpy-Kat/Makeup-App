@@ -4,6 +4,7 @@ import '../navigation.dart' as navigation;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../savedLooksIO.dart' as IO;
+import '../localizationIO.dart';
 
 class TodayLookScreen extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class TodayLookScreen extends StatefulWidget {
 }
 
 class TodayLookScreenState extends State<TodayLookScreen>  {
-  String lookName = "";
+  String lookName = '';
   int lookId = -1;
 
   bool hasSaved = false;
@@ -38,11 +39,11 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
           globals.currSwatches.set(swatches);
         });
       },
-      name: 'Today\'s Look',
-      helpText: 'This all the swatches in the current look. You can press on any swatch for information about it. Press the "More..." button for more extensive information.\n\n'
-      'The delete icon in the upper right corner clears the look.\n\n'
-      'The save icon in the upper right corner saves the look. It\'ll prompt uou to input a name. You will then be able to find the look on the "Saved Looks" screen. It will allow you to revisit, remember, and redo old looks.\n\n'
-      'The edit icon in the upper right corner allows you to add or remove swatches. Press the red "X" in the upper right corner of the swatch to remove it from the look. Press the plus button to see your full collection. Tap on any of the swatches to see information on them. Double tap on them to add them to the look. Double tap on them again to remove them from the look.',
+      name: getString('screen_todayLook'),
+      helpText: '${getString('help_todayLook_0')}\n\n'
+      '${getString('help_todayLook_1')}\n\n'
+      '${getString('help_todayLook_2')}\n\n'
+      '${getString('help_todayLook_3')}\n\n',
       showBack: true,
       askBackSaved: hasSaved,
       onBackPressed: exit,
@@ -58,9 +59,9 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
         //saving for first time, so open dialog for name of the look
         globalWidgets.openTextDialog(
           context,
-          'Enter a name for this look:',
-          'You must add a look name.',
-          'Save',
+          getString('todayLook_popupInstructions'),
+          getString('todayLook_popupError'),
+          getString('save'),
           (String value) {
             setState(() {
               lookName = value;

@@ -8,6 +8,7 @@ import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../allSwatchesIO.dart' as IO;
+import '../localizationIO.dart';
 
 class AddPaletteScreen extends StatefulWidget {
   @override
@@ -46,7 +47,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
     if(!_hasChosenMode) {
       return buildComplete(
         context,
-        'Add Palette',
+        getString('screen_addPalette'),
         10,
         //back button
         leftBar: IconButton(
@@ -69,8 +70,8 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         rightBar: [
           globalWidgets.getHelpBtn(
             context,
-            'Palette Divider allows you to upload a picture and divide the palette into separate swatches. Then, it will automatically finds the colors and finishes for you. It should be used for most shadows and palettes.\n\n'
-            'Custom allows you to input your own swatches, customizing the colors, finishes, and any other information you want to add. It\'s best for adding irregular palettes that would be difficult to divide into columns and rows.',
+            '${getString('help_addPalette_0')}\n\n'
+            '${getString('help_addPalette_1')}\n\n',
           ),
         ],
         body: Column(
@@ -78,12 +79,12 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             //text
             Container(
               margin: EdgeInsets.only(top: 40, bottom: 20),
-              child: Text('Add swatches using: ', style: theme.primaryTextBold),
+              child: Text('${getString('addPalette_chooseMode')} ', style: theme.primaryTextBold),
             ),
             //sets mode ot palette divider
             FlatButton.icon(
               icon: Icon(Icons.crop, size: 20, color: theme.iconTextColor),
-              label: Text('Palette Divider', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
+              label: Text('${getString('addPalette_paletteDivider')}', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
               onPressed: () {
                 setState(() {
                   _isUsingPaletteDivider = true;
@@ -94,7 +95,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             //sets mode to custom
             FlatButton.icon(
               icon: Icon(Icons.colorize, size: 20, color: theme.iconTextColor),
-              label: Text('Custom', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
+              label: Text('${getString('addPalette_custom')}', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
               onPressed: () {
                 onEnter(
                   context,
@@ -117,7 +118,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
     if(_hasChosenMode && _isUsingPaletteDivider && !_displayCheckButton) {
       return buildComplete(
         context,
-        'Add Palette',
+        getString('screen_addPalette'),
         10,
         //back button
         leftBar: IconButton(
@@ -137,11 +138,11 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         rightBar: [
           globalWidgets.getHelpBtn(
             context,
-            'First, press the "Add Image" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows, add it in sections. It is best to take the pictures in bright lighting, preferably near an open window.\n\n'
-            'Then, type in the number of columns and rows in the palette.\n\n'
-            'Next, drag the outer border to fit the palette\'s edges. Drag the inner borders to fit each pans\' edges. It is better to cut off part of the pans than to go too big.\n\n'
-            'Last, press "Save". It will prompt you to add a brand and name for the palette. All the swatches\' colors and finishes will be detected and they will be added to your collection.\n\n'
-            'You\'ll be taken to a screen to look over the added swatches. They will be arranged by the palette\'s rows. You can edit any of their information, leave ratings, or add tags if you wish to.',
+            '${getString('help_addPalette_2')}\n\n'
+            '${getString('help_addPalette_3')}\n\n'
+            '${getString('help_addPalette_4')}\n\n'
+            '${getString('help_addPalette_5')}\n\n'
+            '${getString('help_addPalette_6')}\n\n',
           ),
         ],
         //palette divider
@@ -192,7 +193,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                   IO.add([
                     Swatch(
                       color: RGBColor(0.5, 0.5, 0.5),
-                      finish: 'matte',
+                      finish: 'finish_matte',
                       brand: _brand,
                       palette: _palette,
                       shade: '',
@@ -220,7 +221,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       }
       return buildComplete(
         context,
-        'Add Palette',
+        getString('screen_addPalette'),
         10,
         //back button
         leftBar: IconButton(
@@ -258,10 +259,10 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
     print('Has reached impossible point!');
     return buildComplete(
       context,
-      'Add Palette',
+      getString('screen_addPalette'),
       10,
       body: Text(
-        'Error',
+        getString('error'),
         style: theme.errorText,
       ),
     );
@@ -271,12 +272,12 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
     //open dialog to enter palette name and brand
     globalWidgets.openTwoTextDialog(
       context,
-      'Enter a brand and name for this palette:',
-      'Brand',
-      'Palette',
-      'You must add a brand.',
-      'You must add a palette name.',
-      'Save',
+      getString('addPalette_popupInstructions'),
+      getString('addPalette_brand'),
+      getString('addPalette_palette'),
+      getString('addPalette_brandError'),
+      getString('addPalette_paletteError'),
+      getString('save'),
        onPressed,
     );
   }

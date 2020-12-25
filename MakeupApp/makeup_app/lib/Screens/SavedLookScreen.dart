@@ -3,6 +3,7 @@ import '../Screens/LookScreen.dart';
 import '../globals.dart' as globals;
 import '../navigation.dart' as navigation;
 import '../savedLooksIO.dart' as IO;
+import '../localizationIO.dart';
 
 class SavedLookScreen extends StatefulWidget {
   static int id;
@@ -38,10 +39,10 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
         });
       },
       name: SavedLookScreen.name,
-      helpText: 'This a look you had previously saved. You can press on any swatch for information about it. Press the "More..." button for more extensive information.\n\n'
-      'The delete icon in the upper right corner permanently deletes the look. This action can not be undone.\n\n'
-      'The add icon in the upper right corner adds all the swatches in this look to Today\'s Look.\n\n'
-      'The edit icon in the upper right corner allows you to add or remove swatches. Press the red "X" in the upper right corner of the swatch to remove it from the look. Press the plus button to see your full collection. Tap on any of the swatches to see information on them. Double tap on them to add them to the look. Double tap on them again to remove them from the look.',
+      helpText: '${getString('help_savedLook_0')}\n\n'
+      '${getString('help_savedLook_1')}\n\n'
+      '${getString('help_savedLook_2')}\n\n'
+      '${getString('help_savedLook_3')}',
       showBack: true,
       askBackSaved: true,
       onBackPressed: () {

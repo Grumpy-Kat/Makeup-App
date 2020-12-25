@@ -6,6 +6,7 @@ import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../allSwatchesIO.dart' as IO;
+import '../localizationIO.dart';
 
 class AllSwatchesScreen extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
   Widget build(BuildContext context) {
     return buildComplete(
       context,
-      'All Swatches',
+      getString('screen_allSwatches'),
       0,
       //scroll view to show all swatches
       body: SingleSwatchList(

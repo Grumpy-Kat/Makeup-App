@@ -10,6 +10,7 @@ import '../routes.dart' as routes;
 import '../settingsIO.dart' as settingsIO;
 import '../allSwatchesIO.dart' as allSwatchesIO;
 import '../savedLooksIO.dart' as savedLooksIO;
+import '../localizationIO.dart';
 
 enum Mode {
   Default,
@@ -88,15 +89,15 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     Widget body;
     switch(mode) {
       case Mode.Default:
-        title = 'Settings';
+        title = getString('screen_settings');
         body = getDefaultScreen(context, height, decoration, decorationNoBottom, padding, margin);
         break;
       case Mode.Shade:
-        title = 'Auto Shade Name Settings';
+        title = getString('settings_shade');
         body = getShadeScreen(context, height, decoration, decorationNoBottom, padding, margin);
         break;
       case Mode.Photo:
-        title = 'Photo Upload Settings';
+        title = getString('settings_photo');
         body = getPhotoScreen(context, height, decoration, decorationNoBottom, padding, margin);
         break;
     }
@@ -155,7 +156,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(right: 3),
-            child: Text('Language ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_default_language')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -178,10 +179,10 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                       ),
                     ),
                   ),
-                  items: globals.languages.map((String val) {
+                  items: getLanguages().map((String val) {
                     return DropdownMenuItem(
                       value: val,
-                      child: Text('$val', style: theme.primaryTextSecondary),
+                      child: Text('${getString(val)}', style: theme.primaryTextSecondary),
                     );
                   }).toList(),
                 ),
@@ -204,7 +205,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
         children: <Widget>[
           Align(
             alignment: Alignment.centerLeft,
-            child: Text('Allow Notifications ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_default_notifications')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -244,7 +245,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(right: 3),
-            child: Text('Default Sort ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_default_sort')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -270,7 +271,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   items: globals.defaultSortOptions([]).keys.map((String val) {
                     return DropdownMenuItem(
                       value: val,
-                      child: Text('$val', style: theme.primaryTextSecondary),
+                      child: Text('${getString(val)}', style: theme.primaryTextSecondary),
                     );
                   }).toList(),
                 ),
@@ -299,7 +300,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           children: <Widget>[
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Auto Shade Naming', style: theme.primaryTextSecondary),
+              child: Text('${getString('settings_default_shade')}', style: theme.primaryTextSecondary),
             ),
             Expanded(
               child: Align(
@@ -349,7 +350,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(right: 3),
-            child: Text('Auto Name Shades ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_shade_shade')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -410,7 +411,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           children: <Widget>[
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Photo Upload', style: theme.primaryTextSecondary),
+              child: Text('${getString('settings_default_photo')}', style: theme.primaryTextSecondary),
             ),
             Expanded(
               child: Align(
@@ -457,7 +458,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(right: 3),
-            child: Text('Brightness Offset ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_photo_brightness')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -517,7 +518,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(right: 3),
-            child: Text('Red Offset ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_photo_red')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -577,7 +578,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(right: 3),
-            child: Text('Green Offset ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_photo_green')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -638,7 +639,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(right: 3),
-            child: Text('Blue Offset ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_photo_blue')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -698,25 +699,25 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Expanded(
             child: Align(
               alignment: Alignment.center,
-              child: Text('Before', style: theme.primaryTextTertiary),
+              child: Text('${getString('settings_photo_before')}', style: theme.primaryTextTertiary),
             ),
           ),
           Expanded(
             child: Align(
               alignment: Alignment.center,
-              child: Text('After', style: theme.primaryTextTertiary),
+              child: Text('${getString('settings_photo_after')}', style: theme.primaryTextTertiary),
             ),
           ),
           Expanded(
             child: Align(
               alignment: Alignment.center,
-              child: Text('Before', style: theme.primaryTextTertiary),
+              child: Text('${getString('settings_photo_before')}', style: theme.primaryTextTertiary),
             ),
           ),
           Expanded(
             child: Align(
               alignment: Alignment.center,
-              child: Text('After', style: theme.primaryTextTertiary),
+              child: Text('${getString('settings_photo_after')}', style: theme.primaryTextTertiary),
             ),
           ),
         ],
@@ -756,7 +757,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             ),
           ),
         ),
-        Expanded(
+          Expanded(
           child: Align(
             alignment: Alignment.center,
             child: Image(
@@ -787,7 +788,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(right: 3),
-            child: Text('Color Wheel Screen Sensitivity ', style: theme.primaryTextSecondary),
+            child: Text('${getString('settings_default_sensitivity')} ', style: theme.primaryTextSecondary),
           ),
           Expanded(
             child: Align(
@@ -858,7 +859,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(right: 3),
-                child: Text('Help ', style: theme.primaryTextSecondary),
+                child: Text('${getString('settings_default_help')} ', style: theme.primaryTextSecondary),
               ),
               Align(
                 alignment: Alignment.centerRight,
@@ -891,7 +892,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(right: 3),
-              child: Text('Request a Feature', style: theme.primaryTextSecondary),
+              child: Text('${getString('settings_default_request')} ', style: theme.primaryTextSecondary),
             ),
             Align(
               alignment: Alignment.centerRight,
@@ -923,7 +924,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(right: 3),
-              child: Text('Report a Bug ', style: theme.primaryTextSecondary),
+              child: Text('${getString('settings_default_report')} ', style: theme.primaryTextSecondary),
             ),
             Align(
               alignment: Alignment.centerRight,
@@ -958,7 +959,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
               applicationName: globals.appName,
               applicationVersion: globals.appVersion,
               children: <Widget>[
-                Text('Created by TechneGames', style: theme.primaryTextSecondary, textAlign: TextAlign.center),
+                Text('${getString('settings_default_created')}', style: theme.primaryTextSecondary, textAlign: TextAlign.center),
               ],
             );
           },
@@ -967,7 +968,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(right: 3),
-                child: Text('About ', style: theme.primaryTextSecondary),
+                child: Text('${getString('settings_default_about')} ', style: theme.primaryTextSecondary),
               ),
               Align(
                 alignment: Alignment.centerRight,
@@ -1003,7 +1004,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 //confirms clearing
                 globalWidgets.openTwoButtonDialog(
                   context,
-                  'Are you sure you want to reset the entire app, including settings, swatches, and looks? This can not be undone.',
+                  getString('settings_default_resetQuestion'),
                   () async {
                     await settingsIO.clear();
                     await allSwatchesIO.clear();
@@ -1022,7 +1023,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 print('reset all');
               },
               child: Text(
-                'Reset App',
+                getString('settings_default_reset'),
                 textAlign: TextAlign.center,
                 style: theme.errorText,
               ),

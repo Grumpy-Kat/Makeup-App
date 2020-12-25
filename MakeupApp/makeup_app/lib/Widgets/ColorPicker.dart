@@ -9,7 +9,7 @@ class ColorPicker extends StatefulWidget {
   final String btnText;
   final HSVColor initialColor;
 
-  ColorPicker({Key key, @required this.onEnter, this.btnText = 'Find Colors', this.initialColor }) : super(key: key);
+  ColorPicker({Key key, @required this.onEnter, @required this.btnText, this.initialColor }) : super(key: key);
 
   @override
   ColorPickerState createState() => ColorPickerState();

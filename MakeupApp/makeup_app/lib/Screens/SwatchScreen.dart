@@ -11,6 +11,7 @@ import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
+import '../localizationIO.dart';
 import 'Screen.dart';
 
 class SwatchScreen extends StatefulWidget {
@@ -49,16 +50,16 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     //all swatch data
     SwatchIcon swatchIcon = SwatchIcon.swatch(_swatch, showInfoBox: false, overrideOnDoubleTap: true, onDoubleTap: (int id) {});
     RGBColor color = _swatch.color;
-    String finish = globalWidgets.toTitleCase(_swatch.finish).trimRight();
+    String finish = _swatch.finish;
     String brand = globalWidgets.toTitleCase(_swatch.brand).trimRight();
     String palette = globalWidgets.toTitleCase(_swatch.palette).trimRight();
     String shade = globalWidgets.toTitleCase(_swatch.shade).trimRight();
     //various options
-    List<String> finishes = ['Matte', 'Satin', 'Shimmer', 'Metallic', 'Glitter'];
+    List<String> finishes = ['finish_matte', 'finish_satin', 'finish_shimmer', 'finish_metallic', 'finish_glitter'];
     List<String> tags = globals.tags;
     return buildComplete(
       context,
-      'Edit Swatch',
+      getString('screen_swatch'),
       20,
       //back button
       leftBar: IconButton(
@@ -119,21 +120,21 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
             child: ListView(
               children: <Widget>[
                 //color
-                getColorField('Color', color, (RGBColor value) { _swatch.color = value; onChange(true); }),
+                getColorField('${getString('swatch_color')}', color, (RGBColor value) { _swatch.color = value; onChange(true); }),
                 //finish
-                getDropdownField('Finish', finishes, finish, (String value) { _swatch.finish = value; onChange(true); }),
+                getDropdownField('${getString('swatch_finish')}', finishes, finish, (String value) { _swatch.finish = value; onChange(true); }),
                 //brand name
-                getTextField('Brand', brand, (String value) { _swatch.brand = value; onChange(false); }),
+                getTextField('${getString('swatch_brand')}', brand, (String value) { _swatch.brand = value; onChange(false); }),
                 //palette name
-                getTextField('Palette', palette, (String value) { _swatch.palette = value; onChange(false); }),
+                getTextField('${getString('swatch_palette')}', palette, (String value) { _swatch.palette = value; onChange(false); }),
                 //shade name
-                getTextField('Shade', shade, (String value) { _swatch.shade = value; onChange(false); }),
+                getTextField('${getString('swatch_shade')}', shade, (String value) { _swatch.shade = value; onChange(false); }),
                 divider,
                 //rating
-                getStarField('Rating', _swatch.rating, (int value) { _swatch.rating = value; onChange(false); }),
+                getStarField('${getString('swatch_rating')}', _swatch.rating, (int value) { _swatch.rating = value; onChange(false); }),
                 divider,
                 //tags
-                getChipField('Tags', tags, _swatch.tags, (String value) { tags.add(value); globals.tags = tags; }, (List<String> value) { _swatch.tags = value; onChange(true); }),
+                getChipField('${getString('swatch_tags')}', tags, _swatch.tags, (String value) { tags.add(value); globals.tags = tags; }, (List<String> value) { _swatch.tags = value; onChange(true); }),
                 divider,
                 //delete button
                 Container(
@@ -151,7 +152,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                       exit();
                     },
                     child: Text(
-                      'Delete Swatch',
+                      '${getString('swatch_delete')}',
                       style: theme.errorText,
                     ),
                   ),
@@ -231,7 +232,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
 
   //color field that displays color name and opens popup to color picker
   Widget getColorField(String label, RGBColor color, OnRGBColorAction onChange) {
-    String colorName = globalWidgets.toTitleCase(getColorName(_swatch.color)).trimRight();
+    String colorName = globalWidgets.toTitleCase(getString(getColorName(_swatch.color)));
     Widget child = Row(
       children: <Widget>[
         Text(
@@ -270,7 +271,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                               padding: EdgeInsets.only(bottom: 30),
                               alignment: Alignment.topLeft,
                               child: ColorPicker(
-                                btnText: 'Save',
+                                btnText: '${getString('save')}',
                                 initialColor: RGBtoHSV(_swatch.color),
                                 onEnter: (double hue, double saturation, double value) {
                                   onChange(HSVtoRGB(HSVColor(hue, saturation, value)));
@@ -313,6 +314,10 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
 
   //dropdown field, ex for finish
   Widget getDropdownField(String label, List<String> options, String value, OnStringAction onChange) {
+    String valueText = value;
+    if(valueText.contains('_')) {
+      valueText = getString(valueText);
+    }
     return getField(
       55,
       label,
@@ -329,7 +334,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           ),
         ),
         child: DropdownButton<String>(
-          disabledHint: Text('$value', style: theme.primaryTextPrimary),
+          disabledHint: Text('$valueText', style: theme.primaryTextPrimary),
           isDense: true,
           isExpanded: true,
           style: theme.primaryTextPrimary,
@@ -344,9 +349,13 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           underline: Container(),
           items: options.map(
             (String val) {
+              String text = val;
+              if(text.contains('_')) {
+                  text = getString(text);
+              }
               return DropdownMenuItem(
                 value: val,
-                child: Text('$val', style: theme.primaryTextPrimary),
+                child: Text('$text', style: theme.primaryTextPrimary),
               );
             }
           ).toList(),
@@ -397,10 +406,14 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       if(!_isEditing && !values.contains(options[i])) {
         continue;
       }
+      String text = options[i];
+      if(text.contains('_')) {
+        text = getString(text);
+      }
       widgets.add(
         FilterChip(
           checkmarkColor: theme.accentColor,
-          label: Text(options[i], style: theme.primaryTextSecondary),
+          label: Text(text, style: theme.primaryTextSecondary),
           selected: values.contains(options[i]),
           onSelected: (bool selected) {
             if(_isEditing) {
@@ -432,9 +445,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
             if(_isEditing) {
               globalWidgets.openTextDialog(
                 context,
-                'Enter new tag:',
-                'You must enter a tag.',
-                'Add',
+                getString('swatch_popupInstructions'),
+                getString('swatch_popupError'),
+                getString('swatch_popupBtn'),
                 (String value) {
                   onAddOption(value);
                   values.add(value);
@@ -450,7 +463,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       widgets.add(
         FilterChip(
           checkmarkColor: theme.accentColor,
-          label: Text('None', style: theme.primaryTextSecondary),
+          label: Text('${getString('swatch_none')}', style: theme.primaryTextSecondary),
           selected: false,
           onSelected: (bool selected) { },
         ),

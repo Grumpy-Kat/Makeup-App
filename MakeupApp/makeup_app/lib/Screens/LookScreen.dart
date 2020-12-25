@@ -7,6 +7,7 @@ import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
+import '../localizationIO.dart';
 
 class LookScreen extends StatefulWidget {
   final List<int> swatches;
@@ -189,7 +190,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
             //confirms clearing
             globalWidgets.openTwoButtonDialog(
               context,
-              'Are you sure you want to clear the look?',
+              getString('lookScreen_clearWarning'),
               () {
                 //action determined by screen that uses it
                 widget.onClearPressed();
@@ -264,7 +265,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     if(widget.askBackSaved && _hasEdited) {
       await globalWidgets.openTwoButtonDialog(
         context,
-        'Would you like to save?',
+        getString('lookScreen_saveWarning'),
         () {
           widget.onSavePressed();
           widget.onBackPressed();

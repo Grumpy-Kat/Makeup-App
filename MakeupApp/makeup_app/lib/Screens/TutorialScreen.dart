@@ -5,6 +5,7 @@ import '../Widgets/SizedSafeArea.dart';
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
+import '../localizationIO.dart';
 
 class TutorialScreen extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                   color: theme.primaryColor,
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(left: 20, right: 20, top: 3),
-                  child: Text('Tutorial', style: theme.primaryTextBold),
+                  child: Text('${getString('screen_tutorial')}', style: theme.primaryTextBold),
                 ),
               ),
               Expanded(
@@ -116,7 +117,7 @@ class TutorialScreenState extends State<TutorialScreen> {
           child: FlatButton(
             onPressed: onFinished,
             child: Text(
-              'Skip',
+              getString('tutorial_skip'),
               style: theme.primaryTextSecondary,
             ),
           ),
@@ -151,8 +152,8 @@ class TutorialScreenState extends State<TutorialScreen> {
     return Container(
       padding: EdgeInsets.all(20),
       child: Text(
-        'First, click on the plus button to add your palettes. The screen will have more directions if you press the help icon in the top left corner.\n\n'
-        'Once you\'ve finished, you can return to the "All Swatches" screen and scroll through all the added swatches.',
+        '${getString('tutorial_screen0_0')}\n\n'
+        '${getString('tutorial_screen0_1')}',
         style: theme.primaryTextPrimary,
       ),
     );
@@ -162,8 +163,8 @@ class TutorialScreenState extends State<TutorialScreen> {
     return Container(
       padding: EdgeInsets.all(20),
       child: Text(
-        'Tap on a swatch to get information about, such as the color, finish, brand, palette, and shade name, if entered.\n\n'
-        'Click on the "More..." button to see more information about it. That screen will also allow you to change any information about, such as the tags and rating. You can also delete a swatch from there.',
+        '${getString('tutorial_screen1_0')}\n\n'
+        '${getString('tutorial_screen1_1')}',
         style: theme.primaryTextPrimary,
       ),
     );
@@ -173,9 +174,9 @@ class TutorialScreenState extends State<TutorialScreen> {
     return Container(
       padding: EdgeInsets.all(20),
       child: Text(
-        'Double tap on a swatch to add it to "Today\'s Look."\n\n'
-        'Once you add, you will see the swatch appear in the bottommost bar. You can double tap on the bar to open the full look screen. On this screen you can save the look or clear it. You can also edit by adding or removing swatches. That screen will have more directions if you press the help icon in the top left corner.\n\n'
-        'You will also see another bar open with recommended swatches from your collection to add to your look. You can interact with them the same way you would any other swatch.',
+        '${getString('tutorial_screen2_0')}\n\n'
+        '${getString('tutorial_screen2_1')}\n\n'
+        '${getString('tutorial_screen2_2')}',
         style: theme.primaryTextPrimary,
       ),
     );
@@ -185,10 +186,10 @@ class TutorialScreenState extends State<TutorialScreen> {
     return Container(
       padding: EdgeInsets.all(20),
       child: Text(
-        'Click on the menu icon in top left to open the navigation to all the other menus.\n\n'
-        '"All Swatches" is the screen you have currently been on.\n\n'
-        '"Saved Looks" has all the looks that you\'ve saved from "Today\'s Look. Tap or double tap on the looks to open them. That screen will have more directions if you press the help icon in the top left corner."\n\n'
-        '"Color Wheel" allows you to find the nearest swatch to the color you choose on a color wheel. This is helpful if you may be copying a face chart or have a specific color in mind. The screen will have more directions if you press the help icon in the top left corner.',
+        '${getString('tutorial_screen3_0')}\n\n'
+        '${getString('tutorial_screen3_1')}\n\n'
+        '${getString('tutorial_screen3_2')}\n\n'
+        '${getString('tutorial_screen3_3')}',
         style: theme.primaryTextPrimary,
       ),
     );
@@ -198,8 +199,8 @@ class TutorialScreenState extends State<TutorialScreen> {
     return Container(
       padding: EdgeInsets.all(20),
       child: Text(
-         '"Palette Scanner" can be used to compare other palettes to your existing collection. For example, when shopping, you can take a picture of a palette and compare it to your collection to see if you want to buy it. Or when recreating a look, you can find a picture of the original palettes and compare dupes in your collection. The screen will have more directions if you press the help icon in the top left corner.\n\n'
-        '"Settings" has all the settings for the app. You can also find this tutorial again if you press the help button there. If you wish to report any bugs or request a feature, you can do so there.',
+        '${getString('tutorial_screen4_0')}\n\n'
+        '${getString('tutorial_screen4_1')}',
         style: theme.primaryTextPrimary,
       ),
     );

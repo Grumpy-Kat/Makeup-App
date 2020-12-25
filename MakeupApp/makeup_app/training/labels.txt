@@ -1,5 +1,5 @@
-matte
-satin
-shimmer
-metallic
-glitter
+finish_matte
+finish_satin
+finish_shimmer
+finish_metallic
+finish_glitter
