@@ -150,7 +150,6 @@ class ColorPickerState extends State<ColorPicker> {
 
   Widget buildEnterBtn(BuildContext context, Size screenSize) {
     return Positioned(
-      width: 145,
       height: 40,
       top: screenSize.height * 0.325,
       left: (screenSize.width * 0.5) - 75,
