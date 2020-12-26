@@ -8,14 +8,14 @@ close,Close,,
 cancel,Cancel,Отменить,
 error,Error,Ошибка,Error
 save,Save,Cохранить,
-noColorsFound,No Colors Found.,Цвета не найдены.,
-sort_sortBy,Sort By,Сортировать по,
-sort_hue,Hue,Оттенок,
+noColorsFound,No Colors Found.,Цвета не найдены.,No se encontraron colores.
+sort_sortBy,Sort By,Сортировать по,Ordenar por
+sort_hue,Hue,Оттенок,Matiz
 sort_lightest,Lightest,Самый Светлый,
 sort_darkest,Darkest,Самый Темный,
 sort_finish,Finish,Финиш,
-sort_palette,Palette,Палитра,
-sort_brand,Brand,Марка,
+sort_palette,Palette,Палитра,Paleta
+sort_brand,Brand,Марка,Marca
 sort_highestRated,Highest Rated,Cамый Высокий Рейтинг,
 sort_lowestRated,Lowest Rated,Самый Низкий Рейтинг,
 tags_pigmented,Pigmented,Пигментированная,
@@ -31,77 +31,77 @@ nameMode_none,None,,
 nameDescription_column,Columns will be assigned letters and rows will be assigned numbers.,,
 nameDescription_row,Columns will be assigned numbers and rows will be assigned letters.,,
 nameDescription_none,Will not auto assign a shade name.,,
-finish_matte,Matte,Матовый,
-finish_satin,Satin,Сатин,
-finish_shimmer,Shimmer,Шиммер ,
-finish_metallic,Metallic,Металлический ,
-finish_glitter,Glitter,Блеск,
-color_pastelRed,Pastel Red,Пастельно-красный,
-color_nude,Nude,Телесный ,
-color_lightRed,Light Red,Светло-красный,
-color_red,Red,Красный,
-color_darkRed,Dark Red,Темно-красный,
-color_burgundy,Burgundy,Бордовый,
-color_pastelOrange,Pastel Orange,Пастельно-оранжевый,
-color_peach,Peach,Персиковый,
-color_lightOrange,Light Orange,Светло-оранжевый,
-color_orange,Orange,Оранжевый,
-color_darkOrange,Dark Orange,Темно-оранжевый,
-color_lightBrown,Light Brown,Светло-коричневый,
-color_beige,Beige,Бежевый,
-color_taupe,Taupe,Серо-коричневый,
-color_tan,Tan,Желтовато-коричневый,
-color_brown,Brown,Коричневый,
-color_rust,Rust,Медный,
-color_darkBeige,Dark Beige,Темно-бежевый,
-color_darkBrown,Dark Brown,Темно-коричневый,
-color_chocolate,Chocolate,Шоколадный,
-color_pastelYellow,Pastel Yellow,Пастельно-желтый,
-color_cream,Cream,Кремовый,
-color_lightYellow,Light Yellow,Светло-желтый,
-color_yellow,Yellow,Желтый,
-color_lightChartreuse,Light Chartreuse,Светло-салатовый,
-color_chartreuse,Chartreuse,Салатовый,
-color_darkChartreuse,Dark Chartreuse,Темно-салатовый,
-color_pastelGreen,Pastel Green,Пастельно-зеленый,
-color_lightGreen,Light Green,Светло-зеленый,
-color_green,Green,Зеленый,
-color_darkGreen,Dark Green,Темно-зеленый,
-color_pastelMint,Pastel Mint,Пастельно-мятный,
-color_mint,Mint,Мятный,
-color_aquamarine,Aquamarine,Аквамарин,
-color_darkAquamarine,Dark Aquamarine,Темный-аквамарин,
-color_pastelTurquoise,Pastel Turquoise,Пастельно-бирюзовый,
-color_lightTurquoise,Light Turquoise,Светло-бирюзовый,
-color_turquoise,Turquoise,Бирюзовый,
-color_darkTurquoise,Dark Turquoise,Темно-бирюзовый,
-color_lightSkyBlue,Light Sky Blue,Светло-голубой,
-color_skyBlue,Sky Blue,Голубой,
-color_darkSkyBlue,Dark Sky Blue,Темно-голубой,
-color_pastelBlue,Pastel Blue,Пастельно-синий,
-color_lightBlue,Light Blue,Светло-синий,
-color_blue,Blue,Синий,
-color_darkBlue,Dark Blue,Темно-синий,
-color_pastelLavender,Pastel Lavender,Пастельно-лавандовый,
-color_lavender,Lavender,Лавандовый,
-color_indigo,Indigo,Индиго,
-color_darkIndigo,Dark Indigo,Темно-индиго,
-color_lightPurple,Light Purple,Светло-фиолетовый,
-color_purple,Purple,Фиолетовый,
-color_darkPurple,Dark Purple,Темно-фиолетовый,
-color_mauve,Mauve,Маув,
-color_violet,Violet,Сиреневый,
-color_darkViolet,Dark Violet,Темно-сиреневый,
-color_pastelPink,Pastel Pink,Пастельно-розовый,
-color_lightPink,Light Pink,Светло-розовый,
-color_pink,Pink,Розовый,
-color_darkPink,Dark Pink,Темно-розовый,
-color_white,White,Белый,
-color_lightGray,Light Gray,Светло-серый,
-color_gray,Gray,Серый,
-color_darkGray,Dark Gray,Темно-серый,
-color_darkTaupe,Dark Taupe,Темно-серо-коричневый,
-color_black,Black,Черный,
+finish_matte,Matte,Матовый,Mate
+finish_satin,Satin,Сатин,Satín
+finish_shimmer,Shimmer,Шиммер ,Brillo
+finish_metallic,Metallic,Металлический ,Metálico 
+finish_glitter,Glitter,Блеск,Brillantina
+color_pastelRed,Pastel Red,Пастельно-красный,Rojo Pastel
+color_nude,Nude,Телесный ,Piel
+color_lightRed,Light Red,Светло-красный,Rojo Claro
+color_red,Red,Красный,Rojo
+color_darkRed,Dark Red,Темно-красный,Rojo Oscuro
+color_burgundy,Burgundy,Бордовый,Borgoña
+color_pastelOrange,Pastel Orange,Пастельно-оранжевый,Naranja Pastel
+color_peach,Peach,Персиковый,Durazno
+color_lightOrange,Light Orange,Светло-оранжевый,Naranja Claro
+color_orange,Orange,Оранжевый,Naranja
+color_darkOrange,Dark Orange,Темно-оранжевый,Naranja Oscuro
+color_lightBrown,Light Brown,Светло-коричневый,Marrón Claro
+color_beige,Beige,Бежевый,Beige
+color_taupe,Taupe,Серо-коричневый,Gris Pardo
+color_tan,Tan,Желтовато-коричневый,Bronce
+color_brown,Brown,Коричневый,Marrón
+color_rust,Rust,Медный,Herrumbre
+color_darkBeige,Dark Beige,Темно-бежевый,Beige Oscuro
+color_darkBrown,Dark Brown,Темно-коричневый,Marrón Oscuro
+color_chocolate,Chocolate,Шоколадный,Chocolate
+color_pastelYellow,Pastel Yellow,Пастельно-желтый,Amarillo Pastel
+color_cream,Cream,Кремовый,Crema
+color_lightYellow,Light Yellow,Светло-желтый,Amarillo Claro
+color_yellow,Yellow,Желтый,Amarillo 
+color_lightChartreuse,Light Chartreuse,Светло-салатовый,Chartreuse Claro
+color_chartreuse,Chartreuse,Салатовый,Chartreuse
+color_darkChartreuse,Dark Chartreuse,Темно-салатовый,Chartreuse Oscuro
+color_pastelGreen,Pastel Green,Пастельно-зеленый,Verde Pastel
+color_lightGreen,Light Green,Светло-зеленый,Verde Claro
+color_green,Green,Зеленый,Verde
+color_darkGreen,Dark Green,Темно-зеленый,Verde Oscuro
+color_pastelMint,Pastel Mint,Пастельно-мятный,Menta Pastel
+color_mint,Mint,Мятный,Menta
+color_aquamarine,Aquamarine,Аквамарин,Aguamarina
+color_darkAquamarine,Dark Aquamarine,Темный-аквамарин,Aguamarina Oscuro
+color_pastelTurquoise,Pastel Turquoise,Пастельно-бирюзовый,Turquesa Pastel
+color_lightTurquoise,Light Turquoise,Светло-бирюзовый,Turquesa Claro
+color_turquoise,Turquoise,Бирюзовый,Turquesa
+color_darkTurquoise,Dark Turquoise,Темно-бирюзовый,Turquesa Oscuro
+color_lightSkyBlue,Light Sky Blue,Светло-голубой,Celeste Claro
+color_skyBlue,Sky Blue,Голубой,Celeste
+color_darkSkyBlue,Dark Sky Blue,Темно-голубой,Celeste Oscuro
+color_pastelBlue,Pastel Blue,Пастельно-синий,Azul Pastel
+color_lightBlue,Light Blue,Светло-синий,Azul Claro
+color_blue,Blue,Синий,Azul
+color_darkBlue,Dark Blue,Темно-синий,Azul Oscuro
+color_pastelLavender,Pastel Lavender,Пастельно-лавандовый,Lavanda Pastel
+color_lavender,Lavender,Лавандовый,Lavanda
+color_indigo,Indigo,Индиго,Índigo
+color_darkIndigo,Dark Indigo,Темно-индиго,Índigo Oscuro
+color_lightPurple,Light Purple,Светло-фиолетовый,Morado Claro
+color_purple,Purple,Фиолетовый,Morado
+color_darkPurple,Dark Purple,Темно-фиолетовый,Morado Oscuro
+color_mauve,Mauve,Светло-сиреневый,Malva
+color_violet,Violet,Сиреневый,Violeta
+color_darkViolet,Dark Violet,Темно-сиреневый,Violeta Oscuro
+color_pastelPink,Pastel Pink,Пастельно-розовый,Rosado Pastel
+color_lightPink,Light Pink,Светло-розовый,Rosado Claro
+color_pink,Pink,Розовый,Rosado
+color_darkPink,Dark Pink,Темно-розовый,Rosado Oscuro
+color_white,White,Белый,Blanco
+color_lightGray,Light Gray,Светло-серый,Gris Claro
+color_gray,Gray,Серый,Gris
+color_darkGray,Dark Gray,Темно-серый,Gris Oscuro
+color_darkTaupe,Dark Taupe,Темно-серо-коричневый,Gris Pardo Oscuro
+color_black,Black,Черный,Negro
 screen_allSwatches,All Swatches,,
 screen_savedLooks,Saved Looks,,
 screen_colorWheel,Color Wheel,,
@@ -137,9 +137,9 @@ help_addPalette_6,"You will be taken to a screen to look over the added swatches
 paletteScanner_chooseDifferent,Choose a Different Palette,,
 paletteScanner_savePalette,Save Palette,,
 paletteScanner_popupInstructions,Enter a brand and name for this palette:,,
-paletteScanner_brand,Brand,Марка,
+paletteScanner_brand,Brand,Марка,La Marca
 paletteScanner_brandError,You must add a brand.,,
-paletteScanner_palette,Palette,Палитра,
+paletteScanner_palette,Palette,Палитра,La Paleta
 paletteScanner_paletteError,You must add a palette name.,,
 lookScreen_clearWarning,Are you sure you want to clear the look?,,
 lookScreen_saveWarning,Would you like to save?,,
@@ -167,10 +167,10 @@ settings_default_about,About,,
 settings_default_created,Created by TechneGames,,
 settings_default_reset,Reset App,,
 settings_default_resetQuestion,"Are you sure you want to reset the entire app,% including settings,% swatches,% and looks? This can not be undone.",,
-swatch_color,Color,Цвет,
+swatch_color,Color,Цвет,El Color
 swatch_finish,Finish,Финиш,
-swatch_brand,Brand,Марка,
-swatch_palette,Palette,Палитра,
+swatch_brand,Brand,Марка,La Marca
+swatch_palette,Palette,Палитра,La Paleta
 swatch_shade,Shade,,
 swatch_rating,Rating,,
 swatch_tags,Tags,,
@@ -183,9 +183,9 @@ addPalette_chooseMode,Add swatches using:,,
 addPalette_paletteDivider,Palette Divider,,
 addPalette_custom,Custom,,
 addPalette_popupInstructions,Enter a brand and name for this palette:,,
-addPalette_brand,Brand,Марка,
+addPalette_brand,Brand,Марка,La Marca
 addPalette_brandError,You must add a brand.,,
-addPalette_palette,Palette,Палитра,
+addPalette_palette,Palette,Палитра,La Paleta
 addPalette_paletteError,You must add a palette name.,,
 tutorial_skip,Skip,,
 tutorial_screen0_0,"First,% click on the plus button to add your palettes. The screen will have more directions if you press the help icon in the top left corner.",,
@@ -207,10 +207,10 @@ imagePicker_gallery,Open Gallery,,
 imagePicker_galleryError,Gallery permissions are denied. Please open your phone's settings to allow GlamKit to access your gallery.,,
 imagePicker_camera,Open Camera,,
 imagePicker_cameraError,Camera permissions are denied. Please open your phone's settings to allow GlamKit to access your camera.,,
-infoBox_color,Color:,Цвет:,
+infoBox_color,Color,Цвет:,El color:
 infoBox_finish,Finish:,Финиш:,
-infoBox_brand,Brand:,Марка:,
-infoBox_palette,Palette:,Палитра:,
+infoBox_brand,Brand:,Марка:,La marca:
+infoBox_palette,Palette:,Палитра:,La paleta:
 infoBox_shade,Shade:,,
 infoBox_more,More...,,
 paletteDivider_warning,"If the palette does not have uniform columns and rows,% try to add it in sections.",,

@@ -142,11 +142,9 @@ set hasDoneTutorial(bool value) {
 String _language = 'en';
 String get language => _language;
 set language(String value) {
-  if(getLanguages().contains(value)) {
-    _language = value;
-    setLanguage(value);
-    IO.save();
-  }
+  _language = value;
+  setLanguage(value);
+  IO.save();
 }
 
 //default sort and sort options

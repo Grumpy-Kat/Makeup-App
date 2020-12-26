@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart' show rootBundle;
+import 'types.dart';
 
 Map<String, Map<String, String>> _localizations;
 String _language = 'en';
@@ -39,6 +40,13 @@ void load() async {
       _localizations[languages[j]][values[0]] = value;
     }
   }
+  //call listeners
+  for(OnVoidAction listener in _hasLoadedListeners) {
+    if(listener != null) {
+      listener();
+    }
+  }
+  _hasLoadedListeners.clear();
 }
 
 void setLanguage(String language) {
@@ -49,18 +57,18 @@ List<String> getLanguages() {
   return _localizations.keys.toList();
 }
 
-String getString(String id) {
-  return getStringOther(_language, id);
+String getString(String id, { String defaultValue = '' }) {
+  return getStringOther(_language, id, defaultValue: defaultValue);
 }
 
-String getStringOther(String language, String id) {
+String getStringOther(String language, String id, { String defaultValue = '' }) {
   if(!_localizations.containsKey(language)) {
     print('Localizations does not contain a language of $language.');
-    return '';
+    return defaultValue;
   }
   if(!_localizations[_language].containsKey(id)) {
     print('Localizations does not contain an id of $id.');
-    return '';
+    return defaultValue;
   }
   String value = _localizations[language][id];
   //empty value, use English as default
@@ -68,4 +76,10 @@ String getStringOther(String language, String id) {
     value = _localizations['en'][id];
   }
   return value;
+}
+
+List<OnVoidAction> _hasLoadedListeners = [];
+
+void addHasLocalizationLoadedListener(OnVoidAction hasLoadedListener) {
+  _hasLoadedListeners.add(hasLoadedListener);
 }

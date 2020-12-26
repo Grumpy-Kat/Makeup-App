@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
-import '../globals.dart' as globals;
 import '../Widgets/SizedSafeArea.dart';
+import '../globals.dart' as globals;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
@@ -13,13 +13,112 @@ class TutorialScreen extends StatefulWidget {
 }
 
 class TutorialScreenState extends State<TutorialScreen> {
+  bool hasSetLanguage;
+
   IndexController _controller = IndexController();
 
   int _curr = 0;
   int _count = 5;
 
   @override
+  void initState() {
+    super.initState();
+    hasSetLanguage = globals.hasDoneTutorial;
+    addHasLocalizationLoadedListener(() { setState(() {}); });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if(!hasSetLanguage) {
+      return Scaffold(
+        backgroundColor: theme.bgColor,
+        resizeToAvoidBottomInset: false,
+        body: SizedSafeArea(
+          builder: (context, screenSize) {
+            return Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: theme.primaryColor,
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 20, right: 20, top: 3),
+                    child: Text('${getString('screen_tutorial')}', style: theme.primaryTextBold),
+                  ),
+                ),
+                Expanded(
+                  flex: 9,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${getString('settings_default_language', defaultValue: 'Language')}',
+                          style: theme.primaryTextBold,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Container(
+                        width: 170,
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        child: DropdownButton<String>(
+                          itemHeight: 60,
+                          iconSize: theme.primaryIconSize,
+                          isDense: false,
+                          isExpanded: true,
+                          style: theme.primaryTextPrimary,
+                          iconEnabledColor: theme.iconTextColor,
+                          value: globals.language,
+                          onChanged: (String val) { setState(() { globals.language = val; }); },
+                          underline: Container(
+                            decoration: UnderlineTabIndicator(
+                              borderSide: BorderSide(
+                                color: theme.primaryColorDark,
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          items: getLanguages().map((String val) {
+                            print(val);
+                            return DropdownMenuItem(
+                              value: val,
+                              child: Text('${getString(val, defaultValue: val)}', style: theme.primaryTextPrimary),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        child: FlatButton(
+                          color: theme.accentColor,
+                          onPressed: () {
+                            setState(() {
+                              hasSetLanguage = true;
+                            });
+                          },
+                          child: Text(
+                            getString('save', defaultValue: 'Save'),
+                            style: theme.accentTextPrimary,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 50,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: theme.bgColor,
       resizeToAvoidBottomInset: false,
