@@ -44,9 +44,9 @@ Future<String> saveSwatch(Swatch swatch) async {
   //shade
   String shade = swatch.shade;
   //weight
-  String weight = swatch.weight.toString();
+  String weight = swatch.weight.toStringAsFixed(4);
   //price
-  String price = swatch.price.toString();
+  String price = swatch.price.toStringAsFixed(2);
   //rating
   String rating = swatch.rating.toString();
   //tags
