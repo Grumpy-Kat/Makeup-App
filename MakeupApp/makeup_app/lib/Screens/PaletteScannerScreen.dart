@@ -147,19 +147,16 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
 
   void onSave(BuildContext context, List<Swatch> swatches) {
     //open dialog to enter palette name and brand
-    globalWidgets.openTwoTextDialog(
+    globalWidgets.openPaletteTextDialog(
       context,
       getString('paletteScanner_popupInstructions'),
-      getString('paletteScanner_brand'),
-      getString('paletteScanner_palette'),
-      getString('paletteScanner_brandError'),
-      getString('paletteScanner_paletteError'),
-      getString('save'),
-      (String brand, String palette) {
+      (String brand, String palette, double weight, double price) {
         //assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {
           swatches[i].brand = brand;
           swatches[i].palette = palette;
+          swatches[i].weight = double.parse((weight / swatches.length).toStringAsFixed(2));
+          swatches[i].price = double.parse((price / swatches.length).toStringAsFixed(2));
         }
         //saves swatches
         IO.add(swatches);

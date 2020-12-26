@@ -7,6 +7,7 @@ typedef OnStringAction = void Function(String);
 typedef OnStringListAction = void Function(List<String>);
 typedef OnRGBColorAction = void Function(RGBColor);
 typedef OnIntAction = void Function(int);
+typedef OnDoubleAction = void Function(double);
 //same thing, but for clarity
 typedef OnSwatchAction = void Function(int);
 typedef OnSwatchListAction = void Function(List<int>);

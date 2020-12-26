@@ -137,10 +137,6 @@ help_addPalette_6,"You will be taken to a screen to look over the added swatches
 paletteScanner_chooseDifferent,Choose a Different Palette,Выберите Другую Палитру,
 paletteScanner_savePalette,Save Palette,Сохранить Палитру,
 paletteScanner_popupInstructions,Enter a brand and name for this palette:,Введите марку и название этой палитры:,
-paletteScanner_brand,Brand,Марка,La Marca
-paletteScanner_brandError,You must add a brand.,Добавьте марку.,
-paletteScanner_palette,Palette,Палитра,La Paleta
-paletteScanner_paletteError,You must add a palette name.,Добавьте название палитры.,
 lookScreen_clearWarning,Are you sure you want to clear the look?,Вы уверены что хотите удалять образ?,
 lookScreen_saveWarning,Would you like to save?,Хотите сохранить?,
 todayLook_popupInstructions,Enter a name for this look:,Введите название для этого образа:,
@@ -172,6 +168,8 @@ swatch_finish,Finish,Финиш,
 swatch_brand,Brand,Марка,La Marca
 swatch_palette,Palette,Палитра,La Paleta
 swatch_shade,Shade,Имя Тени,
+swatch_weight,Weight,,
+swatch_price,Price,,
 swatch_rating,Rating,Оценка,
 swatch_tags,Tags,Теги,
 swatch_delete,Delete Swatch,Удалить Образец,
@@ -187,6 +185,9 @@ addPalette_brand,Brand,Марка,La Marca
 addPalette_brandError,You must add a brand.,Добавьте марку.,
 addPalette_palette,Palette,Палитра,La Paleta
 addPalette_paletteError,You must add a palette name.,Добавьте название палитры.,
+addPalette_weight,Net Weight (optional),,
+addPalette_weightPer,Weight Per Shadow (optional),,
+addPalette_price,Price (optional),,
 tutorial_skip,Skip,Пропустить,
 tutorial_screen0_0,"First,% click on the plus button to add your palettes. The screen will have more directions if you press the help icon in the top left corner.",,
 tutorial_screen0_1,"Once you have finished,% you can return to the ""All Swatches"" screen and scroll through all the added swatches.",,

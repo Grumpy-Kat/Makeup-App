@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide HSVColor;
+import 'package:flutter/services.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/StarRating.dart';
 import '../Widgets/ColorPicker.dart';
@@ -54,6 +55,8 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     String brand = globalWidgets.toTitleCase(_swatch.brand).trimRight();
     String palette = globalWidgets.toTitleCase(_swatch.palette).trimRight();
     String shade = globalWidgets.toTitleCase(_swatch.shade).trimRight();
+    double weight = _swatch.weight;
+    double price = _swatch.price;
     //various options
     List<String> finishes = ['finish_matte', 'finish_satin', 'finish_shimmer', 'finish_metallic', 'finish_glitter'];
     List<String> tags = globals.tags;
@@ -129,6 +132,10 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                 getTextField('${getString('swatch_palette')}', palette, (String value) { _swatch.palette = value; onChange(false); }),
                 //shade name
                 getTextField('${getString('swatch_shade')}', shade, (String value) { _swatch.shade = value; onChange(false); }),
+                //weight
+                getNumField('${getString('swatch_weight')}', weight, (double value) { _swatch.weight = value; onChange(false); }),
+                //price
+                getNumField('${getString('swatch_price')}', price, (double value) { _swatch.price = value; onChange(false); }),
                 divider,
                 //rating
                 getStarField('${getString('swatch_rating')}', _swatch.rating, (int value) { _swatch.rating = value; onChange(false); }),
@@ -199,6 +206,53 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         controller: TextEditingController()..text = value,
         textAlign: TextAlign.left,
         onChanged: onChange,
+        enabled: _isEditing,
+        decoration: InputDecoration(
+          fillColor: _isEditing ? theme.primaryColor : theme.bgColor,
+          filled: true,
+          contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3.0),
+            borderSide: BorderSide(
+              color: theme.bgColor,
+              width: 1.0,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3.0),
+            borderSide: BorderSide(
+              color: theme.primaryColorDark,
+              width: 1.0,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3.0),
+            borderSide: BorderSide(
+              color: theme.accentColor,
+              width: 2.5,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  //double field, ex for weight or price numbers
+  Widget getNumField(String label, double value, OnDoubleAction onChange) {
+    return getField(
+      55,
+      label,
+      TextField(
+        scrollPadding: EdgeInsets.zero,
+        style: theme.primaryTextPrimary,
+        controller: TextEditingController()..text = value.toString(),
+        textAlign: TextAlign.left,
+        onChanged: (String val) { onChange(double.parse(val)); },
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        textInputAction: TextInputAction.done,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+        ],
         enabled: _isEditing,
         decoration: InputDecoration(
           fillColor: _isEditing ? theme.primaryColor : theme.bgColor,

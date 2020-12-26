@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'theme.dart' as theme;
 import 'types.dart';
 import 'localizationIO.dart';
@@ -44,6 +46,15 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
                   setState(() { showErrorText = false; });
                 }
               },
+              (String val) {
+                value = val;
+                if(!(value == '' || value == null)) {
+                  setState(() { showErrorText = false; });
+                }
+                if(value == '' || value == null) {
+                  setState(() { showErrorText = true; });
+                }
+              }
             ),
             actions: <Widget>[
               FlatButton(
@@ -70,11 +81,12 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
   );
 }
 
-Future<void> openTwoTextDialog(BuildContext context, String title, String label1, String label2, String error1, String error2, String buttonLabel, void Function(String, String) onPressed) {
-  String value1 = '';
-  String value2 = '';
-  bool showErrorText1 = false;
-  bool showErrorText2 = false;
+Future<void> openPaletteTextDialog(BuildContext context, String title, void Function(String, String, double, double) onPressed) {
+  String brand = '';
+  String palette = '';
+  double weight = 0.0;
+  double price = 0.00;
+  List<bool> showErrorTexts = [false, false];
   return openDialog(
     context,
     (BuildContext context) {
@@ -83,58 +95,114 @@ Future<void> openTwoTextDialog(BuildContext context, String title, String label1
           return getAlertDialog(
             context,
             title: Text(title, style: theme.primaryTextBold),
-            content: Column(
-              children: <Widget> [
-                getTextField(
-                  context,
-                  label1,
-                  value1,
-                  error1,
-                  showErrorText1,
-                  (String val) {
-                    value1 = val;
-                    if(showErrorText1 && !(val == '' || val == null)) {
-                      setState(() { showErrorText1 = false; });
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget> [
+                  getTextField(
+                    context,
+                    getString('addPalette_brand'),
+                    brand,
+                    getString('addPalette_brandError'),
+                    showErrorTexts[0],
+                    (String val) {
+                      brand = val;
+                      if(showErrorTexts[0] && !(val == '' || val == null)) {
+                        setState(() { showErrorTexts[0] = false; });
+                      }
+                    },
+                    (String val) {
+                      brand = val;
+                      if(!(brand == '' || brand == null)) {
+                        setState(() { showErrorTexts[0] = false; });
+                      }
+                      if(brand == '' || brand == null) {
+                        setState(() { showErrorTexts[0] = true; });
+                      }
                     }
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                getTextField(
-                  context,
-                  label2,
-                  value2,
-                  error2,
-                  showErrorText2,
-                  (String val) {
-                    value2 = val;
-                    if(showErrorText2 && !(val == '' || val == null)) {
-                      setState(() { showErrorText2 = false; });
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  getTextField(
+                    context,
+                    getString('addPalette_palette'),
+                    palette,
+                    getString('addPalette_paletteError'),
+                    showErrorTexts[1],
+                    (String val) {
+                      palette = val;
+                      if(showErrorTexts[1] && !(val == '' || val == null)) {
+                        setState(() { showErrorTexts[1] = false; });
+                      }
+                    },
+                    (String val) {
+                      palette = val;
+                      if(!(palette == '' || palette == null)) {
+                        setState(() { showErrorTexts[1] = false; });
+                      }
+                      if(palette == '' || palette == null) {
+                        setState(() { showErrorTexts[1] = true; });
+                      }
                     }
-                  },
-                ),
-              ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  getNumField(
+                    context,
+                    getString('addPalette_weight'),
+                    weight,
+                    '',
+                    false,
+                    (double val) {
+                      weight = double.parse(val.toStringAsFixed(4));
+                    },
+                    (double val) {
+                      setState(() {
+                        weight = double.parse(val.toStringAsFixed(4));
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  getNumField(
+                    context,
+                    getString('addPalette_price'),
+                    price,
+                    '',
+                    false,
+                    (double val) {
+                      price = double.parse(val.toStringAsFixed(2));
+                    },
+                    (double val) {
+                      setState(() {
+                        price = double.parse(val.toStringAsFixed(2));
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
             actions: <Widget>[
               FlatButton(
                 color: theme.accentColor,
                 onPressed: () {
-                  if(value1 == '' || value1 == null || value2 == '' || value2 == null) {
-                    if(value1 == '' || value1 == null) {
-                      setState(() { showErrorText1 = true; });
+                  if(brand == '' || brand == null || palette == '' || palette == null) {
+                    if(brand == '' || brand == null) {
+                      setState(() { showErrorTexts[0] = true; });
                     }
-                    if(value2 == '' || value2 == null) {
-                      setState(() { showErrorText2 = true; });
+                    if(palette == '' || palette == null) {
+                      setState(() { showErrorTexts[1] = true; });
                     }
                   } else {
                     //doesn't use navigation because is popping a Dialog
                     Navigator.pop(context);
-                    onPressed(value1, value2);
+                    onPressed(brand, palette, weight, price);
                   }
                 },
                 child: Text(
-                  buttonLabel,
+                  getString('save'),
                   style: theme.accentTextBold,
                 ),
               )
@@ -248,13 +316,14 @@ PageRouteBuilder slideTransition(BuildContext context, Widget nextScreen, int du
   );
 }
 
-Widget getTextField(BuildContext context, String label, String value, String error, bool showErrorText, onChanged) {
-  return TextField(
+Widget getTextField(BuildContext context, String label, String value, String error, bool showErrorText, OnStringAction onChanged, OnStringAction onSubmitted) {
+  return TextFormField(
     autofocus: true,
     textAlign: TextAlign.left,
     style: theme.primaryTextSecondary,
     textCapitalization: TextCapitalization.words,
     cursorColor: theme.accentColor,
+    initialValue: value,
     decoration: InputDecoration(
       fillColor: theme.primaryColor,
       labelText: label,
@@ -287,6 +356,59 @@ Widget getTextField(BuildContext context, String label, String value, String err
       ),
     ),
     onChanged: onChanged,
+    onFieldSubmitted: onSubmitted,
+  );
+}
+
+Widget getNumField(BuildContext context, String label, double value, String error, bool showErrorText, OnDoubleAction onChanged, OnDoubleAction onSubmitted) {
+  return TextFormField(
+    autofocus: true,
+    textAlign: TextAlign.left,
+    style: theme.primaryTextSecondary,
+    textInputAction: TextInputAction.done,
+    keyboardType: TextInputType.numberWithOptions(decimal: true),
+    cursorColor: theme.accentColor,
+    initialValue: value.toString(),
+    inputFormatters: <TextInputFormatter>[
+      FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+    ],
+    decoration: InputDecoration(
+      fillColor: theme.primaryColor,
+      labelText: label,
+      labelStyle: theme.primaryTextSecondary,
+      errorText: showErrorText ? error : null,
+      errorStyle: theme.errorTextSecondary,
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: theme.errorTextColor,
+          width: 1.0,
+        ),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: theme.errorTextColor,
+          width: 2.5,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: theme.primaryColorDark,
+          width: 1.0,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: theme.accentColor,
+          width: 2.5,
+        ),
+      ),
+    ),
+    onChanged: (String val) {
+      onChanged(double.parse(val));
+    },
+    onFieldSubmitted: (String val) {
+      onSubmitted(double.parse(val));
+    },
   );
 }
 

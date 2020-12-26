@@ -22,6 +22,8 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
 
   static String _brand = '';
   static String _palette = '';
+  static double _weight = 0.0;
+  static double _price = 0.00;
 
   static List<int> _swatches = [];
   static List<SwatchIcon> _swatchIcons = [];
@@ -99,14 +101,16 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
               onPressed: () {
                 onEnter(
                   context,
-                  (String brand, String palette) {
+                  (String brand, String palette, double weight, double price) {
                     setState(() {
                       _brand = brand;
                       _palette = palette;
+                      _weight = weight;
+                      _price = price;
                       _isUsingPaletteDivider = false;
                       _hasChosenMode = true;
                     });
-                  }
+                  },
                 );
               },
             ),
@@ -190,12 +194,22 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                   color: theme.accentTextColor,
                 ),
                 onPressed: () {
+                  double weightPer = double.parse((_weight / (_swatches.length + 1)).toStringAsFixed(4));
+                  double pricePer = double.parse((_price / (_swatches.length + 1)).toStringAsFixed(2));
+                  List<Swatch> swatches = IO.getMany(_swatches);
+                  for(int i = 0; i < swatches.length; i++) {
+                    swatches[i].weight = weightPer;
+                    swatches[i].price = pricePer;
+                    IO.editId(_swatches[i], swatches[i]);
+                  }
                   IO.add([
                     Swatch(
                       color: RGBColor(0.5, 0.5, 0.5),
                       finish: 'finish_matte',
                       brand: _brand,
                       palette: _palette,
+                      weight: weightPer,
+                      price: pricePer,
                       shade: '',
                       rating: 5,
                       tags: [],
@@ -268,30 +282,29 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
     );
   }
 
-  void onEnter(BuildContext context, void Function(String, String) onPressed) {
+  void onEnter(BuildContext context, void Function(String, String, double, double) onPressed) {
     //open dialog to enter palette name and brand
-    globalWidgets.openTwoTextDialog(
+    globalWidgets.openPaletteTextDialog(
       context,
       getString('addPalette_popupInstructions'),
-      getString('addPalette_brand'),
-      getString('addPalette_palette'),
-      getString('addPalette_brandError'),
-      getString('addPalette_paletteError'),
-      getString('save'),
-       onPressed,
+      onPressed,
     );
   }
 
   void onEnterPaletteDivider(BuildContext context, List<Swatch> swatches) {
     onEnter(
       context,
-      (String brand, String palette) {
+      (String brand, String palette, double weight, double price) {
         _brand = brand;
         _palette = palette;
+        _weight = weight;
+        _price = price;
         //assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {
           swatches[i].brand = brand;
           swatches[i].palette = palette;
+          swatches[i].weight = double.parse((weight / swatches.length).toStringAsFixed(4));
+          swatches[i].price = double.parse((price / swatches.length).toStringAsFixed(2));
         }
         //saves swatches and adds them to final list to display
         IO.add(swatches).then((List<int> val) {
