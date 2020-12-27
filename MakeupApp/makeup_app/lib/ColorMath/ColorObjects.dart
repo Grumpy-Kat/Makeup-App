@@ -186,15 +186,15 @@ class RGBColor extends ColorBase {
     return min(max(value, 0.0), 1.0);
   }
 
-  double clampedRGBR(self) {
+  double clampedRGBR() {
     return clampValue(values['rgbR']);
   }
 
-  double clampedRGBG(self) {
+  double clampedRGBG() {
     return clampValue(values['rgbG']);
   }
 
-  double clampedRGBB(self) {
+  double clampedRGBB() {
     return clampValue(values['rgbB']);
   }
 

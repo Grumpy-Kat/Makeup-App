@@ -4,30 +4,30 @@ ru,Русский,,
 es,Español,,
 yes,Yes,Да,Si
 no,No,Нет,No
-close,Close,Закрыть,
-cancel,Cancel,Отменить,
+close,Close,Закрыть,Cerca
+cancel,Cancel,Отменить,Cancelar
 error,Error,Ошибка,Error
-save,Save,Cохранить,
+save,Save,Cохранить,Guardar
 noColorsFound,No Colors Found.,Цвета не найдены.,No se encontraron colores.
 sort_sortBy,Sort By,Сортировать по,Ordenar por
 sort_hue,Hue,Оттенок,Matiz
-sort_lightest,Lightest,Самый Светлый,
-sort_darkest,Darkest,Самый Темный,
-sort_finish,Finish,Финиш,
+sort_lightest,Lightest,Самый Светлый,Más Claro
+sort_darkest,Darkest,Самый Темный,Más Oscuro
+sort_finish,Finish,Финиш,Acabado
 sort_palette,Palette,Палитра,Paleta
 sort_brand,Brand,Марка,Marca
-sort_highestRated,Highest Rated,Cамый Высокий Рейтинг,
-sort_lowestRated,Lowest Rated,Самый Низкий Рейтинг,
-tags_pigmented,Pigmented,Пигментированная,
-tags_sheer,Sheer,Прозрачная,
-tags_lotsFallout,Lots of Fallout,Много осадка,
-tags_noFallout,No Fallout,Без осадка,
-tags_soft,Soft,Мягкая,
-tags_creamy,Creamy,Сливочная,
-tags_dry,Dry,Сухая,
-nameMode_column,Column Letters,,
-nameMode_row,Row Letters,,
-nameMode_none,None,Никакие,
+sort_highestRated,Highest Rated,Cамый Высокий Рейтинг,Mejor Valorado
+sort_lowestRated,Lowest Rated,Самый Низкий Рейтинг,Peor Valorado
+tags_pigmented,Pigmented,Пигментированная,Color Intenso
+tags_sheer,Sheer,Прозрачная,Sheer
+tags_lotsFallout,Lots of Fallout,Много осадка,Mucho Excedente
+tags_noFallout,No Fallout,Без осадка,No Excedente
+tags_soft,Soft,Мягкая,Suave
+tags_creamy,Creamy,Сливочная,Cremosa
+tags_dry,Dry,Сухая,Seca
+nameMode_column,Column Letters,,Letras en Columnas
+nameMode_row,Row Letters,,Letras en Filas
+nameMode_none,None,Никакие,Ninguno
 nameDescription_column,Columns will be assigned letters and rows will be assigned numbers.,,
 nameDescription_row,Columns will be assigned numbers and rows will be assigned letters.,,
 nameDescription_none,Will not auto assign a shade name.,,
@@ -102,15 +102,15 @@ color_gray,Gray,Серый,Gris
 color_darkGray,Dark Gray,Темно-серый,Gris Oscuro
 color_darkTaupe,Dark Taupe,Темно-серо-коричневый,Gris Pardo Oscuro
 color_black,Black,Черный,Negro
-screen_allSwatches,All Swatches,Все Образцы,
-screen_savedLooks,Saved Looks,Сохраненные Образы,
-screen_colorWheel,Color Wheel,Цветовое Колесо,
-screen_paletteScanner,Palette Scanner,Сканер Палитры,
-screen_todayLook,Today's Look,Сегодняшний Образ,
-screen_settings,Settings,Настройка,
-screen_swatch,Edit Swatch,Изменить Образец,
-screen_addPalette,Add Palette,Добавить Палитру,
-screen_tutorial,Tutorial,Обучение,
+screen_allSwatches,All Swatches,Все Образцы,Todas las Muestras
+screen_savedLooks,Saved Looks,Сохраненные Образы,Los Looks Guardados
+screen_colorWheel,Color Wheel,Цветовое Колесо,La Rueda de Colores
+screen_paletteScanner,Palette Scanner,Сканер Палитры,El Escáner de Paleta
+screen_todayLook,Today's Look,Сегодняшний Образ,El Look de Hoy
+screen_settings,Settings,Настройка,Configuracion
+screen_swatch,Edit Swatch,Изменить Образец,Editar Muestra
+screen_addPalette,Add Palette,Добавить Палитру,Agregar Paleta
+screen_tutorial,Tutorial,Обучение,Tutorial
 help_colorWheel_0,This screen allows you to find the nearest swatch to the color you choose on a color wheel. This is helpful if you may be copying a face chart or have a specific color in mind.,,
 help_colorWheel_1,"To use the color wheel,% first drag over the wheel to select the color. The further from the center you go,% the more bright and saturated the color is. Then,% drag the bar below it to select how dark or light the shade. The color to the right of this shows the final color.",,
 help_colorWheel_2,"Press ""Find Colors"" to find the closest swatches in your collection. Repeat this process until you find a swatch you like.",,
@@ -134,61 +134,60 @@ help_addPalette_3,"Then,% type in the number of columns and rows in the palette.
 help_addPalette_4,"Next,% drag the outer border to fit the palette's edges. Drag the inner borders to fit each pan's edges. It is better to cut off part of the pans than to go too big.",,
 help_addPalette_5,"Last,% press ""Save"". It will prompt you to add a brand and name for the palette. All the swatches' colors and finishes will be detected and they will be added to your collection.",,
 help_addPalette_6,"You will be taken to a screen to look over the added swatches. They will be arranged by the palette's rows. You can edit any of their information,% leave ratings,% or add tags if you wish to.",,
-paletteScanner_chooseDifferent,Choose a Different Palette,Выберите Другую Палитру,
-paletteScanner_savePalette,Save Palette,Сохранить Палитру,
-paletteScanner_popupInstructions,Enter a brand and name for this palette:,Введите марку и название этой палитры:,
-lookScreen_clearWarning,Are you sure you want to clear the look?,Вы уверены что хотите удалять образ?,
-lookScreen_saveWarning,Would you like to save?,Хотите сохранить?,
-todayLook_popupInstructions,Enter a name for this look:,Введите название для этого образа:,
-todayLook_popupError,You must add a look name.,Добавьте название образа.,
-settings_default_language,Language,Язык,
-settings_default_notifications,Allow Notifications,Разрешить Уведомления,
-settings_default_sort,Default Sort,Сортировка По Умолчанию,
+paletteScanner_chooseDifferent,Choose a Different Palette,Выберите Другую Палитру,Seleccionar una Paleta Diferente
+paletteScanner_savePalette,Save Palette,Сохранить Палитру,Guardar Paleta
+paletteScanner_popupInstructions,Enter a brand and name for this palette:,Введите марку и название этой палитры:,Escribir una marca y un nombre para esta paleta:
+lookScreen_clearWarning,Are you sure you want to clear the look?,Вы уверены что хотите удалять образ?,¿Estás seguro de que quieres borrar el look?
+lookScreen_saveWarning,Would you like to save?,Хотите сохранить?,¿Le gustaría guardar?
+todayLook_popupInstructions,Enter a name for this look:,Введите название для этого образа:,Escribe un nombre para este look:
+todayLook_popupError,You must add a look name.,Добавьте название образа.,Agregas un nombre de look:
+settings_default_language,Language,Язык,Idioma
+settings_default_notifications,Allow Notifications,Разрешить Уведомления,Permitir Notificaciones
+settings_default_sort,Default Sort,Сортировка По Умолчанию,Clasificación Estándar
 settings_default_shade,Auto Shade Naming,,
 settings_shade,Auto Shade Name Settings,,
 settings_shade_shade,Auto Name Shades,,
-settings_default_photo,Photo Upload,,
-settings_photo,Photo Upload Settings,,
-settings_photo_brightness,Brightness Offset,,
-settings_photo_red,Red Offset,,
-settings_photo_green,Green Offset,,
-settings_photo_blue,Blue Offset,,
-settings_photo_before,Before,До,
-settings_photo_after,After,После,
+settings_default_photo,Photo Upload,,Subir de Foto
+settings_photo,Photo Upload Settings,,Configuración de Subir de Fotos
+settings_photo_brightness,Brightness Offset,,Offset Luminosidad
+settings_photo_red,Red Offset,,Offset Rojo
+settings_photo_green,Green Offset,,Offset Verde
+settings_photo_blue,Blue Offset,,Offset Azul
+settings_photo_before,Before,До,Antes de
+settings_photo_after,After,После,Después
 settings_default_sensitivity,Color Wheel Screen Sensitivity,,
-settings_default_help,Help,Справка,
-settings_default_request,Request a Feature,Запросить Функцию,
-settings_default_report,Report a Bug,Сообщить Ошибку,
-settings_default_about,About,О Программе,
-settings_default_created,Created by TechneGames,Создано TechneGames,
-settings_default_reset,Reset,Сброс,
-settings_default_resetQuestion,"Are you sure you want to reset the entire app,% including settings,% swatches,% and looks? This cannot be undone.","Вы уверены что хотите сбросить все приложение,% включая настройки,% образцы,% и образы? Это не может быть отменено.",
-swatch_color,Color,Цвет,El Color
-swatch_finish,Finish,Финиш,
-swatch_brand,Brand,Марка,La Marca
-swatch_palette,Palette,Палитра,La Paleta
-swatch_shade,Shade,Имя Тени,
-swatch_weight,Weight,,
-swatch_price,Price,,
-swatch_rating,Rating,Оценка,
-swatch_tags,Tags,Теги,
-swatch_delete,Delete Swatch,Удалить Образец,
-swatch_none,None,Никакие,
-swatch_popupInstructions,Enter new tag:,Введите новый тег:,
-swatch_popupError,You must enter a tag.,Добавьте тег.,
-swatch_popupBtn,Add,Добавить,
-addPalette_chooseMode,Add swatches using:,Добавьте образцы используя:,
-addPalette_paletteDivider,Palette Divider,Разделитель Палитры,
-addPalette_custom,Custom,Настраиваемый ,
-addPalette_popupInstructions,Enter a brand and name for this palette:,Введите марку и название этой палитры:,
+settings_default_help,Help,Справка,Ayuda
+settings_default_request,Request a Feature,Запросить Функцию,Solicitar una Función
+settings_default_report,Report a Bug,Сообщить Ошибку,Reportar un Error
+settings_default_about,About,О Программе,Acerca de
+settings_default_created,Created by TechneGames,Создано TechneGames,Creada por TechneGames
+settings_default_reset,Reset,Сброс,Restablecer
+settings_default_resetQuestion,"Are you sure you want to reset the entire app,% including settings,% swatches,% and looks? This cannot be undone.","Вы уверены что хотите сбросить все приложение,% включая настройки,% образцы,% и образы? Это не может быть отменено.","¿Está seguro de que quieres restablecer toda la aplicación,% incluida la configuración,% las muestras,% y los looks? Esto no se puede deshacer."
+swatch_color,Color,Цвет,Color
+swatch_finish,Acabado,Финиш,Acabado
+swatch_brand,Brand,Марка,Marca
+swatch_palette,Palette,Палитра,Paleta
+swatch_shade,Shade,Имя Тени,Tono
+swatch_weight,Weight,,Peso
+swatch_price,Price,,Precio
+swatch_rating,Rating,Оценка,Puntuación
+swatch_tags,Tags,Теги,Etiquetas
+swatch_delete,Delete Swatch,Удалить Образец,Borrar Muestra
+swatch_none,None,Никакие,Ninguna
+swatch_popupInstructions,Enter new tag:,Введите новый тег:,Escribir un nombre para este look:
+swatch_popupError,You must enter a tag.,Добавьте тег.,Escribes una etiqueta.
+swatch_popupBtn,Add,Добавить,Agregar 
+addPalette_chooseMode,Add swatches using:,Добавьте образцы используя:,Agregar muestras usando:
+addPalette_paletteDivider,Palette Divider,Разделитель Палитры,Divisor de Paleta
+addPalette_custom,Custom,Настраиваемый ,Personalizado
+addPalette_popupInstructions,Enter a brand and name for this palette:,Введите марку и название этой палитры:,Escribir una marca y un nombre para esta paleta:
 addPalette_brand,Brand,Марка,La Marca
-addPalette_brandError,You must add a brand.,Добавьте марку.,
+addPalette_brandError,You must add a brand.,Добавьте марку.,Agregas una marca.
 addPalette_palette,Palette,Палитра,La Paleta
-addPalette_paletteError,You must add a palette name.,Добавьте название палитры.,
-addPalette_weight,Net Weight (optional),,
-addPalette_weightPer,Weight Per Shadow (optional),,
-addPalette_price,Price (optional),,
-tutorial_skip,Skip,Пропустить,
+addPalette_paletteError,You must add a palette name.,Добавьте название палитры.,Agregas una paleta.
+addPalette_weight,Net Weight (optional),,Peso Neto (opcional)
+addPalette_price,Price (optional),,Precio (opcional)
+tutorial_skip,Skip,Пропустить,Pasar
 tutorial_screen0_0,"First,% click on the plus button to add your palettes. The screen will have more directions if you press the help icon in the top left corner.",,
 tutorial_screen0_1,"Once you have finished,% you can return to the ""All Swatches"" screen and scroll through all the added swatches.",,
 tutorial_screen1_0,"Tap on a swatch to get information about it,% such as the color,% finish,% brand,% palette,% and shade name.",,
@@ -202,19 +201,19 @@ tutorial_screen3_2,"""Saved Looks"" has all the looks that you've saved from ""T
 tutorial_screen3_3,"""Color Wheel"" allows you to find the nearest swatch to the color you choose on a color wheel. This is helpful if you may be copying a face chart or have a specific color in mind. The screen will have more directions if you press the help icon in the top left corner.",,
 tutorial_screen4_0,"""Palette Scanner"" can be used to compare other palettes to your existing collection. For example,% when shopping,% you can take a picture of a palette and compare it to your collection to see if you want to buy it. Or when recreating a look,% you can find a picture of the original palettes and compare dupes in your collection. The screen will have more directions if you press the help icon in the top left corner.",,
 tutorial_screen4_1,"""Settings"" has all the settings for the app. You can also find this tutorial again if you press the help button there. If you wish to report any bugs or request a feature,% you can do so there.",,
-colorPicker_btn,Find Colors,Найти Цвета,
-imagePicker_chooseMode,Choose photo from:,Выберите фото из:,
-imagePicker_gallery,Open Gallery,Открыть Галерею,
-imagePicker_galleryError,Gallery permissions are denied. Please open your phone's settings to allow GlamKit to access your gallery.,"Разрешение галереи отказано. Пожалуйста,% откройте настройки вашего телефона,% чтобы позволить GlamKit получить доступ к вашей галерее. ",
-imagePicker_camera,Open Camera,Открыть Камеру,
-imagePicker_cameraError,Camera permissions are denied. Please open your phone's settings to allow GlamKit to access your camera.,"Разрешения камеры запрещены. Пожалуйста,% откройте настройки вашего телефона,% чтобы позволить GlamKit получить доступ к вашей камере.",
-infoBox_color,Color,Цвет:,El color:
-infoBox_finish,Finish:,Финиш:,
-infoBox_brand,Brand:,Марка:,La marca:
-infoBox_palette,Palette:,Палитра:,La paleta:
-infoBox_shade,Shade:,Имя Тени:,
-infoBox_more,More...,Больше...,
-paletteDivider_warning,"If the palette does not have uniform columns and rows,% try to add it in sections.","Если в палитре нет однородных столбцов и строк,% попробуйте добавить по разделам.",
-paletteDivider_columns,Palette Columns,Столбцы Палитры,
-paletteDivider_rows,Palette Rows,Строки Палитры,
-paletteDivider_add,Add Image,Добавить Изображение,
+colorPicker_btn,Find Colors,Найти Цвета,Encontrar Colores
+imagePicker_chooseMode,Choose photo from:,Выберите фото из:,Subir foto usando:
+imagePicker_gallery,Open Gallery,Открыть Галерею,Abrir la Galería
+imagePicker_galleryError,Gallery permissions are denied. Please open your phone's settings to allow GlamKit to access your gallery.,"Разрешение галереи отказано. Пожалуйста,% откройте настройки вашего телефона,% чтобы позволить GlamKit получить доступ к вашей галерее. ",Se niegan los permisos de la galería. Abres la configuración de su teléfono para permitir que GlamKit acceda a su galería.
+imagePicker_camera,Open Camera,Открыть Камеру,Abrir la Cámara
+imagePicker_cameraError,Camera permissions are denied. Please open your phone's settings to allow GlamKit to access your camera.,"Разрешения камеры запрещены. Пожалуйста,% откройте настройки вашего телефона,% чтобы позволить GlamKit получить доступ к вашей камере.",Se niegan los permisos de la cámara. Abres la configuración de su teléfono para permitir que GlamKit acceda a su cámara.
+infoBox_color,Color,Цвет:,Color:
+infoBox_finish,Finish:,Финиш:,Acabado:
+infoBox_brand,Brand:,Марка:,Marca:
+infoBox_palette,Palette:,Палитра:,Paleta:
+infoBox_shade,Shade:,Имя Тени:,Tono:
+infoBox_more,More...,Больше...,Más...
+paletteDivider_warning,"If the palette does not have uniform columns and rows,% try to add it in sections.","Если в палитре нет однородных столбцов и строк,% попробуйте добавить по разделам.","Si la paleta no tiene columnas y filas uniformes,% tratas de agregarla en secciones."
+paletteDivider_columns,Palette Columns,Столбцы Палитры,Columnas de Paleta
+paletteDivider_rows,Palette Rows,Строки Палитры,Filas de Paleta
+paletteDivider_add,Add Image,Добавить Изображение,Agregar Imagen

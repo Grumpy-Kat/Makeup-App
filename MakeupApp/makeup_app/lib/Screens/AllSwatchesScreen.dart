@@ -26,6 +26,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
     if(!globals.hasLoaded) {
       globals.addHasLoadedListener(() { setState(() {}); });
     }
+    addHasLocalizationLoadedListener(() { setState(() {}); });
   }
 
   Future<List<int>> _addSwatches() async {
@@ -40,7 +41,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
   Widget build(BuildContext context) {
     return buildComplete(
       context,
-      getString('screen_allSwatches'),
+      getString('screen_allSwatches', defaultValue: 'All Swatches'),
       0,
       //scroll view to show all swatches
       body: SingleSwatchList(

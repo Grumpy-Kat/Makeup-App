@@ -128,7 +128,7 @@ mixin SwatchListState {
       margin: EdgeInsets.fromLTRB(15, 15, 0, 15),
       child: Row(
         children: <Widget>[
-          Text('${getString('sort_sortBy')}  ', style: theme.primaryTextQuaternary),
+          Text('${getString('sort_sortBy', defaultValue: 'Sort By')}  ', style: theme.primaryTextQuaternary),
           SizedBox(
             width: 120,
             child: DropdownButton<String>(
