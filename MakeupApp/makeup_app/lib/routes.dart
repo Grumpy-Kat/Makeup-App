@@ -1,11 +1,12 @@
-import 'package:GlamKit/Screens/TutorialScreen.dart';
-
+import 'Screens/TutorialScreen.dart';
 import 'Screens/AllSwatchesScreen.dart';
 import 'Screens/ColorWheelScreen.dart';
 import 'Screens/PaletteScannerScreen.dart';
 import 'Screens/SavedLooksScreen.dart';
 import 'Screens/SettingsScreen.dart';
 import 'Screens/AddPaletteScreen.dart';
+import 'Screens/AddPaletteDividerScreen.dart';
+import 'Screens/AddCustomPaletteScreen.dart';
 import 'Screens/TodayLookScreen.dart';
 import 'Screens/SavedLookScreen.dart';
 import 'Screens/SwatchScreen.dart';
@@ -25,6 +26,8 @@ enum ScreenRoutes {
   PaletteScannerScreen,
   SettingsScreen,
   AddPaletteScreen,
+  AddPaletteDividerScreen,
+  AddCustomPaletteScreen,
   TodayLookScreen,
   SavedLookScreen,
   SwatchScreen,
@@ -39,6 +42,8 @@ void setRoutes() {
     '/paletteScannerScreen': (context) => PaletteScannerScreen(),
     '/settingsScreen': (context) => SettingsScreen(),
     '/addPaletteScreen': (context) => AddPaletteScreen(),
+    '/addPaletteDividerScreen': (context) => AddPaletteDividerScreen(),
+    '/addCustomPaletteScreen': (context) => AddCustomPaletteScreen(),
     '/todayLookScreen': (context) => TodayLookScreen(),
     '/savedLookScreen': (context) => SavedLookScreen(id: -1, name: '', swatches: []),
     '/swatchScreen': (context) => SwatchScreen(swatch: null),
@@ -51,6 +56,8 @@ void setRoutes() {
     ScreenRoutes.PaletteScannerScreen: routes['/paletteScannerScreen'],
     ScreenRoutes.SettingsScreen: routes['/settingsScreen'],
     ScreenRoutes.AddPaletteScreen: routes['/addPaletteScreen'],
+    ScreenRoutes.AddPaletteDividerScreen: routes['/addPaletteDividerScreen'],
+    ScreenRoutes.AddCustomPaletteScreen: routes['/addCustomPaletteScreen'],
     ScreenRoutes.TodayLookScreen: routes['/todayLookScreen'],
     ScreenRoutes.SavedLookScreen: routes['/savedLookScreen'],
     ScreenRoutes.SwatchScreen: routes['/swatchScreen'],

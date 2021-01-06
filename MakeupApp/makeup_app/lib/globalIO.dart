@@ -1,5 +1,7 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:archive/archive.dart';
+import 'package:archive/archive_io.dart';
+import 'package:string_validator/string_validator.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
@@ -17,18 +19,32 @@ String compress(String string) {
   if(string == '') {
     return '';
   }
-  List<int> bytes = utf8.encode(string);
-  String compressed = base64.encode(ZLibCodec().encode(bytes));
-  return compressed;
+  try {
+    List<int> bytes = utf8.encode(string);
+    String compressed = base64.encode(ZLibCodec().encode(bytes));
+    compressed = base64.normalize(compressed);
+    assert(isBase64(compressed));
+    return compressed;
+  } catch(e) {
+    print(e);
+    print(string);
+    return string;
+  }
 }
 
 String decompress(String compressed) {
   if(compressed == '') {
     return '';
   }
-  List<int> bytes = base64.decode(compressed);
-  String string  = utf8.decode(ZLibDecoder().decodeBytes(bytes));
-  return string;
+  try {
+    List<int> bytes = base64.decode(compressed);
+    String string  = utf8.decode(ZLibDecoder().decodeBytes(bytes));
+    return string;
+  } catch(e) {
+    print(e);
+    print(compressed);
+    return compressed;
+  }
 }
 
 Future<String> saveSwatch(Swatch swatch) async {
@@ -63,6 +79,7 @@ Future<Swatch> loadSwatch(int id, String line) async {
   if(line == '') {
     return null;
   }
+  print(line);
   List<String> lineSplit = line.split(';');
   //color
   List<String> colorValues = lineSplit[0].split(',');

@@ -73,7 +73,7 @@ class SwatchIcon extends StatelessWidget {
   //assumes there is no id (probably editing swatch)
   SwatchIcon.swatch(this.swatch, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.id  = -1;
 
-  SwatchIcon.id(this.id, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.swatch = IO.get(id);
+  SwatchIcon.id(this.id, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.swatch = IO.get(id), super(key: GlobalKey(debugLabel: id.toString()));
 
   @override
   Widget build(BuildContext context) {

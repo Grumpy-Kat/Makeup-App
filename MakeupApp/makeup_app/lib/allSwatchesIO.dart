@@ -58,6 +58,17 @@ void editId(int i, Swatch swatch) async {
   await save(lines);
 }
 
+void editIds(Map<int, Swatch> idsSwatchesMap) async {
+  await load();
+  Map<int, String> info = lines;
+  List<int> ids = idsSwatchesMap.keys.toList();
+  List<Swatch> swatches = idsSwatchesMap.values.toList();
+  for(int i = 0; i < ids.length; i++) {
+    info[ids[i]] = await saveSwatch(swatches[i]);
+  }
+  await save(lines);
+}
+
 void edit(Swatch old, Swatch swatch) async {
   await editId(find(old), swatch);
 }
