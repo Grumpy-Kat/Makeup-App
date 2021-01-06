@@ -10,6 +10,14 @@
 				<span class="shine">Subscribe</span>
 			</button>
 		</form>
+		<div class="container row buttons footerButtons">
+			<button type="button" class="col-xs-6 btn btn-dark shineBtn iOS">
+				<div class="shine"></div>
+			</button>
+			<button type="button" class="col-xs-6 btn btn-dark shineBtn android">
+				<span class="shine"></span>
+			</button>
+		</div>
 		<div class="continer-fluid socialMedia">
 			<a class="twitter" href="#"><img src="imgs/twitter.png" alt="Twitter" /></a>
 			<a class="email" href="#"><img src="imgs/instagram.png" alt="Instagram" /></a>

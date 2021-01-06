@@ -1,20 +1,38 @@
 :root {
-  --bgColor: rgba(251, 252, 254, 1);
-  --primaryColorLight: rgba(251, 252, 254, 1);
-  --primaryColor: rgba(248, 249, 251, 1);
-  --primaryColorDark: rgba(231, 232, 234, 1);
-  --primaryColorDarkest: rgba(153, 154, 156, 1);
-  --primaryTextColor: rgba(0, 0, 0, 1);
-  --secondaryTextColor: rgba(54, 54, 54, 1);
-  --tertiaryTextColor: rgba(109, 109, 114, 1);
-  --accentColor: rgba(39, 165, 146, 1);
-  --accentTextColor: rgba(248, 249, 251, 1);
+	--bgColor: rgba(251, 252, 254, 1);
+	--primaryColorLight: rgba(251, 252, 254, 1);
+	--primaryColor: rgba(248, 249, 251, 1);
+	--primaryColorDark: rgba(231, 232, 234, 1);
+	--primaryColorDarkest: rgba(153, 154, 156, 1);
+	--primaryTextColor: rgba(0, 0, 0, 1);
+	--secondaryTextColor: rgba(54, 54, 54, 1);
+	--tertiaryTextColor: rgba(79, 79, 79, 1);
+	--accentColor: rgba(39, 165, 146, 1);
+	--accentTextColor: rgba(248, 249, 251, 1);
+	
+	--title: normal 700 30px Montserrat, sans-serif;
+	--subTitle: normal 600 20px Montserrat, sans-serif;
+	--textBold: normal 500 17px Montserrat, sans-serif;
+	--textPrimary: 15px Montserrat, sans-serif;
+	--textSecondary: 13px Montserrat, sans-serif;
+	--textTertiary: 11px Montserrat, sans-serif;
+	--textQuaternary: 10px Montserrat, sans-serif;
   
-  --title: normal 700 30px Montserrat, sans-serif;
-  --subTitle: normal 600 20px Montserrat, sans-serif;
-  --textBold: normal 500 17px Montserrat, sans-serif;
-  --textPrimary: 15px Montserrat, sans-serif;
-  --textSecondary: 13px Montserrat, sans-serif;
-  --textTertiary: 11px Montserrat, sans-serif;
-  --textQuaternary: 10px Montserrat, sans-serif;
+	--marginHorizontal: 25px;
+	--widthCalc: 100% - (2 * var(--marginHorizontal));
+}
+@media (min-width: 576px) {
+	:root {
+		--marginHorizontal: 45px;
+	}
+}
+@media (min-width: 768px) {
+	:root {
+		--marginHorizontal: 65px;
+	}
+}
+@media (min-width: 992px) {
+	:root {
+		--marginHorizontal: 100px;
+	}
 }

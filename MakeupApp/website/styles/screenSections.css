@@ -1,15 +1,15 @@
 .screenSection {
-	margin: 60px 7% 70px 7%;
-	width: 86%;
-	padding: 40px 0px;
-	border-radius: 17px;
-	box-shadow: 7px 7px 11px rgba(153, 154, 156, 0.35);
+	margin: 0px 0px 40px 0px;
+	width: 100%;
+	box-shadow: 5px 5px 7px rgba(153, 154, 156, 0.2);
 }
 .screenSection div {
 	z-index: 500;
 }
 .screenSection .phone {
+	height: 460px;
 	padding: 0px;
+	width: 33%;
 }
 .screenSection .phone div {
 	position: relative;
@@ -20,27 +20,19 @@
 	margin: auto;
 	padding: 0px;
 	overflow: hidden;
-	border-radius: 19px;
-	border: 1px rgba(128, 128, 128, 0.3) solid;
 }
-.screenSection .frontPhone div {
-	z-index: 20;
-	background-size: 189px 400px;
-	width: 189px;
-    height: 400px;
-}
-.screenSection .backPhone div {
-	z-index: 10;
-	background-size: 162px 350px;
-	width: 162px;
-    height: 350px;
-	margin-top: 25px;
+.screenSection .textParent {
+	padding: 0px;
+	min-height: 460px;
 }
 .screenSection .text {
-	background-color: var(--primaryColorDark);
 	min-height: 170px;
-	margin: 100px 35px;
-	padding: 10px 17px;
+	width: 66%;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	margin: 20px var(--marginHorizontal);
 }
 .screenSection .textSubsection.active {
 	display: block;
@@ -49,12 +41,16 @@
 	display: none;
 }
 .screenSection ul {
-	margin-top: 20px;
+	margin-top: 10px;
 	padding-inline-start: 10px;
 	margin-bottom: 7px;
 }
 .screenSection li {
 	margin-bottom: 3px;
+}
+.screenSection h2{
+	margin-top: 10px;
+	font-size: 20px;
 }
 .screenSection h3 {
 	margin-top: 0px;
@@ -64,218 +60,151 @@
 	font: var(--textPrimary);
 	color: var(--secondaryTextColor);
 }
-.screenSection-leftArrow .phones .row {
-	padding-left: 0px;
-	padding-right: auto;
+.screenSection .toggle {
+	color: var(--tertiaryTextColor);
 }
-.screenSection-rightArrow .phones .row {
+.screenSection-leftArrow .phone {
 	padding-left: 0px;
 	padding-right: auto;
 }
 .screenSection-rightArrow .phone {
+	padding-left: 0px;
+	padding-right: auto;
 	float: right;
 }
-.screenSection-leftArrow .frontPhone {
-	margin-left: 100px;
-}
-.screenSection-rightArrow .frontPhone {
-	margin-right: 100px;
-}
-.screenSection-leftArrow .backPhone {
-	margin-right: -180px;
-}
-.screenSection-rightArrow .backPhone {
-	margin-left: -180px;
-}
 .screenSection-leftArrow .text {
-	margin-right: 0px;
-	box-shadow: 5px 5px 8px rgba(153, 154, 156, 0.25);
+	/*box-shadow: 5px 5px 8px rgba(153, 154, 156, 0.25);*/
+	right: 0px;
+	float: right;
 }
 .screenSection-rightArrow .text {
-	margin-left: 0px;
-	box-shadow: -5px 5px 8px rgba(153, 154, 156, 0.25);
-}
-@media (min-width: 992px) {
-	.screenSection-leftArrow .phones .row {
-		padding-left: 40px;
-	}
-	.screenSection-rightArrow .phones .row {
-		padding-right: 40px;
-	}
-	.screenSection-leftArrow .text {
-		margin-right: 10%;
-	}
-	.screenSection-rightArrow .text {
-		margin-left: 10%;
-	}
-	.screenSection-leftArrow .frontPhone {
-		margin-left: 35%;
-	}
-	.screenSection-rightArrow .frontPhone {
-		margin-right: 35%;
-	}
-	.screenSection-leftArrow .backPhone {
-		margin-right: -120px;
-	}
-	.screenSection-rightArrow .backPhone {
-		margin-left: -120px;
-	}
-	.screenSection-leftArrow .text:before {
-		z-index: -1;
-		content: "";
-		position: absolute;
-		background-color: var(--primaryColorDark);
-		top: 170px;
-		left: 40px;
-		width: 30px;
-		height: 30px;
-		transform: rotate(135deg);
-		-webkit-transform: rotate(135deg);
-	}
-	.screenSection-rightArrow .text:before {
-		z-index: -1;
-		content: "";
-		position: absolute;
-		background-color: var(--primaryColorDark);
-		top: 170px;
-		right: 40px;
-		width: 30px;
-		height: 30px;
-		transform: rotate(315deg);
-		-webkit-transform: rotate(315deg);
-	}
-}
-@media (min-width: 1300px) {
-	.screenSection-leftArrow .phones .row {
-		padding-left: 90px;
-	}
-	.screenSection-rightArrow .phones .row {
-		padding-right: 90px;
-	}
-	.screenSection-leftArrow .frontPhone {
-		margin-left: 80px;
-	}
-	.screenSection-rightArrow .frontPhone {
-		margin-right: 80px;
-	}
+	/*box-shadow: -5px 5px 8px rgba(153, 154, 156, 0.25);*/
+	float: left;
 }
 .allSwatches {
-	background: -webkit-linear-gradient(50deg, rgba(255, 195, 100, 0.7), rgba(255, 95, 149, 0.7));
-	background: linear-gradient(50deg, rgba(255, 195, 100, 0.7), rgba(255, 95, 149, 0.7));
+	background: -webkit-linear-gradient(50deg, rgba(255, 195, 100, 0.55), rgba(255, 95, 149, 0.55));
+	background: linear-gradient(50deg, rgba(255, 195, 100, 0.55), rgba(255, 95, 149, 0.55));
 }
-.allSwatches .frontPhone div {
-    background-image: url("../imgs/screenshots/light AllSwatches 5-1.png");
+.allSwatches .phone div {
+	/*margin looks larger?*/
+	margin: 0px 0px 0px calc(var(--marginHorizontal) - 7px);
+	background-image: url("../imgs/screenshots/iphone AllSwatches 3.png");
+	background-size: 308px 620px;
+	background-position: center 75%;
+	width: 308px;
+	height: 460px;
+	float: left;
 }
-.allSwatches .backPhone div {
-    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
+.allSwatches .phone #scrollingVideo {
+	height: 430px;
+	top: 0px;
+	left: 0px;
+	padding: 0px;
+	margin: 0px;
+	margin-top: 15px;
 }
 .savedLooks {
-	background: -webkit-linear-gradient(50deg, rgba(5, 117, 230, 0.7), rgba(0, 242, 96, 0.7));
-	background: linear-gradient(50deg, rgba(5, 117, 230, 0.7), rgba(0, 242, 96, 0.7));
+	background: -webkit-linear-gradient(50deg, rgba(5, 117, 230, 0.55), rgba(0, 242, 96, 0.55));
+	background: inear-gradient(50deg, rgba(5, 117, 230, 0.55), rgba(0, 242, 96, 0.55));
 }
-.savedLooks .frontPhone div {
-    background-image: url("../imgs/screenshots/dark SavedLooks 3-1.png");
-}
-.savedLooks .backPhone div {
-    background-image: url("../imgs/screenshots/light SavedLooks 7-1.png");
+.savedLooks .phone div {
+	margin: 60px var(--marginHorizontal) 0px 0px;
+	background-image: url("../imgs/screenshots/iphone SavedLooks 3.png");
+	background-size: 291px 475px;
+	background-position: center -27%;
+	width: 291px;
+	height: 400px;
+	float: right;
 }
 .colorWheel {
-	background: -webkit-linear-gradient(50deg, rgba(236, 110, 173, 0.7), rgba(52, 148, 230, 0.7));
-	background: linear-gradient(50deg, rgba(236, 110, 173, 0.7), rgba(52, 148, 230, 0.7));
+	background: -webkit-linear-gradient(50deg, rgba(236, 110, 173, 0.55), rgba(52, 148, 230, 0.55));
+	background: linear-gradient(50deg, rgba(236, 110, 173, 0.55), rgba(52, 148, 230, 0.55));
 }
-.colorWheel .frontPhone div {
-    background-image: url("../imgs/screenshots/light ColorWheel 1-1.png");
-}
-.colorWheel .backPhone div {
-    background-image: url("../imgs/screenshots/dark ColorWheel 4-1.png");
+.colorWheel .phone div {
+	margin: 30px 0px 30px var(--marginHorizontal);
+	background-image: url("../imgs/screenshots/iphone ColorWheel 1.png");
+	background-size: 170px 390px;
+	width: 170px;
+	height: 400px;
+	float: left;
 }
 .paletteDivider {
-	background: -webkit-linear-gradient(50deg, rgba(230, 90, 36, 0.7), rgba(240, 203, 53, 0.7));
-	background: linear-gradient(50deg, rgba(230, 90, 36, 0.7), rgba(240, 203, 53, 0.7));
+	background: -webkit-linear-gradient(50deg, rgba(230, 90, 36, 0.55), rgba(240, 203, 53, 0.55));
+	background: linear-gradient(50deg, rgba(230, 90, 36, 0.55), rgba(240, 203, 53, 0.55));
 }
-.paletteDivider .frontPhone div {
-    background-image: url("../imgs/screenshots/dark AllSwatches 4-1.png");
-}
-.paletteDivider .backPhone div {
-    background-image: url("../imgs/screenshots/light AllSwatches 4-1.png");
+.paletteDivider .phone div {
+	margin: 0px var(--marginHorizontal) 60px 0px;
+	background-image: url("../imgs/screenshots/iphone AllSwatches 1.png");
+	background-size: 223px 575px;
+	background-position: center 109%;
+	width: 223px;
+	height: 400px;
+	float: right;
 }
 .editSwatch {
-	background: -webkit-linear-gradient(50deg, rgba(219, 223, 78, 0.7), rgba(86, 171, 47, 0.7));
-	background: linear-gradient(50deg, rgba(219, 223, 78, 0.7), rgba(86, 171, 47, 0.7));
+	background: -webkit-linear-gradient(50deg, rgba(219, 223, 78, 0.55), rgba(86, 171, 47, 0.55));
+	background: linear-gradient(50deg, rgba(219, 223, 78, 0.55), rgba(86, 171, 47, 0.55));
 }
-.editSwatch .frontPhone div {
-    background-image: url("../imgs/screenshots/light EditSwatch 2-1.png");
-}
-.editSwatch .backPhone div {
-    background-image: url("../imgs/screenshots/dark EditSwatch 11-1.png");
+.editSwatch .phone div {
+	margin: 30px 0px 30px var(--marginHorizontal);
+	background-image: url("../imgs/screenshots/iphone EditSwatch 3.png");
+	background-size: 235px 390px;
+	width: 235px;
+	height: 400px;
+	float: left;
 }
 @media (max-width: 992px) {
+	.screenSection .textParent {
+		min-height: 0px;
+	}
 	.screenSection .text {
-		width: 86%;
-		margin: 15px 7% 30px 7%;
+		width: calc(var(--widthCalc));
+		position: static;
+		top: 0px;
+		-webkit-transform: none;
+		transform: none;
+		margin: 50px var(--marginHorizontal) 40px var(--marginHorizontal);
+		float: none;
+		min-height: 0px;
 	}
-	.screenSection .frontPhone {
-		margin-right: 50%;
+	.screenSection .phone {
+		width: 100%;
+		float: none;
+		height: auto;
 	}
-	.screenSection .frontPhone div {
-		background-size: 196px 425px;
-		width: 196px;
+	.allSwatches .phone div {
+		margin: 0px calc(50% - 135px) 0px calc(50% - 135px);
+		background-size: 270px 542px;
+		background-position: center 0%;
+		width: 270px;
+		height: 460px;
+	}
+	.allSwatches .phone #scrollingVideo {
+		height: 340px;
+		margin-top: 118px;
+	}
+	.savedLooks .phone div {
+		margin: 0px calc(50% - 145.5px) 0px calc(50% - 145.5px);
+		background-size: 291px 475px;
+		background-position: center -27%;
+		width: 291px;
+		bottom: 0px;
+	}
+	.colorWheel .phone div {
+		margin: 30px calc(50% - 85px) 30px calc(50% - 85px);
+		background-size: 170px 390px;
+		width: 170px;
+	}
+	.paletteDivider .phone div {
+		margin: 0px calc(50% - 111.5px) 30px calc(50% - 111.5px);
+		background-size: 223px 575px;
+		background-position: center 109%;
+		width: 223px;
+	}
+	.editSwatch .phone div {
+		margin: 5px calc(50% - 117.5px) 30px calc(50% - 117.5px);
+		background-size: 235px 390px;
+		width: 235px;
 		height: 425px;
-	}
-	.screenSection .backPhone div {
-		background-size: 173px 375px;
-		width: 173px;
-		height: 375px;
-	}
-	.screenSection .phones .row {
-		padding-left: 25%;
-		padding-right: 25%;
-	}
-	.screenSection-rightArrow .phones .row {
-		padding-left: 23%;
-		padding-right: 37%;
-	}
-	.screenSection-leftArrow .backPhone {
-		margin-right: -50%;
-	}
-	.screenSection-rightArrow .backPhone {
-		margin-left: -50%;
-	}
-}
-@media (max-width: 650px) {
-	.screenSection .phones .row {
-		padding-left: 15%;
-		padding-right: 15%;
-	}
-	.screenSection-rightArrow .phones .row {
-		padding-right: calc(15% + 43px);
-	}
-}
-@media (max-width: 450px) {
-	.screenSection .phones .row {
-		padding-left: 7%;
-		padding-right: 27%;
-	}
-	.screenSection-leftArrow .frontPhone {
-		margin-left: 40%;
-	}
-	.screenSection .frontPhone div {
-		background-size: 189px 400px;
-		width: 189px;
-		height: 400px;
-	}
-	.screenSection .backPhone div {
-		background-size: 162px 350px;
-		width: 162px;
-		height: 350px;
-	}
-}
-@media (max-width: 350px) {
-	.screenSection .phones .row {
-		padding-left: 7%;
-		padding-right: 33%;
-	}
-	.screenSection-leftArrow .frontPhone {
-		margin-left: 35%;
 	}
 }

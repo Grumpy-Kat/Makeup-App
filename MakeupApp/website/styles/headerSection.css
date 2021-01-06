@@ -1,148 +1,199 @@
 .headerSection {
 	margin: 0px;
-	margin-bottom: 20px;
-	padding: 90px 30px 10px 30px;
+	margin-bottom: 50px;
+	padding: 90px var(--marginHorizontal) 0px var(--marginHorizontal);
 	width: 100%;
 	background-color: var(--bgColor);
 	background: -webkit-linear-gradient(200deg, rgba(195, 231, 236, 0.9) 0%, rgba(66, 213, 189, 0.9) 38%, rgba(187, 230, 223, 0.9) 100%, rgba(102, 217, 190, 0.9) 100%);
 	background: linear-gradient(200deg, rgba(195, 231, 236, 0.9) 0%, rgba(66, 213, 189, 0.9) 38%, rgba(187, 230, 223, 0.9) 100%, rgba(102, 217, 190, 0.9) 100%);
-	box-shadow: 0px 7px 11px rgba(153, 154, 156, 0.35);
+	box-shadow: 0px 5px 7px rgba(153, 154, 156, 0.2);
 }
 .headerSection .phone {
-    background-image: url("../imgs/rainbowSwatchesScreen2.png");
-	background-size: auto 520px;
+    background-image: url("../imgs/screenshots/iphone AllSwatches 1.png");
+	background-size: auto 700px;
 	background-repeat: no-repeat;
-	background-position: center;
-    height: 520px;
+	background-position: center -17%;
+	height: 550px;
 	vertical-align: middle;
-	margin: 50px 0px 45px 0px;
+	margin: 50px 0px 0px 0px;
+}
+.headerSection div {
+	padding: 0px 9px;
 }
 .headerSection .text {
 	margin-top: 70px;
-	padding: 50px 30px 0px 30px;
+	padding: 50px 0px 0px 0px;
 }
-.buttons {
-	width: 100%;
-	margin: 0px;
-	margin-top: 50px;
-	padding: 0px 0px;
+.headerButtons {
+	padding: 0px!important;
+	margin: 50px 0px 0px 0px;
 }
-.buttons .btn {
-	height: 57px;
-	background-size: 190px 57px;
-	background-color: transparent;
-	background-repeat: no-repeat;
-	background-position: center;
-	vertical-align: middle;
-	padding-top: 0px;
-	padding-bottom: 0px;
-}
-.buttons .shine {
-	width: 190px;
-	height: 57px;
-}
-@media (min-width: 576px) {
-	.buttons {
-		padding: 0px 18px;
+@media (max-width: 768px) {
+	.headerSection {
+		padding-top: 50px;
 	}
-	.buttons .btn {
+}
+@media (max-width: 576px) {
+	.headerSection {
+		padding-top: 13px;
+	}
+}
+@media (max-width: 420px) {
+	.headerSection .text {
+		padding: 20px 0px 0px 0px;
+	}
+	.headerButtons {
+		margin-top: 30px;
+	}
+	.headerSection .phone {
+		margin-top: 30px;
+	}
+}
+.headerButtons .btn {
+	padding: 0px!important;
+	width: 180px;
+	height: 54px;
+	background-size: 180px 54px;
+}
+.headerButtons .btn {
+	margin: 0px calc(50% - 90px);
+}
+.headerButtons .btn.iOS {
+	margin-top: 7px;
+	margin-bottom: 9px;
+}
+.headerButtons .shine {
+	width: 180px;
+	height: 54px;
+}
+@media (min-width: 407px) {
+	.headerButtons .btn {
+		width: 167px;
+		height: 50px;
+		background-size: 167px 50px;
+	}
+	.headerButtons .btn {
+		margin: 0px;
+	}
+	.headerButtons .btn.iOS {
+		margin: 0px;
+		margin-right: 5px;
+	}
+	.headerButtons .shine {
+		width: 167px;
+		height: 50px;
+	}
+}
+@media (min-width: 481px) {
+	.headerButtons .btn {
+		width: 204px;
+		height: 61px;
+		background-size: 204px 61px;
+	}
+	.headerButtons .btn.iOS {
+		margin-right: 5px;
+	}
+	.headerButtons .shine {
+		width: 204px;
+		height: 61px;
+	}
+}
+@media (min-width: 670px) {
+	.headerButtons .btn {
+		width: 210px;
 		height: 63px;
 		background-size: 210px 63px;
 	}
-	.buttons .shine {
+	.headerButtons .btn.iOS {
+		margin-right: 15px;
+	}
+	.headerButtons .shine {
 		width: 210px;
 		height: 63px;
 	}
 }
 @media (min-width: 768px) {
-	.buttons {
-		padding: 0px 80px;
-	}
-	.buttons .btn {
+	.headerButtons .btn {
+		width: 225px;
 		height: 67px;
 		background-size: 225px 67px;
 	}
-	.buttons .shine {
+	.headerButtons .btn.iOS {
+		margin-right: 35px;
+	}
+	.headerButtons .shine {
 		width: 225px;
 		height: 67px;
 	}
 }
 @media (min-width: 992px) {
-	.buttons {
-		padding: 0px 0px;
+	.headerButtons .btn {
+		width: 180px;
+		height: 54px;
+		background-size: 180px 54px;
 	}
-	.buttons .btn {
-		height: 63px;
-		background-size: 210px 63px;
+	.headerButtons .btn.iOS {
+		margin-right: 5px;
 	}
-	.buttons .shine {
-		width: 210px;
-		height: 63px;
+	.headerButtons .shine {
+		width: 180px;
+		height: 54px;
 	}
 }
-@media (min-width: 1100px) {
-	.buttons {
-		padding: 0px 18px;
+@media (min-width: 1080px) {
+	.headerButtons .btn {
+		width: 204px;
+		height: 61px;
+		background-size: 204px 61px;
 	}
-	.buttons .btn {
-		height: 65px;
-		background-size: 217px 65px;
+	.headerButtons .btn.iOS {
+		margin-right: 5px;
 	}
-	.buttons .shine {
-		width: 217px;
-		height: 65px;
+	.headerButtons .shine {
+		width: 204px;
+		height: 61px;
+	}
+}
+@media (min-width: 1125px) {
+	.headerButtons .btn {
+		width: 214px;
+		height: 64px;
+		background-size: 214px 64px;
+	}
+	.headerButtons .btn.iOS {
+		margin-right: 7px;
+	}
+	.headerButtons .shine {
+		width: 214px;
+		height: 64px;
 	}
 }
 @media (min-width: 1200px) {
-	.buttons {
-		padding: 0px 35px;
-	}
-	.buttons .btn {
+	.headerButtons .btn {
+		width: 225px;
 		height: 67px;
 		background-size: 225px 67px;
 	}
-	.buttons .shine {
+	.headerButtons .btn.iOS {
+		margin-right: 15px;
+	}
+	.headerButtons .shine {
 		width: 225px;
 		height: 67px;
 	}
 }
 @media (min-width: 1400px) {
-	.buttons {
-		padding: 0px 70px;
-	}
-	.buttons .btn {
-		height: 67px;
-		background-size: 225px 67px;
-	}
-	.buttons .shine {
+	.headerButtons .btn {
 		width: 225px;
 		height: 67px;
+		background-size: 225px 67px;
+		background-position: left;
 	}
-}
-.buttons .iOS {
-    background-image: url("../imgs/iOSButton.png");
-}
-.buttons .android {
-    background-image: url("../imgs/androidButton.png");
-}
-@media (max-width: 500px) {
-	.headerSection {
-		padding: 5px;
-		padding-bottom: 10px;
+	.headerButtons .btn.iOS {
+		margin-right: 35px;
 	}
-}
-@media (max-width: 475px) {
-	.headerSection {
-		padding: 0px;
-		padding-bottom: 10px;
-	}
-	.buttons .btn {
-		width: 80%;
-		margin: 5px 10%;
-	}
-}
-@media (max-width: 400px) {
-	.headerSection .text {
-		padding: 20px 20px 0px 20px;
+	.headerButtons .shine {
+		width: 225px;
+		height: 67px;
 	}
 }

@@ -23,27 +23,37 @@
 		<!--description section-->
 		<div class="container-fluid pressSection descriptionSection">
 			<h2>Description</h2>
-			<p></p>
+			<p>GlamKit is an app that makes it easy to organize your makeup and create looks. Just add the palettes in your collection, scroll through all the shades you own, and create breathtaking looks.</p>
 		</div>
 		<!--features section-->
 		<div class="container-fluid pressSection featuresSection">
 			<h2>Features</h2>
 			<p>Features:</p>
 			<ul>
-				<li></li>
+				<li>Easily import a picture of your eyeshadow palettes, divide up the shades, and GlamKit will find the color and finish of each shade.</li>
+				<li>Add more details to each shade, such as tags, rating, price, and weight, to make it easier to remember how a shade performs, which shades you love, and find the perfect shade for your look.</li>
+				<li>See all your eyeshadow in one scrollable list, so no longer have to open all your palettes as you decide on your look.</li>
+				<li>Sort the shades however you want, such as by color, finish, palette, favorite shades, darkest shades, or lightest shades.</li>
+				<li>Double click on any shade you want to add to Today's Look.</li>
+				<li>Save your current look to recreate another day.</li>
+				<li>Name your looks to make them easier to remember and recreate.</li>
+				<li>Find your precise color using a color wheel to help if you're copying a face chart or have a specific color in mind.</li>
+				<li>Compare other palettes to your collection.</li>
+				<li>If you're shopping, you can just upload a picture of a palette you're considering and GlamKit will show you all the similar shades in your collection. It's great way to save some money and avoid buying an almost identical shade for the hundredth time.</li>
+				<li>If you're trying to recreate a look that you saw on Instagram or Youtube, just upload a picture of a palette that the original artist used and you can easily find dupes in your collection. It saves you time because you no longer have to spend time comparing swatches or Googling dupes that you might not even own.</li>
 			</ul>
 			<p>Future features: </p>
 			<ul>
 				<li>Filtering swatch lists based on color, finish, rating, tags, and more to make it easier to find that perfect shade in collection</li>
-				<li>Making swatch lists searchable to make it even easier to find that perfect shade in collection</li>
-				<li>Inputting the price and weight of eyeshadows to make it easier to keept rack of your purchases and see the cost effectiveness of each palette</li>
-				<li>Adding photos of swatches to each shade, including in different lights, in case the shadows look different than in the pan</li>
-				<li>Adding photos of and dates that wore a look, so you can remember which was your favorite</li>
-				<li>Adding notes and estimates of the time it will take to do a look, to make it easier to plan your mornings</li>
-				<li>Sharing your looks and collection to friends, so you can show off your gorgeous makeup</li>
-				<li>Telling you how many looks use a shadow, how many shadows of each color and finish you have, and more to help you get to know your collection</li>
-				<li>Adding support for irridescednt, multichrome, and duochrome eyeshadows to support your full collection</li>
-				<li>Face, lips, sfx, and other product sections to help you create a full face look</li>
+				<li>Making swatch lists searchable to make it even easier to find that perfect shade in collection.</li>
+				<li>Adding photos of swatches to each shade, including in different lights, in case the shadows look different than in the pan.</li>
+				<li>Adding photos of and dates that wore a look, so you can remember which was your favorite.</li>
+				<li>Adding notes and estimates of the time it will take to do a look, to make it easier to plan your mornings.</li>
+				<li>Sharing your looks and collection to friends, so you can show off your gorgeous makeup.</li>
+				<li>Improving finish recognition.</li>
+				<li>Telling you how many looks use a shadow, how many shadows of each color and finish you have, and more to help you get to know your collection.</li>
+				<li>Adding support for irridescednt, multichrome, and duochrome eyeshadows to support your full collection.</li>
+				<li>Face, lips, sfx, and other product sections to help you create a full face look.</li>
 			</ul>
 			<p>If you have an idea for a feature not listed here, you can <a href=\"contact.php?type=feature\">request it here.</a></p>
 		</div>

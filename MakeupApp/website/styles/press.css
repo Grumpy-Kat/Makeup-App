@@ -1,12 +1,13 @@
 .pressSection {
-	margin: 40px 6% 70px 6%;
-	width: 88%;
-	padding: 40px 35px 20px 35px;
-	border-radius: 5px;
-	box-shadow: 7px 7px 11px rgba(153, 154, 156, 0.35);
+	margin: 0px var(--marginHorizontal) 40px var(--marginHorizontal);
+	width: calc(var(--widthCalc));
+	padding: 40px 20px 20px 20px;
+	border-radius: 8px;
+	box-shadow: 5px 5px 7px rgba(153, 154, 156, 0.2);
+	background-color: var(--primaryColor);
 }
 .title {
-	margin: 140px calc(7% + 35px) 0px calc(7% + 35px);
+	margin: 145px var(--marginHorizontal) 0px var(--marginHorizontal);
 	font: var(--subTitle);
 }
 .pressSection h2 {

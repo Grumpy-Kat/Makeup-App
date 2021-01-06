@@ -13,16 +13,16 @@
 					"What are some planned features for future updates?" => 
 					"<p>Planned features include: </p>
 					<ul>
-						<li>Filtering swatch lists based on color, finish, rating, tags, and more to make it easier to find that perfect shade in collection</li>
-						<li>Making swatch lists searchable to make it even easier to find that perfect shade in collection</li>
-						<li>Inputting the price and weight of eyeshadows to make it easier to keept rack of your purchases and see the cost effectiveness of each palette</li>
-						<li>Adding photos of swatches to each shade, including in different lights, in case the shadows look different than in the pan</li>
-						<li>Adding photos of and dates that wore a look, so you can remember which was your favorite</li>
-						<li>Adding notes and estimates of the time it will take to do a look, to make it easier to plan your mornings</li>
-						<li>Sharing your looks and collection to friends, so you can show off your gorgeous makeup</li>
-						<li>Telling you how many looks use a shadow, how many shadows of each color and finish you have, and more to help you get to know your collection</li>
-						<li>Adding support for irridescednt, multichrome, and duochrome eyeshadows to support your full collection</li>
-						<li>Face, lips, sfx, and other product sections to help you create a full face look</li>
+						<li>Filtering swatch lists based on color, finish, rating, tags, and more to make it easier to find that perfect shade in collection.</li>
+						<li>Making swatch lists searchable to make it even easier to find that perfect shade in collection.</li>
+						<li>Adding photos of swatches to each shade, including in different lights, in case the shadows look different than in the pan.</li>
+						<li>Adding photos of and dates that wore a look, so you can remember which was your favorite.</li>
+						<li>Adding notes and estimates of the time it will take to do a look, to make it easier to plan your mornings.</li>
+						<li>Sharing your looks and collection to friends, so you can show off your gorgeous makeup.</li>
+						<li>Telling you how many looks use a shadow, how many shadows of each color and finish you have, and more to help you get to know your collection.</li>
+						<li>Improving finish recognition.</li>
+						<li>Adding support for irridescednt, multichrome, and duochrome eyeshadows to support your full collection.</li>
+						<li>Face, lips, sfx, and other product sections to help you create a full face look.</li>
 					</ul>
 					<p>If you have an idea for a feature not listed here, you can <a href=\"contact.php?type=feature\">request it here.</a> Please remember that this app is still in an early phase and will have many features added soon.</p>",
 					

@@ -6,7 +6,7 @@
 		</button>
 		<a class="navbar-brand navbar-brand-background" href="index.php"></a>
 		<a class="navbar-brand" href="index.php"></a>
-		<a class="navbar-brand navbar-brand-title" href="index.php">GlamKit</a>
+		<a class="navbar-brand navbar-brand-title" href="index.php"><span class="notBold">Glam</span>Kit</a>
 	</div>
 	<div class="collapse navbar-collapse" id="navbar">
 		<ul class="nav navbar-nav navbar-right">

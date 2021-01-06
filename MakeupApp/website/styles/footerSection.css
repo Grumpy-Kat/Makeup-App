@@ -2,7 +2,6 @@
 	margin-top: 20px;
 	width: 100%;
 	padding: 30px 0%;
-	width: 100%;
 	background-color: var(--bgColor);
 	background: -webkit-linear-gradient(346deg, rgba(234, 254, 251, 0.5) 0%, rgba(156, 231, 219, 0.5) 35%, rgba(187, 230, 223, 0.5) 100%);
 	background: linear-gradient(346deg, rgba(234, 254, 251, 0.5) 0%, rgba(156, 231, 219, 0.5) 35%, rgba(187, 230, 223, 0.5) 100%);
@@ -85,46 +84,6 @@
 	top: -320%;
 	left: -110%;
 }
-@media (max-width: 675px) {
-	.mailingListForm input, .mailingListForm button {
-		font: var(--primaryText);
-		font-weight: 500;
-	}
-}
-@media (max-width: 450px) {
-	.mailingListForm input, .mailingListForm button {
-		font-size: 12px;
-		font-weight: 500;
-		height: 37px;
-	}
-	.mailingListForm input, .mailingListForm .shine {
-		padding: 12px 10px;
-	}
-	.mailingListForm input:focus {
-		padding: 11px 10px 11px 9px;
-	}
-}
-@media (max-width: 340px) {
-	.mailingListForm {
-		padding: 0px 15px;
-	}
-}
-@media (max-width: 300px) {
-	.mailingListForm {
-		padding: 0px 10px;
-	}
-	.mailingListForm input, .mailingListForm button {
-		font: var(--textQuaternary);
-		font-weight: 500;
-		height: 31px;
-	}
-	.mailingListForm input, .mailingListForm .shine  {
-		padding: 10px 7px;
-	}
-	.mailingListForm input:focus {
-		padding: 9px 7px 9px 6px;
-	}
-}
 .socialMedia {
 	width: 100%;
 	padding: 0px;
@@ -148,4 +107,135 @@
 	transform: scale(1.3, 1.3);
 	-ms-transform: scale(1.3, 1.3);
 	-webkit-transform: scale(1.3, 1.3);
+}
+.buttons .iOS {
+    background-image: url("../imgs/iOSButton.png");
+}
+.buttons .android {
+    background-image: url("../imgs/androidButton.png");
+}
+.buttons {
+	width: 100%;
+	margin: 0px 0px 20px 0px;
+	padding: 0px 0px;
+}
+.buttons .btn {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	vertical-align: middle;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+.footerButtons {
+	padding: 0px 30px;
+}
+.footerButtons .btn {
+	height: 50px;
+	background-size: 167px 50px;
+}
+.footerButtons .shine {
+	width: 167px;
+	height: 50px;
+}
+@media (max-width: 675px) {
+	.mailingListForm input, .mailingListForm button {
+		font: var(--primaryText);
+		font-weight: 500;
+	}
+}
+@media (max-width: 450px) {
+	.mailingListForm input, .mailingListForm button {
+		font-size: 12px;
+		font-weight: 500;
+		height: 37px;
+	}
+	.mailingListForm input, .mailingListForm .shine {
+		padding: 12px 10px;
+	}
+	.mailingListForm input:focus {
+		padding: 11px 10px 11px 9px;
+	}
+	.footerButtons .btn {
+		height: 37px;
+		background-size: 124px 37px;
+	}
+	.footerButtons .shine {
+		width: 124px;
+		height: 37px;
+	}
+}
+@media (max-width: 340px) {
+	.mailingListForm {
+		padding: 0px 15px;
+	}
+}
+@media (max-width: 300px) {
+	.mailingListForm {
+		padding: 0px 10px;
+	}
+	.mailingListForm input, .mailingListForm button {
+		font: var(--textQuaternary);
+		font-weight: 500;
+		height: 31px;
+	}
+	.mailingListForm input, .mailingListForm .shine  {
+		padding: 10px 7px;
+	}
+	.mailingListForm input:focus {
+		padding: 9px 7px 9px 6px;
+	}
+	.footerButtons .btn {
+		height: 31px;
+		background-size: 104px 31px;
+	}
+	.footerButtons .shine {
+		width: 104px;
+		height: 31px;
+	}
+}
+@media (min-width: 390px) {
+	.footerButtons {
+		padding: 0px 60px;
+	}
+}
+@media (min-width: 450px) {
+	.footerButtons {
+		padding: 0px 53px;
+	}
+}
+@media (min-width: 576px) {
+	.footerButtons {
+		padding: 0px 95px;
+	}
+}
+@media (min-width: 768px) {
+	.footerButtons {
+		padding: 0px 115px;
+	}
+}
+@media (min-width: 900px) {
+	.footerButtons {
+		padding: 0px 160px;
+	}
+}
+@media (min-width: 992px) {
+	.footerButtons {
+		padding: 0px 140px;
+	}
+}
+@media (min-width: 1100px) {
+	.footerButtons {
+		padding: 0px 175px;
+	}
+}
+@media (min-width: 1250px) {
+	.footerButtons {
+		padding: 0px 100px;
+	}
+}
+@media (min-width: 1400px) {
+	.footerButtons {
+		padding: 0px 135px;
+	}
 }

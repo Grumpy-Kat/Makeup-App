@@ -7,7 +7,7 @@
 	<body>
 		<?php
 			if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-				$sourceEmail = "litvin.ariela@lmghs.org";
+				$sourceEmail = "customerservice@technegames.com";
 				$emailSubject = "";
 				$emailBody = "<div>";
 				$name = "";
