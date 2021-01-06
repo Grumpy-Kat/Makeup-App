@@ -73,7 +73,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             onPressed: () {
               setState(() {
                 AddPaletteDividerScreenState.reset();
-                navigation.push(
+                navigation.pushReplacement(
                   context,
                   Offset(1, 0),
                   routes.ScreenRoutes.AddPaletteDividerScreen,
@@ -96,7 +96,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                     AddCustomPaletteScreenState.palette = palette;
                     AddCustomPaletteScreenState.weight = weight;
                     AddCustomPaletteScreenState.price = price;
-                    navigation.push(
+                    navigation.pushReplacement(
                       context,
                       Offset(1, 0),
                       routes.ScreenRoutes.AddCustomPaletteScreen,

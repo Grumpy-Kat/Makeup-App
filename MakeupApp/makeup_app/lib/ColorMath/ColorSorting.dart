@@ -71,9 +71,9 @@ Map<String, RGBColor> createColorWheel() {
     colorWheel['color_pink'] = RGBColor(0.9, 0.1, 0.5);
     colorWheel['color_darkPink'] = RGBColor(0.2, 0, 0.1);
     colorWheel['color_white'] = RGBColor(1, 1, 1);
-    colorWheel['color_lightGray'] = RGBColor(0.25, 0.25, 0.25);
+    colorWheel['color_lightGray'] = RGBColor(0.75, 0.75, 0.75);
     colorWheel['color_gray'] = RGBColor(0.5, 0.5, 0.5);
-    colorWheel['color_darkGray'] = RGBColor(0.75, 0.75, 0.75);
+    colorWheel['color_darkGray'] = RGBColor(0.25, 0.25, 0.25);
     colorWheel['color_darkTaupe'] = RGBColor(0.271, 0.247, 0.227);
     colorWheel['color_black'] = RGBColor(0, 0, 0);
   }

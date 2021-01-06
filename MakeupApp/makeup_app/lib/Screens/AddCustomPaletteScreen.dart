@@ -64,7 +64,12 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
         ),
         onPressed: () {
           //return to mode selection
-          navigation.pop(context, false);
+          navigation.pushReplacement(
+            context,
+            Offset(-1, 0),
+            routes.ScreenRoutes.AddPaletteScreen,
+            routes.routes['/addPaletteScreen'](context),
+          );
         },
       ),
       //scroll view to show all swatches

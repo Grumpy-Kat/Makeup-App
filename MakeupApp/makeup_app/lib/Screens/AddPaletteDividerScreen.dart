@@ -84,7 +84,12 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         ),
         onPressed: () {
           //return to mode selection
-          navigation.pop(context, false);
+          navigation.pushReplacement(
+            context,
+            Offset(-1, 0),
+            routes.ScreenRoutes.AddPaletteScreen,
+            routes.routes['/addPaletteScreen'](context),
+          );
         },
       ),
       //help button
@@ -146,7 +151,12 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         ),
         onPressed: () {
           //return to mode selection
-          navigation.pop(context, false);
+          navigation.pushReplacement(
+            context,
+            Offset(-1, 0),
+            routes.ScreenRoutes.AddPaletteScreen,
+            routes.routes['/addPaletteScreen'](context),
+          );
         },
       ),
       body: Column(
