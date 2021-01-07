@@ -36,8 +36,22 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   void initState() {
     super.initState();
     for(int i = _swatches.length - 1; i >= 0; i--) {
-      if(IO.get(_swatches[i]) == null) {
+      Swatch swatch = IO.get(_swatches[i]);
+      if(swatch == null) {
         _swatches.removeAt(i);
+        _orgRed.removeAt(i);
+        _orgGreen.removeAt(i);
+        _orgBlue.removeAt(i);
+        continue;
+      }
+      double red = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
+      double green = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
+      double blue = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
+      //might break something, only do it if absolutely necessary
+      if(swatch.color.values['rgbR'] != red || swatch.color.values['rgbG'] != green || swatch.color.values['rgbB'] != blue) {
+        _orgRed[i] = swatch.color.clampValue(swatch.color.values['rgbR'] - (_redOffset / 255.0) - (_brightnessOffset / 255.0));
+        _orgGreen[i] = swatch.color.clampValue(swatch.color.values['rgbG'] - (_greenOffset / 255.0) - (_brightnessOffset / 255.0));
+        _orgBlue[i] = swatch.color.clampValue(swatch.color.values['rgbB'] - (_blueOffset / 255.0) - (_brightnessOffset / 255.0));
       }
     }
     _addSwatchIcons();
@@ -356,13 +370,17 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       (String brand, String palette, double weight, double price) {
         //assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {
-          swatches[i].brand = brand;
-          swatches[i].palette = palette;
-          swatches[i].weight = double.parse((weight / swatches.length).toStringAsFixed(4));
-          swatches[i].price = double.parse((price / swatches.length).toStringAsFixed(2));
-          _orgRed.add((swatches[i].color.values['rgbR'] - (globals.brightnessOffset / 255.0)) - (globals.redOffset / 255.0));
-          _orgGreen.add((swatches[i].color.values['rgbG'] - (globals.brightnessOffset / 255.0)) - (globals.greenOffset / 255.0));
-          _orgBlue.add((swatches[i].color.values['rgbB'] - (globals.brightnessOffset / 255.0)) - (globals.blueOffset / 255.0));
+          Swatch swatch = swatches[i];
+          swatch.brand = brand;
+          swatch.palette = palette;
+          swatch.weight = double.parse((weight / swatches.length).toStringAsFixed(4));
+          swatch.price = double.parse((price / swatches.length).toStringAsFixed(2));
+          _orgRed.add(swatch.color.values['rgbR']);
+          _orgGreen.add(swatch.color.values['rgbG']);
+          _orgBlue.add(swatch.color.values['rgbB']);
+          swatch.color.values['rgbR'] = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
+          swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
+          swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
         }
         //saves swatches and adds them to final list to display
         IO.add(swatches).then((List<int> val) {

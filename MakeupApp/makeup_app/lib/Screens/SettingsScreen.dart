@@ -751,7 +751,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           child: Align(
             alignment: Alignment.center,
             child: Image(
-              image: AssetImage('imgs/matte.png'),
+              image: AssetImage('imgs/finish_matte.png'),
               colorBlendMode: BlendMode.modulate,
               color: color,
             ),
@@ -761,7 +761,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           child: Align(
             alignment: Alignment.center,
             child: Image(
-              image: AssetImage('imgs/matte.png'),
+              image: AssetImage('imgs/finish_matte.png'),
               colorBlendMode: BlendMode.modulate,
               color: Color.fromRGBO(
                 (color.red + globals.redOffset + globals.brightnessOffset).clamp(0, 255),

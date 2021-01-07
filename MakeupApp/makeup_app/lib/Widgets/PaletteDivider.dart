@@ -499,8 +499,8 @@ class PaletteDividerState extends State<PaletteDivider> {
           return;
         }
         //lighten/recolor image
-        cropped = image.brightness(cropped, globals.brightnessOffset);
-        cropped = image.colorOffset(cropped, red: globals.redOffset, green: globals.greenOffset, blue: globals.blueOffset);
+       /* cropped = image.brightness(cropped, globals.brightnessOffset);
+        cropped = image.colorOffset(cropped, red: globals.redOffset, green: globals.greenOffset, blue: globals.blueOffset);*/
         //get color
         RGBColor color = avgColor(cropped);
         //get finish

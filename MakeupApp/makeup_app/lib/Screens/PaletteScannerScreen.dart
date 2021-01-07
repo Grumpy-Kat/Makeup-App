@@ -133,6 +133,16 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
           onEnter: (List<Swatch> swatches) {
             setState(
               () {
+                int brightnessOffset = globals.brightnessOffset;
+                int redOffset = globals.redOffset;
+                int greenOffset = globals.greenOffset;
+                int blueOffset = globals.blueOffset;
+                for(int i = 0; i < swatches.length; i++) {
+                  Swatch swatch = swatches[i];
+                  swatch.color.values['rgbR'] = swatch.color.clampValue(swatch.color.values['rgbR'] + (redOffset / 255.0) + (brightnessOffset / 255.0));
+                  swatch.color.values['rgbG'] = swatch.color.clampValue(swatch.color.values['rgbG'] + (greenOffset / 255.0) + (brightnessOffset / 255.0));
+                  swatch.color.values['rgbB'] = swatch.color.clampValue(swatch.color.values['rgbB'] + (blueOffset / 255.0) + (brightnessOffset / 255.0));
+                }
                 //sets mode and future
                 _labels = swatches;
                 _openPaletteDivider = false;

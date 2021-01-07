@@ -203,7 +203,7 @@ set autoShadeNameMode(AutoShadeNameMode value) {
 }
 
 //brightness offset for making new swatches from photos
-int _brightnessOffset = 30;
+int _brightnessOffset = 0;
 int get brightnessOffset => _brightnessOffset;
 set brightnessOffset(int value) {
   _brightnessOffset = value.clamp(-255, 255);
