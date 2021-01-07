@@ -268,12 +268,6 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               ),
               itemCount: _swatchIcons.length,
               itemBuilder: (BuildContext context, int i) {
-                /*return SwatchIcon.id(
-                  _swatches[i],
-                  showInfoBox: true,
-                  showCheck: false,
-                  onDelete: null,
-                );*/
                 return _swatchIcons[i];
               },
             ),

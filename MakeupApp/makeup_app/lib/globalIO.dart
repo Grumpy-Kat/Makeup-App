@@ -79,7 +79,6 @@ Future<Swatch> loadSwatch(int id, String line) async {
   if(line == '') {
     return null;
   }
-  print(line);
   List<String> lineSplit = line.split(';');
   //color
   List<String> colorValues = lineSplit[0].split(',');

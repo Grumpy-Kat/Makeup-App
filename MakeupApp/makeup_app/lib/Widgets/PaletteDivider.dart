@@ -425,13 +425,49 @@ class PaletteDividerState extends State<PaletteDivider> {
   }
 
   void save() async {
+    showLoadingDialog();
+    await saveActual();
+    Navigator.pop(context);
+    widget.onEnter(_swatches);
+  }
+
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            height: 250,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: theme.bgColor,
+            ),
+            padding: EdgeInsets.fromLTRB(50, 75, 50, 75),
+            child: Center(
+              child: Container(
+                width: 100,
+                height: 100,
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void saveActual() async {
     await getModel();
     _swatches = [];
     image.Image img;
     Size actualImg;
     if(globals.debug) {
-     img = await loadImg('imgs/test0.jpg');
-     actualImg = Size(355, 355);
+      img = await loadImg('imgs/test0.jpg');
+      actualImg = Size(355, 355);
     } else {
       img = await loadImg(ImagePicker.img.path);
       actualImg = await ImagePicker.getActualImgSize(ImagePicker.img);
@@ -488,7 +524,6 @@ class PaletteDividerState extends State<PaletteDivider> {
         print('${_swatches.last.color.getValues()} $finish');
       }
     }
-    widget.onEnter(_swatches);
   }
 
   image.Image cropWithBorder(image.Image src, int x, int y, int w, int h) {
