@@ -23,6 +23,28 @@ Widget getAlertDialog(BuildContext context, { Widget title, Widget content, List
   );
 }
 
+Future<void> openLoadingDialog(BuildContext context) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: theme.bgColor.withAlpha(35),
+        elevation: 0,
+        insetPadding: EdgeInsets.zero,
+        
+        child: Center(
+          child: Container(
+            width: 100,
+            height: 100,
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
+    },
+  );
+}
+
 Future<void> openTextDialog(BuildContext context, String title, String error, String buttonLabel, OnStringAction onPressed) {
   String value = '';
   bool showErrorText = false;

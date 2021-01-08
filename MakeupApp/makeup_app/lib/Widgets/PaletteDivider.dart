@@ -9,6 +9,7 @@ import '../ColorMath/ColorProcessingTF.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
 import '../localizationIO.dart';
 import 'ImagePicker.dart';
@@ -425,41 +426,11 @@ class PaletteDividerState extends State<PaletteDivider> {
   }
 
   void save() async {
-    showLoadingDialog();
+    globalWidgets.openLoadingDialog(context);
     await saveActual();
     Navigator.pop(context);
     widget.onEnter(_swatches);
   }
-
-  void showLoadingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding: EdgeInsets.all(10),
-          child: Container(
-            width: 200,
-            height: 250,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: theme.bgColor,
-            ),
-            padding: EdgeInsets.fromLTRB(50, 75, 50, 75),
-            child: Center(
-              child: Container(
-                width: 100,
-                height: 100,
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   void saveActual() async {
     await getModel();
     _swatches = [];
