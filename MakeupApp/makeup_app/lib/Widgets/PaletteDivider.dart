@@ -270,7 +270,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     return Align(
       alignment: Alignment(0, 0.4),
       child: Image.file(
-        (ImagePicker.img == null ? File('imgs/matte.png') : ImagePicker.img),
+        (ImagePicker.img == null ? File('imgs/finish_matte.png') : ImagePicker.img),
         key: _imgKey,
         width: imgSize.width,
         height: imgSize.height,
@@ -451,7 +451,9 @@ class PaletteDividerState extends State<PaletteDivider> {
     List<double> scaledBorders = [borders[0] / imgScale, borders[1] / imgScale, borders[2] / imgScale, borders[3] / imgScale];
     List<double> scaledPadding = [padding[0] / imgScale, padding[1] / imgScale];
     for(int j = 0; j < numRows; j++) {
-      for(int i = numCols - 1; i >= 0; i--) {
+      //for(int i = numCols - 1; i >= 0; i--) {
+      //I'm constantly changing between the two, they sometimes look wrong, is not consistent?
+      for(int i = 0; i < numCols; i++) {
         //get dimensions
         int x = (scaledBorders[0] + (boxWidth * i) + scaledPadding[0]).floor();
         int y = (scaledBorders[1] + (boxHeight * j) + scaledPadding[1]).floor();
