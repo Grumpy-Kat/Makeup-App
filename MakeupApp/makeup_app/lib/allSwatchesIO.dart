@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart' show Widget;
+import 'package:string_validator/string_validator.dart';
 import 'dart:io';
 import 'dart:async';
 import 'dart:math';
@@ -142,19 +145,31 @@ bool isValid(int i) {
   return swatches.containsKey(i);
 }
 
-void save(Map<int, String> info) async {
+void save(Map<int, String> info, { int tries = 0 }) async {
   List<int> keys = info.keys.toList();
   String string = '';
   for(int i = 0; i < keys.length; i++) {
     string += '${keys[i]}|${info[keys[i]]}\n';
   }
   String compressed = compress(string);
-  File file = await getSaveFile();
-  RandomAccessFile f = await file.open(mode: FileMode.writeOnly);
-  await f.writeString(compressed);
-  await loadFormatted(override: true, overrideInner: true);
-  for(int i = 0; i < onSaveChanged.length; i++) {
-    onSaveChanged[i]();
+  try {
+    base64.normalize(compressed);
+    //print('allSwatchesIO 0 ${isBase64(compressed)}');
+    File file = await getSaveFile();
+    RandomAccessFile f = await file.open(mode: FileMode.writeOnly);
+    await f.writeString(compressed);
+    await loadFormatted(override: true, overrideInner: true);
+    //print('allSwatchesIO 1 ${isBase64(compressed)}');
+    for(int i = 0; i < onSaveChanged.length; i++) {
+      onSaveChanged[i]();
+    }
+  } catch(e) {
+    //just ignore it, which effectively reverts to the previous save?
+    //helps prevent save from being corrupted, but might miss some data
+    print(e);
+    if(tries <= 5) {
+      await save(info, tries: tries + 1);
+    }
   }
 }
 

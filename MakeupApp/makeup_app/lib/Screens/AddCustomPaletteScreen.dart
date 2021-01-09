@@ -6,6 +6,7 @@ import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../allSwatchesIO.dart' as IO;
+import '../globalWidgets.dart' as globalWidgets;
 import '../localizationIO.dart';
 
 class AddCustomPaletteScreen extends StatefulWidget {
@@ -105,6 +106,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
                 color: theme.accentTextColor,
               ),
               onPressed: () {
+                globalWidgets.openLoadingDialog(context);
                 double weightPer = double.parse((weight / (_swatches.length + 1)).toStringAsFixed(4));
                 double pricePer = double.parse((price / (_swatches.length + 1)).toStringAsFixed(2));
                 List<Swatch> swatches = IO.getMany(_swatches);
@@ -130,6 +132,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
                     setState(() {
                       _swatches.add(val[0]);
                       _addSwatchIcons();
+                      Navigator.pop(context);
                     });
                   }
                 );

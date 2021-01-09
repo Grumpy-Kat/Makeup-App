@@ -26,8 +26,8 @@ String compress(String string) {
     assert(isBase64(compressed));
     return compressed;
   } catch(e) {
-    print(e);
-    print(string);
+    print('globalIO compress $e');
+    print('globalIO compress $string');
     return string;
   }
 }
@@ -36,15 +36,15 @@ String decompress(String compressed) {
   if(compressed == '') {
     return '';
   }
-  try {
+  //try {
     List<int> bytes = base64.decode(compressed);
     String string  = utf8.decode(ZLibDecoder().decodeBytes(bytes));
     return string;
-  } catch(e) {
-    print(e);
-    print(compressed);
+  /*} catch(e) {
+    print('globalIO decompress $e');
+    print('globalIO decompress $compressed');
     return compressed;
-  }
+  }*/
 }
 
 Future<String> saveSwatch(Swatch swatch) async {
