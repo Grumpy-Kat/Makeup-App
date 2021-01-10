@@ -55,11 +55,11 @@ Future<String> saveSwatch(Swatch swatch) async {
   //finish
   String finish = _finishes.keys.firstWhere((key) => _finishes[key] == swatch.finish, orElse: () => '0');
   //brand
-  String brand = removeAllChars(swatch.brand, [r';', r'\']);
+  String brand = removeAllChars(swatch.brand, [r';', r'\\']);
   //palette
-  String palette = removeAllChars(swatch.palette, [r';', r'\']);
+  String palette = removeAllChars(swatch.palette, [r';', r'\\']);
   //shade
-  String shade = removeAllChars(swatch.shade, [r';', r'\']);
+  String shade = removeAllChars(swatch.shade, [r';', r'\\']);
   //weight
   String weight = swatch.weight.toStringAsFixed(4);
   //price
@@ -70,7 +70,7 @@ Future<String> saveSwatch(Swatch swatch) async {
   String tags = '';
   if(swatch.tags != null) {
     for (int i = 0; i < swatch.tags.length; i++) {
-      tags += removeAllChars(swatch.tags[i], [r';', r'\', r',']) + ',';
+      tags += removeAllChars(swatch.tags[i], [r';', r'\\', r',']) + ',';
     }
   }
   //combined
@@ -80,6 +80,7 @@ Future<String> saveSwatch(Swatch swatch) async {
 String removeAllChars(String orgString, List<String> patterns) {
   String newString = orgString;
   for(int i = 0; i < patterns.length; i++) {
+    print(patterns[i]);
     newString = newString.replaceAll(RegExp(patterns[i]), '');
   }
   return newString;
