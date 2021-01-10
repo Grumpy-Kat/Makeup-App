@@ -72,6 +72,9 @@ Future<int> save(int id, String name, List<int> info) async  {
   //save individual look
   String string = '';
   name = removeAllChars(name, [r'\\']);
+  if(name == '') {
+    name = 'Look';
+  }
   string += '$name\n';
   for(int i = 0; i < info.length; i++) {
     string += '${info[i]}\n';
