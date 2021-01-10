@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
@@ -54,11 +55,11 @@ Future<String> saveSwatch(Swatch swatch) async {
   //finish
   String finish = _finishes.keys.firstWhere((key) => _finishes[key] == swatch.finish, orElse: () => '0');
   //brand
-  String brand = swatch.brand;
+  String brand = removeAllChars(swatch.brand, [r';', r'\']);
   //palette
-  String palette = swatch.palette;
+  String palette = removeAllChars(swatch.palette, [r';', r'\']);
   //shade
-  String shade = swatch.shade;
+  String shade = removeAllChars(swatch.shade, [r';', r'\']);
   //weight
   String weight = swatch.weight.toStringAsFixed(4);
   //price
@@ -69,12 +70,21 @@ Future<String> saveSwatch(Swatch swatch) async {
   String tags = '';
   if(swatch.tags != null) {
     for (int i = 0; i < swatch.tags.length; i++) {
-      tags += swatch.tags[i] + ',';
+      tags += removeAllChars(swatch.tags[i], [r';', r'\', r',']) + ',';
     }
   }
   //combined
   return '$color;$finish;$brand;$palette;$shade;$weight;$price;$rating;$tags\n';
 }
+
+String removeAllChars(String orgString, List<String> patterns) {
+  String newString = orgString;
+  for(int i = 0; i < patterns.length; i++) {
+    newString = newString.replaceAll(RegExp(patterns[i]), '');
+  }
+  return newString;
+}
+
 Future<Swatch> loadSwatch(int id, String line) async {
   if(line == '') {
     return null;

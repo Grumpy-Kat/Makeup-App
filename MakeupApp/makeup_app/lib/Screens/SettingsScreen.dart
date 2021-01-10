@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notification_permissions/notification_permissions.dart';
@@ -123,6 +124,17 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     );
   }
 
+  Widget getLabel(String text) {
+    return AutoSizeText(
+      text,
+      style: theme.primaryTextSecondary,
+      minFontSize: 9,
+      maxFontSize: theme.primaryTextSecondary.fontSize,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
   //shows all fields for default mode
   Widget getDefaultScreen(BuildContext context, double height, Decoration decoration, Decoration noBottomDecoration, EdgeInsets padding, EdgeInsets margin) {
     return SingleChildScrollView(
@@ -153,12 +165,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       margin: margin,
       child: Row(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
-            child: Text('${getString('settings_default_language')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_default_language')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -203,11 +219,15 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       margin: margin,
       child: Row(
         children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text('${getString('settings_default_notifications')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: getLabel('${getString('settings_default_notifications')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -242,12 +262,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       padding: padding,
       child: Row(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
-            child: Text('${getString('settings_default_sort')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_default_sort')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -298,11 +322,15 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
         },
         child: Row(
           children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('${getString('settings_default_shade')}', style: theme.primaryTextSecondary),
+            Expanded(
+              flex: 3,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: getLabel('${getString('settings_default_shade')}'),
+              ),
             ),
             Expanded(
+              flex: 2,
               child: Align(
                 alignment: Alignment.centerRight,
                 child: SizedBox(
@@ -347,12 +375,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       margin: margin,
       child: Row(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
-            child: Text('${getString('settings_shade_shade')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_shade_shade')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -409,11 +441,15 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
         },
         child: Row(
           children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('${getString('settings_default_photo')}', style: theme.primaryTextSecondary),
+            Expanded(
+              flex: 3,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: getLabel('${getString('settings_default_photo')}'),
+              ),
             ),
             Expanded(
+              flex: 2,
               child: Align(
                 alignment: Alignment.centerRight,
                 child: SizedBox(
@@ -455,12 +491,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       padding: padding,
       child: Row(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
-            child: Text('${getString('settings_photo_brightness')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_photo_brightness')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -515,12 +555,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       padding: padding,
       child: Row(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
-            child: Text('${getString('settings_photo_red')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_photo_red')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -575,12 +619,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       padding: padding,
       child: Row(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
-            child: Text('${getString('settings_photo_green')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_photo_green')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -636,12 +684,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       margin: margin,
       child: Row(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
-            child: Text('${getString('settings_photo_blue')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_photo_blue')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -757,7 +809,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             ),
           ),
         ),
-          Expanded(
+        Expanded(
           child: Align(
             alignment: Alignment.center,
             child: Image(
@@ -785,12 +837,16 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       margin: margin,
       child: Row(
         children: <Widget>[
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
-            child: Text('${getString('settings_default_sensitivity')} ', style: theme.primaryTextSecondary),
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_default_sensitivity')} '),
+            ),
           ),
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -859,7 +915,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(right: 3),
-                child: Text('${getString('settings_default_help')} ', style: theme.primaryTextSecondary),
+                child: getLabel('${getString('settings_default_help')} '),
               ),
               Align(
                 alignment: Alignment.centerRight,
@@ -892,7 +948,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(right: 3),
-              child: Text('${getString('settings_default_request')} ', style: theme.primaryTextSecondary),
+              child: getLabel('${getString('settings_default_request')} '),
             ),
             Align(
               alignment: Alignment.centerRight,
@@ -924,7 +980,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(right: 3),
-              child: Text('${getString('settings_default_report')} ', style: theme.primaryTextSecondary),
+              child: getLabel('${getString('settings_default_report')} '),
             ),
             Align(
               alignment: Alignment.centerRight,
@@ -968,7 +1024,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(right: 3),
-                child: Text('${getString('settings_default_about')} ', style: theme.primaryTextSecondary),
+                child: getLabel('${getString('settings_default_about')} '),
               ),
               Align(
                 alignment: Alignment.centerRight,
@@ -1022,10 +1078,13 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 );
                 print('reset all');
               },
-              child: Text(
+              child: AutoSizeText(
                 getString('settings_default_reset'),
                 textAlign: TextAlign.center,
                 style: theme.errorText,
+                maxLines: 1,
+                maxFontSize: theme.errorText.fontSize,
+                minFontSize: 10,
               ),
             ),
           ),
