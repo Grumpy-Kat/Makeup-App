@@ -153,10 +153,18 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                       color: theme.primaryColorDark,
                     ),
                     onPressed: () async {
-                      await IO.removeId(_swatch.id);
-                      _hasSaved = true;
-                      _hasChanged = true;
-                      exit();
+                      await globalWidgets.openTwoButtonDialog(
+                        context,
+                        getString('swatch_deleteWarning'),
+                        () async {
+                          //action determined by screen that uses it
+                          await IO.removeId(_swatch.id);
+                          _hasSaved = true;
+                          _hasChanged = true;
+                          exit();
+                        },
+                        () { },
+                      );
                     },
                     child: Text(
                       '${getString('swatch_delete')}',

@@ -173,6 +173,7 @@ swatch_price,Price,Цена
 swatch_rating,Rating,Оценка
 swatch_tags,Tags,Теги
 swatch_delete,Delete Swatch,Удалить Образец
+swatch_deleteWarning,Are you sure you want to delete the swatch?,Вы уверены что хотите удалить образец?
 swatch_none,None,Никакие
 swatch_popupInstructions,Enter new tag:,Введите новый тег:
 swatch_popupError,You must enter a tag.,Добавьте тег.
