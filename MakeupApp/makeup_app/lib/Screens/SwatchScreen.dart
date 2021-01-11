@@ -148,7 +148,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                   height: 70,
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   child: OutlineButton(
-                    color: theme.primaryColor,
+                    color: theme.bgColor,
                     borderSide: BorderSide(
                       color: theme.primaryColorDark,
                     ),
@@ -216,7 +216,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         onChanged: onChange,
         enabled: _isEditing,
         decoration: InputDecoration(
-          fillColor: _isEditing ? theme.primaryColor : theme.bgColor,
+          fillColor: _isEditing ? theme.primaryColorLight : theme.bgColor,
           filled: true,
           contentPadding:  EdgeInsets.symmetric(horizontal: 12),
           disabledBorder: OutlineInputBorder(
@@ -263,7 +263,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         ],
         enabled: _isEditing,
         decoration: InputDecoration(
-          fillColor: _isEditing ? theme.primaryColor : theme.bgColor,
+          fillColor: _isEditing ? theme.primaryColorLight : theme.bgColor,
           filled: true,
           contentPadding:  EdgeInsets.symmetric(horizontal: 12),
           disabledBorder: OutlineInputBorder(
@@ -360,7 +360,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       Container(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-          color: _isEditing ? theme.primaryColor : theme.bgColor,
+          color: _isEditing ? theme.primaryColorLight : theme.bgColor,
           borderRadius: BorderRadius.circular(3.0),
           border: Border.fromBorderSide(
             BorderSide(
@@ -386,7 +386,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       Container(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-          color: _isEditing ? theme.primaryColor : theme.bgColor,
+          color: _isEditing ? theme.primaryColorLight : theme.bgColor,
           borderRadius: BorderRadius.circular(3.0),
           border: Border.fromBorderSide(
             BorderSide(

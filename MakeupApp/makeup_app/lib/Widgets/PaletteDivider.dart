@@ -175,13 +175,13 @@ class PaletteDividerState extends State<PaletteDivider> {
         ],
         cursorColor: theme.accentColor,
         decoration: InputDecoration(
-          fillColor: theme.primaryColor,
+          fillColor: theme.primaryColorLight,
           labelText: label,
           labelStyle: theme.primaryTextSecondary,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: theme.primaryColorDark,
-              width: 1.0,
+              color: theme.primaryColorDarkest,
+              width: 1.5,
             ),
           ),
           focusedBorder: OutlineInputBorder(

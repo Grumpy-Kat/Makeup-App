@@ -80,7 +80,6 @@ Future<String> saveSwatch(Swatch swatch) async {
 String removeAllChars(String orgString, List<String> patterns) {
   String newString = orgString;
   for(int i = 0; i < patterns.length; i++) {
-    print(patterns[i]);
     newString = newString.replaceAll(RegExp(patterns[i]), '');
   }
   return newString;
