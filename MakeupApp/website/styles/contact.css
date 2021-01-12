@@ -61,11 +61,11 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 }
 .input.filled label {
 	top: 0;
-	font: var(--textTertiary);
+	font: var(--textSecondary);
 	color: var(--secondaryTextColor);
 }
 .contactForm button {
-	font: var(--textBold);
+	font: var(--textPrimary);
 	height: 41px;
 	width: 120px;
 	line-height: 17px;

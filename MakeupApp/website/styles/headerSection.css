@@ -1,12 +1,12 @@
 .headerSection {
 	margin: 0px;
-	margin-bottom: 50px;
+	margin-bottom: 40px;
 	padding: 90px var(--marginHorizontal) 0px var(--marginHorizontal);
 	width: 100%;
 	background-color: var(--bgColor);
-	background: -webkit-linear-gradient(200deg, rgba(195, 231, 236, 0.9) 0%, rgba(66, 213, 189, 0.9) 38%, rgba(187, 230, 223, 0.9) 100%, rgba(102, 217, 190, 0.9) 100%);
-	background: linear-gradient(200deg, rgba(195, 231, 236, 0.9) 0%, rgba(66, 213, 189, 0.9) 38%, rgba(187, 230, 223, 0.9) 100%, rgba(102, 217, 190, 0.9) 100%);
-	box-shadow: 0px 5px 7px rgba(153, 154, 156, 0.2);
+	background: -webkit-linear-gradient(200deg, rgba(185, 226, 230, 0.85) 0%, rgba(74, 213, 190, 0.85) 38%, rgba(190, 228, 215, 0.85) 100%);
+	background: linear-gradient(200deg, rgba(185, 226, 230, 0.85) 0%, rgba(74, 213, 190, 0.85) 38%, rgba(190, 228, 215, 0.85) 100%);
+	box-shadow: var(--shadowSecondary);
 }
 .headerSection .phone {
     background-image: url("../imgs/screenshots/iphone AllSwatches 1.png");
@@ -24,13 +24,23 @@
 	margin-top: 70px;
 	padding: 50px 0px 0px 0px;
 }
+.headerSection .text h2 {
+	font: var(--subTitle);
+}
 .headerButtons {
 	padding: 0px!important;
 	margin: 50px 0px 0px 0px;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 	.headerSection {
 		padding-top: 50px;
+		text-align: center;
+	}
+	.headerButtons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
 	}
 }
 @media (max-width: 576px) {
@@ -51,20 +61,18 @@
 }
 .headerButtons .btn {
 	padding: 0px!important;
-	width: 180px;
-	height: 54px;
-	background-size: 180px 54px;
-}
-.headerButtons .btn {
-	margin: 0px calc(50% - 90px);
+	width: 154px;
+	height: 46px;
+	background-size: 154px 46px;
 }
 .headerButtons .btn.iOS {
 	margin-top: 7px;
 	margin-bottom: 9px;
+	margin-right: 5px;
 }
 .headerButtons .shine {
-	width: 180px;
-	height: 54px;
+	width: 154px;
+	height: 46px;
 }
 @media (min-width: 407px) {
 	.headerButtons .btn {

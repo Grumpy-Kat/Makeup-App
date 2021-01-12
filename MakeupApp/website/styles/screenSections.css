@@ -1,7 +1,8 @@
 .screenSection {
-	margin: 0px 0px 40px 0px;
+	margin: 0px 0px 32px 0px;
 	width: 100%;
-	box-shadow: 5px 5px 7px rgba(153, 154, 156, 0.2);
+	/*box-shadow: 5px 5px 7px rgba(153, 154, 156, 0.2);*/
+	box-shadow: var(--shadowSecondary);
 }
 .screenSection div {
 	z-index: 500;
@@ -50,10 +51,10 @@
 }
 .screenSection h2{
 	margin-top: 10px;
-	font-size: 20px;
 }
 .screenSection h3 {
 	margin-top: 0px;
+	margin-bottom: 7px;
 }
 .screenSection h3 a {
 	margin-top: 0px;
@@ -61,7 +62,8 @@
 	color: var(--secondaryTextColor);
 }
 .screenSection .toggle {
-	color: var(--tertiaryTextColor);
+	margin-top: 0px;
+	color: var(--secondaryTextColor);
 }
 .screenSection-leftArrow .phone {
 	padding-left: 0px;
@@ -81,14 +83,17 @@
 	/*box-shadow: -5px 5px 8px rgba(153, 154, 156, 0.25);*/
 	float: left;
 }
+:root {
+	--screenSectionBgOpacity: 0.5;
+}
 .allSwatches {
-	background: -webkit-linear-gradient(50deg, rgba(255, 195, 100, 0.55), rgba(255, 95, 149, 0.55));
-	background: linear-gradient(50deg, rgba(255, 195, 100, 0.55), rgba(255, 95, 149, 0.55));
+	background: -webkit-linear-gradient(50deg, rgba(255, 195, 100, var(--screenSectionBgOpacity)), rgba(255, 95, 149, var(--screenSectionBgOpacity)));
+	background: linear-gradient(50deg, rgba(255, 195, 100, var(--screenSectionBgOpacity)), rgba(255, 95, 149, var(--screenSectionBgOpacity)));
 }
 .allSwatches .phone div {
 	/*margin looks larger?*/
 	margin: 0px 0px 0px calc(var(--marginHorizontal) - 7px);
-	background-image: url("../imgs/screenshots/iphone AllSwatches 3.png");
+	background-image: url("../imgs/screenshots/iphone AllSwatches 2.png");
 	background-size: 308px 620px;
 	background-position: center 75%;
 	width: 308px;
@@ -104,12 +109,12 @@
 	margin-top: 15px;
 }
 .savedLooks {
-	background: -webkit-linear-gradient(50deg, rgba(5, 117, 230, 0.55), rgba(0, 242, 96, 0.55));
-	background: inear-gradient(50deg, rgba(5, 117, 230, 0.55), rgba(0, 242, 96, 0.55));
+	background: -webkit-linear-gradient(50deg, rgba(5, 117, 230, var(--screenSectionBgOpacity)), rgba(0, 242, 96, var(--screenSectionBgOpacity)));
+	background: linear-gradient(50deg, rgba(5, 117, 230, var(--screenSectionBgOpacity)), rgba(0, 242, 96, var(--screenSectionBgOpacity)));
 }
 .savedLooks .phone div {
 	margin: 60px var(--marginHorizontal) 0px 0px;
-	background-image: url("../imgs/screenshots/iphone SavedLooks 3.png");
+	background-image: url("../imgs/screenshots/iphone SavedLooks 1.png");
 	background-size: 291px 475px;
 	background-position: center -27%;
 	width: 291px;
@@ -117,8 +122,8 @@
 	float: right;
 }
 .colorWheel {
-	background: -webkit-linear-gradient(50deg, rgba(236, 110, 173, 0.55), rgba(52, 148, 230, 0.55));
-	background: linear-gradient(50deg, rgba(236, 110, 173, 0.55), rgba(52, 148, 230, 0.55));
+	background: -webkit-linear-gradient(50deg, rgba(236, 110, 173, var(--screenSectionBgOpacity)), rgba(52, 148, 230, var(--screenSectionBgOpacity)));
+	background: linear-gradient(50deg, rgba(236, 110, 173, var(--screenSectionBgOpacity)), rgba(52, 148, 230, var(--screenSectionBgOpacity)));
 }
 .colorWheel .phone div {
 	margin: 30px 0px 30px var(--marginHorizontal);
@@ -129,25 +134,25 @@
 	float: left;
 }
 .paletteDivider {
-	background: -webkit-linear-gradient(50deg, rgba(230, 90, 36, 0.55), rgba(240, 203, 53, 0.55));
-	background: linear-gradient(50deg, rgba(230, 90, 36, 0.55), rgba(240, 203, 53, 0.55));
+	background: -webkit-linear-gradient(50deg, rgba(230, 90, 36, var(--screenSectionBgOpacity)), rgba(240, 203, 53, var(--screenSectionBgOpacity)));
+	background: linear-gradient(50deg, rgba(230, 90, 36, var(--screenSectionBgOpacity)), rgba(240, 203, 53, var(--screenSectionBgOpacity)));
 }
 .paletteDivider .phone div {
 	margin: 0px var(--marginHorizontal) 60px 0px;
-	background-image: url("../imgs/screenshots/iphone AllSwatches 1.png");
+	background-image: url("../imgs/screenshots/iphone PaletteScanner 4.png");
 	background-size: 223px 575px;
-	background-position: center 109%;
+	background-position: center 111%;
 	width: 223px;
 	height: 400px;
 	float: right;
 }
 .editSwatch {
-	background: -webkit-linear-gradient(50deg, rgba(219, 223, 78, 0.55), rgba(86, 171, 47, 0.55));
-	background: linear-gradient(50deg, rgba(219, 223, 78, 0.55), rgba(86, 171, 47, 0.55));
+	background: -webkit-linear-gradient(50deg, rgba(219, 223, 78, var(--screenSectionBgOpacity)), rgba(86, 171, 47, var(--screenSectionBgOpacity)));
+	background: linear-gradient(50deg, rgba(219, 223, 78, var(--screenSectionBgOpacity)), rgba(86, 171, 47, var(--screenSectionBgOpacity)));
 }
 .editSwatch .phone div {
 	margin: 30px 0px 30px var(--marginHorizontal);
-	background-image: url("../imgs/screenshots/iphone EditSwatch 3.png");
+	background-image: url("../imgs/screenshots/iphone EditSwatch 2.png");
 	background-size: 235px 390px;
 	width: 235px;
 	height: 400px;

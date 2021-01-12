@@ -11,8 +11,8 @@
 		<div class="container-fluid row headerSection">
 			<div class="col-md-6">
 				<div class="text">
-					<h1>Planning your makeup look has never been easier!</h1>
-					<h2>Add the palettes in your collection, scroll through all the colors you own, and create breathtaking looks.</h2>
+					<h1>Planning your makeup has never been easier!</h1>
+					<h2>Add the palettes in your collection, scroll through all your shades, and create breathtaking looks.</h2>
 				</div>
 				<div class="container row buttons headerButtons">
 					<button type="button" class="col-xs-6 btn btn-dark shineBtn iOS">
@@ -31,7 +31,7 @@
 		<div class="container-fluid row screenSection screenSection-leftArrow allSwatches">
 			<div class="col-md-8 col-md-push-4 textParent">
 				<div class="text">
-					<h2>See all your eyeshadow in one place.</h2>
+					<h2>See all your eyeshadows in one place.</h2>
 					<div class="minimized textSubsection active">
 						<h3>No more searching through endless palettes for that perfect shade.</h3>
 						<h3><a class="toggle">Show more...</a></h3>
@@ -39,10 +39,10 @@
 					<div class="expanded textSubsection">
 						<ul>
 							<li>Easily import a picture of your eyeshadow palettes and divide up the shades. GlamKit will do the rest for you, finding the color and finish of each shade.</li>
-							<li>Then, you can see all your eyeshadow in one scrollable list. You no longer have to open all your palettes as you decide on your look. It's basically like shopping your own collection.</li>
+							<li>Then, you can see all your eyeshadows in one scrollable list. You no longer have to open all your palettes as you create your look. It's like shopping your own collection.</li>
 							<li>Scrolling through the list is also a great way to get inspiration directly from your collection. It helps you get more creative with your looks.</li>
-							<li>Sort the shades however you want, such as by color, finish, or palette. You can also sort by your favorite shades, darkest shades, or lightest shades. It's makes it much easier to find the shade you're looking for.</li>
-							<li>No more forgetting shades. It helps you not use the same few palettes over and over because you're not planning based on palettes. You might just find your new favorite shade.</li>
+							<li>Sort the shades however you want, such as by color, finish, or palette. You can also sort by your favorite shades, darkest shades, or lightest shades. It's makes it much easier to find the perfect shade you're looking for.</li>
+							<li>No more forgetting shades or using the same few palettes when you have so many palettes gathering dust. You might just find your new favorite shade.</li>
 						</ul>
 						<p><a class="toggle">Show less...</a></p>
 					</div>
@@ -118,10 +118,11 @@
 					</div>
 					<div class="expanded textSubsection">
 						<ul>
-							<li>Simply double click on any shade you want to add to Today's Look. You can also save it to recreate another day.</li>
+							<li>Simply double click on any shade you want to add to Today's Look. You can also save that stunning look to recreate another day.</li>
 							<li>You can name your looks to make them easier to remember and recreate.</li>
 							<li>Doing your makeup will be quicker because you've already saved plenty of looks.</li>
 							<li>You can now plan your makeup anytime, even when you're not home.</li>
+							<li>It makes packing your travel bag faster and travelling easier. You no longer have to worry about leaving an important palette at home.</li>
 						</ul>
 						<p><a class="toggle">Show less...</a></p>
 					</div>
@@ -167,7 +168,7 @@
 					</div>
 					<div class="expanded textSubsection">
 						<ul>
-							<li>If you're shopping, you can just upload a picture of a palette you're considering. GlamKit will show you all the similar shades in your collection. It's great way to save some money and avoid buying an almost identical shade for the hundredth time.</li>
+							<li>If you're shopping, you can just upload a picture of a palette you're considering. GlamKit will show you all the similar shades in your collection. It's a great way to save some money and avoid buying an almost identical shade for the hundredth time.</li>
 							<li>If you're trying to recreate a look that you saw on Instagram or Youtube, just upload a picture of a palette that the original artist used. You can easily find dupes in your collection. It saves you time because you no longer have to spend time comparing swatches or Googling dupes that you might not even own.</li>
 						</ul>
 						<p><a class="toggle">Show less...</a></p>
