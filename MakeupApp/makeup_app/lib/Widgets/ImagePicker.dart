@@ -15,6 +15,7 @@ class ImagePicker {
   static bool isOpen = false;
 
   static Future<void> open(BuildContext context) {
+    prevImg = img;
     isOpen = true;
     _context = context;
     return globalWidgets.openDialog(

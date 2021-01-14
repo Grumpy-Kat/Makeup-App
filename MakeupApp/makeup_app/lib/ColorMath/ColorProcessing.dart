@@ -19,7 +19,9 @@ Future<Image> loadImg(String path) async {
   File f = File(path);
   Uint8List bytes = await f.readAsBytes();
   ByteData data = ByteData.view(bytes.buffer);
-  return decodeImage(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  Image img = decodeImage(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  //return img;
+  return bakeOrientation(img);
 }
 
 RGBColor avgColor(Image img) {

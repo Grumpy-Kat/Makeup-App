@@ -33,21 +33,23 @@ class PaletteDividerState extends State<PaletteDivider> {
   static const double orgPadding = 25;
   static const double maxPadding = 10;
 
+  static const double minSize = 10;
+
   GlobalKey _imgKey = GlobalKey();
   GlobalKey _borderKey = GlobalKey();
   List<GlobalKey> _borderKeys = [];
 
-  Size imgSize;
-  Future<Size> actualImg;
+  Size _imgSize;
+  Future<Size> _actualImg;
 
-  int numCols = 1;
-  int numRows = 1;
+  static int _numCols = 1;
+  static int _numRows = 1;
 
-  TextEditingController colsController;
-  TextEditingController rowsController;
+  TextEditingController _colsController;
+  TextEditingController _rowsController;
 
-  List<double> borders = [orgBorders, orgBorders, orgBorders, orgBorders];
-  List<double> padding = [orgPadding, orgPadding];
+  static List<double> _borders = [orgBorders, orgBorders, orgBorders, orgBorders];
+  static List<double> _padding = [orgPadding, orgPadding];
 
   int _draggingCorner = 0;
 
@@ -56,17 +58,27 @@ class PaletteDividerState extends State<PaletteDivider> {
   @override
   void initState() {
     super.initState();
-    ImagePicker.img = null;
-    ImagePicker.error = '';
-    actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
-    colsController = TextEditingController(text: numCols.toString());
-    rowsController = TextEditingController(text: numRows.toString());
+    _actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
+    _colsController = TextEditingController(text: _numCols.toString());
+    _rowsController = TextEditingController(text: _numRows.toString());
+  }
+
+  static void reset({ bool includeImg = true }) {
+    if(includeImg) {
+      ImagePicker.img = null;
+      ImagePicker.error = '';
+
+    }
+    _numCols = 1;
+    _numRows = 1;
+    _borders = [orgBorders, orgBorders, orgBorders, orgBorders];
+    _padding = [orgPadding, orgPadding];
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: actualImg,
+      future: _actualImg,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         //determine properties
         bool showImg = false;
@@ -74,25 +86,26 @@ class PaletteDividerState extends State<PaletteDivider> {
         Size screenSize = MediaQuery.of(context).size;
         Size maxSize = Size(screenSize.width * 0.9, (screenSize.height * 0.5) - topPadding);
         Size actualImg = Size(100, 100);
-        imgSize = Size(100, 100);
+        _imgSize = Size(100, 100);
         if(snapshot.connectionState == ConnectionState.done && ImagePicker.img != null) {
+        //if(ImagePicker.img != null) {
           showImg = true;
           if(globals.debug) {
             actualImg = Size(355, 355);
           } else {
             actualImg = snapshot.data;
           }
-          imgSize = ImagePicker.getScaledImgSize(maxSize, actualImg);
+          _imgSize = ImagePicker.getScaledImgSize(maxSize, actualImg);
         }
-        double width = imgSize.width;
+        double width = _imgSize.width;
+        double height = _imgSize.height;
         //print('$showImg ${snapshot.connectionState} $actualImg $imgSize $borders $numCols');
-        double boxWidth = (width - (borders[0] + borders[2])) / numCols;
-        double height = imgSize.height;
-        double boxHeight = (height - (borders[1] + borders[3])) / numRows;
+        double boxWidth = _getBoxWidth();
+        double boxHeight = _getBoxHeight();
         //fill borderKeys
         _borderKeys.clear();
-        for(int i = 0; i < numCols; i++) {
-          for(int j = 0; j < numRows; j++) {
+        for(int i = 0; i < _numCols; i++) {
+          for(int j = 0; j < _numRows; j++) {
             _borderKeys.add(GlobalKey());
           }
         }
@@ -124,8 +137,8 @@ class PaletteDividerState extends State<PaletteDivider> {
                     showImg,
                     child: Row(
                       children: <Widget>[
-                        getTextField(screenSize, getString('paletteDivider_columns'), colsController, (String val) { setState(() { numCols = _toInt(val); }); }),
-                        getTextField(screenSize, getString('paletteDivider_rows'), rowsController, (String val) { setState(() { numRows = _toInt(val); }); })
+                        getTextField(screenSize, getString('paletteDivider_columns'), _colsController, (String val) { setState(() { _setDimensions(_toInt(val), _numRows); }); }),
+                        getTextField(screenSize, getString('paletteDivider_rows'), _rowsController, (String val) { setState(() { _setDimensions(_numCols,  _toInt(val)); }); })
                       ],
                     ),
                   ),
@@ -207,19 +220,16 @@ class PaletteDividerState extends State<PaletteDivider> {
             (val) {
               setState(() {
                 if(ImagePicker.prevImg != ImagePicker.img) {
-                  this.actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
-                  this.numCols = 1;
-                  this.colsController.value = TextEditingValue(
-                    text: numCols.toString(),
-                    selection: this.colsController.selection,
+                  reset(includeImg: false);
+                  this._actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
+                  this._colsController.value = TextEditingValue(
+                    text: _numCols.toString(),
+                    selection: this._colsController.selection,
                   );
-                  this.numRows = 1;
-                  this.rowsController.value = TextEditingValue(
-                    text: numRows.toString(),
-                    selection: this.rowsController.selection,
+                  this._rowsController.value = TextEditingValue(
+                    text: _numRows.toString(),
+                    selection: this._rowsController.selection,
                   );
-                  this.borders = [orgBorders, orgBorders, orgBorders, orgBorders];
-                  this.padding = [orgPadding, orgPadding];
                 }
               });
             }
@@ -261,8 +271,8 @@ class PaletteDividerState extends State<PaletteDivider> {
         child: Image.asset(
           'imgs/test0.jpg',
           key: _imgKey,
-          width: imgSize.width,
-          height: imgSize.height,
+          width: _imgSize.width,
+          height: _imgSize.height,
         ),
       );
     }
@@ -272,8 +282,8 @@ class PaletteDividerState extends State<PaletteDivider> {
       child: Image.file(
         (ImagePicker.img == null ? File('imgs/finish_matte.png') : ImagePicker.img),
         key: _imgKey,
-        width: imgSize.width,
-        height: imgSize.height,
+        width: _imgSize.width,
+        height: _imgSize.height,
       ),
     );
   }
@@ -290,7 +300,7 @@ class PaletteDividerState extends State<PaletteDivider> {
           height: height,
           borderWidth: 3,
           borderColor: Colors.black,
-          padding: EdgeInsets.fromLTRB(borders[0], borders[1], borders[2], borders[3]),
+          padding: EdgeInsets.fromLTRB(_borders[0], _borders[1], _borders[2], _borders[3]),
         ),
       ),
     );
@@ -301,26 +311,53 @@ class PaletteDividerState extends State<PaletteDivider> {
       alignment: Alignment(0, 0.4),
       child: Stack(
         children: [
-          for(int i = 0; i < numCols; i++) for(int j = 0; j < numRows; j++) GestureDetector(
-            onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * numCols + i].currentWidget); },
+          for(int i = 0; i < _numCols; i++) for(int j = 0; j < _numRows; j++) GestureDetector(
+            onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * _numCols + i].currentWidget); },
             child: BorderBox(
-              key: _borderKeys[j * numCols + i],
+              key: _borderKeys[j * _numCols + i],
               width: boxWidth,
               height: boxHeight,
               borderWidth: 2,
               borderColor: Colors.black,
               offset: EdgeInsets.fromLTRB(
-                (i * boxWidth) + borders[0],
-                (j * boxHeight) + borders[1],
-                width - ((i + 1) * boxWidth) - borders[0],
-                height - ((j + 1) * boxHeight) - borders[1],
+                (i * boxWidth) + _borders[0],
+                (j * boxHeight) + _borders[1],
+                width - ((i + 1) * boxWidth) - _borders[0],
+                height - ((j + 1) * boxHeight) - _borders[1],
               ),
-              padding: EdgeInsets.fromLTRB(padding[0], padding[1], padding[0], padding[1]),
+              padding: EdgeInsets.fromLTRB(_padding[0], _padding[1], _padding[0], _padding[1]),
             ),
           ),
         ],
       ),
     );
+  }
+
+  double _getBoxWidth() {
+    return (_imgSize.width - (_borders[0] + _borders[2])) / _numCols;
+  }
+
+  double _getBoxHeight() {
+    return (_imgSize.height - (_borders[1] + _borders[3])) / _numRows;
+  }
+
+  void _setDimensions(int cols, int rows) {
+    _numCols = cols;
+    _numRows = rows;
+    double boxWidth = _getBoxWidth();
+    double boxHeight = _getBoxHeight();
+    double innerWidth = boxWidth - (_padding[0] * 2);
+    if(innerWidth < minSize) {
+        double diff = minSize - innerWidth;
+        _padding[0] -= diff / 2;
+        _padding[0] = max(_padding[0], minPadding);
+    }
+    double innerHeight = boxHeight - (_padding[1] * 2);
+    if(innerHeight < minSize) {
+      double diff = minSize - innerHeight;
+      _padding[1] -= diff / 2;
+      _padding[1] = max(_padding[1], minPadding);
+    }
   }
 
   void _getDraggingCorner(DragUpdateDetails drag, BorderBox border) {
@@ -343,20 +380,20 @@ class PaletteDividerState extends State<PaletteDivider> {
     _getDraggingCorner(drag, border);
     switch(_draggingCorner) {
       case 0:
-        borders[2] -= drag.delta.dx;
-        borders[3] -= drag.delta.dy;
+        _borders[2] -= drag.delta.dx;
+        _borders[3] -= drag.delta.dy;
         break;
       case 1:
-        borders[2] -= drag.delta.dx;
-        borders[1] += drag.delta.dy;
+        _borders[2] -= drag.delta.dx;
+        _borders[1] += drag.delta.dy;
         break;
       case 2:
-        borders[0] += drag.delta.dx;
-        borders[3] -= drag.delta.dy;
+        _borders[0] += drag.delta.dx;
+        _borders[3] -= drag.delta.dy;
         break;
       case 3:
-        borders[0] += drag.delta.dx;
-        borders[1] += drag.delta.dy;
+        _borders[0] += drag.delta.dx;
+        _borders[1] += drag.delta.dy;
         break;
     }
     _update();
@@ -366,20 +403,20 @@ class PaletteDividerState extends State<PaletteDivider> {
     _getDraggingCorner(drag, border);
     switch(_draggingCorner) {
       case 0:
-        padding[0] -= drag.delta.dx;
-        padding[1] -= drag.delta.dy;
+        _padding[0] -= drag.delta.dx;
+        _padding[1] -= drag.delta.dy;
         break;
       case 1:
-        padding[0] -= drag.delta.dx;
-        padding[1] += drag.delta.dy;
+        _padding[0] -= drag.delta.dx;
+        _padding[1] += drag.delta.dy;
         break;
       case 2:
-        padding[0] += drag.delta.dx;
-        padding[1] -= drag.delta.dy;
+        _padding[0] += drag.delta.dx;
+        _padding[1] -= drag.delta.dy;
         break;
       case 3:
-        padding[0] += drag.delta.dx;
-        padding[1] += drag.delta.dy;
+        _padding[0] += drag.delta.dx;
+        _padding[1] += drag.delta.dy;
         break;
     }
     _update();
@@ -391,36 +428,36 @@ class PaletteDividerState extends State<PaletteDivider> {
   }
 
   void _updateBorders() {
-    borders[0] = max(borders[0], minBorders);
-    borders[1] = max(borders[1], minBorders);
-    borders[2] = max(borders[2], minBorders);
-    borders[3] = max(borders[3], minBorders);
+    _borders[0] = max(_borders[0], minBorders);
+    _borders[1] = max(_borders[1], minBorders);
+    _borders[2] = max(_borders[2], minBorders);
+    _borders[3] = max(_borders[3], minBorders);
     BorderBox borderBox = _borderKey.currentWidget as BorderBox;
-    borderBox.padding = EdgeInsets.fromLTRB(borders[0], borders[1], borders[2], borders[3]);
+    borderBox.padding = EdgeInsets.fromLTRB(_borders[0], _borders[1], _borders[2], _borders[3]);
     (_borderKey.currentState as BorderBoxState).update();
   }
 
   void _updatePadding() {
-    double width = imgSize.width;
-    double boxWidth = (width - (borders[0] + borders[2])) / numCols;
-    double height = imgSize.height;
-    double boxHeight = (height - (borders[1] + borders[3])) / numRows;
+    double width = _imgSize.width;
+    double height = _imgSize.height;
+    double boxWidth = _getBoxWidth();
+    double boxHeight = _getBoxHeight();
     double maxX = (boxWidth - maxPadding) / 2;
     double maxY = (boxHeight - maxPadding) / 2;
-    padding = [max(min(padding[0], maxX), minPadding), max(min(padding[1], maxY), minPadding)];
-    for(int i = 0; i < numCols; i++) {
-      for(int j = 0; j < numRows; j++) {
-        BorderBox subBorderBox = (_borderKeys[j * numCols + i].currentWidget as BorderBox);
+    _padding = [max(min(_padding[0], maxX), minPadding), max(min(_padding[1], maxY), minPadding)];
+    for(int i = 0; i < _numCols; i++) {
+      for(int j = 0; j < _numRows; j++) {
+        BorderBox subBorderBox = (_borderKeys[j * _numCols + i].currentWidget as BorderBox);
         subBorderBox.width = boxWidth;
         subBorderBox.height = boxHeight;
         subBorderBox.offset = EdgeInsets.fromLTRB(
-          (i * boxWidth) + borders[0],
-          (j * boxHeight) + borders[1],
-          width - ((i + 1) * boxWidth) - borders[0],
-          height - ((j + 1) * boxHeight) - borders[1],
+          (i * boxWidth) + _borders[0],
+          (j * boxHeight) + _borders[1],
+          width - ((i + 1) * boxWidth) - _borders[0],
+          height - ((j + 1) * boxHeight) - _borders[1],
         );
-        subBorderBox.padding = EdgeInsets.fromLTRB(padding[0], padding[1], padding[0], padding[1]);
-        (_borderKeys[j * numCols + i].currentState as BorderBoxState).update();
+        subBorderBox.padding = EdgeInsets.fromLTRB(_padding[0], _padding[1], _padding[0], _padding[1]);
+        (_borderKeys[j * _numCols + i].currentState as BorderBoxState).update();
       }
     }
   }
@@ -443,22 +480,22 @@ class PaletteDividerState extends State<PaletteDivider> {
       img = await loadImg(ImagePicker.img.path);
       actualImg = await ImagePicker.getActualImgSize(ImagePicker.img);
     }
-    double imgScale = imgSize.width / actualImg.width;
-    double width = imgSize.width - (borders[0] + borders[2]);
-    double boxWidth = width / numCols / imgScale;
-    double height = imgSize.height - (borders[1] + borders[3]);
-    double boxHeight = height / numRows / imgScale;
-    List<double> scaledBorders = [borders[0] / imgScale, borders[1] / imgScale, borders[2] / imgScale, borders[3] / imgScale];
-    List<double> scaledPadding = [padding[0] / imgScale, padding[1] / imgScale];
-    for(int j = 0; j < numRows; j++) {
+    double imgScale = _imgSize.width / actualImg.width;
+    double boxWidth = _getBoxWidth();
+    double scaledBoxWidth = boxWidth / imgScale;
+    double boxHeight = _getBoxHeight();
+    double scaledBoxHeight = boxHeight / imgScale;
+    List<double> scaledBorders = [_borders[0] / imgScale, _borders[1] / imgScale, _borders[2] / imgScale, _borders[3] / imgScale];
+    List<double> scaledPadding = [_padding[0] / imgScale, _padding[1] / imgScale];
+    for(int j = 0; j < _numRows; j++) {
       //for(int i = numCols - 1; i >= 0; i--) {
-      //I'm constantly changing between the two, they sometimes look wrong, is not consistent?
-      for(int i = 0; i < numCols; i++) {
+      //I'm constantly changing between the two, they sometimes look wrong, is not consistent? Try printing cropped.exif.orientation
+      for(int i = 0; i < _numCols; i++) {
         //get dimensions
-        int x = (scaledBorders[0] + (boxWidth * i) + scaledPadding[0]).floor();
-        int y = (scaledBorders[1] + (boxHeight * j) + scaledPadding[1]).floor();
-        int w = (boxWidth - (scaledPadding[0] * 2)).floor();
-        int h = (boxHeight - (scaledPadding[1] * 2)).floor();
+        int x = (scaledBorders[0] + (scaledBoxWidth * i) + scaledPadding[0]).floor();
+        int y = (scaledBorders[1] + (scaledBoxHeight * j) + scaledPadding[1]).floor();
+        int w = (scaledBoxWidth - (scaledPadding[0] * 2)).floor();
+        int h = (scaledBoxHeight - (scaledPadding[1] * 2)).floor();
         //crop image
         image.Image cropped;
         if(img.width == actualImg.width) {
@@ -483,10 +520,10 @@ class PaletteDividerState extends State<PaletteDivider> {
         String shade = '';
         switch(globals.autoShadeNameMode) {
           case globals.AutoShadeNameMode.ColLetters:
-            shade = '${j + 1}${letters[(numCols - i - 1) % letters.length]}';
+            shade = '${j + 1}${letters[(_numCols - i - 1) % letters.length]}';
             break;
           case globals.AutoShadeNameMode.RowLetters:
-            shade = '${letters[(numRows - j - 1) % letters.length]}${i + 1}';
+            shade = '${letters[(_numRows - j - 1) % letters.length]}${i + 1}';
             break;
           default:
             shade = '';

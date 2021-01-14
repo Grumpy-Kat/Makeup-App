@@ -35,6 +35,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   @override
   void initState() {
     super.initState();
+    PaletteDividerState.reset();
     for(int i = _swatches.length - 1; i >= 0; i--) {
       Swatch swatch = IO.get(_swatches[i]);
       if(swatch == null) {
@@ -396,14 +397,12 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
 
   void onCheckButton() {
     //return to AllSwatchesScreen
-    setState(() {
-      navigation.pushReplacement(
-        context,
-        Offset(-1, 0),
-        routes.ScreenRoutes.AllSwatchesScreen,
-        routes.routes['/allSwatchesScreen'](context),
-      );
-    });
+    navigation.pushReplacement(
+      context,
+      Offset(-1, 0),
+      routes.ScreenRoutes.AllSwatchesScreen,
+      routes.routes['/allSwatchesScreen'](context),
+    );
   }
 
   static void reset() {

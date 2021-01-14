@@ -71,15 +71,13 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             icon: Icon(Icons.crop, size: 20, color: theme.iconTextColor),
             label: Text('${getString('addPalette_paletteDivider')}', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
             onPressed: () {
-              setState(() {
-                AddPaletteDividerScreenState.reset();
-                navigation.pushReplacement(
-                  context,
-                  Offset(1, 0),
-                  routes.ScreenRoutes.AddPaletteDividerScreen,
-                  routes.routes['/addPaletteDividerScreen'](context),
-                );
-              });
+            AddPaletteDividerScreenState.reset();
+              navigation.pushReplacement(
+                context,
+                Offset(1, 0),
+                routes.ScreenRoutes.AddPaletteDividerScreen,
+                routes.routes['/addPaletteDividerScreen'](context),
+              );
             },
           ),
           //sets mode to custom

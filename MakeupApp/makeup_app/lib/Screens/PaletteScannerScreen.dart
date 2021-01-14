@@ -25,6 +25,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   @override
   void initState() {
     super.initState();
+    PaletteDividerState.reset();
     //creates future, mostly to not make something null
     _swatchesFuture = _addSwatches();
     //set mode to palette divider
@@ -75,6 +76,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                 onPressed: () {
                   setState(
                     () {
+                      PaletteDividerState.reset();
                       _openPaletteDivider = true;
                     }
                   );
