@@ -488,9 +488,9 @@ class PaletteDividerState extends State<PaletteDivider> {
     List<double> scaledBorders = [_borders[0] / imgScale, _borders[1] / imgScale, _borders[2] / imgScale, _borders[3] / imgScale];
     List<double> scaledPadding = [_padding[0] / imgScale, _padding[1] / imgScale];
     for(int j = 0; j < _numRows; j++) {
-      //for(int i = numCols - 1; i >= 0; i--) {
-      //I'm constantly changing between the two, they sometimes look wrong, is not consistent? Try printing cropped.exif.orientation
-      for(int i = 0; i < _numCols; i++) {
+      for(int i = _numCols - 1; i >= 0; i--) {
+      //TODO: I'm constantly changing between the two, they sometimes look wrong, is not consistent? Try printing cropped.exif.orientation
+      //for(int i = 0; i < _numCols; i++) {
         //get dimensions
         int x = (scaledBorders[0] + (scaledBoxWidth * i) + scaledPadding[0]).floor();
         int y = (scaledBorders[1] + (scaledBoxHeight * j) + scaledPadding[1]).floor();
