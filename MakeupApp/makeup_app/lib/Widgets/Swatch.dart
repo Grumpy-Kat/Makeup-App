@@ -18,7 +18,7 @@ class Swatch {
   int rating = 5;
   List<String> tags = [];
 
-  Swatch({ @required this.color, @required this.finish, this.brand = '', this.palette = '', this.id = -1, this.shade = '', this.weight = 0.0, this.price = 0.0, this.rating = 5, this.tags});
+  Swatch({ @required this.color, @required this.finish, this.brand = '', this.palette = '', this.id = -1, this.shade = '', this.weight = 0.0, this.price = 0.0, this.rating = 5, this.tags });
 
   int compareTo(Swatch other, List<double> Function(Swatch) comparator) {
     List<double> thisValues = comparator(this);
@@ -47,7 +47,6 @@ class Swatch {
 
   @override
   int get hashCode => super.hashCode;
-
 }
 
 class SwatchIcon extends StatelessWidget {
@@ -71,16 +70,24 @@ class SwatchIcon extends StatelessWidget {
   final OnSwatchAction onDoubleTap;
 
   //assumes there is no id (probably editing swatch)
-  SwatchIcon.swatch(this.swatch, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.id  = -1;
+  SwatchIcon.swatch(this.swatch, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.id  = swatch.id;
 
   SwatchIcon.id(this.id, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.swatch = IO.get(id), super(key: GlobalKey(debugLabel: id.toString()));
 
   @override
   Widget build(BuildContext context) {
-    List<double> color = swatch.color.getValues();
+    List<double> color;
+    String finish;
+    if(swatch == null) {
+      color = [0.5, 0.5, 0.5];
+      finish = 'finish_matte';
+    } else {
+      color =  swatch.color.getValues();
+      finish = swatch.finish.toLowerCase();
+    }
     final Widget swatchImg = Image(
       key: childKey,
-      image: AssetImage('imgs/${swatch.finish.toLowerCase()}.png'),
+      image: AssetImage('imgs/$finish.png'),
       colorBlendMode: BlendMode.modulate,
       color: Color.fromRGBO((color[0] * 255).round(), (color[1] * 255).round(), (color[2] * 255).round(), 1),
     );
@@ -104,7 +111,7 @@ class SwatchIcon extends StatelessWidget {
                   color: theme.primaryColor,
                 ),
                 onPressed: () {
-                  onDelete(swatch.id);
+                  onDelete(id);
                 },
               ),
             ),
@@ -129,7 +136,7 @@ class SwatchIcon extends StatelessWidget {
                   color: theme.primaryColor,
                 ),
                 onPressed: () {
-                  onDelete(swatch.id);
+                  onDelete(id);
                 },
               ),
             ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide HSVColor;
-import '../Screens/Screen.dart';
 import '../Widgets/ColorPicker.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/NoScreenSwipe.dart';
@@ -10,6 +9,7 @@ import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../allSwatchesIO.dart' as IO;
 import '../localizationIO.dart';
+import 'Screen.dart';
 
 class ColorWheelScreen extends StatefulWidget {
   @override

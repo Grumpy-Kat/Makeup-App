@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../ColorMath/ColorObjects.dart';
-import '../Screens/Screen.dart';
 import '../Widgets/Swatch.dart';
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
@@ -8,6 +7,7 @@ import '../navigation.dart' as navigation;
 import '../allSwatchesIO.dart' as IO;
 import '../globalWidgets.dart' as globalWidgets;
 import '../localizationIO.dart';
+import 'Screen.dart';
 
 class AddCustomPaletteScreen extends StatefulWidget {
   @override

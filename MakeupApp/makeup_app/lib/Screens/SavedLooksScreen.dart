@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Widgets/Look.dart';
 import '../Widgets/MultipleSwatchList.dart';
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
@@ -16,9 +17,7 @@ class SavedLooksScreen extends StatefulWidget {
 }
 
 class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
-  List<int> _ids = [];
-  List<String> _labels = [];
-  List<List<int>> _swatches = [];
+  List<Look> _looks = [];
   Future<Map<Text, List<int>>> _swatchesFuture;
 
   @override
@@ -30,19 +29,11 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
 
   Future<Map<Text, List<int>>> _addSwatches() async {
     //gets all saved looks
-    Map<String, List<int>> map = await IO.loadFormatted();
-    _labels = map.keys.toList();
-    _swatches = map.values.toList();
+    _looks = (await IO.loadFormatted()).values.toList();
     Map<Text, List<int>> returnMap = {};
-    for(int i = 0; i < _labels.length; i++) {
-      //separate id and label
-      String label = _labels[i];
-      List<String> labelSplit = label.split('|');
-      _ids.add(int.parse(labelSplit[0]));
-      label = label.substring(labelSplit[0].length + 1);
+    for(int i = 0; i < _looks.length; i++) {
       //create text for label and add saved look list
-      returnMap[Text(label, textAlign: TextAlign.left, style: theme.primaryTextBold)] = _swatches[i];
-      _labels[i] = label;
+      returnMap[Text(_looks[i].name, textAlign: TextAlign.left, style: theme.primaryTextBold)] = _looks[i].swatches;
     }
     //reload for sort
     setState(() {});
@@ -58,12 +49,16 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
       //scroll view to show all look names as labels and looks as horizontal bodies
       body: MultipleSwatchList(
         addSwatches: _swatchesFuture,
-        updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
+        updateSwatches: (List<List<int>> swatches) {
+          for(int i = 0; i < swatches.length; i++) {
+            _looks[i].swatches = swatches[i];
+          }
+        },
         rowCount: 1,
         showNoColorsFound: false,
         showPlus: false,
         defaultSort: globals.sort,
-        sort: globals.defaultSortOptions(allSwatchesIO.getMultiple(_swatches), step: 16),
+        sort: globals.defaultSortOptions(allSwatchesIO.getMultiple(getAllSwatches()), step: 16),
         onTap: _onTap,
         onDoubleTap: _onTap,
         overrideSwatchOnTap: true,
@@ -80,7 +75,15 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
       context,
       Offset(1, 0),
       routes.ScreenRoutes.SavedLookScreen,
-      SavedLookScreen(id: _ids[i], name: _labels[i], swatches: _swatches[i]),
+      SavedLookScreen(look: _looks[i]),
     );
+  }
+
+  List<List<int>> getAllSwatches() {
+    List<List<int>> allSwatches = [];
+    for(int i = 0; i < _looks.length; i++) {
+      allSwatches.add(_looks[i].swatches);
+    }
+    return allSwatches;
   }
 }

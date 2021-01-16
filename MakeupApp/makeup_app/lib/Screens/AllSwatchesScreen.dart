@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Screens/Screen.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
@@ -7,6 +6,7 @@ import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../allSwatchesIO.dart' as IO;
 import '../localizationIO.dart';
+import 'Screen.dart';
 
 class AllSwatchesScreen extends StatefulWidget {
   @override

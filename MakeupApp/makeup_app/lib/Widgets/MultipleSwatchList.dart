@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import '../Widgets/Swatch.dart';
 import '../Widgets/SwatchList.dart';
+import '../theme.dart' as theme;
 import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
 
@@ -117,6 +118,30 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
                     ),
                   );
                 }
+              } else {
+                column.add(
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 15),
+                      height: 50,
+                    ),
+                  ),
+                );
+                column.add(
+                  Container(
+                    height: 80,
+                    child: buildSwatchList(
+                      context,
+                      snapshot,
+                      [],
+                      axis: Axis.horizontal,
+                      crossAxisCount: widget.rowCount,
+                      padding: 20,
+                      spacing: 15,
+                    ),
+                  ),
+                );
               }
               return Column(
                 children: column,

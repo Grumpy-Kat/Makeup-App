@@ -45,7 +45,7 @@ void setRoutes() {
     '/addPaletteDividerScreen': (context) => AddPaletteDividerScreen(),
     '/addCustomPaletteScreen': (context) => AddCustomPaletteScreen(),
     '/todayLookScreen': (context) => TodayLookScreen(),
-    '/savedLookScreen': (context) => SavedLookScreen(id: -1, name: '', swatches: []),
+    '/savedLookScreen': (context) => SavedLookScreen(look: null),
     '/swatchScreen': (context) => SwatchScreen(swatch: null),
   };
   enumRoutes = {

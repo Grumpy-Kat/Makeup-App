@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Screens/Screen.dart';
 import '../Widgets/MultipleSwatchList.dart';
 import '../Widgets/PaletteDivider.dart';
 import '../Widgets/Swatch.dart';
@@ -9,6 +8,7 @@ import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../allSwatchesIO.dart' as IO;
 import '../localizationIO.dart';
+import 'Screen.dart';
 
 class PaletteScannerScreen extends StatefulWidget {
   @override

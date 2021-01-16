@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../Screens/Screen.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/PaletteDivider.dart';
 import '../globals.dart' as globals;
@@ -11,6 +10,7 @@ import '../navigation.dart' as navigation;
 import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
 import '../localizationIO.dart';
+import 'Screen.dart';
 import 'AddPaletteScreen.dart';
 
 class AddPaletteDividerScreen extends StatefulWidget {

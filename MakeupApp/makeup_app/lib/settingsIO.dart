@@ -21,6 +21,10 @@ void clear() async {
 void save() async {
   File file = await getSaveFile();
   RandomAccessFile f = await file.open(mode: FileMode.writeOnly);
+  //user id
+  await f.writeString('${globals.userID}\n');
+  //has done initial tutorial
+  await f.writeString('${globals.hasDoneTutorial}\n');
   //language
   await f.writeString('${globals.language}\n');
   //sort
@@ -43,36 +47,34 @@ void save() async {
   await f.writeString('${globals.AutoShadeNameMode.values.indexOf(globals.autoShadeNameMode)}\n');
   //ColorWheelScreen distance
   await f.writeString('${globals.colorWheelDistance}\n');
-  //has done initial tutorial
-  await f.writeString('${globals.hasDoneTutorial}\n');
 }
 
 Future<bool> load() async {
   File file = await getSaveFile();
   List<String> lines = (await file.readAsString()).split('\n');
   if(lines.length > 1) {
+    //user id
+    globals.userID = lines[0];
+    //has done initial tutorial
+    globals.hasDoneTutorial = (lines[1].toLowerCase() == 'true');
     //language
-    globals.language = lines[0];
+    globals.language = lines[2];
     //sort
-    globals.sort = lines[1];
+    globals.sort = lines[3];
     //tags
-    globals.tags = lines[2].split(';');
-    if(lines.length > 4) {
-      //brightness offset
-      globals.brightnessOffset = int.parse(lines[3]);
-      //red offset
-      globals.redOffset = int.parse(lines[4]);
-      //green offset
-      globals.greenOffset = int.parse(lines[5]);
-      //blue offset
-      globals.blueOffset = int.parse(lines[6]);
-      //auto shade name mode
-      globals.autoShadeNameMode = globals.AutoShadeNameMode.values[int.parse(lines[7])];
-      //ColorWheelScreen distance
-      globals.colorWheelDistance = double.parse(lines[8]);
-      //has done initial tutorial
-      globals.hasDoneTutorial = (lines[9].toLowerCase() == 'true');
-    }
+    globals.tags = lines[4].split(';');
+    //brightness offset
+    globals.brightnessOffset = int.parse(lines[5]);
+    //red offset
+    globals.redOffset = int.parse(lines[6]);
+    //green offset
+    globals.greenOffset = int.parse(lines[7]);
+    //blue offset
+    globals.blueOffset = int.parse(lines[8]);
+    //auto shade name mode
+    globals.autoShadeNameMode = globals.AutoShadeNameMode.values[int.parse(lines[9])];
+    //ColorWheelScreen distance
+    globals.colorWheelDistance = double.parse(lines[10]);
   } else {
     await save();
   }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "32233212199",
+    "project_id": "glamkit-11ee3",
+    "storage_bucket": "glamkit-11ee3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32233212199:android:fd126f896784431d9a0102",
+        "android_client_info": {
+          "package_name": "com.makeupapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32233212199-s0udv050i85ruu2dgit3j3nvj7j3l9l5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOaQ6_mrz0Q4hMPoXrRxQHUC2Ms_UMTx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32233212199-s0udv050i85ruu2dgit3j3nvj7j3l9l5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

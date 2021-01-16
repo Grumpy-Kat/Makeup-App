@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide HSVColor;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:math';
@@ -37,8 +38,9 @@ class GlamKitAppState extends State<GlamKitApp> {
     );
   }
 
-  void load() {
-    localizationIO.load();
+  void load() async {
+    await Firebase.initializeApp();
+    await localizationIO.load();
     //generateRainbow();
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
     //theme.isDarkTheme = true;
@@ -47,10 +49,12 @@ class GlamKitAppState extends State<GlamKitApp> {
     globals.currSwatches.init();
     globals.debug = !kReleaseMode;
     //globals.debug = false;
+    allSwatchesIO.init();
     savedLooksIO.init();
-    //clearSave();
-    //IO.clear();
-    IO.load().then((value) { setState(() { }); });
+    //await clearSave();
+    //await IO.clear();
+    await IO.load();
+    setState(() { });
   }
 
   void generateRainbow() async {
@@ -75,7 +79,7 @@ class GlamKitAppState extends State<GlamKitApp> {
     //allSwatchesIO
     allSwatchesIO.clear();
     //savedLooksIO
-    savedLooksIO.clearIds();
+    savedLooksIO.clearAll();
   }
 
   Widget _getHome() {

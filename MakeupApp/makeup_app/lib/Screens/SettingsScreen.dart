@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notification_permissions/notification_permissions.dart';
-import '../Screens/Screen.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
@@ -12,6 +11,7 @@ import '../settingsIO.dart' as settingsIO;
 import '../allSwatchesIO.dart' as allSwatchesIO;
 import '../savedLooksIO.dart' as savedLooksIO;
 import '../localizationIO.dart';
+import 'Screen.dart';
 
 enum Mode {
   Default,
@@ -1064,7 +1064,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   () async {
                     await settingsIO.clear();
                     await allSwatchesIO.clear();
-                    await savedLooksIO.clearIds();
+                    await savedLooksIO.clearAll();
                     globals.hasDoneTutorial = true;
                     globals.currSwatches.set([]);
                     navigation.pushReplacement(

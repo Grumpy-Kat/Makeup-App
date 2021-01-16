@@ -130,6 +130,14 @@ final String appName = 'GlamKit';
 final String appVersion = '0.4';
 bool debug = true;
 
+//user id, used for locating saved swatches and looks in Firestore
+String _userID = '';
+String get userID => _userID;
+set userID(String value) {
+  _userID = value;
+  IO.save();
+}
+
 //has done initial tutorial
 bool _hasDoneTutorial = false;
 bool get hasDoneTutorial => _hasDoneTutorial;

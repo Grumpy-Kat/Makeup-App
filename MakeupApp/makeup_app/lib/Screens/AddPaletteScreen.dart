@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../Screens/Screen.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../localizationIO.dart';
+import 'Screen.dart';
 import 'AddCustomPaletteScreen.dart';
 import 'AddPaletteDividerScreen.dart';
 

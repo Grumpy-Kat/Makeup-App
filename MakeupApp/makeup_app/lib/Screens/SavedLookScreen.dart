@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import '../Screens/LookScreen.dart';
+import '../Widgets/Look.dart';
 import '../globals.dart' as globals;
 import '../navigation.dart' as navigation;
 import '../savedLooksIO.dart' as IO;
 import '../localizationIO.dart';
+import 'LookScreen.dart';
 
 class SavedLookScreen extends StatefulWidget {
-  static int id;
-  static String name;
-  static List<int> swatches;
+  static String id;
+  static Look look;
 
-  SavedLookScreen({ int id, String name, List<int> swatches }) {
-    if(id == null || id == -1) {
+  SavedLookScreen({ Look look }) {
+    if(look == null || look.id == null || look.id == '') {
       //if returning to screen, without setting id, load updated swatches
       //most commonly occurs when going back from SwatchScreen
-      swatches = IO.swatches['$id|$name'];
+      look = IO.looks[id];
     } else {
-      //sets look info
-      SavedLookScreen.id = id;
-      SavedLookScreen.name = name;
-      SavedLookScreen.swatches = swatches;
+      //sets screen info
+      SavedLookScreen.id = look.id;
+      SavedLookScreen.look = look;
     }
   }
 
@@ -32,13 +31,12 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
   Widget build(BuildContext context) {
     //utilizes LookScreen for all functionality
     return LookScreen(
-      swatches: SavedLookScreen.swatches,
+      look: SavedLookScreen.look,
       updateSwatches: (List<int> swatches) {
         setState(() {
-          SavedLookScreen.swatches = swatches;
+          SavedLookScreen.look.swatches = swatches;
         });
       },
-      name: SavedLookScreen.name,
       helpText: '${getString('help_savedLook_0')}\n\n'
       '${getString('help_savedLook_1')}\n\n'
       '${getString('help_savedLook_2')}\n\n'
@@ -50,27 +48,22 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
         navigation.pop(context, false);
       },
       showClear: true,
-      onClearPressed: () {
-        setState(
-          () {
-            //clear swatches
-            SavedLookScreen.swatches = [];
-            //save empty swatch, which will not display in SavedLooksScreen, effectively deleting it
-            IO.save(SavedLookScreen.id, SavedLookScreen.name, SavedLookScreen.swatches);
-            //return to previous screen
-            navigation.pop(context, true);
-          }
-        );
+      onClearPressed: () async {
+        //clear swatches
+        SavedLookScreen.look.swatches = [];
+        await IO.clear(SavedLookScreen.look.id);
+        //return to previous screen
+        navigation.pop(context, true);
       },
       showAdd: true,
       onAddPressed: () {
         //adds all swatches of saved look to Today's Look
-        globals.currSwatches.addMany(SavedLookScreen.swatches);
+        globals.currSwatches.addMany(SavedLookScreen.look.swatches);
       },
       showEdit: true,
       onSavePressed: () {
         //save changes
-        IO.save(SavedLookScreen.id, SavedLookScreen.name, SavedLookScreen.swatches);
+        IO.save(SavedLookScreen.look);
       },
     );
   }

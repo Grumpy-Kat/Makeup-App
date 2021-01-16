@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import '../Widgets/SizedSafeArea.dart';
 import '../globals.dart' as globals;
@@ -25,6 +26,14 @@ class TutorialScreenState extends State<TutorialScreen> {
     super.initState();
     hasSetLanguage = globals.hasDoneTutorial;
     addHasLocalizationLoadedListener(() { setState(() {}); });
+    if(!globals.hasDoneTutorial) {
+      //create user
+      FirebaseFirestore.instance.collection('swatches').add({ 'data': '' }).then(
+        (value) {
+          globals.userID = value.id;
+        }
+      );
+    }
   }
 
   @override

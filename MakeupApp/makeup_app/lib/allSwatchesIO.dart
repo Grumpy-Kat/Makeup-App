@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart' show Widget;
-import 'package:string_validator/string_validator.dart';
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
 import 'Widgets/Swatch.dart';
@@ -16,23 +14,23 @@ List<OnVoidAction> onSaveChanged = [];
 bool hasSaveChanged = true;
 bool isLoading = true;
 
+CollectionReference _database;
+
+void init() {
+  _database = FirebaseFirestore.instance.collection('swatches');
+}
+
 void listenOnSaveChanged(OnVoidAction listener) {
   onSaveChanged.add(listener);
 }
 
-Future<File> getSaveFile() async {
-  final String path = await getLocalPath();
-  File file = File('$path/assets/save.txt');
-  if(!(await file.exists())) {
-    file = await file.create(recursive: true);
-  }
-  return file;
-}
-
 void clear() async {
   print('Clearing');
-  File file = await getSaveFile();
-  await file.delete();
+  await _database.doc(globals.userID).set(
+    {
+      'data': '',
+    }
+  );
   hasSaveChanged = true;
 }
 
@@ -154,12 +152,12 @@ void save(Map<int, String> info, { int tries = 0 }) async {
   String compressed = compress(string);
   try {
     base64.normalize(compressed);
-    //print('allSwatchesIO 0 ${isBase64(compressed)}');
-    File file = await getSaveFile();
-    RandomAccessFile f = await file.open(mode: FileMode.writeOnly);
-    await f.writeString(compressed);
+    await _database.doc(globals.userID).set(
+        {
+          'data': compressed,
+        }
+    );
     await loadFormatted(override: true, overrideInner: true);
-    //print('allSwatchesIO 1 ${isBase64(compressed)}');
     for(int i = 0; i < onSaveChanged.length; i++) {
       onSaveChanged[i]();
     }
@@ -176,8 +174,11 @@ void save(Map<int, String> info, { int tries = 0 }) async {
 Future<Map<int, String>> load({ bool override = false }) async {
   if(lines == null || hasSaveChanged || override) {
     isLoading = true;
-    File file = await getSaveFile();
-    List<String> fileLines = decompress(await file.readAsString()).split('\n');
+    DocumentSnapshot docSnapshot = await _database.doc(globals.userID).get();
+    List<String> fileLines = [];
+    if(docSnapshot != null) {
+      fileLines = decompress(docSnapshot.get('data') ?? '').split('\n');
+    }
     lines = {};
     for(int i = 0; i < fileLines.length; i++) {
       String line = fileLines[i];

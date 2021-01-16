@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Screens/Screen.dart';
+import '../Widgets/Look.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/SelectedSwatchPopup.dart';
 import '../theme.dart' as theme;
@@ -8,12 +8,12 @@ import '../globalWidgets.dart' as globalWidgets;
 import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
 import '../localizationIO.dart';
+import 'Screen.dart';
 
 class LookScreen extends StatefulWidget {
-  final List<int> swatches;
-  final OnSwatchListAction updateSwatches;
+  final Look look;
 
-  final String name;
+  final OnSwatchListAction updateSwatches;
 
   final String helpText;
 
@@ -32,7 +32,7 @@ class LookScreen extends StatefulWidget {
 
   final bool showEdit;
 
-  LookScreen({ @required this.swatches, @required this.updateSwatches, @required this.name, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true });
+  LookScreen({ @required this.look, @required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true });
 
   @override
   LookScreenState createState() => LookScreenState();
@@ -54,7 +54,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
 
   Future<List<int>> _addSwatches() async {
     //swatches are determined by the screen using it
-    _swatches = widget.swatches;
+    _swatches = widget.look.swatches;
     return _swatches;
   }
 
@@ -88,7 +88,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     }
     return buildComplete(
       context,
-      widget.name,
+      widget.look.name,
       10,
       leftBar: leftBar,
       rightBar: rightBar,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../Screens/LookScreen.dart';
+import '../Widgets/Look.dart';
 import '../navigation.dart' as navigation;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../savedLooksIO.dart' as IO;
 import '../localizationIO.dart';
+import 'LookScreen.dart';
 
 class TodayLookScreen extends StatefulWidget {
   @override
@@ -12,8 +13,7 @@ class TodayLookScreen extends StatefulWidget {
 }
 
 class TodayLookScreenState extends State<TodayLookScreen>  {
-  String lookName = '';
-  int lookId = -1;
+  Look look;
 
   bool hasSaved = false;
   int _listenerIndex = -1;
@@ -27,19 +27,20 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
       (swatch) => setState(() { }),
       () => setState(() { }),
     );
+    look = Look(id: '', name: getString('screen_todayLook'), swatches: globals.currSwatches.currSwatches);
   }
 
   @override
   Widget build(BuildContext context) {
+    look.swatches = globals.currSwatches.currSwatches;
     //utilizes LookScreen for all functionality
     return LookScreen(
-      swatches: globals.currSwatches.currSwatches,
+      look: look,
       updateSwatches: (List<int> swatches) {
         setState(() {
           globals.currSwatches.set(swatches);
         });
       },
-      name: getString('screen_todayLook'),
       helpText: '${getString('help_todayLook_0')}\n\n'
       '${getString('help_todayLook_1')}\n\n'
       '${getString('help_todayLook_2')}\n\n'
@@ -64,8 +65,8 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
           getString('save'),
           (String value) {
             setState(() {
-              lookName = value;
-              IO.save(lookId, lookName, globals.currSwatches.currSwatches).then((value) => lookId = value);
+              look.name = value;
+              IO.save(look).then((String value) => look.id = value);
               hasSaved = true;
             });
           }
