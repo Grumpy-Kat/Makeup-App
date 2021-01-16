@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import '../Widgets/Swatch.dart';
 import '../Widgets/SwatchList.dart';
-import '../theme.dart' as theme;
 import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
 

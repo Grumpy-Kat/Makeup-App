@@ -369,6 +369,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
     AddPaletteScreen.onEnter(
       context,
       (String brand, String palette, double weight, double price) {
+        globalWidgets.openLoadingDialog(context);
         //assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {
           Swatch swatch = swatches[i];
@@ -385,11 +386,11 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         }
         //saves swatches and adds them to final list to display
         IO.add(swatches).then((List<int> val) {
-          setState(() {
-            _swatches = val;
-            _addSwatchIcons();
-            _isUsingPaletteDivider = false;
-          });
+          _swatches = val;
+          _addSwatchIcons();
+          _isUsingPaletteDivider = false;
+          Navigator.pop(context);
+          setState(() { });
         });
       }
     );

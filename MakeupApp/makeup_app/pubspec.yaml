@@ -23,8 +23,9 @@ dependencies:
   flutter_test:
     sdk: flutter
   path_provider:
-  firebase_core: ^0.7.0
-  cloud_firestore: ^0.16.0
+  firebase_core: 
+  cloud_firestore:
+  firebase_crashlytics:
   cupertino_icons:
   image: ^2.1.4
   tflite: ^1.0.04

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:math';
@@ -40,6 +41,9 @@ class GlamKitAppState extends State<GlamKitApp> {
 
   void load() async {
     await Firebase.initializeApp();
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    //FirebaseCrashlytics.instance.crash();
     await localizationIO.load();
     //generateRainbow();
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
