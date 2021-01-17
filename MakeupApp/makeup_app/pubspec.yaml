@@ -17,22 +17,21 @@ environment:
   sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
-  flutter_launcher_icons: ^0.7.0
   flutter:
     sdk: flutter
   flutter_test:
     sdk: flutter
   path_provider:
-  firebase_core: 
-  cloud_firestore:
-  firebase_crashlytics:
-  cupertino_icons:
-  image: ^2.1.4
-  tflite: ^1.0.04
-  image_picker:
+  firebase_core: ^0.7.0
+  cloud_firestore: ^0.16.0
+  firebase_crashlytics: ^0.4.0+1
+  cupertino_icons: 
+  image: ^2.1.19
+  tflite: ^1.1.1
+  image_picker: ^0.6.7+21
   notification_permissions: ^0.4.8
-  permission_handler:
-  transformer_page_view:
+  permission_handler: ^5.0.1+1
+  transformer_page_view: ^0.1.6
   auto_size_text: ^2.1.0
   string_validator: ^0.1.4
 
