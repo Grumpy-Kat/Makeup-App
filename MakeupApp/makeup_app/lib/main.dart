@@ -51,8 +51,8 @@ class GlamKitAppState extends State<GlamKitApp> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     routes.setRoutes();
     globals.currSwatches.init();
-    globals.debug = !kReleaseMode;
-    //globals.debug = false;
+    //globals.debug = !kReleaseMode;
+    globals.debug = false;
     allSwatchesIO.init();
     savedLooksIO.init();
     //await clearSave();

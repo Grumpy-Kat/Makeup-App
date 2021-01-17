@@ -35,7 +35,7 @@ OR
 
 
 
-Issue with tflite/'vector file not found'/tflite header not found:
+Issue with tfLite/'vector file not found'/tflite header not found:
 https://pub.dev/packages/tflite
 1) Open Runner in XCode
 2) Go to Runner/Targets/Runner/Build Settings (All Combined)/Apple Clang - Language
@@ -44,7 +44,7 @@ https://pub.dev/packages/tflite
 
 
 
-Repitition in path and longer than filepath buffer size (circular dependency):
+Repition in path and longer than filepath buffer size (circular dependency):
 https://stackoverflow.com/questions/38853437/what-can-be-the-possible-cause-of-this-error-in-xcode-pbxcp-main-storyboardc-is
 1) Open Runner in XCode
 2) Go to Runner/Targets/Runner/Build Phases/Copy Bundle Resources
