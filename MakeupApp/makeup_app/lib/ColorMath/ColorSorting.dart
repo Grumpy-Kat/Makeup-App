@@ -41,7 +41,7 @@ Map<String, RGBColor> createColorWheel() {
     colorWheel['color_lightGreen'] = RGBColor(0.8, 1, 0.8);
     colorWheel['color_green'] = RGBColor(0.1, 0.9, 0.1);
     colorWheel['color_darkGreen'] = RGBColor(0, 0.2, 0);
-    colorWheel['color_pastelMint'] = RGBColor(0.95, 1, 0.95);
+    colorWheel['color_pastelMint'] = RGBColor(0.9, 1, 0.95);
     colorWheel['color_mint'] = RGBColor(0.8, 1, 0.9);
     colorWheel['color_aquamarine'] = RGBColor(0.2, 0.9, 0.5);
     colorWheel['color_darkAquamarine'] = RGBColor(0, 0.2, 0.1);

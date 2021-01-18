@@ -35,11 +35,12 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
 
   AnimationController _controller;
 
-  String _colorName;
-  String _finish;
-  String _brand;
-  String _palette;
-  String _shade;
+  bool _hasSetValues = false;
+  String _colorName = '';
+  String _finish = '';
+  String _brand = '';
+  String _palette = '';
+  String _shade = '';
 
   Size _size;
   Size _arrowSize;
@@ -53,16 +54,23 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     GestureBinding.instance.pointerRouter.addGlobalRoute(onPointerEvent);
-    _colorName = globalWidgets.toTitleCase(getString(getColorName(widget.swatch.color)));
-    _finish = globalWidgets.toTitleCase(getString(widget.swatch.finish));
-    _brand = globalWidgets.toTitleCase(widget.swatch.brand);
-    _palette = globalWidgets.toTitleCase(widget.swatch.palette);
-    _shade = globalWidgets.toTitleCase(widget.swatch.shade);
     _arrowSize = Size(10, 15);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 120),
     );
+    setValues();
+  }
+
+  void setValues() {
+    if(widget.swatch != null) {
+      _hasSetValues = true;
+      _colorName = globalWidgets.toTitleCase(getString(getColorName(widget.swatch.color)));
+      _finish = globalWidgets.toTitleCase(getString(widget.swatch.finish));
+      _brand = globalWidgets.toTitleCase(widget.swatch.brand);
+      _palette = globalWidgets.toTitleCase(widget.swatch.palette);
+      _shade = globalWidgets.toTitleCase(widget.swatch.shade);
+    }
   }
 
   @override
@@ -94,6 +102,9 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
   }
 
   void open() {
+    if(!_hasSetValues) {
+      setValues();
+    }
     RenderBox renderBox = _key.currentContext.findRenderObject();
     Offset pos = renderBox.localToGlobal(Offset.zero);
     RenderBox childRenderBox = _key.currentContext.findRenderObject();

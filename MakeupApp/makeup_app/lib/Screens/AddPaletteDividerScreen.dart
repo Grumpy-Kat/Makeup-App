@@ -22,7 +22,6 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   static bool _isUsingPaletteDivider = true;
 
   static List<int> _swatches = [];
-  static List<SwatchIcon> _swatchIcons = [];
 
   static List<double> _orgRed = [];
   static List<double> _orgGreen = [];
@@ -54,22 +53,6 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         _orgGreen[i] = swatch.color.clampValue(swatch.color.values['rgbG'] - (_greenOffset / 255.0) - (_brightnessOffset / 255.0));
         _orgBlue[i] = swatch.color.clampValue(swatch.color.values['rgbB'] - (_blueOffset / 255.0) - (_brightnessOffset / 255.0));
       }
-    }
-    _addSwatchIcons();
-  }
-
-  void _addSwatchIcons() {
-    _swatchIcons = [];
-    //create icon widgets for all swatch data
-    for(int i = 0; i < _swatches.length; i++) {
-      _swatchIcons.add(
-        SwatchIcon.id(
-          _swatches[i],
-          showInfoBox: true,
-          showCheck: false,
-          onDelete: null,
-        ),
-      );
     }
   }
 
@@ -190,15 +173,17 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               Map<int, Swatch> swatches = {};
               for(int i = 0; i < _swatches.length; i++) {
                 Swatch swatch = IO.get(_swatches[i]);
-                swatch.color.values['rgbR'] = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
-                swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
-                swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
-                swatches[_swatches[i]] = swatch;
+                if(swatch != null) {
+                  swatch.color.values['rgbR'] = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
+                  swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
+                  swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
+                  swatches[_swatches[i]] = swatch;
+                }
               }
+              globalWidgets.openLoadingDialog(context);
               await IO.editIds(swatches);
-              setState(() {
-                _addSwatchIcons();
-              });
+              Navigator.pop(context);
+              setState(() { });
             },
           ),
           //red offset field
@@ -215,13 +200,15 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               Map<int, Swatch> swatches = {};
               for(int i = 0; i < _swatches.length; i++) {
                 Swatch swatch = IO.get(_swatches[i]);
-                swatch.color.values['rgbR'] = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
-                swatches[_swatches[i]] = swatch;
+                if(swatch != null) {
+                  swatch.color.values['rgbR'] = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
+                  swatches[_swatches[i]] = swatch;
+                }
               }
+              globalWidgets.openLoadingDialog(context);
               await IO.editIds(swatches);
-              setState(() {
-                _addSwatchIcons();
-              });
+              Navigator.pop(context);
+              setState(() { });
             },
           ),
           //green offset field
@@ -238,13 +225,15 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               Map<int, Swatch> swatches = {};
               for(int i = 0; i < _swatches.length; i++) {
                 Swatch swatch = IO.get(_swatches[i]);
-                swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
-                swatches[_swatches[i]] = swatch;
+                if(swatch != null) {
+                  swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
+                  swatches[_swatches[i]] = swatch;
+                }
               }
+              globalWidgets.openLoadingDialog(context);
               await IO.editIds(swatches);
-              setState(() {
-                _addSwatchIcons();
-              });
+              Navigator.pop(context);
+              setState(() { });
             },
           ),
           //blue offset field
@@ -261,13 +250,15 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               Map<int, Swatch> swatches = {};
               for(int i = 0; i < _swatches.length; i++) {
                 Swatch swatch = IO.get(_swatches[i]);
-                swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
-                swatches[_swatches[i]] = swatch;
+                if(swatch != null) {
+                  swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
+                  swatches[_swatches[i]] = swatch;
+                }
               }
+              globalWidgets.openLoadingDialog(context);
               await IO.editIds(swatches);
-              setState(() {
-                _addSwatchIcons();
-              });
+              Navigator.pop(context);
+              setState(() { });
             }
           ),
           //scroll view to show all swatches
@@ -281,9 +272,14 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                 crossAxisSpacing: 30,
                 crossAxisCount: 4,
               ),
-              itemCount: _swatchIcons.length,
+              itemCount: _swatches.length,
               itemBuilder: (BuildContext context, int i) {
-                return _swatchIcons[i];
+                return SwatchIcon.id(
+                  _swatches[i],
+                  showInfoBox: true,
+                  showCheck: false,
+                  onDelete: null,
+                );
               },
             ),
           ),
@@ -387,7 +383,6 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         //saves swatches and adds them to final list to display
         IO.add(swatches).then((List<int> val) {
           _swatches = val;
-          _addSwatchIcons();
           _isUsingPaletteDivider = false;
           Navigator.pop(context);
           setState(() { });
@@ -410,7 +405,6 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
     //reset all modes and data
     _isUsingPaletteDivider = true;
     _swatches = [];
-    _swatchIcons = [];
     _orgRed = [];
     _orgGreen = [];
     _orgBlue = [];
