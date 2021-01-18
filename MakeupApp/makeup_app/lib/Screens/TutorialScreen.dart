@@ -51,7 +51,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                   child: Container(
                     color: theme.primaryColor,
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 3),
+                    padding: EdgeInsets.only(left: 25, right: 25, top: 3),
                     child: Text('${getString('screen_tutorial')}', style: theme.primaryTextBold),
                   ),
                 ),
@@ -62,7 +62,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                         alignment: Alignment.center,
                         child: Text(
                           '${getString('settings_default_language', defaultValue: 'Language')}',
@@ -72,7 +72,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                       ),
                       Container(
                         width: 170,
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                         alignment: Alignment.center,
                         child: DropdownButton<String>(
                           itemHeight: 60,
@@ -101,7 +101,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                         alignment: Alignment.center,
                         child: FlatButton(
                           color: theme.accentColor,
@@ -140,7 +140,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                 child: Container(
                   color: theme.primaryColor,
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 3),
+                  padding: EdgeInsets.only(left: 25, right: 25, top: 3),
                   child: Text('${getString('screen_tutorial')}', style: theme.primaryTextBold),
                 ),
               ),
@@ -258,7 +258,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen0() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen0_0')}\n\n'
         '${getString('tutorial_screen0_1')}',
@@ -269,7 +269,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen1() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen1_0')}\n\n'
         '${getString('tutorial_screen1_1')}',
@@ -280,7 +280,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen2() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen2_0')}\n\n'
         '${getString('tutorial_screen2_1')}\n\n'
@@ -292,7 +292,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen3() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen3_0')}\n\n'
         '${getString('tutorial_screen3_1')}\n\n'
@@ -305,7 +305,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen4() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen4_0')}\n\n'
         '${getString('tutorial_screen4_1')}',

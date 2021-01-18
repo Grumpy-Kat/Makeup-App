@@ -13,7 +13,7 @@ Color get primaryTextColor => isDarkTheme ? Color.fromRGBO(255, 255, 255, 1) : C
 Color get secondaryTextColor => isDarkTheme ? Color.fromRGBO(195, 195, 201, 1) : Color.fromRGBO(54, 54, 56, 1);
 Color get tertiaryTextColor => isDarkTheme ? Color.fromRGBO(141, 141, 147, 1) : Color.fromRGBO(109, 109, 114, 1);
 Color get iconTextColor => isDarkTheme ? Color.fromRGBO(185, 185, 191, 1) : Color.fromRGBO(64, 64, 66, 1);
-Color get accentColorLight => isDarkTheme ? Colors.teal[600] : Colors.teal[300];
+Color get accentColorLight => isDarkTheme ? Colors.teal[700] : Colors.teal[200];
 Color get accentColor => isDarkTheme ? Color.fromRGBO(39, 165, 146, 1) : Color.fromRGBO(39, 165, 146, 1);
 Color get accentColorDark => isDarkTheme ? Colors.teal[600] : Colors.teal[600];
 Color get accentTextColor => isDarkTheme ? Color.fromRGBO(244, 245, 248, 1) : Color.fromRGBO(248, 249, 251, 1);
@@ -59,7 +59,7 @@ ThemeData get themeData => ThemeData(
   fontFamily: fontFamily,
   dividerColor: primaryColorLight,
   splashColor: accentColor,
-  textSelectionColor: accentColor,
+  textSelectionColor: accentColorLight,
   indicatorColor: accentColor,
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: accentColor,

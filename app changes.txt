@@ -1,8 +1,16 @@
+Appearance:
+ - Deemphasize "Save" button on PaletteDivider
+ - Emphasize text inputs on PaletteDivider
+
+Text:
+ - Add note to PaletteDivider instructions to drag with only finger, its not necessary to use multiple
+ - Add instructions to list on AddPaletteDividerScreen, such as what offsets do, how to edit individual colors and finishes, and what to do when you finish
+ - Remove word "offset" on AddPaletteDividerScreen
+
 Features:
--// Add instructions (such as touch directions) on the first opening
--// Add directions to more screens, such as Today's Look, Saved Look, and Color Wheel
--// Add splash screen, maybe only on first opening
-- Sort PalettScannerScreen by similar finish?
+- Add button to allow users to add a saved look on SavedLooksScreen
+- In the future, add support for different colored glitters within shadows, multichromes, duochromes, iridescent, etc
 
 Bugs:
-- Investigate occasional black-screen bug when first downloading or updating app and then taking picture of palette
+- Reverse the lettering of columns on PaletteDivider
+- Prioritize opposites less in RecommendedSwatchBar

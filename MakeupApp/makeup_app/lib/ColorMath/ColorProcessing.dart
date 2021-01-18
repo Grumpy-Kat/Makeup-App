@@ -22,7 +22,6 @@ Future<Image> loadImg(String path) async {
   Image img = decodeImage(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   //return img;
   print('exif ${img.exif.orientation} ${img.exif.hasOrientation}');
-  //TODO: remember to look at orientation that image is displayed and see if Flutter is a problem because borders would need to be switched if it is
   return bakeOrientation(img);
 }
 
