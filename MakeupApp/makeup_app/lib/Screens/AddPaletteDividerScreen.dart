@@ -31,6 +31,11 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   static int _greenOffset = 0;
   static int _blueOffset = 0;
 
+  TextEditingController _brightnessController;
+  TextEditingController _redController;
+  TextEditingController _greenController;
+  TextEditingController _blueController;
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +59,10 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         _orgBlue[i] = swatch.color.clampValue(swatch.color.values['rgbB'] - (_blueOffset / 255.0) - (_brightnessOffset / 255.0));
       }
     }
+    _brightnessController = TextEditingController(text: _brightnessOffset.toString());
+    _redController = TextEditingController(text: _redOffset.toString());
+    _greenController = TextEditingController(text: _greenOffset.toString());
+    _blueController = TextEditingController(text: _blueOffset.toString());
   }
 
   @override
@@ -168,6 +177,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
             margin,
             '${getString('settings_photo_brightness')} ',
             _brightnessOffset,
+            _brightnessController,
             (int val) async {
               _brightnessOffset = val;
               Map<int, Swatch> swatches = {};
@@ -180,9 +190,11 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                   swatches[_swatches[i]] = swatch;
                 }
               }
+              TextSelection selection =_brightnessController.selection;
               globalWidgets.openLoadingDialog(context);
               await IO.editIds(swatches);
               Navigator.pop(context);
+              _brightnessController.selection = selection;
               setState(() { });
             },
           ),
@@ -195,6 +207,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
             margin,
             '${getString('settings_photo_red')} ',
             _redOffset,
+            _redController,
             (int val) async {
               _redOffset = val;
               Map<int, Swatch> swatches = {};
@@ -205,9 +218,11 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                   swatches[_swatches[i]] = swatch;
                 }
               }
+              TextSelection selection =_redController.selection;
               globalWidgets.openLoadingDialog(context);
               await IO.editIds(swatches);
               Navigator.pop(context);
+              _redController.selection = selection;
               setState(() { });
             },
           ),
@@ -220,6 +235,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
             margin,
             '${getString('settings_photo_green')} ',
             _greenOffset,
+            _greenController,
             (int val) async {
               _greenOffset = val;
               Map<int, Swatch> swatches = {};
@@ -230,9 +246,11 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                   swatches[_swatches[i]] = swatch;
                 }
               }
+              TextSelection selection =_greenController.selection;
               globalWidgets.openLoadingDialog(context);
               await IO.editIds(swatches);
               Navigator.pop(context);
+              _greenController.selection = selection;
               setState(() { });
             },
           ),
@@ -245,6 +263,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
             margin,
             '${getString('settings_photo_blue')} ',
             _blueOffset,
+            _blueController,
             (int val) async {
               _blueOffset = val;
               Map<int, Swatch> swatches = {};
@@ -255,9 +274,11 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                   swatches[_swatches[i]] = swatch;
                 }
               }
+              TextSelection selection =_blueController.selection;
               globalWidgets.openLoadingDialog(context);
               await IO.editIds(swatches);
               Navigator.pop(context);
+              _blueController.selection = selection;
               setState(() { });
             }
           ),
@@ -304,7 +325,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
     );
   }
 
-  Widget getNumField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin, String title, int value, OnIntAction onChanged) {
+  Widget getNumField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin, String title, int value, TextEditingController controller, OnIntAction onChanged) {
     return Container(
       height: height,
       decoration: decoration,
@@ -325,7 +346,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                 child: TextFormField(
                   textAlign: TextAlign.left,
                   keyboardType: TextInputType.numberWithOptions(signed: true),
-                  initialValue: value.toString(),
+                  //initialValue: value.toString(),
+                  controller: controller,
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
                   inputFormatters: <TextInputFormatter>[
@@ -380,6 +402,10 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
           swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
         }
+        _brightnessController = TextEditingController(text: _brightnessOffset.toString());
+        _redController = TextEditingController(text: _redOffset.toString());
+        _greenController = TextEditingController(text: _greenOffset.toString());
+        _blueController = TextEditingController(text: _blueOffset.toString());
         //saves swatches and adds them to final list to display
         IO.add(swatches).then((List<int> val) {
           _swatches = val;
