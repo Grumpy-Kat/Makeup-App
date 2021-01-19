@@ -1,15 +1,13 @@
 Appearance:
- - Deemphasize "Save" button on PaletteDivider
- - Emphasize text inputs on PaletteDivider
+ -// Emphasize text inputs on PaletteDivider
 
 Text:
  - Add note to PaletteDivider instructions to drag with only finger, its not necessary to use multiple
  - Add instructions to list on AddPaletteDividerScreen, such as what offsets do, how to edit individual colors and finishes, and what to do when you finish
- - Remove word "offset" on AddPaletteDividerScreen
+ - Remove or replace word "offset" on AddPaletteDividerScreen
 
 Features:
 - Add button to allow users to add a saved look on SavedLooksScreen
-- In the future, add support for different colored glitters within shadows, multichromes, duochromes, iridescent, etc
 
 Bugs:
 - Reverse the lettering of columns on PaletteDivider

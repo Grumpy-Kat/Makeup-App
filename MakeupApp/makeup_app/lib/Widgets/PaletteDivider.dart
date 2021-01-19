@@ -181,7 +181,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         textAlign: TextAlign.left,
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
-        style: theme.primaryTextSecondary,
+        style: theme.primaryTextPrimary,
         controller: controller,
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.digitsOnly,
@@ -190,7 +190,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         decoration: InputDecoration(
           fillColor: theme.primaryColorLight,
           labelText: label,
-          labelStyle: theme.primaryTextSecondary,
+          labelStyle: theme.primaryTextPrimary,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: theme.primaryColorDarkest,
@@ -213,7 +213,11 @@ class PaletteDividerState extends State<PaletteDivider> {
     return Align(
       alignment: Alignment(0, -1),
       child: FlatButton(
-        color: (ImagePicker.img == null ? theme.accentColor : theme.primaryColorDark),
+        color: (ImagePicker.img == null ? theme.accentColor : theme.bgColor),
+        shape: (ImagePicker.img == null ? null : Border.all(
+          color: theme.primaryColorDark,
+          width: 2.5,
+        )),
         onPressed: () {
           ImagePicker.error = '';
           ImagePicker.open(context).then(
@@ -237,7 +241,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         },
         child: Text(
           getString('paletteDivider_add'),
-          style: (ImagePicker.img == null ? theme.accentTextBold : theme.primaryTextPrimary),
+          style: (ImagePicker.img == null ? theme.accentTextBold : TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily)),
         ),
       ),
     );
@@ -251,11 +255,11 @@ class PaletteDividerState extends State<PaletteDivider> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           child: FlatButton(
-            color: theme.accentColor,
+            color: theme.primaryColorDark,
             onPressed: save,
             child: Text(
               getString('save'),
-              style: theme.accentTextBold,
+              style: theme.primaryTextBold,
             ),
           ),
         ),
@@ -489,7 +493,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     List<double> scaledPadding = [_padding[0] / imgScale, _padding[1] / imgScale];
     for(int j = 0; j < _numRows; j++) {
      //for(int i = _numCols - 1; i >= 0; i--) {
-      //TODO: I'm constantly changing between the two, they sometimes look wrong, is not consistent? Try printing cropped.exif.orientation
+      //I'm constantly changing between the two, they sometimes look wrong, is not consistent? Try printing cropped.exif.orientation
       for(int i = 0; i < _numCols; i++) {
         //get dimensions
         int x = (scaledBorders[0] + (scaledBoxWidth * i) + scaledPadding[0]).floor();

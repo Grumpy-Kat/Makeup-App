@@ -72,7 +72,11 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
             children: <Widget>[
               //return to palette divider
               FlatButton(
-                color: theme.primaryColorDark,
+                color: theme.bgColor,
+                shape:  Border.all(
+                  color: theme.primaryColorDark,
+                  width: 2.5,
+                ),
                 onPressed: () {
                   setState(
                     () {
@@ -83,7 +87,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                 },
                 child: Text(
                   getString('paletteScanner_chooseDifferent'),
-                  style: theme.primaryTextPrimary,
+                  style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
                 ),
               ),
               //save palette to collection
