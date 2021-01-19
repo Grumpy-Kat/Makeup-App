@@ -10,5 +10,4 @@ Features:
 - Add button to allow users to add a saved look on SavedLooksScreen
 
 Bugs:
-- Reverse the lettering of columns on PaletteDivider
 - Prioritize opposites less in RecommendedSwatchBar

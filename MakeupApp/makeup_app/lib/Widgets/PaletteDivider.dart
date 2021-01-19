@@ -213,6 +213,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     return Align(
       alignment: Alignment(0, -1),
       child: FlatButton(
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         color: (ImagePicker.img == null ? theme.accentColor : theme.bgColor),
         shape: (ImagePicker.img == null ? null : Border.all(
           color: theme.primaryColorDark,
@@ -253,7 +254,7 @@ class PaletteDividerState extends State<PaletteDivider> {
       child: getAnimatedOpacity(
         showImg,
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 23),
           child: FlatButton(
             color: theme.primaryColorDark,
             onPressed: save,
@@ -512,9 +513,6 @@ class PaletteDividerState extends State<PaletteDivider> {
         if(cropped == null) {
           return;
         }
-        //lighten/recolor image
-       /* cropped = image.brightness(cropped, globals.brightnessOffset);
-        cropped = image.colorOffset(cropped, red: globals.redOffset, green: globals.greenOffset, blue: globals.blueOffset);*/
         //get color
         RGBColor color = avgColor(cropped);
         //get finish
@@ -524,10 +522,10 @@ class PaletteDividerState extends State<PaletteDivider> {
         String shade = '';
         switch(globals.autoShadeNameMode) {
           case globals.AutoShadeNameMode.ColLetters:
-            shade = '${j + 1}${letters[(_numCols - i - 1) % letters.length]}';
+            shade = '${j + 1}${letters[i % letters.length]}';
             break;
           case globals.AutoShadeNameMode.RowLetters:
-            shade = '${letters[(_numRows - j - 1) % letters.length]}${i + 1}';
+            shade = '${letters[j % letters.length]}${i + 1}';
             break;
           default:
             shade = '';
