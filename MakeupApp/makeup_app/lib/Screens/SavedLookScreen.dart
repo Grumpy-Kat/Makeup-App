@@ -14,7 +14,9 @@ class SavedLookScreen extends StatefulWidget {
     if(look == null || look.id == null || look.id == '') {
       //if returning to screen, without setting id, load updated swatches
       //most commonly occurs when going back from SwatchScreen
-      look = IO.looks[id];
+      if(id != null && id != '') {
+        look = IO.looks[id];
+      }
     } else {
       //sets screen info
       SavedLookScreen.id = look.id;
@@ -61,9 +63,10 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
         globals.currSwatches.addMany(SavedLookScreen.look.swatches);
       },
       showEdit: true,
-      onSavePressed: () {
+      saveOnEdit: true,
+      onSavePressed: () async {
         //save changes
-        IO.save(SavedLookScreen.look);
+        await IO.save(SavedLookScreen.look);
       },
     );
   }

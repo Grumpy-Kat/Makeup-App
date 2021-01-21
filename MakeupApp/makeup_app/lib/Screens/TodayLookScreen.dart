@@ -57,22 +57,27 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
       showAdd: false,
       showSave: true,
       onSavePressed: () {
-        //saving for first time, so open dialog for name of the look
-        globalWidgets.openTextDialog(
-          context,
-          getString('todayLook_popupInstructions'),
-          getString('todayLook_popupError'),
-          getString('save'),
-          (String value) {
-            setState(() {
-              look.name = value;
-              IO.save(look).then((String value) => look.id = value);
-              hasSaved = true;
-            });
-          }
-        );
+        if(!hasSaved) {
+          //saving for first time, so open dialog for name of the look
+          globalWidgets.openTextDialog(
+            context,
+            getString('todayLook_popupInstructions'),
+            getString('todayLook_popupError'),
+            getString('save'),
+            (String value) {
+              setState(() {
+                look.name = value;
+                IO.save(look).then((String value) => look.id = value);
+                hasSaved = true;
+              });
+            }
+          );
+        } else {
+          IO.save(look);
+        }
       },
       showEdit: true,
+      saveOnEdit: hasSaved,
     );
   }
 

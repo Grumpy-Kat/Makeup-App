@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Widgets/Look.dart';
 import '../Widgets/MultipleSwatchList.dart';
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
@@ -65,6 +66,40 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
         onSwatchTap: (int i, int id) { _onTap(i); },
         overrideSwatchOnDoubleTap: true,
         onSwatchDoubleTap: (int i, int id) { _onTap(i); },
+      ),
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
+        width: 75,
+        height: 75,
+        child: FloatingActionButton(
+          child: Icon(
+            Icons.add,
+            color: theme.accentTextColor,
+            size: 45.0,
+          ),
+          onPressed: () {
+            globalWidgets.openTextDialog(
+              context,
+              getString('todayLook_popupInstructions'),
+              getString('todayLook_popupError'),
+              getString('save'),
+              (String name) {
+                globalWidgets.openLoadingDialog(context);
+                IO.save(Look(id: '', name: name, swatches: [])).then(
+                  (String id) {
+                    Navigator.pop(context);
+                    navigation.pushReplacement(
+                      context,
+                      Offset(1, 0),
+                      routes.ScreenRoutes.SavedLookScreen,
+                      SavedLookScreen(look: Look(id: id, name: name, swatches: [])),
+                    );
+                  }
+                );
+              }
+            );
+          },
+        ),
       ),
     );
   }

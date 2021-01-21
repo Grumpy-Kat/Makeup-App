@@ -31,8 +31,9 @@ class LookScreen extends StatefulWidget {
   final OnVoidAction onSavePressed;
 
   final bool showEdit;
+  final bool saveOnEdit;
 
-  LookScreen({ @required this.look, @required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true });
+  LookScreen({ @required this.look, @required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true, this.saveOnEdit = false });
 
   @override
   LookScreenState createState() => LookScreenState();
@@ -242,6 +243,9 @@ class LookScreenState extends State<LookScreen> with ScreenState {
           setState(() {
             //switches whether in edit mode, which allows user to add or delete swatches from list
             this._isEditing = !this._isEditing;
+            if(!_isEditing && widget.saveOnEdit) {
+              widget.onSavePressed();
+            }
           });
         },
       ),
