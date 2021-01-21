@@ -148,7 +148,7 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
 
     //check if similar
     if(getSimilar && similarCategories.contains(colorName)) {
-      newSwatches[swatches[i]] = 10;
+      newSwatches[swatches[i]] = 12;
       continue;
     }
 
