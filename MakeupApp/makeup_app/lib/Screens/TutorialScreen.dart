@@ -31,6 +31,7 @@ class TutorialScreenState extends State<TutorialScreen> {
       FirebaseFirestore.instance.collection('swatches').add({ 'data': '' }).then(
         (value) {
           globals.userID = value.id;
+          globals.login();
         }
       );
     }

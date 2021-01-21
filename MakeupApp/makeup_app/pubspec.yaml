@@ -25,6 +25,7 @@ dependencies:
   firebase_core: ^0.7.0
   cloud_firestore: ^0.16.0
   firebase_crashlytics: ^0.4.0+1
+  firebase_auth: ^0.20.0+1
   cupertino_icons:
   image: ^2.1.19
   tflite: ^1.1.1

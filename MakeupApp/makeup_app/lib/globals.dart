@@ -1,5 +1,6 @@
 import 'ColorMath/ColorObjects.dart';
 import 'ColorMath/ColorSorting.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'Widgets/Swatch.dart';
 import 'types.dart';
 import 'settingsIO.dart' as IO;
@@ -127,7 +128,7 @@ void addHasLoadedListener(OnVoidAction hasLoadedListener) {
 //settings
 //basic app info
 final String appName = 'GlamKit';
-final String appVersion = '0.4';
+final String appVersion = '0.6';
 bool debug = true;
 
 //user id, used for locating saved swatches and looks in Firestore
@@ -135,7 +136,20 @@ String _userID = '';
 String get userID => _userID;
 set userID(String value) {
   _userID = value;
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
+}
+
+Future<void> login() async {
+  /*if(FirebaseAuth.instance.currentUser != null) {
+    await FirebaseAuth.instance.signOut();
+  }*/
+  if(FirebaseAuth.instance.currentUser == null) {
+    await FirebaseAuth.instance.signInAnonymously();
+  }
+  await FirebaseAuth.instance.currentUser.updateProfile(displayName: _userID);
+  print(FirebaseAuth.instance.currentUser.uid);
 }
 
 //has done initial tutorial
@@ -143,7 +157,9 @@ bool _hasDoneTutorial = false;
 bool get hasDoneTutorial => _hasDoneTutorial;
 set hasDoneTutorial(bool value) {
   _hasDoneTutorial = value;
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }
 
 //languages
@@ -152,7 +168,9 @@ String get language => _language;
 set language(String value) {
   _language = value;
   setLanguage(value);
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }
 
 //default sort and sort options
@@ -160,7 +178,9 @@ String _sort = 'sort_hue';
 String get sort => _sort == '' ? 'sort_hue' : _sort;
 set sort(String value) {
   _sort = value;
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }
 Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step: 16 }) {
   return {
@@ -192,7 +212,9 @@ List<String> _tags = ['tags_pigmented', 'tags_sheer', 'tags_lotsFallout', 'tags_
 List<String> get tags => _tags;
 set tags(List<String> value) {
   _tags = value.toSet().toList();
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }
 
 //auto shade name lettering for new palettes
@@ -207,7 +229,9 @@ AutoShadeNameMode _autoShadeNameMode = AutoShadeNameMode.ColLetters;
 AutoShadeNameMode get autoShadeNameMode => _autoShadeNameMode;
 set autoShadeNameMode(AutoShadeNameMode value) {
    _autoShadeNameMode = value;
-   IO.save();
+   if(hasLoaded) {
+     IO.save();
+   }
 }
 
 //brightness offset for making new swatches from photos
@@ -215,7 +239,9 @@ int _brightnessOffset = 0;
 int get brightnessOffset => _brightnessOffset;
 set brightnessOffset(int value) {
   _brightnessOffset = value.clamp(-255, 255);
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }
 
 //red offset for making new swatches from photos
@@ -223,7 +249,9 @@ int _redOffset = 0;
 int get redOffset => _redOffset;
 set redOffset(int value) {
   _redOffset = value.clamp(-255, 255);
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }
 
 //green offset for making new swatches from photos
@@ -231,7 +259,9 @@ int _greenOffset = 0;
 int get greenOffset => _greenOffset;
 set greenOffset(int value) {
   _greenOffset = value.clamp(-255, 255);
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }
 
 //blue offset for making new swatches from photos
@@ -239,7 +269,9 @@ int _blueOffset = 0;
 int get blueOffset => _blueOffset;
 set blueOffset(int value) {
   _blueOffset = value.clamp(-255, 255);
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }
 
 //color distance for ColorWheelScreen
@@ -247,5 +279,7 @@ double _colorWheelDistance = 13;
 double get colorWheelDistance => _colorWheelDistance;
 set colorWheelDistance(double value) {
   _colorWheelDistance = value.clamp(3, 25);
-  IO.save();
+  if(hasLoaded) {
+    IO.save();
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' hide HSVColor;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -44,6 +45,8 @@ class GlamKitAppState extends State<GlamKitApp> {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     //FirebaseCrashlytics.instance.crash();
+    await IO.load();
+    await globals.login();
     await localizationIO.load();
     //generateRainbow();
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
@@ -57,7 +60,6 @@ class GlamKitAppState extends State<GlamKitApp> {
     savedLooksIO.init();
     //await clearSave();
     //await IO.clear();
-    await IO.load();
     setState(() { });
   }
 
