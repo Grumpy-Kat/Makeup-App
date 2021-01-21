@@ -56,22 +56,12 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: IconButton(
-        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
-        icon: Icon(
-          Icons.arrow_back,
-          size: theme.primaryIconSize,
-          color: theme.iconTextColor,
-        ),
-        onPressed: () {
-          //return to mode selection
-          navigation.pushReplacement(
-            context,
-            Offset(-1, 0),
-            routes.ScreenRoutes.AddPaletteScreen,
-            routes.routes['/addPaletteScreen'](context),
-          );
-        },
+      leftBar: globalWidgets.getBackButton (() => navigation.pushReplacement(
+          context,
+          Offset(-1, 0),
+          routes.ScreenRoutes.AddPaletteScreen,
+          routes.routes['/addPaletteScreen'](context),
+        )
       ),
       //scroll view to show all swatches
       body: GridView.builder(

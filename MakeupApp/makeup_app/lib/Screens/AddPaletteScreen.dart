@@ -35,21 +35,12 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: IconButton(
-        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
-        icon: Icon(
-          Icons.arrow_back,
-          size: theme.primaryIconSize,
-          color: theme.iconTextColor,
-        ),
-        onPressed: () {
-          navigation.pushReplacement(
-            context,
-            Offset(-1, 0),
-            routes.ScreenRoutes.AllSwatchesScreen,
-            routes.routes['/allSwatchesScreen'](context),
-          );
-        },
+      leftBar: globalWidgets.getBackButton (() => navigation.pushReplacement(
+          context,
+          Offset(-1, 0),
+          routes.ScreenRoutes.AllSwatchesScreen,
+          routes.routes['/allSwatchesScreen'](context),
+        )
       ),
       //help button
       rightBar: [

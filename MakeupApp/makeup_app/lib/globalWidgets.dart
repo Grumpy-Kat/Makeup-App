@@ -434,6 +434,18 @@ Widget getNumField(BuildContext context, String label, double value, String erro
   );
 }
 
+Widget getBackButton(OnVoidAction onPressed) {
+  return IconButton(
+    constraints: BoxConstraints.tight(Size.fromWidth(26)),
+    icon: Icon(
+      Icons.arrow_back_ios,
+      size: 19,
+      color: theme.iconTextColor,
+    ),
+    onPressed: onPressed,
+  );
+}
+
 String toTitleCase(String text) {
   List<String> words = text.split(' ');
   String result = '';

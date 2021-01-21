@@ -21,15 +21,15 @@ Color get unselectedTextColor => isDarkTheme ? Color.fromRGBO(244, 245, 248, 1) 
 Color get checkTextColor => isDarkTheme ? Color.fromRGBO(67, 163, 79, 1) : Color.fromRGBO(27, 132, 39, 1);
 Color get errorTextColor => isDarkTheme ? Color.fromRGBO(209, 82, 88, 1) : Color.fromRGBO(230, 0, 32, 1);
 
-double get titleTextSize => 34.0;
+double get titleTextSize => 34;
 double get primaryTextSize => 17;
-double get primaryIconSize => 24.0;
-double get secondaryTextSize => 15.0;
-double get secondaryIconSize => 22.0;
-double get tertiaryTextSize => 13.0;
-double get tertiaryIconSize => 18.0;
-double get quaternaryTextSize => 12.0;
-double get quaternaryIconSize => 23.0;
+double get primaryIconSize => 23;
+double get secondaryTextSize => 15;
+double get secondaryIconSize => 21;
+double get tertiaryTextSize => 13;
+double get tertiaryIconSize => 17;
+double get quaternaryTextSize => 12;
+double get quaternaryIconSize => 22;
 
 String get fontFamily => 'Montserrat';
 TextStyle get primaryTitle => TextStyle(color: primaryTextColor, fontSize: titleTextSize, fontWeight: FontWeight.bold, fontFamily: fontFamily);

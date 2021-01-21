@@ -41,10 +41,10 @@ mixin ScreenState {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           IconButton(
-                            constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+                            constraints: BoxConstraints.tight(Size.fromWidth(40)),
                             icon: Icon(
                               Icons.menu,
-                              size: theme.primaryIconSize,
+                              size: 25,
                               color: theme.iconTextColor,
                               semanticLabel: 'Menu',
                             ),

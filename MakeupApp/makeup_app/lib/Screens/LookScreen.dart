@@ -159,17 +159,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     //creates back button
     return Align(
       alignment: Alignment.centerLeft,
-      child: IconButton(
-        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
-        icon: Icon(
-          Icons.arrow_back,
-          size: theme.primaryIconSize,
-          color: theme.iconTextColor,
-        ),
-        onPressed: () {
-          onExit();
-        },
-      ),
+      child: globalWidgets.getBackButton (() => onExit()),
     );
   }
 

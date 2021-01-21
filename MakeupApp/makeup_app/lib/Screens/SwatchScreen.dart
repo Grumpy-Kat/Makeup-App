@@ -25,7 +25,7 @@ class SwatchScreen extends StatefulWidget {
 }
 
 class SwatchScreenState extends State<SwatchScreen> with ScreenState {
-  Swatch _swatch;
+  static Swatch _swatch;
 
   bool _isEditing = false;
   bool _hasChanged = false;
@@ -35,7 +35,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   void initState() {
     super.initState();
     //get swatch from id
-    _swatch = IO.get(widget.swatch);
+    if(widget.swatch != null) {
+      _swatch = IO.get(widget.swatch);
+    }
   }
 
   @override
@@ -65,17 +67,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       getString('screen_swatch'),
       20,
       //back button
-      leftBar: IconButton(
-        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
-        icon: Icon(
-          Icons.arrow_back,
-          size: theme.primaryIconSize,
-          color: theme.iconTextColor,
-        ),
-        onPressed: () {
-          exit();
-        },
-      ),
+      leftBar: globalWidgets.getBackButton (() => exit()),
       //edit button
       rightBar: [
         IconButton(
