@@ -56,7 +56,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton (() => navigation.pushReplacement(
+      leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
           context,
           Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,

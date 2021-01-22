@@ -217,7 +217,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         color: (ImagePicker.img == null ? theme.accentColor : theme.bgColor),
         shape: (ImagePicker.img == null ? null : Border.all(
           color: theme.primaryColorDark,
-          width: 2.5,
+          width: 2.0,
         )),
         onPressed: () {
           ImagePicker.error = '';

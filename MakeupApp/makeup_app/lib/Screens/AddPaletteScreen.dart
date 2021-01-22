@@ -35,7 +35,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton (() => navigation.pushReplacement(
+      leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
           context,
           Offset(-1, 0),
           routes.ScreenRoutes.AllSwatchesScreen,

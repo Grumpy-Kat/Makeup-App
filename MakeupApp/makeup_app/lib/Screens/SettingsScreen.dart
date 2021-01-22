@@ -107,7 +107,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       title,
       4,
       //back button
-      leftBar: (mode == Mode.Default) ? null : globalWidgets.getBackButton (() => setState(() => mode = Mode.Default)),
+      leftBar: (mode == Mode.Default) ? null : globalWidgets.getBackButton(() => setState(() => mode = Mode.Default)),
       body: body,
     );
   }

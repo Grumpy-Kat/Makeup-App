@@ -160,7 +160,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     //creates back button
     return Align(
       alignment: Alignment.centerLeft,
-      child: globalWidgets.getBackButton (() => onExit()),
+      child: globalWidgets.getBackButton(() => onExit()),
     );
   }
 

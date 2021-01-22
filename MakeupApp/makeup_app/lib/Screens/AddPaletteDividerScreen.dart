@@ -83,7 +83,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       10,
       //back button
 
-      leftBar: globalWidgets.getBackButton (() => navigation.pushReplacement(
+      leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
           context,
           Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
@@ -140,13 +140,22 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton (() => navigation.pushReplacement(
+      leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
           context,
           Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
           routes.routes['/addPaletteScreen'](context),
         )
       ),
+      rightBar: [
+        globalWidgets.getHelpBtn(
+          context,
+          '${getString('help_addPaletteList_0')}\n\n'
+          '${getString('help_addPaletteList_1')}\n\n'
+          '${getString('help_addPaletteList_2')}\n\n'
+          '${getString('help_addPaletteList_3')}\n\n',
+        ),
+      ],
       body: Column(
         children: <Widget> [
           //brightness offset field

@@ -75,7 +75,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                 color: theme.bgColor,
                 shape:  Border.all(
                   color: theme.primaryColorDark,
-                  width: 2.5,
+                  width: 2.0,
                 ),
                 onPressed: () {
                   setState(
