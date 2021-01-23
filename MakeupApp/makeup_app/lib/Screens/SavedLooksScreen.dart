@@ -88,7 +88,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
                 IO.save(Look(id: '', name: name, swatches: [])).then(
                   (String id) {
                     Navigator.pop(context);
-                    navigation.pushReplacement(
+                    navigation.push(
                       context,
                       Offset(1, 0),
                       routes.ScreenRoutes.SavedLookScreen,

@@ -31,6 +31,7 @@ class TutorialScreenState extends State<TutorialScreen> {
       FirebaseFirestore.instance.collection('swatches').add({ 'data': '' }).then(
         (value) {
           globals.userID = value.id;
+          print('${globals.hasLoaded} ${globals.userID}');
           globals.login();
         }
       );
@@ -320,6 +321,7 @@ class TutorialScreenState extends State<TutorialScreen> {
       //already finished tutorial, most likely coming from settings page
       navigation.pop(context, false);
     } else {
+      globals.hasDoneTutorial = true;
       //first time finishing tutorial, new user
       navigation.pushReplacement(
         context,
@@ -328,6 +330,5 @@ class TutorialScreenState extends State<TutorialScreen> {
         routes.routes['/allSwatchesScreen'](context),
       );
     }
-    globals.hasDoneTutorial = true;
   }
 }

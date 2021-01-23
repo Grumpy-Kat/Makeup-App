@@ -28,7 +28,7 @@ class GlamKitAppState extends State<GlamKitApp> {
   @override
   Widget build(BuildContext context) {
     if(!globals.hasLoaded) {
-      load();
+      load().then((value) => setState(() { }));
     }
     return MaterialApp(
       title: globals.appName,
@@ -39,12 +39,14 @@ class GlamKitAppState extends State<GlamKitApp> {
     );
   }
 
-  void load() async {
+  static Future<void> load() async {
     await Firebase.initializeApp();
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     //FirebaseCrashlytics.instance.crash();
-    await IO.load();
+    if(!globals.hasLoaded) {
+      await IO.load();
+    }
     await globals.login();
     await localizationIO.load();
     //generateRainbow();
@@ -59,10 +61,9 @@ class GlamKitAppState extends State<GlamKitApp> {
     savedLooksIO.init();
     //await clearSave();
     //await IO.clear();
-    setState(() { });
   }
 
-  void generateRainbow() async {
+  Future<void> generateRainbow() async {
     await clearSave();
     Random random = Random();
     List<String> finishes = ['finish_matte', 'finish_satin', 'finish_shimmer', 'finish_metallic', 'finish_glitter'];
@@ -80,7 +81,7 @@ class GlamKitAppState extends State<GlamKitApp> {
     await allSwatchesIO.save(info);
   }
 
-  void clearSave() async {
+  Future<void> clearSave() async {
     //allSwatchesIO
     allSwatchesIO.clear();
     //savedLooksIO

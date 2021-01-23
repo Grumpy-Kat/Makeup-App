@@ -142,14 +142,13 @@ set userID(String value) {
 }
 
 Future<void> login() async {
-  /*if(FirebaseAuth.instance.currentUser != null) {
-    await FirebaseAuth.instance.signOut();
-  }*/
   if(FirebaseAuth.instance.currentUser == null) {
     await FirebaseAuth.instance.signInAnonymously();
   }
-  await FirebaseAuth.instance.currentUser.updateProfile(displayName: _userID);
-  print(FirebaseAuth.instance.currentUser.uid);
+  await FirebaseAuth.instance.currentUser.updateProfile(displayName: userID);
+  FirebaseAuth.instance.currentUser.getIdToken(true);
+  //print(FirebaseAuth.instance.currentUser.displayName);
+  //print(userID);
 }
 
 //has done initial tutorial
