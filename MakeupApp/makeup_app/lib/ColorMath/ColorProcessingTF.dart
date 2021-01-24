@@ -1,30 +1,48 @@
-import 'package:tflite/tflite.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:firebase_ml_custom/firebase_ml_custom.dart';
 import 'package:image/image.dart';
-import 'dart:typed_data';
-import '../globals.dart' as globals;
+import 'dart:io';
 
-Future<String> getModel() async {
-  print('loadModel');
-  globals.model = await Tflite.loadModel(model: 'training/finishes-0.001-5-50-2conv.tflite', labels: 'training/labels.txt');
-  return globals.model;
+FirebaseCustomRemoteModel model;
+Interpreter interpreter;
+List<String> labels = ['finish_matte', 'finish_satin', 'finish_shimmer', 'finish_metallic', 'finish_glitter'];
+
+Future<void> getModel() async {
+  model = FirebaseCustomRemoteModel('Finish-Detection');
+  FirebaseModelDownloadConditions conditions = FirebaseModelDownloadConditions(
+    androidRequireWifi: true,
+    iosAllowCellularAccess: true,
+    iosAllowBackgroundDownloading: true,
+  );
+  await FirebaseModelManager.instance.download(model, conditions);
+  File modelFile = await FirebaseModelManager.instance.getLatestModelFile(model);
+  interpreter = Interpreter.fromFile(modelFile);
 }
 
 Future<String> getFinish(Image img) async {
-  if(globals.model == '') {
-    print(await getModel());
+  if(interpreter == null) {
+    await getModel();
   }
   Image newImg = copyResize(grayscale(img), width: 32, height: 32);
-  Float32List convertedBytes = Float32List(1 * newImg.width * newImg.height * 1);
-  Float32List buffer = Float32List.view(convertedBytes.buffer);
-  int pixelIndex = 0;
-  for (var i = 0; i < newImg.width; i++) {
-    for (var j = 0; j < newImg.height; j++) {
+  List<List<List<List<double>>>> input = [List<List<List<double>>>(newImg.height)];
+  for(var i = 0; i < newImg.height; i++) {
+    input[0][i] = List<List<double>>(newImg.width);
+    for(var j = 0; j < newImg.width; j++) {
       int pixel = newImg.getPixel(j, i);
-      buffer[pixelIndex++] = getRed(pixel) / 255.0;
+      input[0][i][j] = [getRed(pixel) / 255.0];
     }
   }
-  List<dynamic> result = await Tflite.runModelOnBinary(binary: convertedBytes.buffer.asUint8List(), numResults: 5);
-  List<String> finishResults = result[0]['label'].split(' ');
-  print('Prediction ${finishResults.last}');
-  return finishResults.last;
+  //print(input);
+  List output = List(1 * 5).reshape([1, 5]);
+  interpreter.run(input, output);
+  //print(output);
+  int index = 0;
+  for(int i = 1; i < output[0].length; i++) {
+    if(output[0][i] > output[0][index]) {
+      index = i;
+    }
+  }
+  String finishResult = labels[index];
+  print('Prediction $finishResult');
+  return finishResult;
 }

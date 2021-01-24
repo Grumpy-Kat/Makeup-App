@@ -1,0 +1,5 @@
+finish_matte
+finish_satin
+finish_shimmer
+finish_metallic
+finish_glitter

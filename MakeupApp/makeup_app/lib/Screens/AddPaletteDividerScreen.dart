@@ -152,7 +152,12 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           context,
           '${getString('help_addPaletteList_0')}\n\n'
           '${getString('help_addPaletteList_1')}\n\n'
-          '${getString('help_addPaletteList_2')}\n\n'
+          '${getString('help_addPaletteList_2_0')}\n'
+          '${getString('help_addPaletteList_2_1')}\n'
+          '${getString('help_addPaletteList_2_2')}\n'
+          '${getString('help_addPaletteList_2_3')}\n'
+          '${getString('help_addPaletteList_2_4')}\n'
+          '${getString('help_addPaletteList_2_5')}\n\n'
           '${getString('help_addPaletteList_3')}\n\n',
         ),
       ],

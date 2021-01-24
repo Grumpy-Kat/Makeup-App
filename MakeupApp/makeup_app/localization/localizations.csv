@@ -134,10 +134,15 @@ help_addPalette_3,"Then,% type in the number of columns and rows in the palette.
 help_addPalette_4,"Next,% drag the outer border to fit the palette's edges. Drag the inner borders to fit each pan's edges. It is better to cut off part of the pans than to go too big. Use only one finger to drag.","Затем перетащите внешнюю границу,% чтобы она соответствовала краям палитры. Перетащите внутренние границы,% чтобы они соответствовали краям каждой тени. Лучше отрезать часть тени,% чем зайти слишком далеко. Для перетаскивания используйте только один палец."
 help_addPalette_5,"Last,% press ""Save"". It will prompt you to add a brand and name for the palette. You can also add the price and weight of the palette. It will calculate the price and weight of each swatch. All the swatches' colors and finishes will be detected.","В заключение,% нажмите «Cохранить». Вам нужно будет добавить марки и название палитры. Вы также можете добавить цену и вес палитры. Программа рассчитает цену и вес каждого образца. Будут обнаружены все цвета и финишы образцов. "
 help_addPalette_6,"You will be taken to a screen to look over the added swatches. They will be arranged by the palette's rows. You can correct the colors of the swatches. You can also edit any of their information,% leave ratings,% or add tags.","Вы попадете на экран,% чтобы просмотреть добавленные образцы. Они будут расположены рядами палитры. Вы можете исправить цвета образцов. Вы также можете изменить любую их информацию,% оставить оценки или добавить теги."
-help_addPaletteList_0,"This is all the added swatches,% arranged by the palette's rows.",
-help_addPaletteList_1,"You can edit the colors of all the swatches using the text inputs on the top. You can add numbers between -255 and 255. Using a positive number for ""Brightness"" will make the swatches very light and a negative number will make them very dark. Using a positive number for ""Red"" will add red to the swatches and a negative number will remove red. ",
-help_addPaletteList_2,"To make the swatches more red,% type a positive number in the ""Red"" input.  To make the swatches more orange,% type a positive number in the ""Red"" input and a negative number in the ""Blue"" input. To make the swatches more yellow,% type a positive number in the ""Red"" and ""Green"" inputs. To make the swatches more green,% type a positive number in the ""Green"" input. To make the swatches more blue,% type a positive number in ""Blue"" input. To make the swatches more purple,% type a positive number in the ""Green"" and ""Blue"" inputs.",
-help_addPaletteList_3,"You can edit the individual colors of swatches by clicking on them and clicking ""More..."" You can also edit the finish,% weight,% price,% shade name,% tags,% and rating on that screen.",
+help_addPaletteList_0,"This is all the added swatches,% arranged by the palette's rows.","Это все добавленные образцы,% расположенные по рядам палитры."
+help_addPaletteList_1,"You can adjust the colors of all the swatches using the text inputs. Type in numbers between -255 and 255. Using a positive number for ""Brightness"" will make the swatches lighter and a negative number will make them darker. Using a positive number for ""Red"" will add red to the swatches and a negative number will remove red. ","Вы можете настроить цвета всех образцов,% используя текстовые поля. Введите числа от -255 до 255. Использование положительного числа для параметра «Яркость» сделает образцы светлее,% а отрицательное число сделает их темнее. Использование положительного числа для «Красный» добавит красный цвет к образцам,% а отрицательное число удалит красный цвет."
+help_addPaletteList_2_0,"To make the swatches more red,% type a positive number in the ""Red"" input.","Чтобы сделать образцы более красными,% введите положительное число в поле «Красный»."
+help_addPaletteList_2_1,"To make the swatches more orange,% type a positive number in the ""Red"" input and a negative number in the ""Blue"" input.","Чтобы сделать образцы более оранжевыми,% введите положительное число в поле «Красный» и отрицательное число в поле «Синий»."
+help_addPaletteList_2_2,"To make the swatches more yellow,% type a positive number in both the ""Red"" and ""Green"" inputs.","Чтобы сделать образцы более желтыми,% введите положительное число в оба поля «Красный» и «Зеленый»."
+help_addPaletteList_2_3,"To make the swatches more green,% type a positive number in the ""Green"" input.","Чтобы сделать образцы более зелеными,% введите положительное число в поле «Зеленый»."
+help_addPaletteList_2_4,"To make the swatches more blue,% type a positive number in ""Blue"" input.","Чтобы сделать образцы более синими,% введите положительное число в поле «Синий»."
+help_addPaletteList_2_5,"To make the swatches more purple,% type a positive number in both the ""Red"" and ""Blue"" inputs.","Чтобы сделать образцы более фиолетовыми,% введите положительное число в оба поля «Красный» и «Синий»."
+help_addPaletteList_3,"You can edit the individual colors of swatches by clicking on one and clicking ""More..."" You can also edit the finish,% weight,% price,% shade name,% tags,% and rating on that screen. Press the green checkmark to return to ""All Swatches.""","Вы можете изменить отдельные цвета образцов,% нажимая на него и нажимая «Больше...». Вы также можете изменить финиш,% вес,% цену,% имя тени,% оценку и теги на этом экране. Нажмите зеленую галочку,% чтобы вернуться к «Все Образцы»."
 paletteScanner_chooseDifferent,Choose a Different Palette,Выберите Другую Палитру
 paletteScanner_savePalette,Save Palette,Сохранить Палитру
 paletteScanner_popupInstructions,Enter a brand and name for this palette:,Введите марку и название этой палитры:
@@ -149,14 +154,14 @@ settings_default_language,Language,Язык
 settings_default_notifications,Allow Notifications,Разрешить Уведомления
 settings_default_sort,Default Sort,Сортировка По Умолчанию
 settings_default_shade,Auto Shade Naming,Автоматическое Наименование Оттенков
-settings_shade,Auto Shade Name Settings,Настройка Автоматического Наименование Оттенков 
-settings_shade_shade,Auto Name Shades,Автоматические Названия Оттенков
+settings_shade,Auto Name Settings,Настройка Автоматического Наименование 
+settings_shade_shade,Auto Name Shades With,Автоматические Названия Оттенков С
 settings_default_photo,Photo Upload,Загрузки Фото
 settings_photo,Photo Upload Settings,Настройки Загрузки Фото
-settings_photo_brightness,Brightness,Яркости
-settings_photo_red,Red,Красное
-settings_photo_green,Green,Зеленое
-settings_photo_blue,Blue,Синее
+settings_photo_brightness,Brightness,Яркость
+settings_photo_red,Red,Красный
+settings_photo_green,Green,Зеленый
+settings_photo_blue,Blue,Синий
 settings_photo_before,Before,До
 settings_photo_after,After,После
 settings_default_sensitivity,Color Wheel Screen Sensitivity,Цветовое Колесо Чувствительность Экрана

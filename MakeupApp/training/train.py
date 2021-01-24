@@ -8,7 +8,7 @@ from tensorflow.keras.backend import clear_session
 from random import shuffle
 import os
 
-IMG_ROOT_DIR = r'C:\Users\Luda\Desktop\Makeup\training\finishes'
+IMG_ROOT_DIR = r'C:\Users\Ariela\Desktop\Github\Makeup App\MakeupApp\finishes'
 IMG_SIZE = 32
 LR = 1e-3
 SPLIT_RATE = 0.2
@@ -39,7 +39,7 @@ def trainModel():
 	data = getData()
 	x = np.array([i[0] for i in data]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)
 	y = [i[1] for i in data]
-	
+    
 	model = Sequential()
 	
 	model.add(Conv2D(32, (3, 3), input_shape = (IMG_SIZE, IMG_SIZE, 1)))
@@ -65,5 +65,5 @@ def trainModel():
 	return model
 
 if __name__ == '__main__':
-	model = trainModel()
-	model.save(MODEL_NAME + '.h5')
+    model = trainModel()
+    model.save(MODEL_NAME + '.h5')

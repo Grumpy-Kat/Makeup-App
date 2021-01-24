@@ -99,9 +99,6 @@ class CurrSwatches {
   int get length { return currSwatches.length; }
 }
 
-//finish prediction model
-String model = '';
-
 //has settings loaded and listener
 bool _hasLoaded = false;
 bool get hasLoaded => _hasLoaded;
