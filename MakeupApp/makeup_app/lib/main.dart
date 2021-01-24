@@ -44,6 +44,7 @@ class GlamKitAppState extends State<GlamKitApp> {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     //FirebaseCrashlytics.instance.crash();
+    await IO.init();
     if(!globals.hasLoaded) {
       await IO.load();
     }

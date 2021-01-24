@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'dart:async';
 import 'globalIO.dart';
 import 'globals.dart' as globals;
+
+CollectionReference _database;
+
+void init() {
+  _database = FirebaseFirestore.instance.collection('users');
+}
 
 Future<File> getSaveFile() async {
   final String path = await getLocalPath();
@@ -19,6 +26,7 @@ void clear() async {
 }
 
 void save() async {
+  //store user id, has done initial tutorial, and language locally
   File file = await getSaveFile();
   RandomAccessFile f = await file.open(mode: FileMode.writeOnly);
   //user id
@@ -27,54 +35,70 @@ void save() async {
   await f.writeString('${globals.hasDoneTutorial}\n');
   //language
   await f.writeString('${globals.language}\n');
+  //store everything else in Firestore
   //sort
-  await f.writeString('${globals.sort}\n');
+  String sort = globals.sort;
   //tags
   String tags = '';
   for(int i = 0; i < globals.tags.length; i++) {
     tags += '${globals.tags[i]};';
   }
-  await f.writeString('$tags\n');
   //brightness offset
-  await f.writeString('${globals.brightnessOffset}\n');
+  int brightness = globals.brightnessOffset;
   //red offset
-  await f.writeString('${globals.redOffset}\n');
+  int red = globals.redOffset;
   //green offset
-  await f.writeString('${globals.greenOffset}\n');
+  int green = globals.greenOffset;
   //blue offset
-  await f.writeString('${globals.blueOffset}\n');
+  int blue = globals.blueOffset;
   //auto shade name mode
-  await f.writeString('${globals.AutoShadeNameMode.values.indexOf(globals.autoShadeNameMode)}\n');
+  int nameMode = globals.AutoShadeNameMode.values.indexOf(globals.autoShadeNameMode);
   //ColorWheelScreen distance
-  await f.writeString('${globals.colorWheelDistance}\n');
+  double colorWheel = globals.colorWheelDistance;
+  //save to database
+  await _database.doc(globals.userID).set(
+      {
+        'sort': sort,
+        'tags': tags,
+        'brightness': brightness,
+        'red': red,
+        'green': green,
+        'blue': blue,
+        'nameMode': nameMode,
+        'colorWheel': colorWheel,
+      }
+  );
 }
 
 Future<bool> load() async {
   File file = await getSaveFile();
   List<String> lines = (await file.readAsString()).split('\n');
   if(lines.length > 1) {
+    //read user id, has done initial tutorial, and language locally
     //user id
     globals.userID = lines[0];
     //has done initial tutorial
     globals.hasDoneTutorial = (lines[1].toLowerCase() == 'true');
     //language
     globals.language = lines[2];
+    //read everything else from Firestore
+    DocumentSnapshot docSnapshot = await _database.doc(globals.userID).get();
     //sort
-    globals.sort = lines[3];
+    globals.sort = docSnapshot.get('sort');
     //tags
-    globals.tags = lines[4].split(';');
+    globals.tags = docSnapshot.get('tags').split(';');
     //brightness offset
-    globals.brightnessOffset = int.parse(lines[5]);
+    globals.brightnessOffset = docSnapshot.get('brightness');
     //red offset
-    globals.redOffset = int.parse(lines[6]);
+    globals.redOffset = docSnapshot.get('red');
     //green offset
-    globals.greenOffset = int.parse(lines[7]);
+    globals.greenOffset = docSnapshot.get('green');
     //blue offset
-    globals.blueOffset = int.parse(lines[8]);
+    globals.blueOffset = docSnapshot.get('blue');
     //auto shade name mode
-    globals.autoShadeNameMode = globals.AutoShadeNameMode.values[int.parse(lines[9])];
+    globals.autoShadeNameMode = globals.AutoShadeNameMode.values[docSnapshot.get('nameMode')];
     //ColorWheelScreen distance
-    globals.colorWheelDistance = double.parse(lines[10]);
+    globals.colorWheelDistance = docSnapshot.get('colorWheel') as double;
   } else {
     await save();
   }
