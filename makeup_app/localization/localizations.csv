@@ -1,0 +1,229 @@
+id,en,ru
+en,English,
+ru,Русский,
+es,Español,
+yes,Yes,Да
+no,No,Нет
+close,Close,Закрыть
+cancel,Cancel,Отменить
+error,Error,Ошибка
+save,Save,Cохранить
+noColorsFound,No Colors Found.,Цвета не найдены.
+sort_sortBy,Sort By,Сортировать по
+sort_hue,Hue,Оттенок
+sort_lightest,Lightest,Самый Светлый
+sort_darkest,Darkest,Самый Темный
+sort_finish,Finish,Финиш
+sort_palette,Palette,Палитра
+sort_brand,Brand,Марка
+sort_highestRated,Highest Rated,Cамый Высокий Рейтинг
+sort_lowestRated,Lowest Rated,Самый Низкий Рейтинг
+tags_pigmented,Pigmented,Пигментированная
+tags_sheer,Sheer,Прозрачная
+tags_lotsFallout,Lots of Fallout,Много осадка
+tags_noFallout,No Fallout,Без осадка
+tags_soft,Soft,Мягкая
+tags_creamy,Creamy,Сливочная
+tags_dry,Dry,Сухая
+nameMode_column,Column Letters,Буквы в Столбец
+nameMode_row,Row Letters,Буквы в Строку
+nameMode_none,None,Никакие
+nameDescription_column,Columns will be assigned letters and rows will be assigned numbers.,"Столбцам будут присвоены буквы,% а строкам - номера."
+nameDescription_row,Columns will be assigned numbers and rows will be assigned letters.,"Столбцам будут присвоены номера,% а строкам - буквы."
+nameDescription_none,Will not auto assign a shade name.,Не будет автоматически присваивать имя оттенку.
+finish_matte,Matte,Матовый
+finish_satin,Satin,Сатин
+finish_shimmer,Shimmer,Шиммер 
+finish_metallic,Metallic,Металлический 
+finish_glitter,Glitter,Блеск
+color_pastelRed,Pastel Red,Пастельно-красный
+color_nude,Nude,Телесный 
+color_lightRed,Light Red,Светло-красный
+color_red,Red,Красный
+color_darkRed,Dark Red,Темно-красный
+color_burgundy,Burgundy,Бордовый
+color_pastelOrange,Pastel Orange,Пастельно-оранжевый
+color_peach,Peach,Персиковый
+color_lightOrange,Light Orange,Светло-оранжевый
+color_orange,Orange,Оранжевый
+color_darkOrange,Dark Orange,Темно-оранжевый
+color_lightBrown,Light Brown,Светло-коричневый
+color_beige,Beige,Бежевый
+color_taupe,Taupe,Серо-коричневый
+color_tan,Tan,Желтовато-коричневый
+color_brown,Brown,Коричневый
+color_rust,Rust,Медный
+color_darkBeige,Dark Beige,Темно-бежевый
+color_darkBrown,Dark Brown,Темно-коричневый
+color_chocolate,Chocolate,Шоколадный
+color_pastelYellow,Pastel Yellow,Пастельно-желтый
+color_cream,Cream,Кремовый
+color_lightYellow,Light Yellow,Светло-желтый
+color_yellow,Yellow,Желтый
+color_lightChartreuse,Light Chartreuse,Светло-салатовый
+color_chartreuse,Chartreuse,Салатовый
+color_darkChartreuse,Dark Chartreuse,Темно-салатовый
+color_pastelGreen,Pastel Green,Пастельно-зеленый
+color_lightGreen,Light Green,Светло-зеленый
+color_green,Green,Зеленый
+color_darkGreen,Dark Green,Темно-зеленый
+color_pastelMint,Pastel Mint,Пастельно-мятный
+color_mint,Mint,Мятный
+color_aquamarine,Aquamarine,Аквамарин
+color_darkAquamarine,Dark Aquamarine,Темный-аквамарин
+color_pastelTurquoise,Pastel Turquoise,Пастельно-бирюзовый
+color_lightTurquoise,Light Turquoise,Светло-бирюзовый
+color_turquoise,Turquoise,Бирюзовый
+color_darkTurquoise,Dark Turquoise,Темно-бирюзовый
+color_lightSkyBlue,Light Sky Blue,Светло-голубой
+color_skyBlue,Sky Blue,Голубой
+color_darkSkyBlue,Dark Sky Blue,Темно-голубой
+color_pastelBlue,Pastel Blue,Пастельно-синий
+color_lightBlue,Light Blue,Светло-синий
+color_blue,Blue,Синий
+color_darkBlue,Dark Blue,Темно-синий
+color_pastelLavender,Pastel Lavender,Пастельно-лавандовый
+color_lavender,Lavender,Лавандовый
+color_indigo,Indigo,Индиго
+color_darkIndigo,Dark Indigo,Темно-индиго
+color_lightPurple,Light Purple,Светло-фиолетовый
+color_purple,Purple,Фиолетовый
+color_darkPurple,Dark Purple,Темно-фиолетовый
+color_mauve,Mauve,Светло-сиреневый
+color_violet,Violet,Сиреневый
+color_darkViolet,Dark Violet,Темно-сиреневый
+color_pastelPink,Pastel Pink,Пастельно-розовый
+color_lightPink,Light Pink,Светло-розовый
+color_pink,Pink,Розовый
+color_darkPink,Dark Pink,Темно-розовый
+color_white,White,Белый
+color_lightGray,Light Gray,Светло-серый
+color_gray,Gray,Серый
+color_darkGray,Dark Gray,Темно-серый
+color_darkTaupe,Dark Taupe,Темно-серо-коричневый
+color_black,Black,Черный
+screen_allSwatches,All Swatches,Все Образцы
+screen_savedLooks,Saved Looks,Сохраненные Образы
+screen_colorWheel,Color Wheel,Цветовое Колесо
+screen_paletteScanner,Palette Scanner,Сканер Палитры
+screen_todayLook,Today's Look,Сегодняшний Образ
+screen_settings,Settings,Настройка
+screen_swatch,Edit Swatch,Изменить Образец
+screen_addPalette,Add Palette,Добавить Палитру
+screen_tutorial,Tutorial,Обучение
+help_colorWheel_0,This screen allows you to find the closest swatch to the color you choose on a color wheel. This is helpful if you are copying a face chart or have a specific color in mind.,"Этот экран позволяет вам найти образец,% наиболее близкий к цвету,% выбранному вами на цветовом круге. Это помогает,% если вы копируете диаграмму лица или хотите использовать определенный цвет."
+help_colorWheel_1,"To use the color wheel,% first drag your finger over the wheel to select the color. The further from the center you go,% the more bright and saturated the color is. Then,% drag the bar below the wheel to choose the darkness of the color. The shade to the right shows the final color.","Чтобы использовать цветовое колесо,% сначала проведите пальцем по колесу,% чтобы выбрать цвет. Чем дальше от центра,% тем ярче и насыщеннее будет цвет. Затем перетащите панель под колесом,% чтобы выбрать темноту цвета. Оттенок справа показывает окончательный цвет."
+help_colorWheel_2,"Press ""Find Colors"" to find the closest swatches in your collection. Repeat this process until you find a swatch you like.","Нажмите «Найти Цвета»,% чтобы найти самые близкие образцы в вашей коллекции. Повторяйте этот процесс,% пока не найдете образец,% который вам нравится."
+help_paletteScanner_0,"This screen can be used to compare other palettes to your existing collection. For example,% when shopping,% you can take a picture of a palette and compare it to your collection to see if you own similar colors. Or when recreating a look,% you can find a picture of the original palettes and compare dupes in your collection.","Этот экран можно использовать для сравнения других палитр с вашей существующей коллекцией. Например,% делая покупки,% вы можете сфотографировать палитру и сравнить ее с вашей коллекцией,% чтобы увидеть,% есть ли у вас похожие цвета. Или при воссоздании образа вы можете найти изображение исходных палитр и сравнить дубликаты в своей коллекции."
+help_paletteScanner_1,"First,% press the ""Add Image"" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows,% add it in sections. It is best to take the pictures in bright lighting,% preferably near a window.","Сначала нажмите кнопку «Добавить Изображение». Вы можете выбрать палитру из сохраненных фотографий или открыть камеру. Если палитра имеет неоднородные столбцы или строки,% добавляйте ее по разделам. Лучше всего делать снимки при ярком освещении,% желательно возле окна."
+help_paletteScanner_2,"Then,% type in the number of columns and rows in the palette.",Затем введите количество столбцов и строк в палитре.
+help_paletteScanner_3,"Next,% drag the outer border to fit the palette's edges. Drag the inner borders to fit each pan's edges. It is better to cut off part of the pans than to go too big. Use only one finger to drag.","Затем перетащите внешнюю границу,% чтобы она соответствовала краям палитры. Перетащите внутренние границы,% чтобы они соответствовали краям каждой тени. Лучше отрезать часть тени,% чем зайти слишком далеко. Для перетаскивания используйте только один палец."
+help_paletteScanner_4,"Last,% press ""Save"". All the swatches' colors and finishes will be detected. You will be taken to a screen to compare each of the palette's swatches to your collection. They will be arranged by the palette's rows.","В заключение,% нажмите «Cохранить». Будут обнаружены все цвета и финишы образцов. Откроется экран для сравнения каждого образца палитры с вашей коллекцией. Они будут расположены рядами палитры."
+help_todayLook_0,"This is all the swatches in the current look. You can press on any swatch for information about it. Press the ""More..."" button for more detailed information.","Это все образцы сегодняшнего образа. Вы можете нажать на любой образец,% чтобы получить о нем дополнительную информацию. Чтобы получить более подробную информацию об образце нажмите кнопку «Больше...»."
+help_todayLook_1,The delete icon in the upper right corner clears the look.,Кнопка удаления в правом верхнем углу удаляет образ.
+help_todayLook_2,"The save icon in the upper right corner saves the look. It will prompt you to input a name. You will then be able to find the look on the ""Saved Looks"" screen. It will allow you to revisit and redo old looks.",Кнопка сохранения в правом верхнем углу сохраняет образ. Вам будет предложено ввести имя. После этого вы сможете найти образ на экране «Сохраненные Образы». Это позволит вам пересматривать и повторять старые образы.
+help_todayLook_3,"The edit icon in the upper right corner allows you to add or remove swatches. Press the red ""X"" in the upper right corner of the swatch to remove it from the look. Press the plus button to see your full collection. Tap on any swatch to see information on it. Double tap on it to add it to the look. Double tap on it again to remove them from the look.","Кнопка изменить в правом верхнем углу позволяет добавить или удалить образец. Нажмите красный «X» в правом верхнем углу образца,% чтобы удалить его из образа. Нажмите кнопку с плюсом,% чтобы увидеть всю вашу коллекцию. Нажмите на любой образец,% чтобы просмотреть информацию о нем. Дважды нажмите на него,% чтобы добавить к образу. Дважды нажмите на него еще раз,% чтобы удалить его из образа."
+help_savedLook_0,"This a look you had previously saved. You can press on any swatch for information about it. Press the ""More..."" button for more detailed information.","Это образ был сохранен раньше. Вы можете нажать на любой образец,% чтобы получить о нем дополнительную информацию. Чтобы получить более подробную информацию об образце нажмите кнопку «Больше...»."
+help_savedLook_1,The delete icon in the upper right corner permanently deletes the look. This action cannot be undone.,Кнопка удаления в правом верхнем углу навсегда удаляет образ. Это действие не может быть отменено.
+help_savedLook_2,The add icon in the upper right corner adds all the swatches in this look to Today's Look.,Кнопка добавления в правом верхнем углу добавляет все образцы этого образа к Сегодняшний Образ.
+help_savedLook_3,"The edit icon in the upper right corner allows you to add or remove swatches. Press the red ""X"" in the upper right corner of the swatch to remove it from the look. Press the plus button to see your full collection. Tap on any of the swatches to see information on them. Double tap on them to add them to the look. Double tap on them again to remove them from the look.","Кнопка изменить в правом верхнем углу позволяет добавить или удалить образец. Нажмите красный «X» в правом верхнем углу образца,% чтобы удалить его из образа. Нажмите кнопку с плюсом,% чтобы увидеть всю вашу коллекцию. Нажмите на любой образец,% чтобы просмотреть информацию о нем. Дважды нажмите на него,% чтобы добавить к образу. Дважды нажмите на него еще раз,% чтобы удалить его из образа."
+help_addPalette_0,"""Palette Divider"" allows you to upload a picture and divide the palette into separate swatches. Then,% it will automatically find the colors and finishes for you. It should be used for most shadows and palettes.",«Разделитель Палитры» позволяет загрузить картинку и разделить палитру на отдельные образцы. Затем он автоматически подберет для вас цвета и Финишы. Его следует использовать для большинства теней и палитр.
+help_addPalette_1,"""Custom"" allows you to input your own swatches,% customizing the colors,% finishes,% and any other information you want to add. It is best for adding irregular palettes that would be difficult to divide into columns and rows.","«Настраиваемый» позволяет вам вводить свои собственные образцы,% настраивая цвета,% финишы,% и любую другую информацию,% которую вы хотите добавить. Это лучше использовать для палитры неправильной формы,% которые сложно разделить на столбцы и строки."
+help_addPalette_2,"First,% press the ""Add Image"" button. You can choose a palette from your saved photos or open the camera. If the palette has nonuniform columns or rows,% add it in sections. It is best to take the pictures in bright lighting,% preferably near an open window.","Сначала нажмите кнопку «Добавить Изображение». Вы можете выбрать палитру из сохраненных фотографий или открыть камеру. Если палитра имеет неоднородные столбцы или строки,% добавляйте ее по разделам. Лучше всего делать снимки при ярком освещении,% желательно возле окна."
+help_addPalette_3,"Then,% type in the number of columns and rows in the palette.",Затем введите количество столбцов и строк в палитре.
+help_addPalette_4,"Next,% drag the outer border to fit the palette's edges. Drag the inner borders to fit each pan's edges. It is better to cut off part of the pans than to go too big. Use only one finger to drag.","Затем перетащите внешнюю границу,% чтобы она соответствовала краям палитры. Перетащите внутренние границы,% чтобы они соответствовали краям каждой тени. Лучше отрезать часть тени,% чем зайти слишком далеко. Для перетаскивания используйте только один палец."
+help_addPalette_5,"Last,% press ""Save"". It will prompt you to add a brand and name for the palette. You can also add the price and weight of the palette. It will calculate the price and weight of each swatch. All the swatches' colors and finishes will be detected.","В заключение,% нажмите «Cохранить». Вам нужно будет добавить марки и название палитры. Вы также можете добавить цену и вес палитры. Программа рассчитает цену и вес каждого образца. Будут обнаружены все цвета и финишы образцов. "
+help_addPalette_6,"You will be taken to a screen to look over the added swatches. They will be arranged by the palette's rows. You can correct the colors of the swatches. You can also edit any of their information,% leave ratings,% or add tags.","Вы попадете на экран,% чтобы просмотреть добавленные образцы. Они будут расположены рядами палитры. Вы можете исправить цвета образцов. Вы также можете изменить любую их информацию,% оставить оценки или добавить теги."
+help_addPaletteList_0,"This is all the added swatches,% arranged by the palette's rows.","Это все добавленные образцы,% расположенные по рядам палитры."
+help_addPaletteList_1,"You can adjust the colors of all the swatches using the text inputs. Type in numbers between -255 and 255. Using a positive number for ""Brightness"" will make the swatches lighter and a negative number will make them darker. Using a positive number for ""Red"" will add red to the swatches and a negative number will remove red. ","Вы можете настроить цвета всех образцов,% используя текстовые поля. Введите числа от -255 до 255. Использование положительного числа для параметра «Яркость» сделает образцы светлее,% а отрицательное число сделает их темнее. Использование положительного числа для «Красный» добавит красный цвет к образцам,% а отрицательное число удалит красный цвет."
+help_addPaletteList_2_0,"To make the swatches more red,% type a positive number in the ""Red"" input.","Чтобы сделать образцы более красными,% введите положительное число в поле «Красный»."
+help_addPaletteList_2_1,"To make the swatches more orange,% type a positive number in the ""Red"" input and a negative number in the ""Blue"" input.","Чтобы сделать образцы более оранжевыми,% введите положительное число в поле «Красный» и отрицательное число в поле «Синий»."
+help_addPaletteList_2_2,"To make the swatches more yellow,% type a positive number in both the ""Red"" and ""Green"" inputs.","Чтобы сделать образцы более желтыми,% введите положительное число в оба поля «Красный» и «Зеленый»."
+help_addPaletteList_2_3,"To make the swatches more green,% type a positive number in the ""Green"" input.","Чтобы сделать образцы более зелеными,% введите положительное число в поле «Зеленый»."
+help_addPaletteList_2_4,"To make the swatches more blue,% type a positive number in ""Blue"" input.","Чтобы сделать образцы более синими,% введите положительное число в поле «Синий»."
+help_addPaletteList_2_5,"To make the swatches more purple,% type a positive number in both the ""Red"" and ""Blue"" inputs.","Чтобы сделать образцы более фиолетовыми,% введите положительное число в оба поля «Красный» и «Синий»."
+help_addPaletteList_3,"You can edit the individual colors of swatches by clicking on one and clicking ""More..."" You can also edit the finish,% weight,% price,% shade name,% tags,% and rating on that screen. Press the green checkmark to return to ""All Swatches.""","Вы можете изменить отдельные цвета образцов,% нажимая на него и нажимая «Больше...». Вы также можете изменить финиш,% вес,% цену,% имя тени,% оценку и теги на этом экране. Нажмите зеленую галочку,% чтобы вернуться к «Все Образцы»."
+paletteScanner_chooseDifferent,Choose a Different Palette,Выберите Другую Палитру
+paletteScanner_savePalette,Save Palette,Сохранить Палитру
+paletteScanner_popupInstructions,Enter a brand and name for this palette:,Введите марку и название этой палитры:
+lookScreen_clearWarning,Are you sure you want to clear the look?,Вы уверены что хотите удалять образ?
+lookScreen_saveWarning,Would you like to save?,Хотите сохранить?
+todayLook_popupInstructions,Enter a name for this look:,Введите название для этого образа:
+todayLook_popupError,You must add a look name.,Добавьте название образа.
+settings_default_language,Language,Язык
+settings_default_notifications,Allow Notifications,Разрешить Уведомления
+settings_default_sort,Default Sort,Сортировка По Умолчанию
+settings_default_shade,Auto Shade Naming,Автоматическое Наименование Оттенков
+settings_shade,Auto Name Settings,Настройка Автоматического Наименование 
+settings_shade_shade,Auto Name Shades With,Автоматические Названия Оттенков С
+settings_default_photo,Photo Upload,Загрузки Фото
+settings_photo,Photo Upload Settings,Настройки Загрузки Фото
+settings_photo_brightness,Brightness,Яркость
+settings_photo_red,Red,Красный
+settings_photo_green,Green,Зеленый
+settings_photo_blue,Blue,Синий
+settings_photo_before,Before,До
+settings_photo_after,After,После
+settings_default_sensitivity,Color Wheel Screen Sensitivity,Цветовое Колесо Чувствительность Экрана
+settings_default_help,Help,Справка
+settings_default_request,Request a Feature,Запросить Функцию
+settings_default_report,Report a Bug,Сообщить Ошибку
+settings_default_about,About,О Программе
+settings_default_created,Created by TechneGames,Создано TechneGames
+settings_default_reset,Reset,Сброс
+settings_default_resetQuestion,"Are you sure you want to reset the entire app,% including settings,% swatches,% and looks? This cannot be undone.","Вы уверены что хотите сбросить все приложение,% включая настройки,% образцы,% и образы? Это не может быть отменено."
+swatch_color,Color,Цвет
+swatch_finish,Finish,Финиш
+swatch_brand,Brand,Марка
+swatch_palette,Palette,Палитра
+swatch_shade,Shade,Имя Тени
+swatch_weight,Weight,Вес
+swatch_price,Price,Цена
+swatch_rating,Rating,Оценка
+swatch_tags,Tags,Теги
+swatch_delete,Delete Swatch,Удалить Образец
+swatch_deleteWarning,Are you sure you want to delete the swatch?,Вы уверены что хотите удалить образец?
+swatch_none,None,Никакие
+swatch_popupInstructions,Enter new tag:,Введите новый тег:
+swatch_popupError,You must enter a tag.,Добавьте тег.
+swatch_popupBtn,Add,Добавить
+addPalette_chooseMode,Add swatches using:,Добавьте образцы используя:
+addPalette_paletteDivider,Palette Divider,Разделитель Палитры
+addPalette_custom,Custom,Настраиваемый 
+addPalette_popupInstructions,Enter a brand and name for this palette:,Введите марку и название этой палитры:
+addPalette_brand,Brand,Марка
+addPalette_brandError,You must add a brand.,Добавьте марку.
+addPalette_palette,Palette,Палитра
+addPalette_paletteError,You must add a palette name.,Добавьте название палитры.
+addPalette_weight,Net Weight (optional),Вес Нетто (не обязательна)
+addPalette_price,Price (optional),Цена (не обязательна)
+tutorial_skip,Skip,Пропустить
+tutorial_screen0_0,"First,% click on the plus button to add your palettes. The screen will have more directions if you press the help icon in the top left corner.","Сначала нажмите кнопку с плюсом,% чтобы добавить свои палитры. На экране появятся дополнительные инструкции,% если вы нажмете кнопку справки в верхнем левом углу."
+tutorial_screen0_1,"Once you have finished,% you can return to the ""All Swatches"" screen and scroll through all the added swatches.","Когда вы закончите,% вы можете вернуться к экрану «Все Образцы» и просмотреть все добавленные образцы."
+tutorial_screen1_0,"Tap on a swatch to get information about it,% such as the color,% finish,% brand,% palette,% and shade name.","Нажмите на образец,% чтобы получить информацию о нем,% как цвет,% финиш,% марка,% палитра и название оттенка."
+tutorial_screen1_1,"Click on the ""More..."" button to see more information about it. That screen will also allow you to change any details,% such as the price,% weight,% rating,% and tags. You can also delete a swatch on this screen.","Нажмите кнопку «Больше...»,% чтобы просмотреть дополнительную информацию. Этот экран также позволит вам изменить любые детали,% как цена,% вес,% оценка и теги. Вы также можете удалить образец на этом экране."
+tutorial_screen2_0,"Double tap on a swatch to add it to ""Today's Look.""",Нажмите дважды на образец чтобы добавить его в «Сегодняшний Образ».
+tutorial_screen2_1,"Once you add it,% you will see the swatch appear in the bottom bar. You can double tap on the bar to open the look's screen. On this screen,% you can save the look or clear it. You can also edit it by adding or removing swatches. That screen will have more directions if you press the help icon in the top left corner.","Когда вы добавите его,% вы увидите,% что образец появляется на нижней панели. Вы можете дважды нажать на панель,% чтобы открыть экран с образом. На этом экране вы можете сохранить образ или удалить его. Вы также можете изменить его,% добавляя или удаляя образцы. На экране появятся дополнительные инструкции,% если вы нажмете кнопку справки в верхнем левом углу."
+tutorial_screen2_2,You will also see another bar open with recommendations from your collection to add to your look. You can interact with them the same way you would any other swatch.,"Также откроется еще одна панель с рекомендациями из вашей коллекции,% которые можно добавить к вашему образу. Вы можете взаимодействовать с ними так же,% как и с любыми другими образцами."
+tutorial_screen3_0,Click on the menu icon in top left to open the navigation to all the other menus.,"Нажмите кнопку меню в верхнем левом углу,% чтобы открыть навигацию ко всем другим меню."
+tutorial_screen3_1,"""All Swatches"" is the screen you have currently been on.","«Все Образцы» это экран,% на котором вы сейчас находитесь."
+tutorial_screen3_2,"""Saved Looks"" has all the looks that you've saved from the ""Today's Look"" screen. Tap on the looks to open them. That screen will have more directions if you press the help icon in the top left corner.","«Сохраненные Образы» содержат все образы,% которые вы сохранили с экрана «Сегодняшний Образ». Нажмите на образы,% чтобы открыть их. На экране появятся дополнительные инструкции,% если вы нажмете кнопку справки в верхнем левом углу."
+tutorial_screen3_3,"""Color Wheel"" allows you to find the nearest swatch to the color you choose on a color wheel. This is helpful if you may be copying a face chart or have a specific color in mind. The screen will have more directions if you press the help icon in the top left corner.","«Цветовое Колесо» позволяет вам найти образец,% наиболее близкий к цвету,% выбранному вами на цветовом колесе. Это помогает,% если вы копируете диаграмму лица или хотите использовать определенный цвет. На экране появятся дополнительные инструкции,% если вы нажмете кнопку справки в верхнем левом углу."
+tutorial_screen4_0,"""Palette Scanner"" can be used to compare other palettes to your existing collection. For example,% when shopping,% you can take a picture of a palette and compare it to your collection to see if you own similar colors. Or when recreating a look,% you can find a picture of the original palettes and compare dupes in your collection. The screen will have more directions if you press the help icon in the top left corner.","«Сканер Палитры» можно использовать для сравнения других палитр с вашей существующей коллекцией. Например,% делая покупки,% вы можете сфотографировать палитру и сравнить ее с вашей коллекцией,% чтобы увидеть,% есть ли у вас похожие цвета. Или при воссоздании образа вы можете найти изображение исходных палитр и сравнить дубликаты в своей коллекции. На экране появятся дополнительные инструкции,% если вы нажмете кнопку справки в верхнем левом углу."
+tutorial_screen4_1,"""Settings"" has all the settings for the app. You can also find this tutorial again if you press the help button there. If you wish to report any bugs or request a feature,% you can do so there.","«Настройка» имеет все настройки для программы. Вы также можете снова найти это обучение,% если нажмете там кнопку справки. Если вы хотите сообщить о каких-либо ошибках или запросить функцию,% вы можете сделать это там."
+colorPicker_btn,Find Colors,Найти Цвета
+imagePicker_chooseMode,Choose photo from:,Выберите фото из:
+imagePicker_gallery,Open Gallery,Открыть Галерею
+imagePicker_galleryError,Gallery permissions are denied. Please open your phone's settings to allow GlamKit to access your gallery.,"Разрешение галереи отказано. Пожалуйста,% откройте настройки вашего телефона,% чтобы позволить GlamKit получить доступ к вашей галерее. "
+imagePicker_camera,Open Camera,Открыть Камеру
+imagePicker_cameraError,Camera permissions are denied. Please open your phone's settings to allow GlamKit to access your camera.,"Разрешения камеры запрещены. Пожалуйста,% откройте настройки вашего телефона,% чтобы позволить GlamKit получить доступ к вашей камере."
+infoBox_color,Color,Цвет:
+infoBox_finish,Finish:,Финиш:
+infoBox_brand,Brand:,Марка:
+infoBox_palette,Palette:,Палитра:
+infoBox_shade,Shade:,Имя Тени:
+infoBox_more,More...,Больше...
+paletteDivider_warning,"If the palette does not have uniform columns and rows,% try to add it in sections.","Если в палитре нет однородных столбцов и строк,% попробуйте добавить по разделам."
+paletteDivider_columns,Palette Columns,Столбцы Палитры
+paletteDivider_rows,Palette Rows,Строки Палитры
+paletteDivider_add,Add Image,Добавить Изображение
