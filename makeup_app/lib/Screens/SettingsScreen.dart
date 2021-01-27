@@ -136,9 +136,9 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           getDefaultPhotoField(context, height, noBottomDecoration, padding, margin),
           getDefaultDistanceField(context, height, decoration, padding, margin),
           getDefaultHelpField(context, height, noBottomDecoration, padding, margin),
+          getDefaultAboutField(context, height, noBottomDecoration, padding, margin),
           getDefaultRequestField(context, height, noBottomDecoration, padding, margin),
           getDefaultReportField(context, height, noBottomDecoration, padding, margin),
-          getDefaultAboutField(context, height, noBottomDecoration, padding, margin),
           getDefaultTermsField(context, height, noBottomDecoration, padding, margin),
           getDefaultPrivacyField(context, height, decoration, padding, margin),
           getDefaultResetField(context, height, decoration, padding, margin),
@@ -934,7 +934,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       padding: padding,
       child: InkWell(
         onTap: () async {
-          String url = 'https://technegames.com/contact.php?type=feature';
+          String url = 'http://www.technegames.com/contact.php?type=feature';
           if(await canLaunch(url)) {
             await launch(url);
           } else {
@@ -973,7 +973,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       padding: padding,
       child: InkWell(
         onTap: () async {
-          String url = 'https://technegames.com/contact.php?type=bug';
+          String url = 'http://www.technegames.com/contact.php?type=bug';
           if(await canLaunch(url)) {
             await launch(url);
           } else {
@@ -1056,7 +1056,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       padding: padding,
       child: InkWell(
         onTap: () async {
-          String url = 'https://technegames.com/tos';
+          String url = 'http://www.technegames.com/tos';
           if(await canLaunch(url)) {
             await launch(url);
           } else {
@@ -1096,7 +1096,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       margin: margin,
       child: InkWell(
         onTap: () async {
-          String url = 'https://technegames.com/privacy';
+          String url = 'http://www.technegames.com/privacy';
           if(await canLaunch(url)) {
             await launch(url);
           } else {

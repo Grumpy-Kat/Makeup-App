@@ -3,8 +3,5 @@ Appearance:
 Text:
 
 Features:
-- On AddPaletteDividerScreen, add a delete button to mass delete the newly added palette
-- In the future, add button to mass delete a palette, brand, or another filter
 
 Bugs:
--// Prioritize opposites less in RecommendedSwatchBar
