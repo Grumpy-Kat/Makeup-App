@@ -473,6 +473,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     Navigator.pop(context);
     widget.onEnter(_swatches);
   }
+
   void saveActual() async {
     await getModel();
     _swatches = [];
@@ -533,7 +534,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         }
         //create swatch
         _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: shade, rating: 5, tags: []));
-        print('${_swatches.last.color.getValues()} $finish');
+        //print('${_swatches.last.color.getValues()} $finish');
       }
     }
   }

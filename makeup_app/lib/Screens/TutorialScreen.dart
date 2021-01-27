@@ -7,6 +7,7 @@ import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../localizationIO.dart';
+import '../settingsIO.dart' as IO;
 
 class TutorialScreen extends StatefulWidget {
   @override
@@ -31,6 +32,7 @@ class TutorialScreenState extends State<TutorialScreen> {
       FirebaseFirestore.instance.collection('swatches').add({ 'data': '' }).then(
         (value) {
           globals.userID = value.id;
+          IO.save();
           print('${globals.hasLoaded} ${globals.userID}');
           globals.login();
         }

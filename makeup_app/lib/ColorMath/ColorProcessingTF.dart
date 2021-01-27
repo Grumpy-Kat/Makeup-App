@@ -14,8 +14,13 @@ Future<void> getModel() async {
     iosAllowCellularAccess: true,
     iosAllowBackgroundDownloading: true,
   );
-  await FirebaseModelManager.instance.download(model, conditions);
-  File modelFile = await FirebaseModelManager.instance.getLatestModelFile(model);
+  FirebaseModelManager manager = FirebaseModelManager.instance;
+  await manager.download(model, conditions);
+  bool canContinue = await manager.isModelDownloaded(model);
+  while(!canContinue) {
+    canContinue = await manager.isModelDownloaded(model);
+  }
+  File modelFile = await manager.getLatestModelFile(model);
   interpreter = Interpreter.fromFile(modelFile);
 }
 
@@ -25,11 +30,11 @@ Future<String> getFinish(Image img) async {
   }
   Image newImg = copyResize(grayscale(img), width: 32, height: 32);
   List<List<List<List<double>>>> input = [List<List<List<double>>>(newImg.height)];
-  for(var i = 0; i < newImg.height; i++) {
-    input[0][i] = List<List<double>>(newImg.width);
-    for(var j = 0; j < newImg.width; j++) {
-      int pixel = newImg.getPixel(j, i);
-      input[0][i][j] = [getRed(pixel) / 255.0];
+  for(var x = 0; x < newImg.height; x++) {
+    input[0][x] = List<List<double>>(newImg.width);
+    for(var y = 0; y < newImg.width; y++) {
+      int pixel = newImg.getPixel(y, x);
+      input[0][x][y] = [getRed(pixel) / 255.0];
     }
   }
   //print(input);

@@ -1,7 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:notification_permissions/notification_permissions.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
@@ -137,7 +138,9 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           getDefaultHelpField(context, height, noBottomDecoration, padding, margin),
           getDefaultRequestField(context, height, noBottomDecoration, padding, margin),
           getDefaultReportField(context, height, noBottomDecoration, padding, margin),
-          getDefaultAboutField(context, height, decoration, padding, margin),
+          getDefaultAboutField(context, height, noBottomDecoration, padding, margin),
+          getDefaultTermsField(context, height, noBottomDecoration, padding, margin),
+          getDefaultPrivacyField(context, height, decoration, padding, margin),
           getDefaultResetField(context, height, decoration, padding, margin),
         ],
       ),
@@ -930,7 +933,14 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       decoration: decoration,
       padding: padding,
       child: InkWell(
-        onTap: () { },
+        onTap: () async {
+          String url = 'https://technegames.com/contact.php?type=feature';
+          if(await canLaunch(url)) {
+            await launch(url);
+          } else {
+            print('Can\'t launch $url');
+          }
+        },
         child: Row(
           children: <Widget>[
             Container(
@@ -962,7 +972,14 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       decoration: decoration,
       padding: padding,
       child: InkWell(
-        onTap: () { },
+        onTap: () async {
+          String url = 'https://technegames.com/contact.php?type=bug';
+          if(await canLaunch(url)) {
+            await launch(url);
+          } else {
+            print('Can\'t launch $url');
+          }
+        },
         child: Row(
           children: <Widget>[
             Container(
@@ -993,7 +1010,6 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       height: height,
       decoration: decoration,
       padding: padding,
-      margin: margin,
       child: Align(
         alignment: Alignment.centerLeft,
         child: InkWell(
@@ -1027,6 +1043,85 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  //field to go to bug report link, shown in default mode
+  Widget getDefaultTermsField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
+    return Container(
+      height: height,
+      decoration: decoration,
+      padding: padding,
+      child: InkWell(
+        onTap: () async {
+          String url = 'https://technegames.com/tos';
+          if(await canLaunch(url)) {
+            await launch(url);
+          } else {
+            print('Can\'t launch $url');
+          }
+        },
+        child: Row(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_default_terms')} '),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                child: Icon(
+                  Icons.description,
+                  size: theme.primaryIconSize,
+                  color: theme.tertiaryTextColor,
+                  semanticLabel: 'Terms of Service',
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //field to go to bug report link, shown in default mode
+  Widget getDefaultPrivacyField(BuildContext context, double height, Decoration decoration, EdgeInsets padding, EdgeInsets margin) {
+    return Container(
+      height: height,
+      decoration: decoration,
+      padding: padding,
+      margin: margin,
+      child: InkWell(
+        onTap: () async {
+          String url = 'https://technegames.com/privacy';
+          if(await canLaunch(url)) {
+            await launch(url);
+          } else {
+            print('Can\'t launch $url');
+          }
+        },
+        child: Row(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(right: 3),
+              child: getLabel('${getString('settings_default_privacy')} '),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                child: Icon(
+                  Icons.security,
+                  size: theme.primaryIconSize,
+                  color: theme.tertiaryTextColor,
+                  semanticLabel: 'Privacy Policy',
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

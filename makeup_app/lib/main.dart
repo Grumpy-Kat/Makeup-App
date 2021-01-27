@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:math';
 import 'ColorMath/ColorObjects.dart';
 import 'ColorMath/ColorConversions.dart';
+import 'ColorMath/ColorProcessingTF.dart';
 import 'Widgets/Swatch.dart';
 import 'globals.dart' as globals;
 import 'theme.dart' as theme;
@@ -49,6 +50,7 @@ class GlamKitAppState extends State<GlamKitApp> {
       await IO.load();
     }
     await globals.login();
+    print(globals.userID);
     await localizationIO.load();
     //generateRainbow();
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
@@ -60,6 +62,7 @@ class GlamKitAppState extends State<GlamKitApp> {
     globals.debug = false;
     allSwatchesIO.init();
     savedLooksIO.init();
+    getModel();
     //await clearSave();
     //await IO.clear();
   }
@@ -90,6 +93,8 @@ class GlamKitAppState extends State<GlamKitApp> {
   }
 
   Widget _getHome() {
+    print(globals.hasLoaded);
+    print(globals.hasDoneTutorial);
     if(globals.hasLoaded) {
       if(globals.hasDoneTutorial) {
         navigation.init(routes.ScreenRoutes.AllSwatchesScreen);
