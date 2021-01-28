@@ -125,7 +125,7 @@ void addHasLoadedListener(OnVoidAction hasLoadedListener) {
 //settings
 //basic app info
 final String appName = 'GlamKit';
-final String appVersion = '0.6';
+final String appVersion = '1.0';
 bool debug = true;
 
 //user id, used for locating saved swatches and looks in Firestore
