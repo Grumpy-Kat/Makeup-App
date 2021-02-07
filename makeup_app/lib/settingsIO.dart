@@ -58,6 +58,9 @@ void save() async {
     //ColorWheelScreen distance
     double colorWheel = globals.colorWheelDistance;
     //save to database
+    DocumentSnapshot docSnapshot;
+    docSnapshot = await _database.doc(globals.userID).get();
+    Map<String, dynamic> data = ((docSnapshot != null && docSnapshot.exists) ? docSnapshot.data() : {});
     await _database.doc(globals.userID).set(
         {
           'sort': sort,
@@ -68,6 +71,7 @@ void save() async {
           'blue': blue,
           'nameMode': nameMode,
           'colorWheel': colorWheel,
+          'debug': data.containsKey('debug') ? data['debug'] : <String>[],
         }
     );
   }
@@ -113,4 +117,33 @@ Future<bool> load() async {
   }
   globals.hasLoaded = true;
   return globals.hasLoaded;
+}
+
+Future<void> addDebug(String debug) async {
+  if(globals.userID != '') {
+    try {
+      DocumentReference doc = _database.doc(globals.userID);
+      Map<String, dynamic> data = (await doc.get()).data();
+      List<dynamic> prevDebug = data.containsKey('debug') ? data['debug'] : [];
+      prevDebug.add(debug);
+      await doc.update(
+          {
+            'debug': prevDebug,
+          }
+      );
+    } catch(e) {
+      print(e);
+    }
+  }
+}
+
+Future<void> clearDebug() async {
+  if(globals.userID != '') {
+    DocumentReference doc = _database.doc(globals.userID);
+    await doc.update(
+        {
+          'debug': [],
+        }
+    );
+  }
 }

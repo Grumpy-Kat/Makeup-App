@@ -22,12 +22,26 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Not required.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Not required.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To be able to take pictures of palettes and swatches.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Not required.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>For analytics purposes.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>For analytics purposes.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To be able to take videos of palettes and swatches.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Not required.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To be able to upload palettes and swatches.</string>
+	<string>To be able to upload pictures of palettes and swatches.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Not required.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
