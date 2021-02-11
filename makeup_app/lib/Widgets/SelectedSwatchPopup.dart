@@ -39,7 +39,7 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
     return Column(
       children: <Widget> [
         Expanded(
-      child: SingleSwatchList(
+          child: SingleSwatchList(
             addSwatches: _swatchesFuture,
             updateSwatches: (List<int> swatches) { this._allSwatches = swatches; },
             selectedSwatches: _selectedSwatches,

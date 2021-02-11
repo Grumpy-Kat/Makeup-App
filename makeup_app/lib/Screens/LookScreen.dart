@@ -44,7 +44,6 @@ class LookScreenState extends State<LookScreen> with ScreenState {
   List<int> _swatches = [];
   Future<List<int>> _swatchesFuture;
 
-  bool _isEditing = false;
   bool _hasEdited = false;
 
   @override
@@ -106,53 +105,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         showPlus: false,
         defaultSort: globals.sort,
         sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
-        showDelete: _isEditing,
-      ),
-      //if is in edit mode, show floating action button to add or remove swatches
-      floatingActionButton: !_isEditing ? null : Container(
-        margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
-        width: 75,
-        height: 75,
-        child: FloatingActionButton(
-          heroTag: 'LookScreen Plus',
-          child: Icon(
-            Icons.add,
-            color: theme.accentTextColor,
-            size: 50.0,
-          ),
-          onPressed: () {
-            globalWidgets.openDialog(
-              context,
-              (BuildContext context) {
-                return Padding(
-                  padding: EdgeInsets.zero,
-                  child: Dialog(
-                    insetPadding: EdgeInsets.symmetric(horizontal: 0),
-                    shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      child: SelectedSwatchPopup(
-                        swatches: _swatches,
-                        onChange: (List<int> swatches) {
-                          _swatches = swatches;
-                        },
-                        onSave: (List<int> swatches) {
-                          setState(() {
-                            widget.updateSwatches(swatches);
-                            _hasEdited = true;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                );
-              }
-            );
-          },
-        ),
+        showDelete: false,
       ),
     );
   }
@@ -242,11 +195,41 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         ),
         onPressed: () {
           setState(() {
-            //switches whether in edit mode, which allows user to add or delete swatches from list
-            this._isEditing = !this._isEditing;
-            if(!_isEditing && widget.saveOnEdit) {
-              widget.onSavePressed();
-            }
+            //show popup to add or remove swatches
+            globalWidgets.openDialog(
+              context,
+              (BuildContext context) {
+                return Padding(
+                  padding: EdgeInsets.zero,
+                  child: Dialog(
+                    insetPadding: EdgeInsets.symmetric(horizontal: 0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: SelectedSwatchPopup(
+                        swatches: _swatches,
+                        onChange: (List<int> swatches) {
+                          _swatches = swatches;
+                        },
+                        onSave: (List<int> swatches) {
+                          setState(() {
+                            widget.updateSwatches(swatches);
+                            if(widget.saveOnEdit) {
+                              widget.onSavePressed();
+                            } else {
+                              _hasEdited = true;
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              }
+            );
           });
         },
       ),

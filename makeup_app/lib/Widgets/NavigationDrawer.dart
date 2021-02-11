@@ -72,7 +72,7 @@ class NavigationDrawer extends StatelessWidget {
           //2 = TodayLookScreen
           ListTile(
             leading: Icon(
-              Icons.save,
+              Icons.today,
               size: theme.primaryIconSize,
               color: currTab == 2 ? selectedColor : unselectedColor,
               semanticLabel: 'Today\'s Look',
