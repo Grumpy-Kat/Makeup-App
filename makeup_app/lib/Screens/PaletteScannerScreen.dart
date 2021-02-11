@@ -65,7 +65,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
       return buildComplete(
         context,
         getString('screen_paletteScanner'),
-        3,
+        4,
         body: Padding(
           padding: EdgeInsets.only(top: 15),
           child: Column(
@@ -122,7 +122,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
       return buildComplete(
         context,
         getString('screen_paletteScanner'),
-        3,
+        4,
         //help button
         rightBar: [
           globalWidgets.getHelpBtn(

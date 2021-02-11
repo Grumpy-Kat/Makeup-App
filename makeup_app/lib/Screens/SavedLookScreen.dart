@@ -34,6 +34,7 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
     //utilizes LookScreen for all functionality
     return LookScreen(
       look: SavedLookScreen.look,
+      screenId: 10,
       updateSwatches: (List<int> swatches) {
         setState(() {
           SavedLookScreen.look.swatches = swatches;

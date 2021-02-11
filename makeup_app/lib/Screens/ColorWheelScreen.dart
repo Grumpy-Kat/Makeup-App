@@ -58,7 +58,7 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
     return buildComplete(
       context,
       getString('screen_colorWheel'),
-      2,
+      3,
       //help button
       rightBar: [
         globalWidgets.getHelpBtn(

@@ -12,6 +12,7 @@ import 'Screen.dart';
 
 class LookScreen extends StatefulWidget {
   final Look look;
+  final int screenId;
 
   final OnSwatchListAction updateSwatches;
 
@@ -33,7 +34,7 @@ class LookScreen extends StatefulWidget {
   final bool showEdit;
   final bool saveOnEdit;
 
-  LookScreen({ @required this.look, @required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true, this.saveOnEdit = false });
+  LookScreen({ @required this.look, @required this.screenId, @required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true, this.saveOnEdit = false });
 
   @override
   LookScreenState createState() => LookScreenState();
@@ -90,7 +91,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return buildComplete(
       context,
       widget.look.name,
-      10,
+      widget.screenId,
       leftBar: leftBar,
       rightBar: rightBar,
       //scroll view to show all swatches

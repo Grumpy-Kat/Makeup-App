@@ -106,7 +106,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     return buildComplete(
       context,
       title,
-      4,
+      5,
       //back button
       leftBar: (mode == Mode.Default) ? null : globalWidgets.getBackButton(() => setState(() => mode = Mode.Default)),
       body: body,
@@ -130,7 +130,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       child: Column(
         children: <Widget>[
           getDefaultLanguageField(context, height, decoration, padding, margin),
-          getDefaultNotificationsField(context, height, decoration, padding, margin),
+          //getDefaultNotificationsField(context, height, decoration, padding, margin),
           getDefaultSortField(context, height, noBottomDecoration, padding, margin),
           getDefaultShadeField(context, height, noBottomDecoration, padding, margin),
           getDefaultPhotoField(context, height, noBottomDecoration, padding, margin),

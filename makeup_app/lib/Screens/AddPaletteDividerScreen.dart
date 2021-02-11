@@ -303,15 +303,15 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       ),
       //check button to complete
       floatingActionButton: Container(
-        margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
-        width: 75,
-        height: 75,
+        margin: EdgeInsets.only(right: 15, bottom: (MediaQuery.of(context).size.height * 0.1) + 15),
+        width: 65,
+        height: 65,
         child: FloatingActionButton(
           heroTag: 'AddPaletteScreen Check',
           backgroundColor: theme.checkTextColor,
           child: Icon(
             Icons.check,
-            size: 45,
+            size: 40,
             color: theme.accentTextColor,
           ),
           onPressed: onCheckButton,

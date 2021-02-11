@@ -68,14 +68,14 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
         onSwatchDoubleTap: (int i, int id) { _onTap(i); },
       ),
       floatingActionButton: Container(
-        margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
-        width: 75,
-        height: 75,
+        margin: EdgeInsets.only(right: 15, bottom: (MediaQuery.of(context).size.height * 0.1) + 15),
+        width: 65,
+        height: 65,
         child: FloatingActionButton(
           child: Icon(
             Icons.add,
             color: theme.accentTextColor,
-            size: 45.0,
+            size: 40.0,
           ),
           onPressed: () {
             globalWidgets.openTextDialog(

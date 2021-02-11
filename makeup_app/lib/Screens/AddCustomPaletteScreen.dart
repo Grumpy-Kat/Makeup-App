@@ -84,15 +84,15 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
         children: <Widget>[
           //plus button to add swatches
           Container(
-            margin: EdgeInsets.only(right: 0, bottom: 12.5),
-            width: 63,
-            height: 63,
+            margin: EdgeInsets.only(right: 8, bottom: 13),
+            width: 57,
+            height: 57,
             child: FloatingActionButton(
               heroTag: 'AddPaletteScreen Plus',
               backgroundColor: theme.accentColor,
               child: Icon(
                 Icons.add,
-                size: 38,
+                size: 36,
                 color: theme.accentTextColor,
               ),
               onPressed: () {
@@ -131,15 +131,15 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
           ),
           //check button to complete
           Container(
-            margin: EdgeInsets.only(right: 12.5, bottom: (MediaQuery.of(context).size.height * 0.1) + 12.5),
-            width: 75,
-            height: 75,
+            margin: EdgeInsets.only(right: 15, bottom: (MediaQuery.of(context).size.height * 0.1) + 15),
+            width: 65,
+            height: 65,
             child: FloatingActionButton(
               heroTag: 'AddPaletteScreen Check',
               backgroundColor: theme.checkTextColor,
               child: Icon(
                 Icons.check,
-                size: 45,
+                size: 40,
                 color: theme.accentTextColor,
               ),
               onPressed: onCheckButton,

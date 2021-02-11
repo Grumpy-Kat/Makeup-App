@@ -18,9 +18,10 @@ class NavigationDrawer extends StatelessWidget {
     menus = {
       0: routes.ScreenRoutes.AllSwatchesScreen,
       1: routes.ScreenRoutes.SavedLooksScreen,
-      2: routes.ScreenRoutes.ColorWheelScreen,
-      3: routes.ScreenRoutes.PaletteScannerScreen,
-      4: routes.ScreenRoutes.SettingsScreen,
+      2: routes.ScreenRoutes.TodayLookScreen,
+      3: routes.ScreenRoutes.ColorWheelScreen,
+      4: routes.ScreenRoutes.PaletteScannerScreen,
+      5: routes.ScreenRoutes.SettingsScreen,
     };
     Color selectedColor = theme.accentColor;
     TextStyle selectedText = TextStyle(color: theme.accentColorDark, fontSize: theme.primaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: theme.fontFamily);
@@ -68,47 +69,61 @@ class NavigationDrawer extends StatelessWidget {
             ),
             onTap: () { routePage(context, 1); },
           ),
-          //2 = ColorWheelScreen
+          //2 = TodayLookScreen
           ListTile(
             leading: Icon(
-              Icons.colorize,
+              Icons.save,
               size: theme.primaryIconSize,
               color: currTab == 2 ? selectedColor : unselectedColor,
-              semanticLabel: 'Color Wheel',
+              semanticLabel: 'Today\'s Look',
             ),
             title: Text(
-              getString('screen_colorWheel'),
+              getString('screen_todayLook'),
               style: currTab == 2 ? selectedText : unselectedText,
             ),
             onTap: () { routePage(context, 2); },
           ),
-          //3 = PaletteScannerScreen
+          //3 = ColorWheelScreen
           ListTile(
             leading: Icon(
-              Icons.linked_camera,
+              Icons.colorize,
               size: theme.primaryIconSize,
               color: currTab == 3 ? selectedColor : unselectedColor,
-              semanticLabel: 'Palette Scanner',
+              semanticLabel: 'Color Wheel',
             ),
             title: Text(
-              getString('screen_paletteScanner'),
+              getString('screen_colorWheel'),
               style: currTab == 3 ? selectedText : unselectedText,
             ),
             onTap: () { routePage(context, 3); },
           ),
-          //4 = SettingsScreen
+          //4 = PaletteScannerScreen
+          ListTile(
+            leading: Icon(
+              Icons.linked_camera,
+              size: theme.primaryIconSize,
+              color: currTab == 4 ? selectedColor : unselectedColor,
+              semanticLabel: 'Palette Scanner',
+            ),
+            title: Text(
+              getString('screen_paletteScanner'),
+              style: currTab == 4 ? selectedText : unselectedText,
+            ),
+            onTap: () { routePage(context, 4); },
+          ),
+          //5 = SettingsScreen
           ListTile(
             leading: Icon(
               Icons.settings,
               size: theme.primaryIconSize,
-              color: currTab == 4 ? selectedColor : unselectedColor,
+              color: currTab == 5 ? selectedColor : unselectedColor,
               semanticLabel: 'Settings',
             ),
             title: Text(
               getString('screen_settings'),
-              style: currTab == 4 ? selectedText : unselectedText,
+              style: currTab == 5 ? selectedText : unselectedText,
             ),
-            onTap: () { routePage(context, 4); },
+            onTap: () { routePage(context, 5); },
           ),
         ],
       ),

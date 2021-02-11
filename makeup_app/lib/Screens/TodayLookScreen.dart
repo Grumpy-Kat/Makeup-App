@@ -36,6 +36,7 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
     //utilizes LookScreen for all functionality
     return LookScreen(
       look: look,
+      screenId: 2,
       updateSwatches: (List<int> swatches) {
         setState(() {
           globals.currSwatches.set(swatches);
