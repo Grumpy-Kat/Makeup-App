@@ -2,32 +2,59 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:firebase_ml_custom/firebase_ml_custom.dart';
 import 'package:image/image.dart';
 import 'dart:io';
+import 'dart:async';
 
 FirebaseCustomRemoteModel model;
 Interpreter interpreter;
+int downloadAttempts = 0;
 List<String> labels = ['finish_matte', 'finish_satin', 'finish_shimmer', 'finish_metallic', 'finish_glitter'];
 
-Future<void> getModel() async {
+Future<bool> getModel() async {
+  if(interpreter != null) {
+    //already downloaded, nothing to be done
+    return false;
+  }
   model = FirebaseCustomRemoteModel('Finish-Detection');
   FirebaseModelDownloadConditions conditions = FirebaseModelDownloadConditions(
-    androidRequireWifi: true,
+    androidRequireWifi: false,
     iosAllowCellularAccess: true,
     iosAllowBackgroundDownloading: true,
   );
   FirebaseModelManager manager = FirebaseModelManager.instance;
-  await manager.download(model, conditions);
-  bool canContinue = await manager.isModelDownloaded(model);
-  while(!canContinue) {
-    canContinue = await manager.isModelDownloaded(model);
-  }
-  File modelFile = await manager.getLatestModelFile(model);
-  interpreter = Interpreter.fromFile(modelFile);
+  bool hadException = false;
+  //don't attempt too long if most likely won't work
+  await (manager.download(model, conditions).timeout(Duration(seconds: (downloadAttempts >= 3 ? 1 : 3))).then(
+    (value) async {
+      bool canContinue = false;
+      do {
+        canContinue = await manager.isModelDownloaded(model);
+      } while(!canContinue);
+      File modelFile = await manager.getLatestModelFile(model);
+      interpreter = Interpreter.fromFile(modelFile);
+    },
+    onError: (e) async {
+      downloadAttempts++;
+      hadException = true;
+    }
+  ));
+  return hadException;
 }
 
 Future<String> getFinish(Image img) async {
-  if(interpreter == null) {
-    await getModel();
+  bool hadException = await getModel();
+  if(hadException) {
+    if(interpreter == null) {
+      print('Unable to get internet');
+      return labels[0];
+    } else {
+      return await _getFinishActual(img);
+    }
+  } else {
+    return await _getFinishActual(img);
   }
+}
+
+Future<String> _getFinishActual(Image img) async {
   Image newImg = copyResize(grayscale(img), width: 32, height: 32);
   List<List<List<List<double>>>> input = [List<List<List<double>>>(newImg.height)];
   for(var x = 0; x < newImg.height; x++) {
@@ -39,6 +66,7 @@ Future<String> getFinish(Image img) async {
   }
   //print(input);
   List output = List(1 * 5).reshape([1, 5]);
+  print(interpreter == null);
   interpreter.run(input, output);
   //print(output);
   int index = 0;
