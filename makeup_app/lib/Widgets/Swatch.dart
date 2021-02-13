@@ -39,6 +39,20 @@ class Swatch {
     //return id == other.id && color == other.color && finish == other.finish && brand == other.brand && palette == other.palette && shade == other.shade && rating == other.rating && tags == other.tags;
     return id == other.id;
   }
+  
+  Map<String, dynamic> getMap() {
+    return {
+      'color': color,
+      'finish': finish,
+      'brand': brand,
+      'palette': palette,
+      'shade': shade,
+      'weight': weight,
+      'price': price,
+      'rating': rating,
+      'tags': tags,
+    };
+  }
 
   @override
   String toString() {

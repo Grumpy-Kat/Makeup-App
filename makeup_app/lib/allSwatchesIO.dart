@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
 import 'Widgets/Swatch.dart';
+import 'Widgets/Filter.dart';
 import 'globalIO.dart';
 import 'globals.dart' as globals;
 import 'types.dart';
@@ -223,6 +224,31 @@ Future<Map<Widget, List<int>>> sortMultiple(List<Widget> keys, List<List<int>> v
   Map<Widget, List<int>> ret = {};
   for(int i = 0; i < keys.length; i++) {
     ret[keys[i]] = await sort(values[i], (a, b) => a.compareTo(b, (swatch) => compare(swatch, i)));
+  }
+  return ret;
+}
+
+Future<List<int>> filter(List<int> ids, List<Filter> filters) async {
+  List<int> ret = ids;
+  for (int i = 0; i < ids.length; i++) {
+    Map<String, dynamic> swatchAttributes = swatches[i].getMap();
+    for (int j = 0; j < filters.length; j++) {
+      String attribute = filters[j].attribute;
+      if(swatchAttributes.containsKey(attribute)) {
+        if(!filters[j].contains(swatchAttributes[attribute])) {
+          ret.removeAt(i);
+          break;
+        }
+      }
+    }
+  }
+  return ret;
+}
+
+Future<Map<Widget, List<int>>> filterMultiple(List<Widget> keys, List<List<int>> values, List<Filter> filters) async {
+  Map<Widget, List<int>> ret = {};
+  for(int i = 0; i < keys.length; i++) {
+    ret[keys[i]] = await filter(values[i], filters);
   }
   return ret;
 }
