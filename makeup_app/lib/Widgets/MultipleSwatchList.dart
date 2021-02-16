@@ -14,7 +14,7 @@ class MultipleSwatchList extends StatefulWidget {
   final OnSwatchAction onTap;
   final OnSwatchAction onDoubleTap;
 
-  MultipleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, void Function(int, int) onSwatchTap, bool overrideSwatchOnDoubleTap = false, void Function(int, int) onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
+  MultipleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool showDeleteFiltered = false, bool overrideSwatchOnTap = false, void Function(int, int) onSwatchTap, bool overrideSwatchOnDoubleTap = false, void Function(int, int) onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
     addSwatches: addSwatches,
     orgAddSwatches: addSwatches,
     selectedSwatches: selectedSwatches ?? [],
@@ -26,6 +26,7 @@ class MultipleSwatchList extends StatefulWidget {
     sort: sort,
     defaultSort: defaultSort,
     showDelete: showDelete,
+    showDeleteFiltered: showDeleteFiltered,
     overrideOnTap: overrideSwatchOnTap,
     onTap: onSwatchTap,
     overrideOnDoubleTap: overrideSwatchOnDoubleTap,
@@ -181,6 +182,16 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
         ],
       ),
     );
+  }
+
+  @override
+  Future<void> deleteSwatches() async {
+    List<int> delete = [];
+    //compress into single list
+    for(int i = 0; i < _swatches.length; i++) {
+      delete.addAll(_swatches[i]);
+    }
+    await IO.removeIDsMany(delete);
   }
 
   @override

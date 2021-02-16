@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Filter.dart';
 import '../theme.dart' as theme;
+import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
 import '../localizationIO.dart';
 
@@ -25,6 +26,7 @@ class SwatchList {
   final String defaultSort;
 
   final bool showDelete;
+  final bool showDeleteFiltered;
 
   final bool overrideOnTap;
   final Function onTap;
@@ -35,7 +37,7 @@ class SwatchList {
   final bool showEndDrawer;
   final OnVoidAction openEndDrawer;
 
-  SwatchList({ @required this.addSwatches, this.orgAddSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showNoFilteredColorsFound = true, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap, this.showEndDrawer = true, this.openEndDrawer });
+  SwatchList({ @required this.addSwatches, this.orgAddSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showNoFilteredColorsFound = true, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.showDeleteFiltered = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap, this.showEndDrawer = true, this.openEndDrawer });
 }
 
 mixin SwatchListState {
@@ -136,7 +138,17 @@ mixin SwatchListState {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         buildSortDropdown(context),
-        if(swatchList.showEndDrawer) buildFilterBtn(context),
+        if(swatchList.showEndDrawer) Container(
+          margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              if(swatchList.showDeleteFiltered && filters.length > 0) buildDeleteBtn(context),
+              buildFilterBtn(context),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -186,8 +198,10 @@ mixin SwatchListState {
 
   Widget buildFilterBtn(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(15, 15, 0, 15),
+      //TODO: see if bar and buttons are large enough to comfortably click and see
+      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
       child: IconButton(
+        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
         color: theme.primaryColor,
         onPressed: () {
           if(swatchList.openEndDrawer != null) {
@@ -204,6 +218,39 @@ mixin SwatchListState {
     );
   }
 
+  Widget buildDeleteBtn(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      child: IconButton(
+        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+        color: theme.primaryColor,
+        onPressed: () {
+          //TODO: add proper translation
+          globalWidgets.openTwoButtonDialog(
+            context,
+            'Are you sure you want to delete the currently filtered swatches? They will be permanently deleted and this action is unable to be undone.',
+            () {
+              globalWidgets.openLoadingDialog(context);
+              deleteSwatches().then((value) {
+                filters = [];
+                sortAndFilterSwatches();
+                setState(() { });
+                Navigator.pop(context);
+              });
+            },
+            () { },
+          );
+        },
+        icon: Icon(
+          Icons.delete,
+          size: theme.quaternaryIconSize,
+          color: theme.tertiaryTextColor,
+          semanticLabel: 'Delete Filtered Swatches',
+        ),
+      ),
+    );
+  }
+
   void onFilterDrawerClose(List<Filter> newFilters) {
     filters = newFilters;
     filterSwatches(filters);
@@ -211,6 +258,7 @@ mixin SwatchListState {
 
   void setState(OnVoidAction func);
 
+  Future<void> deleteSwatches();
   void sortSwatches(String val);
   void filterSwatches(List<Filter> filters);
   Future sortAndFilterSwatchesActual();

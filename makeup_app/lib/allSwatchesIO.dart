@@ -85,8 +85,20 @@ void removeId(int i) async {
   }
 }
 
+void removeIDsMany(List<int> ids) async {
+  for (int i = ids.length - 1; i >= 0; i--) {
+    await removeId(ids[i]);
+  }
+}
+
 void remove(Swatch swatch) async {
   await removeId(find(swatch));
+}
+
+void removeMany(List<Swatch> swatches) async {
+  for (int i = swatches.length - 1; i >= 0; i--) {
+    await removeId(find(swatches[i]));
+  }
 }
 
 int find(Swatch swatch)  {

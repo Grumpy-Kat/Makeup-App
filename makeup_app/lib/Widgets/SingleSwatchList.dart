@@ -12,7 +12,7 @@ class SingleSwatchList extends StatefulWidget {
   final OnVoidAction onTap;
   final OnVoidAction onDoubleTap;
 
-  SingleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
+  SingleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool showDeleteFiltered = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
     addSwatches: addSwatches,
     orgAddSwatches: addSwatches,
     selectedSwatches: selectedSwatches ?? [],
@@ -24,6 +24,7 @@ class SingleSwatchList extends StatefulWidget {
     sort: sort,
     defaultSort: defaultSort,
     showDelete: showDelete,
+    showDeleteFiltered: showDeleteFiltered,
     overrideOnTap: overrideSwatchOnTap,
     onTap: onSwatchTap,
     overrideOnDoubleTap: overrideSwatchOnDoubleTap,
@@ -60,7 +61,6 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
         widget.updateSwatches(_swatches);
       }
     };
-    //TODO: issue with changing swatches
     _swatchIcons.clear();
     for(int i = 0; i < _swatches.length; i++) {
       _swatchIcons.add(
@@ -119,6 +119,11 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
         ),
       ),
     );
+  }
+
+  @override
+  Future<void> deleteSwatches() async {
+    await IO.removeIDsMany(_swatches);
   }
 
   @override

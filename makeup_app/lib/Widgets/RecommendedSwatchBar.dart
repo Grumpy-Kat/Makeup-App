@@ -205,6 +205,11 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   }
 
   @override
+  Future<void> deleteSwatches() async {
+    //do nothing
+  }
+
+  @override
   void sortSwatches(String val) {
     _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => globals.distanceSortOptions(IO.getMultiple([_swatches]), currSwatch.color, step: 16)[val](swatch, 0)));
   }

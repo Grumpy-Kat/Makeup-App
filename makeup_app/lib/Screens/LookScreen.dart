@@ -112,6 +112,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         defaultSort: globals.sort,
         sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
         showDelete: false,
+        showDeleteFiltered: false,
         openEndDrawer: openEndDrawer,
       ),
       //end drawer for swatch filtering
