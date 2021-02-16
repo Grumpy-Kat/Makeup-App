@@ -55,7 +55,7 @@ class TodayLookScreenState extends State<TodayLookScreen>  {
         globals.currSwatches.set([]);
         exit();
       },
-      showAdd: false,
+      showClone: false,
       showSave: true,
       onSavePressed: () {
         if(!hasSaved) {

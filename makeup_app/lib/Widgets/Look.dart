@@ -7,6 +7,12 @@ class Look {
 
   Look({ @required this.id, @required this.name, @required this.swatches });
 
+  Look.copy(Look other) {
+    id = '';
+    name = other.name;
+    swatches = other.swatches.toList();
+  }
+
   int compareTo(Look other, List<double> Function(Look) comparator) {
     List<double> thisValues = comparator(this);
     List<double> otherValues = comparator(other);

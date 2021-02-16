@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../Widgets/Look.dart';
-import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../navigation.dart' as navigation;
+import '../routes.dart' as routes;
 import '../savedLooksIO.dart' as IO;
 import '../localizationIO.dart';
 import 'LookScreen.dart';
@@ -52,16 +53,39 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
       },
       showClear: true,
       onClearPressed: () async {
+        globalWidgets.openLoadingDialog(context);
         //clear swatches
         SavedLookScreen.look.swatches = [];
         await IO.clear(SavedLookScreen.look.id);
+        Navigator.pop(context);
         //return to previous screen
         navigation.pop(context, true);
       },
-      showAdd: true,
-      onAddPressed: () {
-        //adds all swatches of saved look to Today's Look
-        globals.currSwatches.addMany(SavedLookScreen.look.swatches);
+      showClone: true,
+      onClonePressed: () {
+        globalWidgets.openTextDialog(
+          context,
+          'Enter a name for the cloned look:',
+          'You need to enter a name for the cloned look.',
+          getString('save'),
+          (String value) {
+            globalWidgets.openLoadingDialog(context);
+            Look clonedLook = Look.copy(SavedLookScreen.look);
+            clonedLook.name = value;
+            IO.save(clonedLook).then(
+              (String value) {
+                clonedLook.id = value;
+                Navigator.pop(context);
+                navigation.pushReplacement(
+                  context,
+                  Offset(1, 0),
+                  routes.ScreenRoutes.SavedLookScreen,
+                  SavedLookScreen(look: clonedLook),
+                );
+              }
+            );
+          }
+        );
       },
       showEdit: true,
       saveOnEdit: true,
