@@ -12,11 +12,13 @@ class SingleSwatchList extends StatefulWidget {
   final OnVoidAction onTap;
   final OnVoidAction onDoubleTap;
 
-  SingleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, bool showInfoBox = true, bool showNoColorsFound = false, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
+  SingleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
     addSwatches: addSwatches,
+    orgAddSwatches: addSwatches,
     selectedSwatches: selectedSwatches ?? [],
     showInfoBox: showInfoBox,
     showNoColorsFound: showNoColorsFound,
+    showNoFilteredColorsFound: showNoFilteredColorsFound,
     showPlus: showPlus,
     onPlusPressed: onPlusPressed,
     sort: sort,
@@ -26,6 +28,7 @@ class SingleSwatchList extends StatefulWidget {
     onTap: onSwatchTap,
     overrideOnDoubleTap: overrideSwatchOnDoubleTap,
     onDoubleTap: onSwatchDoubleTap,
+    showEndDrawer: showEndDrawer,
     openEndDrawer: openEndDrawer,
   ), super(key: key);
 
@@ -57,6 +60,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
         widget.updateSwatches(_swatches);
       }
     };
+    //TODO: issue with changing swatches
     _swatchIcons.clear();
     for(int i = 0; i < _swatches.length; i++) {
       _swatchIcons.add(
@@ -81,8 +85,10 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   @override
   Widget build(BuildContext context) {
     init(widget.swatchList);
-    if(!_hasSorted && !_hasFiltered) {
-      sortAndFilterSwatches();
+    if(widget.swatchList.showEndDrawer) {
+      if(!_hasSorted && !_hasFiltered) {
+        sortAndFilterSwatches();
+      }
     }
     return buildComplete(
       context,
@@ -97,7 +103,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
               if(_shouldChangeOriginalSwatches) {
                 _allSwatches = _swatches;
               }
-              print('${_swatches.length} ${_allSwatches.length}');
+              //print('${_swatches.length} ${_allSwatches.length}');
               _addSwatchIcons();
             }
             return buildSwatchList(
@@ -125,11 +131,6 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   @override
   void filterSwatches(List<Filter> filters) {
     _shouldChangeOriginalSwatches = false;
-    //this does not work because it causes rebuilds, which resets _shouldChangeOriginalSwatches and changes _allSwatches; figure out how to it properly by sorting filtering after every reload (they're don't use await)
-    /*FocusScopeNode currentFocus = FocusScope.of(context);
-    if(!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-      currentFocus.focusedChild.unfocus();
-    }*/
     widget.swatchList.addSwatches = IO.filter(_allSwatches, filters);
     _hasFiltered = true;
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
@@ -137,13 +138,12 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
 
   @override
   Future<List<int>> sortAndFilterSwatchesActual() async {
-    _swatches = await IO.sort(_allSwatches, (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[currentSort](swatch, 0)));
+    _swatches = await swatchList.orgAddSwatches;
+    _swatches = await IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[currentSort](swatch, 0)));
     _allSwatches = _swatches;
     _shouldChangeOriginalSwatches = false;
     _hasSorted = true;
     _hasFiltered = true;
-    //unnecessary and causes infinite loop because generally called from build()
-    //WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { print('setting state'); }));
     return await IO.filter(_allSwatches, filters);
   }
 }

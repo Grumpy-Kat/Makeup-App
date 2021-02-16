@@ -113,6 +113,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                   updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
                   rowCount: 1,
                   showNoColorsFound: true,
+                  showNoFilteredColorsFound: true,
                   showPlus: false,
                   defaultSort: globals.sort,
                   sort: globals.defaultSortOptions(IO.getMultiple(_swatches), step: 16),

@@ -36,7 +36,6 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: figure out what to do about this use of SingleSwatchList and the lack of endDrawer
     return Column(
       children: <Widget> [
         Expanded(
@@ -59,6 +58,7 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
                 widget.onChange(_selectedSwatches);
               });
             },
+            showEndDrawer: false,
           ),
         ),
         FlatButton(

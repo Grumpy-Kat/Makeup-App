@@ -8,12 +8,15 @@ import '../localizationIO.dart';
 
 class SwatchList {
   Future addSwatches;
+  //keep original for when changed with sorting or filtering
+  Future orgAddSwatches;
 
   final List<int> selectedSwatches;
 
   final bool showInfoBox;
 
   final bool showNoColorsFound;
+  final bool showNoFilteredColorsFound;
 
   final bool showPlus;
   final OnVoidAction onPlusPressed;
@@ -29,9 +32,10 @@ class SwatchList {
   final bool overrideOnDoubleTap;
   final Function onDoubleTap;
 
+  final bool showEndDrawer;
   final OnVoidAction openEndDrawer;
 
-  SwatchList({ @required this.addSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap, this.openEndDrawer });
+  SwatchList({ @required this.addSwatches, this.orgAddSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showNoFilteredColorsFound = true, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap, this.showEndDrawer = true, this.openEndDrawer });
 }
 
 mixin SwatchListState {
@@ -57,7 +61,7 @@ mixin SwatchListState {
   Widget buildSwatchList(BuildContext context, AsyncSnapshot snapshot, List<SwatchIcon> swatchIcons, { Axis axis = Axis.vertical, int crossAxisCount = 3, double padding = 20, double spacing = 35 }) {
     int itemCount = 0;
     if(snapshot.connectionState != ConnectionState.active && snapshot.connectionState != ConnectionState.waiting) {
-      if(swatchList.showNoColorsFound && swatchIcons.length == 0) {
+      if(swatchIcons.length == 0 && (swatchList.showNoColorsFound || (swatchList.showNoFilteredColorsFound && filters.length != 0))) {
         //no colors found
         return Align(
           alignment: Alignment.centerLeft,
@@ -132,7 +136,7 @@ mixin SwatchListState {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         buildSortDropdown(context),
-        buildFilterBtn(context),
+        if(swatchList.showEndDrawer) buildFilterBtn(context),
       ],
     );
   }
@@ -154,7 +158,7 @@ mixin SwatchListState {
               onChanged: (String val) {
                 setState(() {
                   currentSort = val;
-                  sortSwatches(val);
+                  sortAndFilterSwatches();
                 });
               },
               underline: Container(

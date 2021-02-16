@@ -14,11 +14,13 @@ class MultipleSwatchList extends StatefulWidget {
   final OnSwatchAction onTap;
   final OnSwatchAction onDoubleTap;
 
-  MultipleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, void Function(int, int) onSwatchTap, bool overrideSwatchOnDoubleTap = false, void Function(int, int) onSwatchDoubleTap, this.onTap, this.onDoubleTap, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
+  MultipleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool overrideSwatchOnTap = false, void Function(int, int) onSwatchTap, bool overrideSwatchOnDoubleTap = false, void Function(int, int) onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
     addSwatches: addSwatches,
+    orgAddSwatches: addSwatches,
     selectedSwatches: selectedSwatches ?? [],
     showInfoBox: showInfoBox,
     showNoColorsFound: showNoColorsFound,
+    showNoFilteredColorsFound: showNoFilteredColorsFound,
     showPlus: showPlus,
     onPlusPressed: onPlusPressed,
     sort: sort,
@@ -28,6 +30,7 @@ class MultipleSwatchList extends StatefulWidget {
     onTap: onSwatchTap,
     overrideOnDoubleTap: overrideSwatchOnDoubleTap,
     onDoubleTap: onSwatchDoubleTap,
+    showEndDrawer: showEndDrawer,
     openEndDrawer: openEndDrawer,
   ), super(key: key);
 
@@ -88,8 +91,10 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   @override
   Widget build(BuildContext context) {
     init(widget.swatchList);
-    if(!_hasSorted && !_hasFiltered) {
-      sortAndFilterSwatches();
+    if(widget.swatchList.showEndDrawer) {
+      if(!_hasSorted && !_hasFiltered) {
+        sortAndFilterSwatches();
+      }
     }
     return buildComplete(
       context,
@@ -195,7 +200,10 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
 
   @override
   Future<Map<Widget, List<int>>> sortAndFilterSwatchesActual() async {
-    Map<Widget, List<int>> map = await IO.sortMultiple(_allSwatchLabels, _allSwatches, widget.swatchList.sort[currentSort]);
+    Map<Widget, List<int>> map = await swatchList.orgAddSwatches;
+    _swatchLabels = map.keys.toList();
+    _swatches = map.values.toList();
+    map = await IO.sortMultiple(_swatchLabels, _swatches, widget.swatchList.sort[currentSort]);
     _swatchLabels = map.keys.toList();
     _swatches = map.values.toList();
     _allSwatches = _swatches;

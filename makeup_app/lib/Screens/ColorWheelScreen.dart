@@ -97,6 +97,7 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
               addSwatches: _swatchesFuture,
               updateSwatches: (List<int> swatches) { this._swatches = swatches; },
               showNoColorsFound: (_pickedColor != null),
+              showNoFilteredColorsFound: (_pickedColor != null),
               showPlus: false,
               defaultSort: 'sort_hue',
               sort: globals.distanceSortOptions(IO.getMultiple([_swatches]), _pickedColor, step: 16),

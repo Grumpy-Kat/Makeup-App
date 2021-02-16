@@ -51,7 +51,6 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
     super.initState();
     SwatchListState state = (widget.swatchListKey.currentState as SwatchListState);
     if(state != null && state.filters != null && state.filters.length > 0) {
-      print(state.filters);
       loadFilters(state.filters);
     } else {
       resetFilters();
@@ -136,9 +135,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
             setState(() {
               if(selected) {
                 _selectedFinishes.add(_finishes[i]);
-                print(_finishesFilters.length);
                 for(int j = 0; j < _finishesFilters.length; j++) {
-                  print('${_finishesFilters[j].threshold} ${_finishes[i]}');
                   if(_finishesFilters[j].threshold == _finishes[i]) {
                     _finishesFilters.removeAt(j);
                     break;
@@ -319,7 +316,6 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
   }
 
   Widget getWeightField(BuildContext context) {
-    //TODO: figure out why weight went to price?
     TextSelection selection = _minWeightController.selection;
     _minWeightController.text = _minWeightFilter.threshold.toString();
     try {

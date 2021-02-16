@@ -62,6 +62,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
         },
         rowCount: 1,
         showNoColorsFound: false,
+        showNoFilteredColorsFound: true,
         showPlus: false,
         defaultSort: globals.sort,
         sort: globals.defaultSortOptions(allSwatchesIO.getMultiple(getAllSwatches()), step: 16),
