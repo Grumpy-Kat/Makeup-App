@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../Widgets/Look.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/SelectedSwatchPopup.dart';
+import '../Widgets/Filter.dart';
+import '../Widgets/SwatchFilterDrawer.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
@@ -43,6 +45,8 @@ class LookScreen extends StatefulWidget {
 class LookScreenState extends State<LookScreen> with ScreenState {
   List<int> _swatches = [];
   Future<List<int>> _swatchesFuture;
+
+  GlobalKey _swatchListKey = GlobalKey();
 
   bool _hasEdited = false;
 
@@ -95,6 +99,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
       rightBar: rightBar,
       //scroll view to show all swatches
       body: SingleSwatchList(
+        key: _swatchListKey,
         addSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) {
           this._swatches = swatches;
@@ -106,8 +111,15 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         defaultSort: globals.sort,
         sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
         showDelete: false,
+        openEndDrawer: openEndDrawer,
       ),
+      //end drawer for swatch filtering
+      endDrawer: SwatchFilterDrawer(onDrawerClose: onFilterDrawerClose, swatchListKey: _swatchListKey),
     );
+  }
+
+  void onFilterDrawerClose(List<Filter> filters) {
+    (_swatchListKey.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
   }
 
   Widget buildBack(BuildContext context) {

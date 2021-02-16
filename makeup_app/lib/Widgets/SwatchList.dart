@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import 'package:flutter/rendering.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/Filter.dart';
 import '../theme.dart' as theme;
 import '../types.dart';
 import '../localizationIO.dart';
@@ -28,12 +29,15 @@ class SwatchList {
   final bool overrideOnDoubleTap;
   final Function onDoubleTap;
 
-  SwatchList({ @required this.addSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap });
+  final OnVoidAction openEndDrawer;
+
+  SwatchList({ @required this.addSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap, this.openEndDrawer });
 }
 
 mixin SwatchListState {
   SwatchList swatchList;
-  String _currentSort;
+  String currentSort = 'sort_hue';
+  List<Filter> filters = [];
 
   void init(SwatchList swatchList) {
     this.swatchList = swatchList;
@@ -42,7 +46,7 @@ mixin SwatchListState {
   Widget buildComplete(BuildContext context, Widget list) {
     return Column(
       children: <Widget>[
-        buildSortDropdown(context),
+        buildOptionsBar(context),
         Expanded(
           child: list,
         ),
@@ -123,6 +127,16 @@ mixin SwatchListState {
     );
   }
 
+  Widget buildOptionsBar(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        buildSortDropdown(context),
+        buildFilterBtn(context),
+      ],
+    );
+  }
+
   Widget buildSortDropdown(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(15, 15, 0, 15),
@@ -139,7 +153,7 @@ mixin SwatchListState {
               iconEnabledColor: theme.tertiaryTextColor,
               onChanged: (String val) {
                 setState(() {
-                  _currentSort = val;
+                  currentSort = val;
                   sortSwatches(val);
                 });
               },
@@ -152,7 +166,7 @@ mixin SwatchListState {
                   ),
                 ),
               ),
-              value: _currentSort ?? (swatchList.sort.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort.keys.first),
+              value: currentSort ?? (swatchList.sort.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort.keys.first),
               items: swatchList.sort.keys.map((String val) {
                 return DropdownMenuItem(
                   value: val,
@@ -166,6 +180,38 @@ mixin SwatchListState {
     );
   }
 
-  void sortSwatches(String val);
+  Widget buildFilterBtn(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(15, 15, 0, 15),
+      child: IconButton(
+        color: theme.primaryColor,
+        onPressed: () {
+          if(swatchList.openEndDrawer != null) {
+            swatchList.openEndDrawer();
+          }
+        },
+        icon: Icon(
+          Icons.filter_list_alt,
+          size: theme.quaternaryIconSize,
+          color: theme.tertiaryTextColor,
+          semanticLabel: 'Filter Swatches',
+        ),
+      ),
+    );
+  }
+
+  void onFilterDrawerClose(List<Filter> newFilters) {
+    filters = newFilters;
+    filterSwatches(filters);
+  }
+
   void setState(OnVoidAction func);
+
+  void sortSwatches(String val);
+  void filterSwatches(List<Filter> filters);
+  Future sortAndFilterSwatchesActual();
+
+  void sortAndFilterSwatches() {
+    swatchList.addSwatches = sortAndFilterSwatchesActual();
+  }
 }

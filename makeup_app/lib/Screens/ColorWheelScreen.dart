@@ -2,6 +2,8 @@ import 'package:flutter/material.dart' hide HSVColor;
 import '../Widgets/ColorPicker.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/NoScreenSwipe.dart';
+import '../Widgets/Filter.dart';
+import '../Widgets/SwatchFilterDrawer.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorConversions.dart';
 import '../ColorMath/ColorProcessing.dart';
@@ -98,10 +100,17 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
               showPlus: false,
               defaultSort: 'sort_hue',
               sort: globals.distanceSortOptions(IO.getMultiple([_swatches]), _pickedColor, step: 16),
+              openEndDrawer: openEndDrawer,
             ),
           ),
         ],
       ),
+      //end drawer for swatch filtering
+      endDrawer: SwatchFilterDrawer(onDrawerClose: onFilterDrawerClose, swatchListKey: _swatchListKey),
     );
+  }
+
+  void onFilterDrawerClose(List<Filter> filters) {
+    (_swatchListKey.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
   }
 }

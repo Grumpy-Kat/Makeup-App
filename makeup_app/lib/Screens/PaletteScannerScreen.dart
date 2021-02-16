@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../Widgets/MultipleSwatchList.dart';
 import '../Widgets/PaletteDivider.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/Filter.dart';
+import '../Widgets/SwatchFilterDrawer.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
@@ -19,6 +21,8 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   List<Swatch> _labels = [];
   List<List<int>> _swatches = [];
   Future<Map<SwatchIcon, List<int>>> _swatchesFuture;
+
+  GlobalKey _swatchListKey = GlobalKey();
 
   bool _openPaletteDivider = false;
 
@@ -104,6 +108,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
               //scroll view to show all swatches as labels and similar swatches as horizontal bodies
               Expanded(
                 child: MultipleSwatchList(
+                  key: _swatchListKey,
                   addSwatches: _swatchesFuture,
                   updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
                   rowCount: 1,
@@ -111,11 +116,14 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
                   showPlus: false,
                   defaultSort: globals.sort,
                   sort: globals.defaultSortOptions(IO.getMultiple(_swatches), step: 16),
+                  openEndDrawer: openEndDrawer,
                 ),
               ),
             ],
           ),
         ),
+        //end drawer for swatch filtering
+        endDrawer: SwatchFilterDrawer(onDrawerClose: onFilterDrawerClose, swatchListKey: _swatchListKey),
       );
     } else {
       //using palette divider
@@ -159,6 +167,10 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         ),
       );
     }
+  }
+
+  void onFilterDrawerClose(List<Filter> filters) {
+    (_swatchListKey.currentState as MultipleSwatchListState).onFilterDrawerClose(filters);
   }
 
   void onSave(BuildContext context, List<Swatch> swatches) {

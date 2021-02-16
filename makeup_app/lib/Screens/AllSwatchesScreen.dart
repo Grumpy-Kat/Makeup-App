@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Widgets/SingleSwatchList.dart';
+import '../Widgets/Filter.dart';
+import '../Widgets/SwatchFilterDrawer.dart';
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
@@ -16,6 +18,8 @@ class AllSwatchesScreen extends StatefulWidget {
 class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
   List<int> _swatches = [];
   Future<List<int>> _swatchesFuture;
+
+  GlobalKey _swatchListKey = GlobalKey();
 
   @override
   void initState() {
@@ -45,12 +49,14 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
       0,
       //scroll view to show all swatches
       body: SingleSwatchList(
+        key: _swatchListKey,
         addSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) { this._swatches = swatches; },
         showNoColorsFound: false,
         showPlus: false,
         defaultSort: globals.sort,
         sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
+        openEndDrawer: openEndDrawer,
       ),
       //floating plus button to go to AddPaletteScreen
       floatingActionButton: Container(
@@ -73,6 +79,12 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
           },
         ),
       ),
+      //end drawer for swatch filtering
+      endDrawer: SwatchFilterDrawer(onDrawerClose: onFilterDrawerClose, swatchListKey: _swatchListKey),
     );
+  }
+
+  void onFilterDrawerClose(List<Filter> filters) {
+    (_swatchListKey.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
   }
 }

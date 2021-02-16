@@ -77,6 +77,12 @@ ThemeData get themeData => ThemeData(
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
     ),
   ),
+  sliderTheme: SliderThemeData(
+    valueIndicatorColor: primaryColorDarkest,
+    valueIndicatorTextStyle: accentTextSecondary,
+    activeTrackColor: accentColor,
+    inactiveTrackColor: primaryColorDark,
+  ),
   appBarTheme: AppBarTheme(
     color: primaryColor,
     elevation: 0,

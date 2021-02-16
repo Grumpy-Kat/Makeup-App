@@ -229,13 +229,23 @@ Future<Map<Widget, List<int>>> sortMultiple(List<Widget> keys, List<List<int>> v
 }
 
 Future<List<int>> filter(List<int> ids, List<Filter> filters) async {
-  List<int> ret = ids;
-  for (int i = 0; i < ids.length; i++) {
-    Map<String, dynamic> swatchAttributes = swatches[i].getMap();
+  print('Filtering ${filters.length}');
+  print(filters);
+  List<int> ret = ids.toList();
+  for (int i = ids.length - 1; i >= 0; i--) {
+    Map<String, dynamic> swatchAttributes = swatches[ids[i]].getMap();
     for (int j = 0; j < filters.length; j++) {
       String attribute = filters[j].attribute;
       if(swatchAttributes.containsKey(attribute)) {
-        if(!filters[j].contains(swatchAttributes[attribute])) {
+        dynamic value = swatchAttributes[attribute];
+        //TODO: keep sort and filter when returning to screen from SwatchScreen
+        if(value is String) {
+          //make all strings lowercase to avoid issues
+          value = (value as String).toLowerCase();
+          filters[j].threshold = (filters[j].threshold as String).toLowerCase();
+        }
+        if(!filters[j].contains(value)) {
+          //print('removing ${ids[i]}');
           ret.removeAt(i);
           break;
         }

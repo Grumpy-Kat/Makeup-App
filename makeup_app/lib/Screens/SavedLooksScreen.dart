@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../Widgets/Look.dart';
 import '../Widgets/MultipleSwatchList.dart';
+import '../Widgets/Look.dart';
+import '../Widgets/Filter.dart';
+import '../Widgets/SwatchFilterDrawer.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
@@ -20,6 +22,8 @@ class SavedLooksScreen extends StatefulWidget {
 class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
   List<Look> _looks = [];
   Future<Map<Text, List<int>>> _swatchesFuture;
+
+  GlobalKey _swatchListKey = GlobalKey();
 
   @override
   void initState() {
@@ -49,6 +53,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
       1,
       //scroll view to show all look names as labels and looks as horizontal bodies
       body: MultipleSwatchList(
+        key: _swatchListKey,
         addSwatches: _swatchesFuture,
         updateSwatches: (List<List<int>> swatches) {
           for(int i = 0; i < swatches.length; i++) {
@@ -66,6 +71,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
         onSwatchTap: (int i, int id) { _onTap(i); },
         overrideSwatchOnDoubleTap: true,
         onSwatchDoubleTap: (int i, int id) { _onTap(i); },
+        openEndDrawer: openEndDrawer,
       ),
       floatingActionButton: Container(
         margin: EdgeInsets.only(right: 15, bottom: (MediaQuery.of(context).size.height * 0.1) + 15),
@@ -101,7 +107,13 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
           },
         ),
       ),
+      //end drawer for swatch filtering
+      endDrawer: SwatchFilterDrawer(onDrawerClose: onFilterDrawerClose, swatchListKey: _swatchListKey),
     );
+  }
+
+  void onFilterDrawerClose(List<Filter> filters) {
+    (_swatchListKey.currentState as MultipleSwatchListState).onFilterDrawerClose(filters);
   }
 
   void _onTap(int i) {
