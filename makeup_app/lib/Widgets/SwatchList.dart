@@ -49,7 +49,7 @@ mixin SwatchListState {
     this.swatchList = swatchList;
   }
 
-  Widget buildComplete(BuildContext context, Widget list) {
+  Widget buildCompleteList(BuildContext context, Widget list) {
     return Column(
       children: <Widget>[
         buildOptionsBar(context),
@@ -225,7 +225,6 @@ mixin SwatchListState {
         constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
         color: theme.primaryColor,
         onPressed: () {
-          //TODO: add proper translation
           globalWidgets.openTwoButtonDialog(
             context,
             'Are you sure you want to delete the currently filtered swatches? They will be permanently deleted and this action is unable to be undone.',

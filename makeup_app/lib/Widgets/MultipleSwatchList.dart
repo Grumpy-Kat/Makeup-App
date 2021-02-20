@@ -97,7 +97,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
         sortAndFilterSwatches();
       }
     }
-    return buildComplete(
+    return buildCompleteList(
       context,
       ListView(
         children: <Widget>[

@@ -21,7 +21,8 @@ class NavigationDrawer extends StatelessWidget {
       2: routes.ScreenRoutes.TodayLookScreen,
       3: routes.ScreenRoutes.ColorWheelScreen,
       4: routes.ScreenRoutes.PaletteScannerScreen,
-      5: routes.ScreenRoutes.SettingsScreen,
+      5: routes.ScreenRoutes.RandomizeLookScreen,
+      6: routes.ScreenRoutes.SettingsScreen,
     };
     Color selectedColor = theme.accentColor;
     TextStyle selectedText = TextStyle(color: theme.accentColorDark, fontSize: theme.primaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: theme.fontFamily);
@@ -111,19 +112,33 @@ class NavigationDrawer extends StatelessWidget {
             ),
             onTap: () { routePage(context, 4); },
           ),
-          //5 = SettingsScreen
+          //5 = PaletteScannerScreen
+          ListTile(
+            leading: Icon(
+              Icons.casino,
+              size: theme.primaryIconSize,
+              color: currTab == 5 ? selectedColor : unselectedColor,
+              semanticLabel: 'Randomize Look',
+            ),
+            title: Text(
+              'Randomize Look',
+              style: currTab == 5 ? selectedText : unselectedText,
+            ),
+            onTap: () { routePage(context, 5); },
+          ),
+          //6 = SettingsScreen
           ListTile(
             leading: Icon(
               Icons.settings,
               size: theme.primaryIconSize,
-              color: currTab == 5 ? selectedColor : unselectedColor,
+              color: currTab == 6 ? selectedColor : unselectedColor,
               semanticLabel: 'Settings',
             ),
             title: Text(
               getString('screen_settings'),
-              style: currTab == 5 ? selectedText : unselectedText,
+              style: currTab == 6 ? selectedText : unselectedText,
             ),
-            onTap: () { routePage(context, 5); },
+            onTap: () { routePage(context, 6); },
           ),
         ],
       ),

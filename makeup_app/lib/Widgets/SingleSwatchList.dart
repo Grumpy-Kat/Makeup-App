@@ -90,7 +90,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
         sortAndFilterSwatches();
       }
     }
-    return buildComplete(
+    return buildCompleteList(
       context,
       GestureDetector(
         onTap: widget.onTap,

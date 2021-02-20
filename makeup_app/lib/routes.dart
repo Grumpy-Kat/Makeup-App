@@ -1,8 +1,9 @@
 import 'Screens/TutorialScreen.dart';
 import 'Screens/AllSwatchesScreen.dart';
+import 'Screens/SavedLooksScreen.dart';
 import 'Screens/ColorWheelScreen.dart';
 import 'Screens/PaletteScannerScreen.dart';
-import 'Screens/SavedLooksScreen.dart';
+import 'Screens/RandomizeLookScreen.dart';
 import 'Screens/SettingsScreen.dart';
 import 'Screens/AddPaletteScreen.dart';
 import 'Screens/AddPaletteDividerScreen.dart';
@@ -24,6 +25,7 @@ enum ScreenRoutes {
   SavedLooksScreen,
   ColorWheelScreen,
   PaletteScannerScreen,
+  RandomizeLookScreen,
   SettingsScreen,
   AddPaletteScreen,
   AddPaletteDividerScreen,
@@ -40,6 +42,7 @@ void setRoutes() {
     '/savedLooksScreen': (context) => SavedLooksScreen(),
     '/colorWheelScreen': (context) => ColorWheelScreen(),
     '/paletteScannerScreen': (context) => PaletteScannerScreen(),
+    '/randomizeLookScreen': (context) => RandomizeLookScreen(),
     '/settingsScreen': (context) => SettingsScreen(),
     '/addPaletteScreen': (context) => AddPaletteScreen(),
     '/addPaletteDividerScreen': (context) => AddPaletteDividerScreen(),
@@ -54,6 +57,7 @@ void setRoutes() {
     ScreenRoutes.SavedLooksScreen: routes['/savedLooksScreen'],
     ScreenRoutes.ColorWheelScreen: routes['/colorWheelScreen'],
     ScreenRoutes.PaletteScannerScreen: routes['/paletteScannerScreen'],
+    ScreenRoutes.RandomizeLookScreen: routes['/randomizeLookScreen'],
     ScreenRoutes.SettingsScreen: routes['/settingsScreen'],
     ScreenRoutes.AddPaletteScreen: routes['/addPaletteScreen'],
     ScreenRoutes.AddPaletteDividerScreen: routes['/addPaletteDividerScreen'],

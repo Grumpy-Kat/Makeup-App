@@ -3,81 +3,98 @@ import 'ColorDifferences.dart';
 import 'ColorConversions.dart';
 import '../Widgets/Swatch.dart';
 
-Map<String, RGBColor> colorWheel;
+Map<String, HSVColor> colorWheel;
+Map<String, RGBColor> colorNames;
 Map<String, List<String>> similarColorNames;
 Map<String, List<String>> oppositeColorNames;
 
-Map<String, RGBColor> createColorWheel() {
+Map<String, HSVColor> createColorWheel() {
   if(colorWheel == null) {
-    colorWheel = Map<String, RGBColor>();
-    colorWheel['color_pastelRed'] = RGBColor(1, 0.95, 0.95);
-    colorWheel['color_nude'] = RGBColor(0.920, 0.804, 0.745);
-    colorWheel['color_lightRed'] = RGBColor(1, 0.8, 0.8);
-    colorWheel['color_red'] = RGBColor(0.9, 0.3, 0.3);
-    colorWheel['color_darkRed'] = RGBColor(0.2, 0, 0);
-    colorWheel['color_burgundy'] = RGBColor(0.322, 0, 0.078);
-    colorWheel['color_pastelOrange'] = RGBColor(1, 0.95, 0.85);
-    colorWheel['color_peach'] = RGBColor(1, 0.882, 0.741);
-    colorWheel['color_lightOrange'] = RGBColor(1, 0.8, 0.6);
-    colorWheel['color_orange'] = RGBColor(1, 0.5, 0.1);
-    colorWheel['color_darkOrange'] = RGBColor(0.2, 0.1, 0);
-    colorWheel['color_lightBrown'] = RGBColor(0.851, 0.654, 0.494);
-    colorWheel['color_beige'] = RGBColor(0.761, 0.551, 0.471);
-    colorWheel['color_taupe'] = RGBColor(0.529, 0.475, 0.427);
-    colorWheel['color_tan'] = RGBColor(0.859, 0.600, 0.318);
-    colorWheel['color_brown'] = RGBColor(0.565, 0.350, 0.212);
-    colorWheel['color_rust'] = RGBColor(0.600, 0.220, 0.114);
-    colorWheel['color_darkBeige'] = RGBColor(0.388, 0.322, 0.240);
-    colorWheel['color_darkBrown'] = RGBColor(0.169, 0.114, 0.063);
-    colorWheel['color_chocolate'] = RGBColor(0.251, 0.102, 0.039);
-    colorWheel['color_pastelYellow'] = RGBColor(1, 1, 0.9);
-    colorWheel['color_cream'] = RGBColor(1, 0.959, 0.851);
-    colorWheel['color_lightYellow'] = RGBColor(1, 1, 0.6);
-    colorWheel['color_yellow'] = RGBColor(0.9, 0.9, 0.1);
-    colorWheel['color_lightChartreuse'] = RGBColor(0.9, 1, 0.8);
-    colorWheel['color_chartreuse'] = RGBColor(0.5, 0.9, 0.1);
-    colorWheel['color_darkChartreuse'] = RGBColor(0.1, 0.2, 0);
-    colorWheel['color_pastelGreen'] = RGBColor(0.95, 1, 0.95);
-    colorWheel['color_lightGreen'] = RGBColor(0.8, 1, 0.8);
-    colorWheel['color_green'] = RGBColor(0.1, 0.9, 0.1);
-    colorWheel['color_darkGreen'] = RGBColor(0, 0.2, 0);
-    colorWheel['color_pastelMint'] = RGBColor(0.9, 1, 0.95);
-    colorWheel['color_mint'] = RGBColor(0.8, 1, 0.9);
-    colorWheel['color_aquamarine'] = RGBColor(0.2, 0.9, 0.5);
-    colorWheel['color_darkAquamarine'] = RGBColor(0, 0.2, 0.1);
-    colorWheel['color_pastelTurquoise'] = RGBColor(0.9, 1, 1);
-    colorWheel['color_lightTurquoise'] = RGBColor(0.8, 1, 1);
-    colorWheel['color_turquoise'] = RGBColor(0.4, 0.9, 0.9);
-    colorWheel['color_darkTurquoise'] = RGBColor(0, 0.2, 0.2);
-    colorWheel['color_lightSkyBlue'] = RGBColor(0.8, 0.9, 1);
-    colorWheel['color_skyBlue'] = RGBColor(0.2, 0.5, 0.9);
-    colorWheel['color_darkSkyBlue'] = RGBColor(0, 0.1, 0.2);
-    colorWheel['color_pastelBlue'] = RGBColor(0.9, 0.95, 1);
-    colorWheel['color_lightBlue'] = RGBColor(0.8, 0.8, 1);
-    colorWheel['color_blue'] = RGBColor(0.1, 0.1, 0.9);
-    colorWheel['color_darkBlue'] = RGBColor(0, 0, 0.2);
-    colorWheel['color_pastelLavender'] = RGBColor(0.95, 0.9, 1);
-    colorWheel['color_lavender'] = RGBColor(0.9, 0.8, 1);
-    colorWheel['color_indigo'] = RGBColor(0.5, 0, 1);
-    colorWheel['color_darkIndigo'] = RGBColor(0.1, 0, 0.2);
-    colorWheel['color_lightPurple'] = RGBColor(1, 0.8, 1);
-    colorWheel['color_purple'] = RGBColor(0.9, 0.1, 0.9);
-    colorWheel['color_darkPurple'] = RGBColor(0.2, 0, 0.2);
-    colorWheel['color_mauve'] = RGBColor(0.8, 0.6, 0.7);
-    colorWheel['color_violet'] = RGBColor(0.9, 0.3, 0.9);
-    colorWheel['color_darkViolet'] = RGBColor(0.15, 0, 0.15);
-    colorWheel['color_pastelPink'] = RGBColor(1, 0.9, 0.95);
-    colorWheel['color_lightPink'] = RGBColor(1, 0.8, 0.9);
-    colorWheel['color_pink'] = RGBColor(0.9, 0.1, 0.5);
-    colorWheel['color_darkPink'] = RGBColor(0.2, 0, 0.1);
-    colorWheel['color_white'] = RGBColor(1, 1, 1);
-    colorWheel['color_lightGray'] = RGBColor(0.75, 0.75, 0.75);
-    colorWheel['color_gray'] = RGBColor(0.5, 0.5, 0.5);
-    colorWheel['color_darkGray'] = RGBColor(0.25, 0.25, 0.25);
-    colorWheel['color_darkTaupe'] = RGBColor(0.271, 0.247, 0.227);
-    colorWheel['color_black'] = RGBColor(0, 0, 0);
+    colorWheel = Map<String, HSVColor>();
+    //colorWheel['neutral'] = HSVColor(40.0, 0.5, 0.5);
+    colorWheel['red'] = HSVColor(355.0, 0.5, 0.5);
+    colorWheel['orange'] = HSVColor(25.0, 0.5, 0.5);
+    colorWheel['yellow'] = HSVColor(45.0, 0.5, 0.5);
+    colorWheel['green'] = HSVColor(80.0, 0.5, 0.5);
+    colorWheel['teal'] = HSVColor(155.0, 0.5, 0.5);
+    colorWheel['blue'] = HSVColor(220.0, 0.5, 0.5);
+    colorWheel['purple'] = HSVColor(275.0, 0.5, 0.5);
+    colorWheel['pink'] = HSVColor(315.0, 0.5, 0.5);
   }
   return colorWheel;
+}
+
+Map<String, RGBColor> createColorNames() {
+  if(colorNames == null) {
+    colorNames = Map<String, RGBColor>();
+    colorNames['color_pastelRed'] = RGBColor(1, 0.95, 0.95);
+    colorNames['color_nude'] = RGBColor(0.920, 0.804, 0.745);
+    colorNames['color_lightRed'] = RGBColor(1, 0.8, 0.8);
+    colorNames['color_red'] = RGBColor(0.9, 0.3, 0.3);
+    colorNames['color_darkRed'] = RGBColor(0.2, 0, 0);
+    colorNames['color_burgundy'] = RGBColor(0.322, 0, 0.078);
+    colorNames['color_pastelOrange'] = RGBColor(1, 0.95, 0.85);
+    colorNames['color_peach'] = RGBColor(1, 0.882, 0.741);
+    colorNames['color_lightOrange'] = RGBColor(1, 0.8, 0.6);
+    colorNames['color_orange'] = RGBColor(1, 0.5, 0.1);
+    colorNames['color_darkOrange'] = RGBColor(0.2, 0.1, 0);
+    colorNames['color_lightBrown'] = RGBColor(0.851, 0.654, 0.494);
+    colorNames['color_beige'] = RGBColor(0.761, 0.551, 0.471);
+    colorNames['color_taupe'] = RGBColor(0.529, 0.475, 0.427);
+    colorNames['color_tan'] = RGBColor(0.859, 0.600, 0.318);
+    colorNames['color_brown'] = RGBColor(0.565, 0.350, 0.212);
+    colorNames['color_rust'] = RGBColor(0.600, 0.220, 0.114);
+    colorNames['color_darkBeige'] = RGBColor(0.388, 0.322, 0.240);
+    colorNames['color_darkBrown'] = RGBColor(0.169, 0.114, 0.063);
+    colorNames['color_chocolate'] = RGBColor(0.251, 0.102, 0.039);
+    colorNames['color_pastelYellow'] = RGBColor(1, 1, 0.9);
+    colorNames['color_cream'] = RGBColor(1, 0.959, 0.851);
+    colorNames['color_lightYellow'] = RGBColor(1, 1, 0.6);
+    colorNames['color_yellow'] = RGBColor(0.9, 0.9, 0.1);
+    colorNames['color_lightChartreuse'] = RGBColor(0.9, 1, 0.8);
+    colorNames['color_chartreuse'] = RGBColor(0.5, 0.9, 0.1);
+    colorNames['color_darkChartreuse'] = RGBColor(0.1, 0.2, 0);
+    colorNames['color_pastelGreen'] = RGBColor(0.95, 1, 0.95);
+    colorNames['color_lightGreen'] = RGBColor(0.8, 1, 0.8);
+    colorNames['color_green'] = RGBColor(0.1, 0.9, 0.1);
+    colorNames['color_darkGreen'] = RGBColor(0, 0.2, 0);
+    colorNames['color_pastelMint'] = RGBColor(0.9, 1, 0.95);
+    colorNames['color_mint'] = RGBColor(0.8, 1, 0.9);
+    colorNames['color_aquamarine'] = RGBColor(0.2, 0.9, 0.5);
+    colorNames['color_darkAquamarine'] = RGBColor(0, 0.2, 0.1);
+    colorNames['color_pastelTurquoise'] = RGBColor(0.9, 1, 1);
+    colorNames['color_lightTurquoise'] = RGBColor(0.8, 1, 1);
+    colorNames['color_turquoise'] = RGBColor(0.4, 0.9, 0.9);
+    colorNames['color_darkTurquoise'] = RGBColor(0, 0.2, 0.2);
+    colorNames['color_lightSkyBlue'] = RGBColor(0.8, 0.9, 1);
+    colorNames['color_skyBlue'] = RGBColor(0.2, 0.5, 0.9);
+    colorNames['color_darkSkyBlue'] = RGBColor(0, 0.1, 0.2);
+    colorNames['color_pastelBlue'] = RGBColor(0.9, 0.95, 1);
+    colorNames['color_lightBlue'] = RGBColor(0.8, 0.8, 1);
+    colorNames['color_blue'] = RGBColor(0.1, 0.1, 0.9);
+    colorNames['color_darkBlue'] = RGBColor(0, 0, 0.2);
+    colorNames['color_pastelLavender'] = RGBColor(0.95, 0.9, 1);
+    colorNames['color_lavender'] = RGBColor(0.9, 0.8, 1);
+    colorNames['color_indigo'] = RGBColor(0.5, 0, 1);
+    colorNames['color_darkIndigo'] = RGBColor(0.1, 0, 0.2);
+    colorNames['color_lightPurple'] = RGBColor(1, 0.8, 1);
+    colorNames['color_purple'] = RGBColor(0.9, 0.1, 0.9);
+    colorNames['color_darkPurple'] = RGBColor(0.2, 0, 0.2);
+    colorNames['color_mauve'] = RGBColor(0.8, 0.6, 0.7);
+    colorNames['color_violet'] = RGBColor(0.9, 0.3, 0.9);
+    colorNames['color_darkViolet'] = RGBColor(0.15, 0, 0.15);
+    colorNames['color_pastelPink'] = RGBColor(1, 0.9, 0.95);
+    colorNames['color_lightPink'] = RGBColor(1, 0.8, 0.9);
+    colorNames['color_pink'] = RGBColor(0.9, 0.1, 0.5);
+    colorNames['color_darkPink'] = RGBColor(0.2, 0, 0.1);
+    colorNames['color_white'] = RGBColor(1, 1, 1);
+    colorNames['color_lightGray'] = RGBColor(0.75, 0.75, 0.75);
+    colorNames['color_gray'] = RGBColor(0.5, 0.5, 0.5);
+    colorNames['color_darkGray'] = RGBColor(0.25, 0.25, 0.25);
+    colorNames['color_darkTaupe'] = RGBColor(0.271, 0.247, 0.227);
+    colorNames['color_black'] = RGBColor(0, 0, 0);
+  }
+  return colorNames;
 }
 
 Map<String, List<String>> createSimilarColorNames() {
@@ -247,7 +264,7 @@ List<double> stepSort(RGBColor rgb, { int step = 1 }) {
 
 List<double> colorWheelSort(RGBColor rgb, { int step = 1 }) {
   List<double> sort = stepSort(rgb, step: step);
-  Map<String, RGBColor> colorWheel = createColorWheel();
+  Map<String, RGBColor> colorWheel = createColorNames();
   double minDist = 1000;
   int minIndex = 0;
   LabColor color0 = RGBtoLab(rgb);

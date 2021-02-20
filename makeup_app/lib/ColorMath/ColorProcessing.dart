@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'dart:math';
 import 'dart:io';
+import 'dart:ui';
 import 'dart:typed_data';
 import '../Widgets/Swatch.dart';
 import '../globals.dart' as globals;
@@ -103,7 +104,7 @@ RGBColor maxFiveColor(Image img) {
 }
 
 String getColorName(RGBColor rgb) {
-  Map<String, RGBColor> colorWheel = createColorWheel();
+  Map<String, RGBColor> colorWheel = createColorNames();
   double minDist = 1000;
   String minColor = 'unknown';
   LabColor color0 = RGBtoLab(rgb);
@@ -166,4 +167,3 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
   }
   return newSwatches;
 }
-

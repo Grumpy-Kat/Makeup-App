@@ -160,7 +160,6 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
       '${getString('swatch_finish')}',
       Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.only(bottom: 15),
         child: Wrap(
           children: widgets,
         ),
