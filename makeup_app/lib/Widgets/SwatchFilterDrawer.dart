@@ -68,14 +68,14 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Filter By', style: theme.primaryTextBold),
+                Text('${getString('filter_filterBy')}', style: theme.primaryTextBold),
                 TextButton(
                   onPressed: () {
                     resetFilters();
                     setState(() { });
                   },
                   child: Text(
-                    'Clear All',
+                    '${getString('filter_clear')}',
                     style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.secondaryTextSize, decoration: TextDecoration.underline, fontFamily: theme.fontFamily),
                     textAlign: TextAlign.left,
                   ),

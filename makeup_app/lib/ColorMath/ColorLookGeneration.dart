@@ -329,8 +329,8 @@ List<int> getAnalogousIndexes(List<int> indexes, int total, int num) {
 List<int> getComplementaryIndexes(List<int> indexes, int total) {
   List<int> ret = [];
   for(int i = 0; i < indexes.length; i++) {
-    if(indexes.contains((i + (total / 2).round()) % total)) {
-      ret.add(i);
+    if(indexes.contains((indexes[i] + (total / 2).round()) % total)) {
+      ret.add(indexes[i]);
     }
   }
   return ret;
@@ -339,9 +339,9 @@ List<int> getComplementaryIndexes(List<int> indexes, int total) {
 List<int> getSplitComplementaryIndexes(List<int> indexes, int total) {
   List<int> ret = [];
   for(int i = 0; i < indexes.length; i++) {
-    int complementary = i + (total / 2).round();
+    int complementary = indexes[i] + (total / 2).round();
     if(indexes.contains((complementary).round() % total) && indexes.contains((complementary + 1).round() % total)) {
-      ret.add(i);
+      ret.add(indexes[i]);
     }
   }
   return ret;
@@ -351,8 +351,8 @@ List<int> getTriadIndexes(List<int> indexes, int total) {
   List<int> ret = [];
   for(int i = 0; i < indexes.length; i++) {
     int third = (total / 3).ceil();
-    if(indexes.contains((i - third) % total) && indexes.contains((i + third) % total)) {
-      ret.add(i);
+    if(indexes.contains((indexes[i] - third) % total) && indexes.contains((indexes[i] + third) % total)) {
+      ret.add(indexes[i]);
     }
   }
   return ret;

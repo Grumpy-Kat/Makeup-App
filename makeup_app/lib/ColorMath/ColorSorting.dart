@@ -16,7 +16,7 @@ Map<String, HSVColor> createColorWheel() {
     colorWheel['orange'] = HSVColor(25.0, 0.5, 0.5);
     colorWheel['yellow'] = HSVColor(45.0, 0.5, 0.5);
     colorWheel['green'] = HSVColor(80.0, 0.5, 0.5);
-    colorWheel['teal'] = HSVColor(155.0, 0.5, 0.5);
+    colorWheel['turquoise'] = HSVColor(155.0, 0.5, 0.5);
     colorWheel['blue'] = HSVColor(220.0, 0.5, 0.5);
     colorWheel['purple'] = HSVColor(275.0, 0.5, 0.5);
     colorWheel['pink'] = HSVColor(315.0, 0.5, 0.5);

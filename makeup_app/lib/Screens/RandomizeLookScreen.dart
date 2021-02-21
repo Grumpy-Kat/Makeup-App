@@ -84,7 +84,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
       init(_swatchList);
       return buildComplete(
         context,
-        'Randomize Look',
+        getString('screen_todayLook'),
         5,
         rightBar: [
           //help button
@@ -110,7 +110,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
                 });
               },
               child: Text(
-                'Change Settings',
+                getString('randomizeLook_changeSettings'),
                 style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
               ),
             ),
@@ -127,7 +127,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
                 });
               },
               child: Text(
-                'Generate Again',
+                getString('randomizeLook_generateAgain'),
                 style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
               ),
             ),
@@ -137,8 +137,8 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
               onPressed: () {
                 globalWidgets.openTextDialog(
                   context,
-                  getString('todayLook_popupInstructions'),
-                  getString('todayLook_popupError'),
+                  getString('randomizeLook_popupInstructions'),
+                  getString('randomizeLook_popupError'),
                   getString('save'),
                   (String value) {
                     globalWidgets.openLoadingDialog(context);
@@ -157,7 +157,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
                 );
               },
               child: Text(
-                'Save Look',
+                getString('randomizeLook_save'),
                 style: theme.primaryTextPrimary,
               ),
             ),
@@ -183,7 +183,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
     } else {
       return buildComplete(
         context,
-        'Randomize Look',
+        getString('screen_todayLook'),
         5,
         rightBar: [
           globalWidgets.getHelpBtn(
@@ -218,7 +218,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      'Create Look',
+                      getString('randomizeLook_generate'),
                       style: theme.accentTextBold,
                     ),
                   ),
@@ -259,7 +259,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   Widget getNumSwatchesField(BuildContext context) {
     TextStyle style = TextStyle(color: theme.secondaryTextColor, fontSize: 14, fontFamily: theme.fontFamily);
     return getField(
-      'Number of Swatches',
+      '${getString('randomizeLook_swatches')}',
       CupertinoSlidingSegmentedControl<int>(
         groupValue: _numSwatches,
         backgroundColor: theme.primaryColor,
@@ -335,7 +335,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
       );
     }
     return getField(
-      'Possible Finishes',
+      '${getString('randomizeLook_finishes')}',
       Container(
         alignment: Alignment.center,
         child: Wrap(
@@ -355,7 +355,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
       widgets.add(
         FilterChip(
           checkmarkColor: theme.accentColor,
-          label: Text('${globalWidgets.toTitleCase(_colors[i])}', style: style),
+          label: Text('${getString('randomizeLook_color_${_colors[i].toLowerCase()}')}', style: style),
           selected: _selectedColors.contains(_colors[i]),
           onSelected: (bool selected) {
             setState(() {
@@ -375,7 +375,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
       );
     }
     return getField(
-      'Possible Colors',
+      '${getString('randomizeLook_colors')}',
       Container(
         alignment: Alignment.center,
         child: Wrap(
@@ -388,7 +388,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   Widget getTypeField(BuildContext context) {
     TextStyle style = TextStyle(color: theme.secondaryTextColor, fontSize: 10, fontFamily: theme.fontFamily);
     return getField(
-      'Look Type',
+      '${getString('randomizeLook_type')}',
       CupertinoSlidingSegmentedControl<int>(
         groupValue: _type,
         backgroundColor: theme.primaryColor,
@@ -404,19 +404,19 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         children: {
           0: Container(
             width: double.maxFinite,
-            child: Text('Random', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_type_random')}', style: style, textAlign: TextAlign.center),
           ),
           1: Container(
             width: double.maxFinite,
-            child: Text('Monochromatic', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_type_monochromatic')}', style: style, textAlign: TextAlign.center),
           ),
           2: Container(
             width: double.maxFinite,
-            child: Text('Duochromatic', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_type_duochromatic')}', style: style, textAlign: TextAlign.center),
           ),
           3: Container(
             width: double.maxFinite,
-            child: Text('Trichromatic', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_type_trichromatic')}', style: style, textAlign: TextAlign.center),
           ),
         },
       ),
@@ -426,7 +426,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   Widget getDuochromaticSubtypeField(BuildContext context) {
     TextStyle style = TextStyle(color: theme.secondaryTextColor, fontSize: 10, fontFamily: theme.fontFamily);
     return getField(
-      'Duochromatic Type',
+      '${getString('randomizeLook_duochromatic')}',
       CupertinoSlidingSegmentedControl<int>(
         groupValue: _subtype,
         backgroundColor: theme.primaryColor,
@@ -441,15 +441,15 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         children: {
           0: Container(
             width: double.maxFinite,
-            child: Text('Random', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_duochromatic_random')}', style: style, textAlign: TextAlign.center),
           ),
           1: Container(
             width: double.maxFinite,
-            child: Text('Analogous', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_duochromatic_analogous')}', style: style, textAlign: TextAlign.center),
           ),
           2: Container(
             width: double.maxFinite,
-            child: Text('Complementary', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_duochromatic_complementary')}', style: style, textAlign: TextAlign.center),
           ),
         },
       ),
@@ -459,7 +459,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   Widget getTrichromaticSubtypeField(BuildContext context) {
     TextStyle style = TextStyle(color: theme.secondaryTextColor, fontSize: 10, fontFamily: theme.fontFamily);
     return getField(
-      'Trichromatic Type',
+      '${getString('randomizeLook_trichromatic')}',
       CupertinoSlidingSegmentedControl<int>(
         groupValue: _subtype,
         backgroundColor: theme.primaryColor,
@@ -474,19 +474,19 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         children: {
           0: Container(
             width: double.maxFinite,
-            child: Text('Random', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_trichromatic_random')}', style: style, textAlign: TextAlign.center),
           ),
           1: Container(
             width: double.maxFinite,
-            child: Text('Analogous', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_trichromatic_analogous')}', style: style, textAlign: TextAlign.center),
           ),
           2: Container(
             width: double.maxFinite,
-            child: Text('Complementary', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_trichromatic_complementary')}', style: style, textAlign: TextAlign.center),
           ),
           3: Container(
             width: double.maxFinite,
-            child: Text('Triad', style: style, textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_trichromatic_triad')}', style: style, textAlign: TextAlign.center),
           ),
         },
       ),

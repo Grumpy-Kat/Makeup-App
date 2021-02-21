@@ -9,6 +9,8 @@ cancel,Cancel,Отменить
 error,Error,Ошибка
 save,Save,Cохранить
 noColorsFound,No Colors Found.,Цвета не найдены.
+filter_filterBy,Filter By,
+filter_clear,Clear All,
 sort_sortBy,Sort By,Сортировать по
 sort_hue,Hue,Оттенок
 sort_lightest,Lightest,Самый Светлый
@@ -107,6 +109,7 @@ screen_savedLooks,Saved Looks,Сохраненные Образы
 screen_colorWheel,Color Wheel,Цветовое Колесо
 screen_paletteScanner,Palette Scanner,Сканер Палитры
 screen_todayLook,Today's Look,Сегодняшний Образ
+screen_randomizeLook,Randomize Look,
 screen_settings,Settings,Настройка
 screen_swatch,Edit Swatch,Изменить Образец
 screen_addPalette,Add Palette,Добавить Палитру
@@ -150,6 +153,38 @@ lookScreen_clearWarning,Are you sure you want to clear the look?,Вы увере
 lookScreen_saveWarning,Would you like to save?,Хотите сохранить?
 todayLook_popupInstructions,Enter a name for this look:,Введите название для этого образа:
 todayLook_popupError,You must add a look name.,Добавьте название образа.
+randomizeLook_popupInstructions,Enter a name for this look:,Введите название для этого образа:
+randomizeLook_popupError,You must add a look name.,Добавьте название образа.
+randomizeLook_swatches,Number of Swatches,
+randomizeLook_finishes,Possible Finishes,
+randomizeLook_colors,Possible Colors,
+randomizeLook_color_neutral,Neutral,
+randomizeLook_color_red,Red,Красный
+randomizeLook_color_orange,Orange,Оранжевый
+randomizeLook_color_yellow,Yellow,Желтый
+randomizeLook_color_green,Green,Зеленый
+randomizeLook_color_turquoise,Turquoise,Бирюзовый
+randomizeLook_color_blue,Blue,Синий
+randomizeLook_color_purple,Purple,Фиолетовый
+randomizeLook_color_pink,Pink,Розовый
+randomizeLook_type,Look Type,
+randomizeLook_type_random,Random,
+randomizeLook_type_monochromatic,Monochromatic,
+randomizeLook_type_duochromatic,Duochromatic,
+randomizeLook_type_trichromatic,Trichromatic,
+randomizeLook_duochromatic,Duochromatic Type,
+randomizeLook_duochromatic_random,Random,
+randomizeLook_duochromatic_analogous,Analogous,
+randomizeLook_duochromatic_complementary,Complementary,
+randomizeLook_trichromatic,Trichromatic Type,
+randomizeLook_trichromatic_random,Random,
+randomizeLook_trichromatic_analogous,Analogous,
+randomizeLook_trichromatic_complementary,Complementary,
+randomizeLook_trichromatic_triad,Triad,
+randomizeLook_generate,Create Look,
+randomizeLook_changeSettings,Change Settings,
+randomizeLook_generateAgain,Generate Again,
+randomizeLook_save,Save Look,
 settings_default_language,Language,Язык
 settings_default_notifications,Allow Notifications,Разрешить Уведомления
 settings_default_sort,Default Sort,Сортировка По Умолчанию
