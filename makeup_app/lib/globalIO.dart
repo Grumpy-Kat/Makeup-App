@@ -72,8 +72,10 @@ Future<String> saveSwatch(Swatch swatch) async {
       tags += removeAllChars(swatch.tags[i], [r';', r'\\', r',']) + ',';
     }
   }
+  //color name
+  String colorName = removeAllChars(swatch.colorName.trim(), [r';', r'\\']);
   //combined
-  return '$color;$finish;$brand;$palette;$shade;$weight;$price;$rating;$tags\n';
+  return '$color;$finish;$brand;$palette;$shade;$weight;$price;$rating;$tags;$colorName\n';
 }
 
 String removeAllChars(String orgString, List<String> patterns) {
@@ -108,6 +110,11 @@ Future<Swatch> loadSwatch(int id, String line) async {
   int rating = int.parse(lineSplit[7] == '' ? 0 : lineSplit[7]);
   //tags
   List<String> tags = (lineSplit[8] == '' ? [] : lineSplit[8].split(','));
+  //if exists, color name
+  String colorName = '';
+  if(lineSplit.length > 9) {
+    colorName = lineSplit[9];
+  }
   //combined
-  return Swatch(color: color, finish: finish, brand: brand, palette: palette, id: id, shade: shade, weight: weight, price: price, rating: rating, tags: tags);
+  return Swatch(id: id, color: color, finish: finish, brand: brand, palette: palette, shade: shade, weight: weight, price: price, rating: rating, tags: tags, colorName: colorName);
 }

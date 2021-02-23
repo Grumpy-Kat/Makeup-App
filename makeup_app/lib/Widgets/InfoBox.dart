@@ -65,7 +65,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
   void setValues() {
     if(widget.swatch != null) {
       _hasSetValues = true;
-      _colorName = globalWidgets.toTitleCase(getString(getColorName(widget.swatch.color)));
+      _colorName = globalWidgets.toTitleCase(widget.swatch.colorName == '' ? getString(getColorName(widget.swatch.color)) : widget.swatch.colorName);
       _finish = globalWidgets.toTitleCase(getString(widget.swatch.finish));
       _brand = globalWidgets.toTitleCase(widget.swatch.brand);
       _palette = globalWidgets.toTitleCase(widget.swatch.palette);

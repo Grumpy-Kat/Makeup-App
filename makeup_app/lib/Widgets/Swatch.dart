@@ -9,6 +9,7 @@ import 'InfoBox.dart';
 class Swatch {
   int id;
   RGBColor color;
+  String colorName;
   String finish;
   String brand;
   String palette;
@@ -18,7 +19,7 @@ class Swatch {
   int rating = 5;
   List<String> tags = [];
 
-  Swatch({ @required this.color, @required this.finish, this.brand = '', this.palette = '', this.id = -1, this.shade = '', this.weight = 0.0, this.price = 0.0, this.rating = 5, this.tags });
+  Swatch({ @required this.color, @required this.finish, this.id = -1, this.colorName = '', this.brand = '', this.palette = '', this.shade = '', this.weight = 0.0, this.price = 0.0, this.rating = 5, this.tags });
 
   int compareTo(Swatch other, List<double> Function(Swatch) comparator) {
     List<double> thisValues = comparator(this);
@@ -43,6 +44,7 @@ class Swatch {
   Map<String, dynamic> getMap() {
     return {
       'color': color,
+      'colorName': colorName,
       'finish': finish,
       'brand': brand,
       'palette': palette,

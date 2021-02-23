@@ -60,11 +60,12 @@ class GlamKitAppState extends State<GlamKitApp> {
     globals.debug = false;
     allSwatchesIO.init();
     savedLooksIO.init();
-    for(int i = 0; i < 3; i++) {
+    /*for(int i = 0; i < 3; i++) {
       for(int j = 0; j < 3; j++) {
         //await generateRainbow(saturation: (i * 0.2) + 0.2, value: (j * 0.2) + 0.2);
       }
-    }
+    }*/
+    //await generateRainbow(saturation: 0.5, value: 0.5);
     getModel();
     //await clearSave();
     //await IO.clear();

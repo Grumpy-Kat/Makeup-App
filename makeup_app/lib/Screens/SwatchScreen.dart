@@ -53,6 +53,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     //all swatch data
     SwatchIcon swatchIcon = SwatchIcon.swatch(_swatch, showInfoBox: false, overrideOnDoubleTap: true, onDoubleTap: (int id) {});
     RGBColor color = _swatch.color;
+    String colorName = globalWidgets.toTitleCase(_swatch.colorName).trim();
     String finish = _swatch.finish;
     String brand = globalWidgets.toTitleCase(_swatch.brand).trimRight();
     String palette = globalWidgets.toTitleCase(_swatch.palette).trimRight();
@@ -115,7 +116,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
             child: ListView(
               children: <Widget>[
                 //color
-                getColorField('${getString('swatch_color')}', color, (RGBColor value) { _swatch.color = value; onChange(true); }),
+                getColorField('${getString('swatch_color')}', color, colorName, (RGBColor value) { _swatch.color = value; onChange(true); }, (String value) { _swatch.colorName = value.trim(); onChange(true); }),
                 //finish
                 getDropdownField('${getString('swatch_finish')}', finishes, finish, (String value) { _swatch.finish = value; onChange(true); }),
                 //brand name
@@ -285,8 +286,8 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   }
 
   //color field that displays color name and opens popup to color picker
-  Widget getColorField(String label, RGBColor color, OnRGBColorAction onChange) {
-    String colorName = globalWidgets.toTitleCase(getString(getColorName(_swatch.color)));
+  Widget getColorField(String label, RGBColor color, String colorNameOrg, OnRGBColorAction onChange, OnStringAction onNameChange) {
+    String colorName = (colorNameOrg == '' ? globalWidgets.toTitleCase(getString(getColorName(_swatch.color))) : colorNameOrg);
     Widget child = Row(
       children: <Widget>[
         Text(
@@ -296,6 +297,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         ),
         if(_isEditing) IconButton(
           padding: EdgeInsets.only(left: 12, bottom: 70),
+          constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
           alignment: Alignment.topLeft,
           icon: Icon(
             Icons.colorize,
@@ -340,7 +342,29 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                     ),
                   ),
                 );
-              }
+              },
+            );
+          },
+        ),
+        if(_isEditing) IconButton(
+          padding: EdgeInsets.only(bottom: 70),
+          constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+          alignment: Alignment.topLeft,
+          icon: Icon(
+            Icons.mode_edit,
+            size: theme.secondaryIconSize,
+          ),
+          onPressed: () {
+            globalWidgets.openTextDialog(
+              context,
+              'Enter the name of the color of swatch. Leave it empty for it to be auto generated.',
+              '',
+              getString('save'),
+              (String value) {
+                onNameChange(value);
+              },
+              orgValue: colorNameOrg,
+              required: false,
             );
           },
         ),
@@ -496,19 +520,17 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
             color: theme.iconTextColor,
           ),
           onPressed: () {
-            if(_isEditing) {
-              globalWidgets.openTextDialog(
-                context,
-                getString('swatch_popupInstructions'),
-                getString('swatch_popupError'),
-                getString('swatch_popupBtn'),
-                (String value) {
-                  onAddOption(value);
-                  values.add(value);
-                  onChange(values);
-                }
-              );
-            }
+            globalWidgets.openTextDialog(
+              context,
+              getString('swatch_popupInstructions'),
+              getString('swatch_popupError'),
+              getString('swatch_popupBtn'),
+              (String value) {
+                onAddOption(value);
+                values.add(value);
+                onChange(values);
+              },
+            );
           },
         ),
       );

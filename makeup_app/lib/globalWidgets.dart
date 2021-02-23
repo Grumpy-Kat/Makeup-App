@@ -45,8 +45,8 @@ Future<void> openLoadingDialog(BuildContext context) {
   );
 }
 
-Future<void> openTextDialog(BuildContext context, String title, String error, String buttonLabel, OnStringAction onPressed) {
-  String value = '';
+Future<void> openTextDialog(BuildContext context, String title, String error, String buttonLabel, OnStringAction onPressed, { String orgValue = '', bool required = true }) {
+  String value = orgValue;
   bool showErrorText = false;
   return openDialog(
     context,
@@ -64,17 +64,21 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
               showErrorText,
               (String val) {
                 value = val;
-                if(showErrorText && !(val == '' || val == null)) {
-                  setState(() { showErrorText = false; });
+                if(required) {
+                  if(showErrorText && !(val == '' || val == null)) {
+                    setState(() { showErrorText = false; });
+                  }
                 }
               },
               (String val) {
                 value = val;
-                if(!(value == '' || value == null)) {
-                  setState(() { showErrorText = false; });
-                }
-                if(value == '' || value == null) {
-                  setState(() { showErrorText = true; });
+                if(required) {
+                  if(!(value == '' || value == null)) {
+                    setState(() { showErrorText = false; });
+                  }
+                  if(value == '' || value == null) {
+                    setState(() { showErrorText = true; });
+                  }
                 }
               }
             ),
@@ -82,7 +86,7 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
               FlatButton(
                 color: theme.accentColor,
                 onPressed: () {
-                  if(value == '' || value == null) {
+                  if(required && (value == '' || value == null)) {
                     setState(() { showErrorText = true; });
                   } else {
                     //doesn't use navigation because is popping a Dialog
