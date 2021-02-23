@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'dart:typed_data';
 import '../Widgets/Swatch.dart';
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import 'ColorObjects.dart';
 import 'ColorDifferences.dart';
 import 'ColorConversions.dart';
@@ -122,8 +123,12 @@ String getColorName(RGBColor rgb) {
 }
 
 Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatches, { double maxDist = 15, bool getSimilar = true, bool getOpposite = true }) {
-  //TODO: pass in list of manually set color names, if not '' and equal to existing color name, use instead of generated? or maybe only pass in these conditions are true?
-  String colorName = getColorName(rgb);
+  List<String> colorNames = createColorNames().keys.toList();
+  String orgColorName = '';
+  if(rgbSwatch != null) {
+    orgColorName = 'color_${globalWidgets.toCamelCase(rgbSwatch.colorName)}';
+  }
+  String colorName = ((rgbSwatch != null && rgbSwatch.colorName != '' && colorNames.contains(orgColorName)) ? orgColorName : getColorName(rgb));
   LabColor color0 = RGBtoLab(rgb);
   List<String> similarCategories = [];
   List<String> oppositeCategories = [];
@@ -143,9 +148,10 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
     }
 
     //find color name
-    String colorName = '';
+    colorName = '';
     if(getSimilar || getOpposite) {
-      colorName = getColorName(swatches[i].color);
+      orgColorName = 'color_${globalWidgets.toCamelCase(swatches[i].colorName)}';
+      colorName = ((swatches[i].colorName != '' && colorNames.contains(orgColorName)) ? orgColorName : getColorName(swatches[i].color));
     }
 
     //check if similar

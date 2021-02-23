@@ -78,7 +78,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
         currSwatch.color,
         currSwatch,
         IO.getMany(allSwatches),
-        maxDist: 10,
+        maxDist: 12,
         getSimilar: true,
         getOpposite: true,
       );

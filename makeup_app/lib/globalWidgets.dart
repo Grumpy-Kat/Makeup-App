@@ -462,3 +462,16 @@ String toTitleCase(String text) {
   }
   return result;
 }
+
+String toCamelCase(String text) {
+  List<String> words = text.split(' ');
+  String result = words[0].toLowerCase();
+  for(int i = 1; i < words.length; i++) {
+    if(words[i].length <= 1) {
+      result += words[i].toUpperCase();
+      continue;
+    }
+    result += words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+  }
+  return result;
+}

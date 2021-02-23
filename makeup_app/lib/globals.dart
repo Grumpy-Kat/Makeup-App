@@ -271,10 +271,10 @@ set blueOffset(int value) {
 }
 
 //color distance for ColorWheelScreen
-double _colorWheelDistance = 13;
+double _colorWheelDistance = 11;
 double get colorWheelDistance => _colorWheelDistance;
 set colorWheelDistance(double value) {
-  _colorWheelDistance = value.clamp(3, 25);
+  _colorWheelDistance = value.clamp(2, 30);
   if(hasLoaded) {
     IO.save();
   }
