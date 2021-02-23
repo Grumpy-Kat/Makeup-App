@@ -63,6 +63,40 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
           routes.routes['/addPaletteScreen'](context),
         )
       ),
+      rightBar: [
+        //delete button
+        Container(
+          margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+          child: IconButton(
+            constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+            color: theme.primaryColor,
+            onPressed: () {
+              globalWidgets.openTwoButtonDialog(
+                context,
+                '${getString('addCustomPalette_popupInstructions')}',
+                () {
+                  globalWidgets.openLoadingDialog(context);
+                  IO.removeIDsMany(_swatches);
+                  Navigator.pop(context);
+                  navigation.pushReplacement(
+                    context,
+                    Offset(-1, 0),
+                    routes.ScreenRoutes.AddPaletteScreen,
+                    routes.routes['/addPaletteScreen'](context),
+                  );
+                },
+                () { },
+              );
+            },
+            icon: Icon(
+              Icons.delete,
+              size: theme.quaternaryIconSize,
+              color: theme.tertiaryTextColor,
+              semanticLabel: 'Delete Filtered Swatches',
+            ),
+          ),
+        ),
+      ],
       //scroll view to show all swatches
       body: GridView.builder(
         scrollDirection: Axis.vertical,

@@ -235,6 +235,8 @@ addPalette_palette,Palette,Палитра
 addPalette_paletteError,You must add a palette name.,Добавьте название палитры.
 addPalette_weight,Net Weight (optional),Вес Нетто (не обязательна)
 addPalette_price,Price (optional),Цена (не обязательна)
+addPaletteDivider_popupInstructions,Are you sure you want to delete the swatches in this palette? They will be permanently deleted and this action cannot be undone.,
+addCustomPalette_popupInstructions,Are you sure you want to delete the swatches in this palette? They will be permanently deleted and this action cannot be undone.,
 tutorial_skip,Skip,Пропустить
 tutorial_screen0_0,"First,% click on the plus button to add your palettes. The screen will have more directions if you press the help icon in the top left corner.","Сначала нажмите кнопку с плюсом,% чтобы добавить свои палитры. На экране появятся дополнительные инструкции,% если вы нажмете кнопку справки в верхнем левом углу."
 tutorial_screen0_1,"Once you have finished,% you can return to the ""All Swatches"" screen and scroll through all the added swatches.","Когда вы закончите,% вы можете вернуться к экрану «Все Образцы» и просмотреть все добавленные образцы."
@@ -265,3 +267,4 @@ paletteDivider_warning,"If the palette does not have uniform columns and rows,% 
 paletteDivider_columns,Palette Columns,Столбцы Палитры
 paletteDivider_rows,Palette Rows,Строки Палитры
 paletteDivider_add,Add Image,Добавить Изображение
+swatchList_popupInstructions,Are you sure you want to delete the currently filtered swatches? They will be permanently deleted and this action cannot be undone.,

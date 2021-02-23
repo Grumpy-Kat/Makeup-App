@@ -82,7 +82,6 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       getString('screen_addPalette'),
       10,
       //back button
-
       leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
           context,
           Offset(-1, 0),
@@ -148,6 +147,39 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         )
       ),
       rightBar: [
+        //delete button
+        Container(
+          margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+          child: IconButton(
+            constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+            color: theme.primaryColor,
+            onPressed: () {
+              globalWidgets.openTwoButtonDialog(
+                context,
+                '${getString('addPaletteDivider_popupInstructions')}',
+                () {
+                  globalWidgets.openLoadingDialog(context);
+                  IO.removeIDsMany(_swatches);
+                  Navigator.pop(context);
+                  navigation.pushReplacement(
+                    context,
+                    Offset(-1, 0),
+                    routes.ScreenRoutes.AddPaletteScreen,
+                    routes.routes['/addPaletteScreen'](context),
+                  );
+                },
+                () { },
+              );
+            },
+            icon: Icon(
+              Icons.delete,
+              size: theme.quaternaryIconSize,
+              color: theme.tertiaryTextColor,
+              semanticLabel: 'Delete Filtered Swatches',
+            ),
+          ),
+        ),
+        //help button
         globalWidgets.getHelpBtn(
           context,
           '${getString('help_addPaletteList_0')}\n\n'

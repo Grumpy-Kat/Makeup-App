@@ -227,7 +227,7 @@ mixin SwatchListState {
         onPressed: () {
           globalWidgets.openTwoButtonDialog(
             context,
-            'Are you sure you want to delete the currently filtered swatches? They will be permanently deleted and this action is unable to be undone.',
+            '${getString('swatchList_popupInstructions')}',
             () {
               globalWidgets.openLoadingDialog(context);
               deleteSwatches().then((value) {
