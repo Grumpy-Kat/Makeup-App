@@ -357,7 +357,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           onPressed: () {
             globalWidgets.openTextDialog(
               context,
-              'Enter the name of the color of swatch. Leave it empty for it to be auto generated.',
+              getString('swatch_color_popupInstructions'),
               '',
               getString('save'),
               (String value) {
@@ -522,9 +522,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           onPressed: () {
             globalWidgets.openTextDialog(
               context,
-              getString('swatch_popupInstructions'),
-              getString('swatch_popupError'),
-              getString('swatch_popupBtn'),
+              getString('swatch_tags_popupInstructions'),
+              getString('swatch_tags_popupError'),
+              getString('swatch_tags_popupBtn'),
               (String value) {
                 onAddOption(value);
                 values.add(value);

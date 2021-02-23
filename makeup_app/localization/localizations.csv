@@ -221,9 +221,10 @@ swatch_tags,Tags,Теги
 swatch_delete,Delete Swatch,Удалить Образец
 swatch_deleteWarning,Are you sure you want to delete the swatch?,Вы уверены что хотите удалить образец?
 swatch_none,None,Никакие
-swatch_popupInstructions,Enter new tag:,Введите новый тег:
-swatch_popupError,You must enter a tag.,Добавьте тег.
-swatch_popupBtn,Add,Добавить
+swatch_tags_popupInstructions,Enter new tag:,Введите новый тег:
+swatch_tags_popupError,You must enter a tag.,Добавьте тег.
+swatch_tags_popupBtn,Add,Добавить
+swatch_color_popupInstructions,Enter the name of the color of swatch. Leave it empty for it to be auto generated.,
 addPalette_chooseMode,Add swatches using:,Добавьте образцы используя:
 addPalette_paletteDivider,Palette Divider,Разделитель Палитры
 addPalette_custom,Custom,Настраиваемый 
