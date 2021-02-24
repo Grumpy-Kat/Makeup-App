@@ -185,6 +185,36 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   }
 
   @override
+  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags) async {
+    Map<int, Swatch> editing = {};
+    for(int i = 0; i < _swatches.length; i++) {
+      List<Swatch> swatches = IO.getMany(_swatches[i]);
+      for(int j = 0; j < _swatches.length; j++) {
+        if (brand != null && brand != '') {
+          swatches[j].brand = brand;
+        }
+        if(palette != null && palette != '') {
+          swatches[j].palette = palette;
+        }
+        if(weight != null) {
+          swatches[j].weight = weight;
+        }
+        if(price != null) {
+          swatches[j].price = price;
+        }
+        if(rating != null && rating > 0 && rating <= 10) {
+          swatches[j].rating = rating;
+        }
+        if(tags != null) {
+          swatches[j].tags.addAll(tags);
+        }
+        editing[swatches[j].id] = swatches[j];
+      }
+    }
+    await IO.editIds(editing);
+  }
+
+  @override
   Future<void> deleteSwatches() async {
     List<int> delete = [];
     //compress into single list

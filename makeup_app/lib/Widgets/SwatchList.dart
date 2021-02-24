@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide HSVColor;
 import 'package:flutter/rendering.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Filter.dart';
+import '../Widgets/EditSwatchPopup.dart';
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
@@ -44,6 +45,7 @@ mixin SwatchListState {
   SwatchList swatchList;
   String currentSort = 'sort_hue';
   List<Filter> filters = [];
+  bool canShowBtns = true;
 
   void init(SwatchList swatchList) {
     this.swatchList = swatchList;
@@ -144,7 +146,8 @@ mixin SwatchListState {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              if(swatchList.showDeleteFiltered && filters.length > 0) buildDeleteBtn(context),
+              if(swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns) buildEditBtn(context),
+              if(swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns) buildDeleteBtn(context),
               buildFilterBtn(context),
             ],
           ),
@@ -218,6 +221,25 @@ mixin SwatchListState {
     );
   }
 
+  Widget buildEditBtn(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      child: IconButton(
+        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+        color: theme.primaryColor,
+        onPressed: () {
+          openEditDialog(context);
+        },
+        icon: Icon(
+          Icons.mode_edit,
+          size: theme.quaternaryIconSize,
+          color: theme.tertiaryTextColor,
+          semanticLabel: 'Edit Filtered Swatches',
+        ),
+      ),
+    );
+  }
+
   Widget buildDeleteBtn(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
@@ -250,6 +272,37 @@ mixin SwatchListState {
     );
   }
 
+  Future<void> openEditDialog(BuildContext context) {
+    return globalWidgets.openDialog(
+      context,
+      (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.zero,
+          child: Dialog(
+            insetPadding: EdgeInsets.symmetric(horizontal: 0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: EditSwatchPopup(
+                onSave: (String brand, String palette, double weight, double price, int rating, List<String> tags) {
+                  globalWidgets.openLoadingDialog(context);
+                  editSwatches(brand.trim(), palette.trim(), weight, price, rating, tags).then((value) {
+                    setState(() {});
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+            ),
+          ),
+        );
+      }
+    );
+  }
+
   void onFilterDrawerClose(List<Filter> newFilters) {
     filters = newFilters;
     filterSwatches(filters);
@@ -257,6 +310,7 @@ mixin SwatchListState {
 
   void setState(OnVoidAction func);
 
+  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags);
   Future<void> deleteSwatches();
   void sortSwatches(String val);
   void filterSwatches(List<Filter> filters);

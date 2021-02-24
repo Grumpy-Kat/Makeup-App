@@ -511,6 +511,9 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   }
 
   @override
+  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags) { return null; }
+
+  @override
   Future<void> deleteSwatches() { return null; }
 
   @override

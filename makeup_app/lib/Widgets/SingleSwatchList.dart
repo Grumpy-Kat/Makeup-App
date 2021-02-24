@@ -122,6 +122,34 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   }
 
   @override
+  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags) async {
+    Map<int, Swatch> editing = {};
+    List<Swatch> swatches = IO.getMany(_swatches);
+    for(int i = 0; i < _swatches.length; i++) {
+      if(brand != null && brand != '') {
+        swatches[i].brand = brand;
+      }
+      if(palette != null && palette != '') {
+        swatches[i].palette = palette;
+      }
+      if(weight != null) {
+        swatches[i].weight = weight;
+      }
+      if(price != null) {
+        swatches[i].price = price;
+      }
+      if(rating != null && rating > 0 && rating <= 10) {
+        swatches[i].rating = rating;
+      }
+      if(tags != null) {
+        swatches[i].tags.addAll(tags);
+      }
+      editing[swatches[i].id] = swatches[i];
+    }
+    await IO.editIds(editing);
+  }
+
+  @override
   Future<void> deleteSwatches() async {
     await IO.removeIDsMany(_swatches);
   }

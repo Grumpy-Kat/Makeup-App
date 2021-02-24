@@ -205,6 +205,11 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   }
 
   @override
+  Future<void> editSwatches(String brand, String palette, double weight,  double price,int rating, List<String> tags) async {
+    //do nothing
+  }
+
+  @override
   Future<void> deleteSwatches() async {
     //do nothing
   }
