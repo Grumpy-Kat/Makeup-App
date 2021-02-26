@@ -44,11 +44,11 @@ class Swatch {
   Map<String, dynamic> getMap() {
     return {
       'color': color,
-      'colorName': colorName,
+      'colorName': colorName.trim(),
       'finish': finish,
-      'brand': brand,
-      'palette': palette,
-      'shade': shade,
+      'brand': brand.trim(),
+      'palette': palette.trim(),
+      'shade': shade.trim(),
       'weight': weight,
       'price': price,
       'rating': rating,

@@ -27,8 +27,8 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
   static const double _maxPrice = 100;
 
   List<Filter<String>> _finishesFilters = [];
-  Filter<String> _paletteFilter = Filter(FilterType.EqualTo, 'palette', '');
   Filter<String> _brandFilter = Filter(FilterType.EqualTo, 'brand', '');
+  Filter<String> _paletteFilter = Filter(FilterType.EqualTo, 'palette', '');
   Filter<int> _minRatingFilter = Filter(FilterType.GreaterThanOrEqualTo, 'rating', _minRating);
   Filter<int> _maxRatingFilter = Filter(FilterType.LessThanOrEqualTo, 'rating', _maxRating);
   List<Filter<String>> _tagsFilters = [];
@@ -84,8 +84,8 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
             ),
           ),
           getFinishField(context),
-          getPaletteField(context),
           getBrandField(context),
+          getPaletteField(context),
           getRatingField(context),
           getTagsField(context),
           getWeightField(context),
@@ -529,11 +529,13 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
   List<Filter> getFilters() {
     List<Filter> ret = [];
     ret.addAll(_finishesFilters);
-    if(_paletteFilter.threshold.trim() != '') {
-      ret.add(_paletteFilter);
-    }
     if(_brandFilter.threshold.trim() != '') {
+      _brandFilter.threshold = _brandFilter.threshold.trim();
       ret.add(_brandFilter);
+    }
+    if(_paletteFilter.threshold.trim() != '') {
+      _paletteFilter.threshold = _paletteFilter.threshold.trim();
+      ret.add(_paletteFilter);
     }
     if(_minRatingFilter.threshold != _minRating) {
       ret.add(_minRatingFilter);
@@ -572,12 +574,12 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
           _finishesFilters.add(Filter(FilterType.NotEqualTo, 'finish', filters[i].threshold));
           break;
         }
-        case 'palette': {
-          _paletteFilter.threshold = filters[i].threshold;
-          break;
-        }
         case 'brand': {
           _brandFilter.threshold = filters[i].threshold;
+          break;
+        }
+        case 'palette': {
+          _paletteFilter.threshold = filters[i].threshold;
           break;
         }
         case 'rating': {
@@ -621,8 +623,8 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
     _selectedFinishes = _finishes.toList();
 
     _finishesFilters = [];
-    _paletteFilter.threshold = '';
     _brandFilter.threshold = '';
+    _paletteFilter.threshold = '';
     _minRatingFilter.threshold = _minRating;
     _maxRatingFilter.threshold = _maxRating;
     _tagsFilters = [];
