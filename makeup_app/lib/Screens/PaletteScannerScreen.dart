@@ -66,6 +66,10 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   Widget build(BuildContext context) {
     if(!_openPaletteDivider) {
       //has finished using palette divider and displays similar swatches
+      Future<Map<Widget, List<int>>> swatchesFutureActual = _swatchesFuture;
+      if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
+        swatchesFutureActual = (_swatchListKey.currentWidget as MultipleSwatchList).swatchList.addSwatches;
+      }
       return buildComplete(
         context,
         getString('screen_paletteScanner'),
@@ -109,7 +113,8 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
               Expanded(
                 child: MultipleSwatchList(
                   key: _swatchListKey,
-                  addSwatches: _swatchesFuture,
+                  addSwatches: swatchesFutureActual,
+                  orgAddSwatches: _swatchesFuture,
                   updateSwatches: (List<List<int>> swatches) { this._swatches = swatches; },
                   rowCount: 1,
                   showNoColorsFound: true,

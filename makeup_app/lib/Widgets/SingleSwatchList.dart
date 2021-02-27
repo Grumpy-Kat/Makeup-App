@@ -12,9 +12,9 @@ class SingleSwatchList extends StatefulWidget {
   final OnVoidAction onTap;
   final OnVoidAction onDoubleTap;
 
-  SingleSwatchList({ Key key, @required Future addSwatches, @required this.updateSwatches, List<int> selectedSwatches, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool showDeleteFiltered = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
+  SingleSwatchList({ Key key, @required Future addSwatches, Future orgAddSwatches, @required this.updateSwatches, List<int> selectedSwatches, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showDelete = false, bool showDeleteFiltered = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
     addSwatches: addSwatches,
-    orgAddSwatches: addSwatches,
+    orgAddSwatches: orgAddSwatches ?? addSwatches,
     selectedSwatches: selectedSwatches ?? [],
     showInfoBox: showInfoBox,
     showNoColorsFound: showNoColorsFound,
@@ -103,7 +103,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
               if(_shouldChangeOriginalSwatches) {
                 _allSwatches = _swatches;
               }
-              //print('${_swatches.length} ${_allSwatches.length}');
+              print('${_swatches.length} ${_allSwatches.length}');
               _addSwatchIcons();
             }
             return buildSwatchList(

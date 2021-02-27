@@ -168,13 +168,12 @@ List<HSVColor> getDuochromaticColors(Map<String, HSVColor> colorWheel, List<int>
       int i = random.nextInt(indexes.length);
       String color = colorNames[indexes[i]];
       ret.add(colorWheel[color]);
-
       color = colorNames[indexes[(i + 1) % indexes.length]];
       ret.add(colorWheel[color]);
     } else {
       int i = analogous[random.nextInt(analogous.length)];
       ret.add(colorWheel[colorNames[i]]);
-      ret.add(colorWheel[colorNames[i + 1]]);
+      ret.add(colorWheel[colorNames[(i + 1) % colorNames.length]]);
     }
 
   } else {

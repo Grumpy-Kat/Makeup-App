@@ -26,6 +26,8 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
 
   RGBColor _pickedColor;
 
+  bool _settingColor = false;
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +59,14 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
 
   @override
   Widget build(BuildContext context) {
+    Future<List<int>> swatchesFutureActual = _swatchesFuture;
+    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
+      if(!_settingColor) {
+        swatchesFutureActual = (_swatchListKey.currentWidget as SingleSwatchList).swatchList.addSwatches;
+      } else {
+        _settingColor = false;
+      }
+    }
     return buildComplete(
       context,
       getString('screen_colorWheel'),
@@ -80,11 +90,15 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
               child: ColorPicker(
                 btnText: getString('colorPicker_btn'),
                 onEnter: (double hue, double saturation, double value) {
-                  setState(() {
-                    //sets color and future
-                    _pickedColor = HSVtoRGB(HSVColor(hue, saturation, value));
-                    _swatchesFuture = _addSwatches();
-                  });
+                  //sets color and future
+                  _pickedColor = HSVtoRGB(HSVColor(hue, saturation, value));
+                  _settingColor = true;
+                  if(_swatchListKey.currentState != null) {
+                    //no need to refilter because setting state soon
+                    (_swatchListKey.currentState as SingleSwatchListState).clearFilters(refilter: false);
+                  }
+                  _swatchesFuture = _addSwatches();
+                  setState(() { });
                 },
               ),
             ),
@@ -94,7 +108,8 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
             flex: 4,
             child: SingleSwatchList(
               key: _swatchListKey,
-              addSwatches: _swatchesFuture,
+              addSwatches: swatchesFutureActual,
+              orgAddSwatches: _swatchesFuture,
               updateSwatches: (List<int> swatches) { this._swatches = swatches; },
               showNoColorsFound: (_pickedColor != null),
               showNoFilteredColorsFound: (_pickedColor != null),

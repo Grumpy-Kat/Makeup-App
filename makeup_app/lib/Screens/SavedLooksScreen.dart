@@ -47,6 +47,10 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
 
   @override
   Widget build(BuildContext context) {
+    Future<Map<Widget, List<int>>> swatchesFutureActual = _swatchesFuture;
+    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
+      swatchesFutureActual = (_swatchListKey.currentWidget as MultipleSwatchList).swatchList.addSwatches;
+    }
     return buildComplete(
       context,
       getString('screen_savedLooks'),
@@ -54,7 +58,8 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
       //scroll view to show all look names as labels and looks as horizontal bodies
       body: MultipleSwatchList(
         key: _swatchListKey,
-        addSwatches: _swatchesFuture,
+        addSwatches: swatchesFutureActual,
+        orgAddSwatches: _swatchesFuture,
         updateSwatches: (List<List<int>> swatches) {
           for(int i = 0; i < swatches.length; i++) {
             _looks[i].swatches = swatches[i];

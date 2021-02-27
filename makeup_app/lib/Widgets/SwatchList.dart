@@ -201,7 +201,6 @@ mixin SwatchListState {
 
   Widget buildFilterBtn(BuildContext context) {
     return Container(
-      //TODO: see if bar and buttons are large enough to comfortably click and see
       margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
       child: IconButton(
         constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
@@ -306,6 +305,13 @@ mixin SwatchListState {
   void onFilterDrawerClose(List<Filter> newFilters) {
     filters = newFilters;
     filterSwatches(filters);
+  }
+
+  void clearFilters({ bool refilter = true }) {
+    filters.clear();
+    if(refilter) {
+      filterSwatches(filters);
+    }
   }
 
   void setState(OnVoidAction func);

@@ -91,6 +91,10 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         ),
       );
     }
+    Future<List<int>> swatchesFutureActual = _swatchesFuture;
+    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
+      swatchesFutureActual = (_swatchListKey.currentWidget as SingleSwatchList).swatchList.addSwatches;
+    }
     return buildComplete(
       context,
       widget.look.name,
@@ -100,7 +104,8 @@ class LookScreenState extends State<LookScreen> with ScreenState {
       //scroll view to show all swatches
       body: SingleSwatchList(
         key: _swatchListKey,
-        addSwatches: _swatchesFuture,
+        addSwatches: swatchesFutureActual,
+        orgAddSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) {
           this._swatches = swatches;
           widget.updateSwatches(swatches);

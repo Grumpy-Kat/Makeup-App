@@ -43,6 +43,10 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
 
   @override
   Widget build(BuildContext context) {
+    Future<List<int>> swatchesFutureActual = _swatchesFuture;
+    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
+      swatchesFutureActual = (_swatchListKey.currentWidget as SingleSwatchList).swatchList.addSwatches;
+    }
     return buildComplete(
       context,
       getString('screen_allSwatches', defaultValue: 'All Swatches'),
@@ -50,7 +54,8 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
       //scroll view to show all swatches
       body: SingleSwatchList(
         key: _swatchListKey,
-        addSwatches: _swatchesFuture,
+        addSwatches: swatchesFutureActual,
+        orgAddSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) { this._swatches = swatches; },
         showNoColorsFound: false,
         showNoFilteredColorsFound: true,
