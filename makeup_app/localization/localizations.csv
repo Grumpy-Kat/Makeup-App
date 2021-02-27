@@ -268,3 +268,5 @@ paletteDivider_columns,Palette Columns,Столбцы Палитры
 paletteDivider_rows,Palette Rows,Строки Палитры
 paletteDivider_add,Add Image,Добавить Изображение
 swatchList_popupInstructions,Are you sure you want to delete the currently filtered swatches? They will be permanently deleted and this action cannot be undone.,
+editSwatchPopup_instructions,Edit information for all filtered swatches. Leave the field empty if you wish to keep the swatch's original value.,
+editSwatchPopup_clear,Clear All,

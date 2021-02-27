@@ -41,7 +41,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
           padding: EdgeInsets.only(bottom: 20),
           child: Column(
             children: <Widget>[
-              Text('Edit information for all filtered swatches. Leave the field empty if you wish to keep the swatch\'s original value.', style: theme.primaryTextPrimary),
+              Text(getString('editSwatchPopup_instructions'), style: theme.primaryTextPrimary),
               TextButton(
                 onPressed: () {
                   reset();
@@ -50,7 +50,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Clear All',
+                    getString('editSwatchPopup_clear'),
                     style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.secondaryTextSize, decoration: TextDecoration.underline, fontFamily: theme.fontFamily),
                     textAlign: TextAlign.left,
                   ),
