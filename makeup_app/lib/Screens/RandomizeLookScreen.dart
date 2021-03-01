@@ -90,8 +90,11 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
           //help button
           globalWidgets.getHelpBtn(
             context,
-            //TODO: add help text
-            '',
+            '${getString('help_randomizeLook_0')}\n\n'
+            '${getString('help_randomizeLook_1')}\n\n'
+            '${getString('help_randomizeLook_2')}\n\n'
+            '${getString('help_randomizeLook_3')}\n\n'
+            '${getString('help_randomizeLook_4')}',
           ),
         ],
         body: Column(
@@ -188,8 +191,11 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         rightBar: [
           globalWidgets.getHelpBtn(
             context,
-            //TODO: add help text
-            '',
+            '${getString('help_randomizeLook_0')}\n\n'
+            '${getString('help_randomizeLook_1')}\n\n'
+            '${getString('help_randomizeLook_2')}\n\n'
+            '${getString('help_randomizeLook_3')}\n\n'
+            '${getString('help_randomizeLook_4')}',
           ),
         ],
         body: Container(
