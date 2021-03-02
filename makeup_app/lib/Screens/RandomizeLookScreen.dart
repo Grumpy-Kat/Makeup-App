@@ -198,18 +198,19 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
             '${getString('help_randomizeLook_4')}',
           ),
         ],
-        body: Container(
-          padding: EdgeInsets.only(left: 17, right: 17, top: 15),
-          child: Column(
-            children: <Widget> [
-              getNumSwatchesField(context),
-              getFinishField(context),
-              getColorField(context),
-              getTypeField(context),
-              if(_type == 2) getDuochromaticSubtypeField(context),
-              if(_type == 3) getTrichromaticSubtypeField(context),
-              Container(
-                width: 150,
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          children: <Widget> [
+            getNumSwatchesField(context),
+            getFinishField(context),
+            getColorField(context),
+            getTypeField(context),
+            if(_type == 2) getDichromaticSubtypeField(context),
+            if(_type == 3) getTrichromaticSubtypeField(context),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: 170,
                 height: 37,
                 child: FlatButton(
                   color: theme.accentColor,
@@ -230,8 +231,8 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     }
@@ -240,7 +241,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   Widget getField(String label, Widget child) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(bottom: 14),
+      padding: EdgeInsets.only(bottom: 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -430,7 +431,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
           2: Container(
             width: double.maxFinite,
             padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text('${getString('randomizeLook_type_duochromatic')}', style: (_type == 2 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_type_dichromatic')}', style: (_type == 2 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           3: Container(
             width: double.maxFinite,
@@ -442,11 +443,11 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
     );
   }
 
-  Widget getDuochromaticSubtypeField(BuildContext context) {
+  Widget getDichromaticSubtypeField(BuildContext context) {
     TextStyle unselectedStyle = TextStyle(color: theme.secondaryTextColor, fontSize: 10, fontFamily: theme.fontFamily);
     TextStyle selectedStyle = TextStyle(color: theme.accentTextColor, fontSize: 10, fontFamily: theme.fontFamily);
     return getField(
-      '${getString('randomizeLook_duochromatic')}',
+      '${getString('randomizeLook_dichromatic')}',
       CupertinoSlidingSegmentedControl<int>(
         groupValue: _subtype,
         backgroundColor: theme.primaryColor,
@@ -462,17 +463,17 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
           0: Container(
             width: double.maxFinite,
             padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text('${getString('randomizeLook_duochromatic_random')}', style: (_subtype == 0 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_dichromatic_random')}', style: (_subtype == 0 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           1: Container(
             width: double.maxFinite,
             padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text('${getString('randomizeLook_duochromatic_analogous')}', style: (_subtype == 1 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_dichromatic_analogous')}', style: (_subtype == 1 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           2: Container(
             width: double.maxFinite,
             padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text('${getString('randomizeLook_duochromatic_complementary')}', style: (_subtype == 2 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
+            child: Text('${getString('randomizeLook_dichromatic_complementary')}', style: (_subtype == 2 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
         },
       ),
@@ -480,8 +481,8 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   }
 
   Widget getTrichromaticSubtypeField(BuildContext context) {
-    TextStyle unselectedStyle = TextStyle(color: theme.secondaryTextColor, fontSize: 10, fontFamily: theme.fontFamily);
-    TextStyle selectedStyle = TextStyle(color: theme.accentTextColor, fontSize: 10, fontFamily: theme.fontFamily);
+    TextStyle unselectedStyle = TextStyle(color: theme.secondaryTextColor, fontSize: 8, fontFamily: theme.fontFamily);
+    TextStyle selectedStyle = TextStyle(color: theme.accentTextColor, fontSize: 8, fontFamily: theme.fontFamily);
     return getField(
       '${getString('randomizeLook_trichromatic')}',
       CupertinoSlidingSegmentedControl<int>(

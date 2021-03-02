@@ -121,7 +121,7 @@ class NavigationDrawer extends StatelessWidget {
               semanticLabel: 'Randomize Look',
             ),
             title: Text(
-              'Randomize Look',
+              getString('screen_randomizeLook'),
               style: currTab == 5 ? selectedText : unselectedText,
             ),
             onTap: () { routePage(context, 5); },

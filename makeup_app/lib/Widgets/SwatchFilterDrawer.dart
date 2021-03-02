@@ -61,7 +61,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.fromLTRB(30, 47, 30, 170),
+        padding: EdgeInsets.fromLTRB(22, 47, 22, 170),
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(bottom: 20),
@@ -76,8 +76,8 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                   },
                   child: Text(
                     '${getString('filter_clear')}',
-                    style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.secondaryTextSize, decoration: TextDecoration.underline, fontFamily: theme.fontFamily),
-                    textAlign: TextAlign.left,
+                    style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.tertiaryTextSize, decoration: TextDecoration.underline,fontFamily: theme.fontFamily),
+                    textAlign: TextAlign.right,
                   ),
                 ),
               ],
