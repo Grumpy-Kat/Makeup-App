@@ -241,13 +241,13 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   Widget getField(String label, Widget child) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: 19),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(bottom: 6),
+            padding: EdgeInsets.only(bottom: 8),
             child: Text(
               '$label: ',
               style: theme.primaryTextSecondary,

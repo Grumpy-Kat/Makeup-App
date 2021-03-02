@@ -61,7 +61,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.fromLTRB(22, 47, 22, 170),
+        padding: EdgeInsets.fromLTRB(22, 55, 22, 170),
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(bottom: 20),
