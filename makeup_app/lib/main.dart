@@ -13,7 +13,6 @@ import 'theme.dart' as theme;
 import 'routes.dart' as routes;
 import 'navigation.dart' as navigation;
 import 'settingsIO.dart' as IO;
-import 'globalIO.dart' as globalIO;
 import 'savedLooksIO.dart' as savedLooksIO;
 import 'allSwatchesIO.dart' as allSwatchesIO;
 import 'localizationIO.dart' as localizationIO;
@@ -52,7 +51,6 @@ class GlamKitAppState extends State<GlamKitApp> {
     await globals.login();
     print(globals.userID);
     await localizationIO.load();
-    //generateRainbow();
     theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
     //theme.isDarkTheme = true;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -62,27 +60,31 @@ class GlamKitAppState extends State<GlamKitApp> {
     globals.debug = false;
     allSwatchesIO.init();
     savedLooksIO.init();
+    /*for(int i = 0; i < 3; i++) {
+      for(int j = 0; j < 3; j++) {
+        //await generateRainbow(saturation: (i * 0.2) + 0.2, value: (j * 0.2) + 0.2);
+      }
+    }*/
+    //await generateRainbow(saturation: 0.5, value: 0.5);
     getModel();
     //await clearSave();
     //await IO.clear();
   }
 
-  Future<void> generateRainbow() async {
-    await clearSave();
+  static Future<void> generateRainbow({ double saturation = 0.7, double value = 0.7 }) async {
+    //await clearSave();
     Random random = Random();
     List<String> finishes = ['finish_matte', 'finish_satin', 'finish_shimmer', 'finish_metallic', 'finish_glitter'];
-    Map<int, String> info = {};
-    int swatches = 100;
-    for(int i = 0; i < swatches; i++) {
-      double hue = (341 / swatches * i).floorToDouble();
-      double saturation = 0.7;
-      double value = 0.7;
+    List<Swatch> swatches = [];
+    int numSwatches = 100;
+    for(int i = 0; i < numSwatches; i++) {
+      double hue = (341 / numSwatches * i).floorToDouble();
       RGBColor color = HSVtoRGB(HSVColor(hue, saturation, value));
       //print('$hue $saturation $value | ${color.getValues()[0]} ${color.getValues()[1]} ${color.getValues()[2]}');
       String finish = finishes[random.nextInt(finishes.length)];
-      info[i] = await globalIO.saveSwatch(Swatch(color:color, finish: finish));
+      swatches.add(Swatch(color:color, finish: finish));
     }
-    await allSwatchesIO.save(info);
+    await allSwatchesIO.add(swatches);
   }
 
   Future<void> clearSave() async {

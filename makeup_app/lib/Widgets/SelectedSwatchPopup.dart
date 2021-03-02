@@ -58,6 +58,7 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
                 widget.onChange(_selectedSwatches);
               });
             },
+            showEndDrawer: false,
           ),
         ),
         FlatButton(

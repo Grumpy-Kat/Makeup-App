@@ -1,3 +1,4 @@
+import 'package:GlamKit/Widgets/Filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:math';
@@ -77,7 +78,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
         currSwatch.color,
         currSwatch,
         IO.getMany(allSwatches),
-        maxDist: 10,
+        maxDist: 12,
         getSimilar: true,
         getOpposite: true,
       );
@@ -204,7 +205,28 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   }
 
   @override
+  Future<void> editSwatches(String brand, String palette, double weight,  double price,int rating, List<String> tags) async {
+    //do nothing
+  }
+
+  @override
+  Future<void> deleteSwatches() async {
+    //do nothing
+  }
+
+  @override
   void sortSwatches(String val) {
     _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => globals.distanceSortOptions(IO.getMultiple([_swatches]), currSwatch.color, step: 16)[val](swatch, 0)));
+  }
+
+  @override
+  void filterSwatches(List<Filter> filters) {
+    _swatchesFuture = IO.filter(_swatches, filters);
+  }
+
+  @override
+  Future<List<int>> sortAndFilterSwatchesActual() async {
+    _swatches = await IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => swatchList.sort[currentSort](swatch, 0)));
+    return await IO.filter(_swatches, filters);
   }
 }

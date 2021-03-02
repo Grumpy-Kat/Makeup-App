@@ -19,7 +19,7 @@ mixin ScreenState {
 
   bool isDragging = false;
 
-  Widget buildComplete(BuildContext context, String title, int menu, { @required Widget body, Widget leftBar, List<Widget> rightBar, Widget floatingActionButton }) {
+  Widget buildComplete(BuildContext context, String title, int menu, { @required Widget body, Widget leftBar, List<Widget> rightBar, Widget floatingActionButton, Widget endDrawer }) {
     Widget child = SizedSafeArea(
       builder: (context, screenSize) {
         this.screenSize = screenSize.biggest;
@@ -128,12 +128,18 @@ mixin ScreenState {
     return Scaffold(
       key: scaffoldKey,
       drawer: NavigationDrawer(key: menuKey, currTab: menu, onExit: onExit),
+      endDrawerEnableOpenDragGesture: false,
       backgroundColor: theme.bgColor,
-      //floatingActionButton is determined by screen subclassing
+      //floatingActionButton and endDrawer are determined by screen subclassing
       floatingActionButton: floatingActionButton,
+      endDrawer: endDrawer,
       resizeToAvoidBottomInset: false,
       body: child,
     );
+  }
+
+  void openEndDrawer() {
+    (scaffoldKey.currentState as ScaffoldState).openEndDrawer();
   }
 
   void onExit() async {

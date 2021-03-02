@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../Widgets/Look.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/SelectedSwatchPopup.dart';
+import '../Widgets/Filter.dart';
+import '../Widgets/SwatchFilterDrawer.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
@@ -25,8 +27,8 @@ class LookScreen extends StatefulWidget {
   final bool showClear;
   final OnVoidAction onClearPressed;
 
-  final bool showAdd;
-  final OnVoidAction onAddPressed;
+  final bool showClone;
+  final OnVoidAction onClonePressed;
 
   final bool showSave;
   final OnVoidAction onSavePressed;
@@ -34,7 +36,7 @@ class LookScreen extends StatefulWidget {
   final bool showEdit;
   final bool saveOnEdit;
 
-  LookScreen({ @required this.look, @required this.screenId, @required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showAdd = false, this.onAddPressed, this.showSave = false, this.onSavePressed, this.showEdit = true, this.saveOnEdit = false });
+  LookScreen({ @required this.look, @required this.screenId, @required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showClone = false, this.onClonePressed, this.showSave = false, this.onSavePressed, this.showEdit = true, this.saveOnEdit = false });
 
   @override
   LookScreenState createState() => LookScreenState();
@@ -43,6 +45,8 @@ class LookScreen extends StatefulWidget {
 class LookScreenState extends State<LookScreen> with ScreenState {
   List<int> _swatches = [];
   Future<List<int>> _swatchesFuture;
+
+  GlobalKey _swatchListKey = GlobalKey();
 
   bool _hasEdited = false;
 
@@ -70,8 +74,8 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     if(widget.showClear) {
       rightBar.add(buildClear(context));
     }
-    if(widget.showAdd) {
-      rightBar.add(buildAdd(context));
+    if(widget.showClone) {
+      rightBar.add(buildClone(context));
     }
     if(widget.showSave) {
       rightBar.add(buildSave(context));
@@ -87,6 +91,10 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         ),
       );
     }
+    Future<List<int>> swatchesFutureActual = _swatchesFuture;
+    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
+      swatchesFutureActual = (_swatchListKey.currentWidget as SingleSwatchList).swatchList.addSwatches;
+    }
     return buildComplete(
       context,
       widget.look.name,
@@ -95,19 +103,30 @@ class LookScreenState extends State<LookScreen> with ScreenState {
       rightBar: rightBar,
       //scroll view to show all swatches
       body: SingleSwatchList(
-        addSwatches: _swatchesFuture,
+        key: _swatchListKey,
+        addSwatches: swatchesFutureActual,
+        orgAddSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) {
           this._swatches = swatches;
           widget.updateSwatches(swatches);
           _hasEdited = true;
         },
         showNoColorsFound: false,
+        showNoFilteredColorsFound: true,
         showPlus: false,
         defaultSort: globals.sort,
         sort: globals.defaultSortOptions(IO.getMultiple([_swatches]), step: 16),
         showDelete: false,
+        showDeleteFiltered: false,
+        openEndDrawer: openEndDrawer,
       ),
+      //end drawer for swatch filtering
+      endDrawer: SwatchFilterDrawer(onDrawerClose: onFilterDrawerClose, swatchListKey: _swatchListKey),
     );
+  }
+
+  void onFilterDrawerClose(List<Filter> filters) {
+    (_swatchListKey.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
   }
 
   Widget buildBack(BuildContext context) {
@@ -148,19 +167,19 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     );
   }
 
-  Widget buildAdd(BuildContext context) {
-    //creates add button
+  Widget buildClone(BuildContext context) {
+    //creates clone button
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
         constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
-          Icons.library_add,
+          Icons.note_add,
           size: theme.primaryIconSize,
           color: theme.iconTextColor,
         ),
         //action determined by screen that uses it
-        onPressed: widget.onAddPressed,
+        onPressed: widget.onClonePressed,
       ),
     );
   }

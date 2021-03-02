@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
 import 'Widgets/Swatch.dart';
+import 'Widgets/Filter.dart';
 import 'globalIO.dart';
 import 'globals.dart' as globals;
 import 'types.dart';
@@ -84,8 +85,20 @@ void removeId(int i) async {
   }
 }
 
+void removeIDsMany(List<int> ids) async {
+  for (int i = ids.length - 1; i >= 0; i--) {
+    await removeId(ids[i]);
+  }
+}
+
 void remove(Swatch swatch) async {
   await removeId(find(swatch));
+}
+
+void removeMany(List<Swatch> swatches) async {
+  for (int i = swatches.length - 1; i >= 0; i--) {
+    await removeId(find(swatches[i]));
+  }
 }
 
 int find(Swatch swatch)  {
@@ -223,6 +236,37 @@ Future<Map<Widget, List<int>>> sortMultiple(List<Widget> keys, List<List<int>> v
   Map<Widget, List<int>> ret = {};
   for(int i = 0; i < keys.length; i++) {
     ret[keys[i]] = await sort(values[i], (a, b) => a.compareTo(b, (swatch) => compare(swatch, i)));
+  }
+  return ret;
+}
+
+Future<List<int>> filter(List<int> ids, List<Filter> filters) async {
+  List<int> ret = ids.toList();
+  for(int i = ids.length - 1; i >= 0; i--) {
+    Map<String, dynamic> swatchAttributes = swatches[ids[i]].getMap();
+    for(int j = 0; j < filters.length; j++) {
+      String attribute = filters[j].attribute;
+      if(swatchAttributes.containsKey(attribute)) {
+        dynamic value = swatchAttributes[attribute];
+        if(value is String) {
+          //make all strings lowercase to avoid issues
+          value = (value as String).toLowerCase();
+          filters[j].threshold = (filters[j].threshold as String).toLowerCase();
+        }
+        if(!filters[j].contains(value)) {
+          ret.removeAt(i);
+          break;
+        }
+      }
+    }
+  }
+  return ret;
+}
+
+Future<Map<Widget, List<int>>> filterMultiple(List<Widget> keys, List<List<int>> values, List<Filter> filters) async {
+  Map<Widget, List<int>> ret = {};
+  for(int i = 0; i < keys.length; i++) {
+    ret[keys[i]] = await filter(values[i], filters);
   }
   return ret;
 }

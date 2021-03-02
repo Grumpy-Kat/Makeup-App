@@ -2,9 +2,11 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'dart:math';
 import 'dart:io';
+import 'dart:ui';
 import 'dart:typed_data';
 import '../Widgets/Swatch.dart';
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import 'ColorObjects.dart';
 import 'ColorDifferences.dart';
 import 'ColorConversions.dart';
@@ -103,7 +105,7 @@ RGBColor maxFiveColor(Image img) {
 }
 
 String getColorName(RGBColor rgb) {
-  Map<String, RGBColor> colorWheel = createColorWheel();
+  Map<String, RGBColor> colorWheel = createColorNames();
   double minDist = 1000;
   String minColor = 'unknown';
   LabColor color0 = RGBtoLab(rgb);
@@ -121,7 +123,12 @@ String getColorName(RGBColor rgb) {
 }
 
 Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatches, { double maxDist = 15, bool getSimilar = true, bool getOpposite = true }) {
-  String colorName = getColorName(rgb);
+  List<String> colorNames = createColorNames().keys.toList();
+  String orgColorName = '';
+  if(rgbSwatch != null) {
+    orgColorName = 'color_${globalWidgets.toCamelCase(rgbSwatch.colorName)}';
+  }
+  String colorName = ((rgbSwatch != null && rgbSwatch.colorName != '' && colorNames.contains(orgColorName)) ? orgColorName : getColorName(rgb));
   LabColor color0 = RGBtoLab(rgb);
   List<String> similarCategories = [];
   List<String> oppositeCategories = [];
@@ -141,9 +148,10 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
     }
 
     //find color name
-    String colorName = '';
+    colorName = '';
     if(getSimilar || getOpposite) {
-      colorName = getColorName(swatches[i].color);
+      orgColorName = 'color_${globalWidgets.toCamelCase(swatches[i].colorName)}';
+      colorName = ((swatches[i].colorName != '' && colorNames.contains(orgColorName)) ? orgColorName : getColorName(swatches[i].color));
     }
 
     //check if similar
@@ -166,4 +174,3 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
   }
   return newSwatches;
 }
-

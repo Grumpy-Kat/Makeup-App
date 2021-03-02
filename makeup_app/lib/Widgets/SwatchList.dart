@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import 'package:flutter/rendering.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/Filter.dart';
+import '../Widgets/EditSwatchPopup.dart';
 import '../theme.dart' as theme;
+import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
 import '../localizationIO.dart';
 
 class SwatchList {
   Future addSwatches;
+  //keep original for when changed with sorting or filtering
+  Future orgAddSwatches;
 
   final List<int> selectedSwatches;
 
   final bool showInfoBox;
 
   final bool showNoColorsFound;
+  final bool showNoFilteredColorsFound;
 
   final bool showPlus;
   final OnVoidAction onPlusPressed;
@@ -21,6 +27,7 @@ class SwatchList {
   final String defaultSort;
 
   final bool showDelete;
+  final bool showDeleteFiltered;
 
   final bool overrideOnTap;
   final Function onTap;
@@ -28,21 +35,26 @@ class SwatchList {
   final bool overrideOnDoubleTap;
   final Function onDoubleTap;
 
-  SwatchList({ @required this.addSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap });
+  final bool showEndDrawer;
+  final OnVoidAction openEndDrawer;
+
+  SwatchList({ @required this.addSwatches, this.orgAddSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showNoFilteredColorsFound = true, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showDelete = false, this.showDeleteFiltered = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap, this.showEndDrawer = true, this.openEndDrawer });
 }
 
 mixin SwatchListState {
   SwatchList swatchList;
-  String _currentSort;
+  String currentSort = 'sort_hue';
+  List<Filter> filters = [];
+  bool canShowBtns = true;
 
   void init(SwatchList swatchList) {
     this.swatchList = swatchList;
   }
 
-  Widget buildComplete(BuildContext context, Widget list) {
+  Widget buildCompleteList(BuildContext context, Widget list) {
     return Column(
       children: <Widget>[
-        buildSortDropdown(context),
+        buildOptionsBar(context),
         Expanded(
           child: list,
         ),
@@ -53,7 +65,7 @@ mixin SwatchListState {
   Widget buildSwatchList(BuildContext context, AsyncSnapshot snapshot, List<SwatchIcon> swatchIcons, { Axis axis = Axis.vertical, int crossAxisCount = 3, double padding = 20, double spacing = 35 }) {
     int itemCount = 0;
     if(snapshot.connectionState != ConnectionState.active && snapshot.connectionState != ConnectionState.waiting) {
-      if(swatchList.showNoColorsFound && swatchIcons.length == 0) {
+      if(swatchIcons.length == 0 && (swatchList.showNoColorsFound || (swatchList.showNoFilteredColorsFound && filters.length != 0))) {
         //no colors found
         return Align(
           alignment: Alignment.centerLeft,
@@ -123,6 +135,27 @@ mixin SwatchListState {
     );
   }
 
+  Widget buildOptionsBar(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        buildSortDropdown(context),
+        if(swatchList.showEndDrawer) Container(
+          margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              if(swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns) buildEditBtn(context),
+              if(swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns) buildDeleteBtn(context),
+              buildFilterBtn(context),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget buildSortDropdown(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(15, 15, 0, 15),
@@ -139,8 +172,8 @@ mixin SwatchListState {
               iconEnabledColor: theme.tertiaryTextColor,
               onChanged: (String val) {
                 setState(() {
-                  _currentSort = val;
-                  sortSwatches(val);
+                  currentSort = val;
+                  sortAndFilterSwatches();
                 });
               },
               underline: Container(
@@ -152,7 +185,7 @@ mixin SwatchListState {
                   ),
                 ),
               ),
-              value: _currentSort ?? (swatchList.sort.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort.keys.first),
+              value: currentSort ?? (swatchList.sort.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort.keys.first),
               items: swatchList.sort.keys.map((String val) {
                 return DropdownMenuItem(
                   value: val,
@@ -166,6 +199,130 @@ mixin SwatchListState {
     );
   }
 
-  void sortSwatches(String val);
+  Widget buildFilterBtn(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      child: IconButton(
+        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+        color: theme.primaryColor,
+        onPressed: () {
+          if(swatchList.openEndDrawer != null) {
+            swatchList.openEndDrawer();
+          }
+        },
+        icon: Icon(
+          Icons.filter_list_alt,
+          size: theme.quaternaryIconSize,
+          color: theme.tertiaryTextColor,
+          semanticLabel: 'Filter Swatches',
+        ),
+      ),
+    );
+  }
+
+  Widget buildEditBtn(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      child: IconButton(
+        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+        color: theme.primaryColor,
+        onPressed: () {
+          openEditDialog(context);
+        },
+        icon: Icon(
+          Icons.mode_edit,
+          size: theme.quaternaryIconSize,
+          color: theme.tertiaryTextColor,
+          semanticLabel: 'Edit Filtered Swatches',
+        ),
+      ),
+    );
+  }
+
+  Widget buildDeleteBtn(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      child: IconButton(
+        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+        color: theme.primaryColor,
+        onPressed: () {
+          globalWidgets.openTwoButtonDialog(
+            context,
+            '${getString('swatchList_popupInstructions')}',
+            () {
+              globalWidgets.openLoadingDialog(context);
+              deleteSwatches().then((value) {
+                filters = [];
+                sortAndFilterSwatches();
+                setState(() { });
+                Navigator.pop(context);
+              });
+            },
+            () { },
+          );
+        },
+        icon: Icon(
+          Icons.delete,
+          size: theme.quaternaryIconSize,
+          color: theme.tertiaryTextColor,
+          semanticLabel: 'Delete Filtered Swatches',
+        ),
+      ),
+    );
+  }
+
+  Future<void> openEditDialog(BuildContext context) {
+    return globalWidgets.openDialog(
+      context,
+      (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.zero,
+          child: Dialog(
+            insetPadding: EdgeInsets.symmetric(horizontal: 0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: EditSwatchPopup(
+                onSave: (String brand, String palette, double weight, double price, int rating, List<String> tags) {
+                  globalWidgets.openLoadingDialog(context);
+                  editSwatches(brand.trim(), palette.trim(), weight, price, rating, tags).then((value) {
+                    setState(() {});
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+            ),
+          ),
+        );
+      }
+    );
+  }
+
+  void onFilterDrawerClose(List<Filter> newFilters) {
+    filters = newFilters;
+    filterSwatches(filters);
+  }
+
+  void clearFilters({ bool refilter = true }) {
+    filters.clear();
+    if(refilter) {
+      filterSwatches(filters);
+    }
+  }
+
   void setState(OnVoidAction func);
+
+  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags);
+  Future<void> deleteSwatches();
+  void sortSwatches(String val);
+  void filterSwatches(List<Filter> filters);
+  Future sortAndFilterSwatchesActual();
+
+  void sortAndFilterSwatches() {
+    swatchList.addSwatches = sortAndFilterSwatchesActual();
+  }
 }
