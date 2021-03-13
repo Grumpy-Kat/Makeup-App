@@ -8,7 +8,7 @@
 .buildlog/
 .history
 .svn/
-/makeup_app/android/key.properties
+/android/key.properties
 
 # IntelliJ related
 *.iml
