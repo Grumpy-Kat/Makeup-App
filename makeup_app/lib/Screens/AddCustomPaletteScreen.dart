@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/Palette.dart';
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
@@ -18,10 +19,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
   static List<int> _swatches = [];
   static List<SwatchIcon> _swatchIcons = [];
 
-  static String brand = '';
-  static String palette = '';
-  static double weight = 0.0;
-  static double price = 0.00;
+  //doesn't actually contain swatches, just other values
+  static Palette _palette;
 
   @override
   void initState() {
@@ -56,12 +55,13 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
+      leftBar: globalWidgets.getBackButton(
+        () => navigation.pushReplacement(
           context,
           Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
           routes.routes['/addPaletteScreen'](context),
-        )
+        ),
       ),
       rightBar: [
         //delete button
@@ -131,8 +131,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
               ),
               onPressed: () {
                 globalWidgets.openLoadingDialog(context);
-                double weightPer = double.parse((weight / (_swatches.length + 1)).toStringAsFixed(4));
-                double pricePer = double.parse((price / (_swatches.length + 1)).toStringAsFixed(2));
+                double weightPer = double.parse((_palette.weight / (_swatches.length + 1)).toStringAsFixed(4));
+                double pricePer = double.parse((_palette.price / (_swatches.length + 1)).toStringAsFixed(2));
                 List<Swatch> swatches = IO.getMany(_swatches);
                 for(int i = 0; i < swatches.length; i++) {
                   swatches[i].weight = weightPer;
@@ -143,8 +143,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
                   Swatch(
                     color: RGBColor(0.5, 0.5, 0.5),
                     finish: 'finish_matte',
-                    brand: brand,
-                    palette: palette,
+                    brand: _palette.brand,
+                    palette: _palette.name,
                     weight: weightPer,
                     price: pricePer,
                     shade: '',
@@ -196,9 +196,22 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
     });
   }
 
+  static void setValues(String brand, String palette, double weight, double price) {
+    //doesn't actually contain swatches, just other values
+    _palette = Palette(
+      id: '',
+      brand: brand,
+      name: palette,
+      weight: weight,
+      price: price,
+      swatches: [],
+    );
+  }
+
   static void reset() {
     //reset all modes and data
     _swatches = [];
     _swatchIcons = [];
+    _palette = null;
   }
 }

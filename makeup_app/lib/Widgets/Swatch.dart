@@ -74,6 +74,7 @@ class SwatchIcon extends StatelessWidget {
 
   final bool addSwatch;
   final bool showInfoBox;
+  final bool showMoreBtnInInfoBox;
 
   final bool showCheck;
 
@@ -86,9 +87,9 @@ class SwatchIcon extends StatelessWidget {
   final OnSwatchAction onDoubleTap;
 
   //assumes there is no id (probably editing swatch)
-  SwatchIcon.swatch(this.swatch, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.id  = swatch.id;
+  SwatchIcon.swatch(this.swatch, { this.addSwatch = true, this.showInfoBox = true, this.showMoreBtnInInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.id  = swatch.id;
 
-  SwatchIcon.id(this.id, { this.addSwatch = true, this.showInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.swatch = IO.get(id), super(key: GlobalKey(debugLabel: id.toString()));
+  SwatchIcon.id(this.id, { this.addSwatch = true, this.showInfoBox = true, this.showMoreBtnInInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.swatch = IO.get(id), super(key: GlobalKey(debugLabel: id.toString()));
 
   @override
   Widget build(BuildContext context) {
@@ -170,6 +171,7 @@ class SwatchIcon extends StatelessWidget {
         onDoubleTap: overrideOnDoubleTap ? () { onDoubleTap(id); } : _onDoubleTap,
         child: child,
         childKey: childKey,
+        showMoreBtn: showMoreBtnInInfoBox,
       );
     }
     return GestureDetector(

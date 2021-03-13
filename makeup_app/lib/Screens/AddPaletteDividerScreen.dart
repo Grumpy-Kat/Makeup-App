@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/Palette.dart';
 import '../Widgets/PaletteDivider.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
@@ -8,6 +9,7 @@ import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../allSwatchesIO.dart' as IO;
+import '../presetPalettesIO.dart' as presetPalettesIO;
 import '../types.dart';
 import '../localizationIO.dart';
 import 'Screen.dart';
@@ -30,6 +32,9 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   static int _redOffset = 0;
   static int _greenOffset = 0;
   static int _blueOffset = 0;
+
+  //doesn't actually contain swatches, just other values
+  static Palette _palette;
 
   TextEditingController _brightnessController;
   TextEditingController _redController;
@@ -82,12 +87,13 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
+      leftBar: globalWidgets.getBackButton(
+        () => navigation.pushReplacement(
           context,
           Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
           routes.routes['/addPaletteScreen'](context),
-        )
+        ),
       ),
       //help button
       rightBar: [
@@ -415,6 +421,14 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       context,
       (String brand, String palette, double weight, double price) {
         globalWidgets.openLoadingDialog(context);
+        _palette = Palette(
+          id: '',
+          brand: brand,
+          name: palette,
+          weight: weight,
+          price: price,
+          swatches: [],
+        );
         //assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {
           Swatch swatch = swatches[i];
@@ -445,12 +459,24 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   }
 
   void onCheckButton() {
-    //return to AllSwatchesScreen
-    navigation.pushReplacement(
+    globalWidgets.openTwoButtonDialog(
       context,
-      Offset(-1, 0),
-      routes.ScreenRoutes.AllSwatchesScreen,
-      routes.routes['/allSwatchesScreen'](context),
+      'Do you allow this palette to be added to the GlamKit\'s palette database?',
+      () {
+        _palette.swatches = IO.getMany(_swatches);
+        presetPalettesIO.save(_palette);
+      },
+      () { },
+    ).then(
+      (value) {
+        //return to AllSwatchesScreen
+        navigation.pushReplacement(
+          context,
+          Offset(-1, 0),
+          routes.ScreenRoutes.AllSwatchesScreen,
+          routes.routes['/allSwatchesScreen'](context),
+        );
+      },
     );
   }
 

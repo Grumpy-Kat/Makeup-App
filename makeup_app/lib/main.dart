@@ -13,8 +13,9 @@ import 'theme.dart' as theme;
 import 'routes.dart' as routes;
 import 'navigation.dart' as navigation;
 import 'settingsIO.dart' as IO;
-import 'savedLooksIO.dart' as savedLooksIO;
 import 'allSwatchesIO.dart' as allSwatchesIO;
+import 'savedLooksIO.dart' as savedLooksIO;
+import 'presetPalettesIO.dart' as presetPalettesIO;
 import 'localizationIO.dart' as localizationIO;
 
 void main() => runApp(GlamKitApp());
@@ -60,6 +61,7 @@ class GlamKitAppState extends State<GlamKitApp> {
     globals.debug = false;
     allSwatchesIO.init();
     savedLooksIO.init();
+    presetPalettesIO.init();
     /*for(int i = 0; i < 3; i++) {
       for(int j = 0; j < 3; j++) {
         //await generateRainbow(saturation: (i * 0.2) + 0.2, value: (j * 0.2) + 0.2);

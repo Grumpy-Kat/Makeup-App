@@ -23,7 +23,9 @@ class InfoBox extends StatefulWidget {
   final Widget child;
   final GlobalKey childKey;
 
-  InfoBox({ GlobalKey key, @required this.swatch, this.onTap, this.onDoubleTap, this.child, this.childKey }) : super(key: key);
+  final bool showMoreBtn;
+
+  InfoBox({ GlobalKey key, @required this.swatch, this.onTap, this.onDoubleTap, this.child, this.childKey, this.showMoreBtn = true }) : super(key: key);
 
   @override
   InfoBoxState createState() => InfoBoxState();
@@ -110,7 +112,9 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
     RenderBox childRenderBox = _key.currentContext.findRenderObject();
     Offset childPos = childRenderBox.localToGlobal(Offset.zero);
     Size childSize = childRenderBox.size;
-    _size = Size(InfoBox.screenSize.width * 0.9, (_shade != '' ? 147 : 135));
+    //this sizing won't work if both shade is not filled and not showing "More..." button
+    //the setting is only currently used in preset palettes so it is not currently an issue
+    _size = Size(InfoBox.screenSize.width * 0.9, ((_shade != '' && widget.showMoreBtn) ? 147 : 135));
     _verticalOffset = childSize.height + 5;
     bool isFlipped = false;
     if(pos.dy > 500) {
@@ -171,7 +175,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
                     getText('${getString('infoBox_brand')} $_brand'),
                     getText('${getString('infoBox_palette')} $_palette'),
                     if(_shade != '') getText('${getString('infoBox_shade')} $_shade'),
-                    Expanded(
+                    if(widget.showMoreBtn) Expanded(
                       flex: 4,
                       child: Align(
                         alignment: Alignment(-1, -1),

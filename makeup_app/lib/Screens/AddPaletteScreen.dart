@@ -5,8 +5,9 @@ import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../localizationIO.dart';
 import 'Screen.dart';
-import 'AddCustomPaletteScreen.dart';
 import 'AddPaletteDividerScreen.dart';
+import 'AddCustomPaletteScreen.dart';
+import 'AddPresetPaletteScreen.dart';
 
 class AddPaletteScreen extends StatefulWidget {
   @override
@@ -76,6 +77,25 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
           Container(
             height: 7,
           ),
+          //sets mode to preset palette gallery
+          FlatButton.icon(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            color: theme.primaryColorDark,
+            icon: Icon(Icons.list, size: 20, color: theme.iconTextColor),
+            label: Text('Preset Palettes', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
+            onPressed: () {
+              AddPresetPaletteScreenState.reset();
+              navigation.pushReplacement(
+                context,
+                Offset(1, 0),
+                routes.ScreenRoutes.AddPresetPaletteScreen,
+                routes.routes['/addPresetPaletteScreen'](context),
+              );
+            },
+          ),
+          Container(
+            height: 7,
+          ),
           //sets mode to custom
           FlatButton.icon(
             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
@@ -88,10 +108,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                 (String brand, String palette, double weight, double price) {
                   setState(() {
                     AddCustomPaletteScreenState.reset();
-                    AddCustomPaletteScreenState.brand = brand;
-                    AddCustomPaletteScreenState.palette = palette;
-                    AddCustomPaletteScreenState.weight = weight;
-                    AddCustomPaletteScreenState.price = price;
+                    AddCustomPaletteScreenState.setValues(brand, palette, weight, price);
                     navigation.pushReplacement(
                       context,
                       Offset(1, 0),

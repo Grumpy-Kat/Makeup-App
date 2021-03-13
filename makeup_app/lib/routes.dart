@@ -8,6 +8,7 @@ import 'Screens/SettingsScreen.dart';
 import 'Screens/AddPaletteScreen.dart';
 import 'Screens/AddPaletteDividerScreen.dart';
 import 'Screens/AddCustomPaletteScreen.dart';
+import 'Screens/AddPresetPaletteScreen.dart';
 import 'Screens/TodayLookScreen.dart';
 import 'Screens/SavedLookScreen.dart';
 import 'Screens/SwatchScreen.dart';
@@ -30,6 +31,7 @@ enum ScreenRoutes {
   AddPaletteScreen,
   AddPaletteDividerScreen,
   AddCustomPaletteScreen,
+  AddPresetPaletteScreen,
   TodayLookScreen,
   SavedLookScreen,
   SwatchScreen,
@@ -47,6 +49,7 @@ void setRoutes() {
     '/addPaletteScreen': (context) => AddPaletteScreen(),
     '/addPaletteDividerScreen': (context) => AddPaletteDividerScreen(),
     '/addCustomPaletteScreen': (context) => AddCustomPaletteScreen(),
+    '/addPresetPaletteScreen': (context) => AddPresetPaletteScreen(),
     '/todayLookScreen': (context) => TodayLookScreen(),
     '/savedLookScreen': (context) => SavedLookScreen(look: null),
     '/swatchScreen': (context) => SwatchScreen(swatch: null),
@@ -62,6 +65,7 @@ void setRoutes() {
     ScreenRoutes.AddPaletteScreen: routes['/addPaletteScreen'],
     ScreenRoutes.AddPaletteDividerScreen: routes['/addPaletteDividerScreen'],
     ScreenRoutes.AddCustomPaletteScreen: routes['/addCustomPaletteScreen'],
+    ScreenRoutes.AddPresetPaletteScreen: routes['/addPresetPaletteScreen'],
     ScreenRoutes.TodayLookScreen: routes['/todayLookScreen'],
     ScreenRoutes.SavedLookScreen: routes['/savedLookScreen'],
     ScreenRoutes.SwatchScreen: routes['/swatchScreen'],

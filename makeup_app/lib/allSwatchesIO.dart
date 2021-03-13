@@ -86,9 +86,15 @@ void removeId(int i) async {
 }
 
 void removeIDsMany(List<int> ids) async {
+  await load();
+  Map<int, String> info = lines;
   for (int i = ids.length - 1; i >= 0; i--) {
-    await removeId(ids[i]);
+    if(ids[i] > 0) {
+      info.remove(ids[i]);
+      print('removing ${ids[i]}');
+    }
   }
+  await save(info);
 }
 
 void remove(Swatch swatch) async {
