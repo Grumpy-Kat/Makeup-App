@@ -168,10 +168,7 @@ Future<Swatch> loadPresetSwatch(String line) async {
   //price
   double price = double.parse(lineSplit[6]);
   //if exists, color name
-  String colorName = '';
-  if(lineSplit.length > 9) {
-    colorName = lineSplit[9];
-  }
+  String colorName = lineSplit[7];
   //combined
   return Swatch(id: -1, color: color, finish: finish, brand: brand, palette: palette, shade: shade, weight: weight, price: price, colorName: colorName);
 }

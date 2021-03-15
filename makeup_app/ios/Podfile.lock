@@ -467,9 +467,9 @@ SPEC CHECKSUMS:
   FirebaseCrashlytics: d31325312c92e2cb2f0386d589b9aa44e303d99b
   FirebaseFirestore: 1906bf163afdb7c432d2e3b5c40ceb9dd2df5820
   FirebaseInstallations: 30646fc9a61c6f4ee3cd7a8b7231721842b40c95
-  FirebaseMLCommon: e91cc254e70be471462528f6c7445abca8c3e630
-  FirebaseMLModelInterpreter: bb94b5d7197c7feeecde3353a45e78d268dc7b04
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  FirebaseMLCommon: 3fb40844a2221a585f84170c082403573c862c83
+  FirebaseMLModelInterpreter: 50d25667d10fc154afcc5b8e1196c2583c10392e
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   GoogleDataTransport: 116c84c4bdeb76be2a7a46de51244368f9794eab
   GoogleToolboxForMac: 1350d40e86a76f7863928d63bcb0b89c84c521c5
   GoogleUtilities: d866834472f1324d080496bc67ab3ce5d0d46027
