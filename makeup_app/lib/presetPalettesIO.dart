@@ -172,3 +172,53 @@ Future<Swatch> loadPresetSwatch(String line) async {
   //combined
   return Swatch(id: -1, color: color, finish: finish, brand: brand, palette: palette, shade: shade, weight: weight, price: price, colorName: colorName);
 }
+Future<List<Palette>> search(String search) async {
+  List<Palette> ret = [];
+  List<Palette> allPalettes = palettes.values.toList();
+  search = search.trim().toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"');
+  for(int i = 0; i < palettes.length; i++) {
+    Palette palette = allPalettes[i];
+
+    //check if search is within brand, must count for different types of quotes
+    String brand = ' ${palette.brand.toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"')}';
+    if(brand.contains(' $search') || brand.replaceAll(RegExp(r'[^\w\s]'), '').contains(' $search')) {
+      ret.add(palette);
+      continue;
+    }
+
+    //check if search is within name
+    String name = ' ${palette.name.toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"')}';
+    if(name.contains(' $search') || name.replaceAll(RegExp(r'[^\w\s]'), '').contains(' $search')) {
+      ret.add(palette);
+      continue;
+    }
+
+    if(search.contains(' ')) {
+      //can't be acronym, just continue
+      continue;
+    }
+    //check if search is within acronym, either separated by spaces or by capital letters
+    String spaceAcronym = '';
+    String capsAcronym = '';
+    List<String> brandWords = palette.brand.split(' ');
+    for(int j = 0; j < brandWords.length; j++) {
+      if(brandWords[j] == '') {
+        continue;
+      }
+      String letter = brandWords[j].substring(0, 1);
+      spaceAcronym += letter;
+      capsAcronym += letter;
+      for(int k = 1; k < brandWords[j].length; k++) {
+        letter = brandWords[j].substring(k, k + 1);
+        if(letter == letter.toUpperCase()) {
+          capsAcronym += letter;
+        }
+      }
+    }
+    if(spaceAcronym.toLowerCase().contains(search) || capsAcronym.toLowerCase().contains(search)) {
+      ret.add(palette);
+      continue;
+    }
+  }
+  return ret;
+}

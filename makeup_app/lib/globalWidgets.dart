@@ -32,7 +32,6 @@ Future<void> openLoadingDialog(BuildContext context) {
         backgroundColor: theme.bgColor.withAlpha(35),
         elevation: 0,
         insetPadding: EdgeInsets.zero,
-        
         child: Center(
           child: Container(
             width: 100,

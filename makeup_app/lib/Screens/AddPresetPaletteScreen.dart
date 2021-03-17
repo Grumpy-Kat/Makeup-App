@@ -16,18 +16,32 @@ class AddPresetPaletteScreen extends StatefulWidget {
 }
 
 class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with ScreenState {
+  Future _addPalettesFuture;
+  static List<Palette> _allPalettes = [];
   static List<Palette> _palettes = [];
   static Palette _seletedPalette = null;
   static List<SwatchIcon> _swatchIcons = [];
 
+  String search = '';
+  bool _isSearching = false;
+
   @override
   void initState() {
     super.initState();
+    _addPalettesFuture = _addPalettes();
   }
 
   Future<List<Palette>> _addPalettes() async {
-    Map<String, Palette> map = (await IO.loadFormatted());
-    _palettes = map.values.toList() ?? [];
+    if(_palettes == null || _palettes.length == 0) {
+      Map<String, Palette> map = (await IO.loadFormatted());
+      _allPalettes = map.values.toList() ?? [];
+      _palettes = _allPalettes;
+    }
+    if(search != '') {
+      _palettes = await IO.search(search);
+    } else {
+      _palettes = _allPalettes;
+    }
     return _palettes;
   }
 
@@ -72,67 +86,162 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
           routes.routes['/addPaletteScreen'](context),
         ),
       ),
-      body: FutureBuilder(
-        future: _addPalettes(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          List<Widget> children = [];
-          if(snapshot.connectionState == ConnectionState.done) {
-            _palettes = _palettes ?? [];
-            Decoration decorationLast = BoxDecoration(
-              color: theme.primaryColor,
-              border: Border(
-                top: BorderSide(
-                  color: theme.primaryColorDark,
-                ),
-                bottom: BorderSide(
-                  color: theme.primaryColorDark,
-                ),
-              ),
-            );
-            Decoration decorationNotLast = BoxDecoration(
-              color: theme.primaryColor,
-              border: Border(
-                top: BorderSide(
-                  color: theme.primaryColorDark,
-                ),
-              ),
-            );
-            for(int i = 0; i < _palettes.length; i++) {
-              children.add(
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _seletedPalette = _palettes[i];
-                      _addSwatchIcons();
-                    });
-                  },
-                  child: Container(
-                    height: 64,
-                    decoration: (i == _palettes.length - 1) ? decorationLast : decorationNotLast,
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
-                    margin: (i == _palettes.length - 1) ? EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text('${_palettes[i].brand}', style: theme.primaryTextSecondary),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+            currentFocus.focusedChild.unfocus();
+          }
+          setState(() {
+            _isSearching = false;
+          });
+        },
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment(-1.0, 0.0),
+              child: Stack(
+                overflow: Overflow.visible,
+                children: [
+                  AnimatedContainer(
+                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    duration: Duration(milliseconds: 375),
+                    width: _isSearching ? MediaQuery.of(context).size.width - 103 : MediaQuery.of(context).size.width - 30,
+                    padding: EdgeInsets.symmetric(horizontal: 11, vertical: 10),
+                    curve: Curves.easeOut,
+                    alignment: Alignment(-1.0, 0.0),
+                    child: TextFormField(
+                      initialValue: search,
+                      onTap: () {
+                        setState(() {
+                          _isSearching = true;
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          search = value;
+                          _addPalettesFuture = _addPalettes();
+                        });
+                      },
+                      style: theme.primaryTextPrimary,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        isCollapsed: true,
+                        icon: Icon(
+                          Icons.search,
+                          color: theme.tertiaryTextColor,
+                          size: theme.secondaryIconSize,
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text('${_palettes[i].name}', style: theme.primaryTextPrimary),
-                        ),
-                      ],
+                        hintText: 'Search...',
+                        hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
+                      ),
+                    ),
+                    decoration:  BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: theme.primaryColorDark,
                     ),
                   ),
-                ),
-              );
-            }
-          }
-          return ListView(
-            children: children,
-          );
-        },
+                  AnimatedPositioned(
+                    duration: Duration(milliseconds: 375),
+                    top: 0,
+                    left: _isSearching ? MediaQuery.of(context).size.width - 110 : MediaQuery.of(context).size.width - 30,
+                    curve: Curves.easeOut,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 6.5),
+                      width: 100,
+                      alignment: Alignment(1.0, 0.0),
+                      child: AnimatedOpacity(
+                        opacity: _isSearching ? 1.0 : 0.0,
+                        duration: Duration(milliseconds: 200),
+                        child: TextButton(
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
+                          ),
+                          onPressed: () {
+                            FocusScopeNode currentFocus = FocusScope.of(context);
+                            if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                              currentFocus.focusedChild.unfocus();
+                            }
+                            setState(() {
+                              _isSearching = false;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: FutureBuilder(
+                future: _addPalettesFuture,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  List<Widget> children = [];
+                  if(snapshot.connectionState == ConnectionState.done) {
+                    _palettes = _palettes ?? [];
+                    Decoration decorationLast = BoxDecoration(
+                      color: theme.primaryColor,
+                      border: Border(
+                        top: BorderSide(
+                          color: theme.primaryColorDark,
+                        ),
+                        bottom: BorderSide(
+                          color: theme.primaryColorDark,
+                        ),
+                      ),
+                    );
+                    Decoration decorationNotLast = BoxDecoration(
+                      color: theme.primaryColor,
+                      border: Border(
+                        top: BorderSide(
+                          color: theme.primaryColorDark,
+                        ),
+                      ),
+                    );
+                    for(int i = 0; i < _palettes.length; i++) {
+                      children.add(
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _seletedPalette = _palettes[i];
+                              _addSwatchIcons();
+                            });
+                          },
+                          child: Container(
+                            height: 64,
+                            decoration: (i == _palettes.length - 1) ? decorationLast : decorationNotLast,
+                            padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+                            margin: (i == _palettes.length - 1) ? EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text('${_palettes[i].brand}', style: theme.primaryTextSecondary),
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text('${_palettes[i].name}', style: theme.primaryTextPrimary),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                  return ListView(
+                    children: children,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
