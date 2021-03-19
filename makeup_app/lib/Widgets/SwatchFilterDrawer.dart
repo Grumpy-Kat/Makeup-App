@@ -175,6 +175,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
         style: theme.primaryTextPrimary,
         controller: TextEditingController()..text = _brandFilter.threshold,
         textAlign: TextAlign.left,
+        textInputAction: TextInputAction.done,
         onChanged: (String val) {
           _brandFilter.threshold = val;
           //widget.onChange(filters);
@@ -208,6 +209,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
         style: theme.primaryTextPrimary,
         controller: TextEditingController()..text = _paletteFilter.threshold,
         textAlign: TextAlign.left,
+        textInputAction: TextInputAction.done,
         onChanged: (String val) {
           _paletteFilter.threshold = val;
           //widget.onChange(filters);
@@ -341,6 +343,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
               style: theme.primaryTextPrimary,
               controller: _minWeightController,
               textAlign: TextAlign.left,
+              textInputAction: TextInputAction.done,
               onChanged: (String val) {
                 double minWeight = double.parse(val);
                 if(minWeight < _minWeight) {
@@ -353,7 +356,6 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                 //widget.onChange(filters);
               },
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              textInputAction: TextInputAction.done,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
               ],
@@ -383,6 +385,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
               style: theme.primaryTextPrimary,
               controller: _maxWeightController,
               textAlign: TextAlign.left,
+              textInputAction: TextInputAction.done,
               onChanged: (String val) {
                 double maxWeight = double.parse(val);
                 if(maxWeight < _minWeightFilter.threshold) {
@@ -392,7 +395,6 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                 //widget.onChange(filters);
               },
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              textInputAction: TextInputAction.done,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
               ],
@@ -447,6 +449,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
               style: theme.primaryTextPrimary,
               controller: _minPriceController,
               textAlign: TextAlign.left,
+              textInputAction: TextInputAction.done,
               onChanged: (String val) {
                 double minPrice = double.parse(val);
                 if(minPrice < _minPrice) {
@@ -459,7 +462,6 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                 //widget.onChange(filters);
               },
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              textInputAction: TextInputAction.done,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
               ],
@@ -489,6 +491,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
               style: theme.primaryTextPrimary,
               controller: _maxPriceController,
               textAlign: TextAlign.left,
+              textInputAction: TextInputAction.done,
               onChanged: (String val) {
                 double maxPrice = double.parse(val);
                 if(maxPrice < _minPriceFilter.threshold) {
@@ -498,7 +501,6 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                 //widget.onChange(filters);
               },
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              textInputAction: TextInputAction.done,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
               ],

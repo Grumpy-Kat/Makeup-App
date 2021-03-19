@@ -172,32 +172,28 @@ Future<Swatch> loadPresetSwatch(String line) async {
   //combined
   return Swatch(id: -1, color: color, finish: finish, brand: brand, palette: palette, shade: shade, weight: weight, price: price, colorName: colorName);
 }
+
 Future<List<Palette>> search(String search) async {
-  List<Palette> ret = [];
-  List<Palette> allPalettes = palettes.values.toList();
-  search = search.trim().toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"');
-  for(int i = 0; i < palettes.length; i++) {
-    Palette palette = allPalettes[i];
+  List<Palette> ret = palettes.values.toList();
+  if(search == '' || search == ' ') {
+    return ret;
+  }
+  List<String> searchTerms = search.trim().toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"').split(' ');
+  for(int i = palettes.length - 1; i >= 0; i--) {
+    Palette palette = ret[i];
+    String possibleTerms = '';
 
-    //check if search is within brand, must count for different types of quotes
-    String brand = ' ${palette.brand.toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"')}';
-    if(brand.contains(' $search') || brand.replaceAll(RegExp(r'[^\w\s]'), '').contains(' $search')) {
-      ret.add(palette);
-      continue;
-    }
+    //add brand to possible search terms, must account for different types of quotes
+    String brand = palette.brand.toLowerCase().trimRight().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"');
+    possibleTerms += ' $brand';
+    possibleTerms += ' ${brand.replaceAll(RegExp(r'[^\w\s]'), '')}';
 
-    //check if search is within name
-    String name = ' ${palette.name.toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"')}';
-    if(name.contains(' $search') || name.replaceAll(RegExp(r'[^\w\s]'), '').contains(' $search')) {
-      ret.add(palette);
-      continue;
-    }
+    //add name to possible search terms, must account for different types of quotes
+    String name = palette.name.toLowerCase().trimRight().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"');
+    possibleTerms += ' $name';
+    possibleTerms += ' ${name.replaceAll(RegExp(r'[^\w\s]'), '')}';
 
-    if(search.contains(' ')) {
-      //can't be acronym, just continue
-      continue;
-    }
-    //check if search is within acronym, either separated by spaces or by capital letters
+    //add brand acronym, either separated by spaces or by capital letters, to possible search terms
     String spaceAcronym = '';
     String capsAcronym = '';
     List<String> brandWords = palette.brand.split(' ');
@@ -215,9 +211,18 @@ Future<List<Palette>> search(String search) async {
         }
       }
     }
-    if(spaceAcronym.toLowerCase().contains(search) || capsAcronym.toLowerCase().contains(search)) {
-      ret.add(palette);
-      continue;
+    possibleTerms += ' ${spaceAcronym.toLowerCase()}';
+    possibleTerms += ' ${capsAcronym.toLowerCase()}';
+
+    //check if search terms are found in possible search terms
+    for(int j = 0; j < searchTerms.length; j++) {
+      if(searchTerms[j] == '') {
+        continue;
+      }
+      if(!possibleTerms.contains(' ${searchTerms[j]}')) {
+        ret.removeAt(i);
+        break;
+      }
     }
   }
   return ret;

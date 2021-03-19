@@ -126,6 +126,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         style: theme.primaryTextPrimary,
         controller: TextEditingController()..text = value,
         textAlign: TextAlign.left,
+        textInputAction: TextInputAction.done,
         onChanged: (String val) { onChange(globalWidgets.toTitleCase(val).trim()); },
         decoration: InputDecoration(
           fillColor: theme.primaryColorLight,

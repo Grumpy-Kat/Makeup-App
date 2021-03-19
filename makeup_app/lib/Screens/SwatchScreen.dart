@@ -205,6 +205,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         scrollPadding: EdgeInsets.zero,
         style: theme.primaryTextPrimary,
         controller: TextEditingController()..text = value,
+        textInputAction: TextInputAction.done,
         textAlign: TextAlign.left,
         onChanged: onChange,
         enabled: _isEditing,

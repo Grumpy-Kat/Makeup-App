@@ -114,6 +114,7 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
                     alignment: Alignment(-1.0, 0.0),
                     child: TextFormField(
                       initialValue: search,
+                      textInputAction: TextInputAction.search,
                       onTap: () {
                         setState(() {
                           _isSearching = true;
@@ -138,7 +139,7 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
                         hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
                       ),
                     ),
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: theme.primaryColorDark,
                     ),

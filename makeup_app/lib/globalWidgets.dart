@@ -348,6 +348,7 @@ Widget getTextField(BuildContext context, String label, String value, String err
     style: theme.primaryTextSecondary,
     textCapitalization: TextCapitalization.words,
     cursorColor: theme.accentColor,
+    textInputAction: TextInputAction.done,
     initialValue: value,
     decoration: InputDecoration(
       fillColor: theme.primaryColor,

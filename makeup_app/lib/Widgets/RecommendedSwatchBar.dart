@@ -205,6 +205,11 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   }
 
   @override
+  Future<void> searchSwatches(String val) async {
+    //do nothing
+  }
+
+  @override
   Future<void> editSwatches(String brand, String palette, double weight,  double price,int rating, List<String> tags) async {
     //do nothing
   }
@@ -222,6 +227,11 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   @override
   void filterSwatches(List<Filter> filters) {
     _swatchesFuture = IO.filter(_swatches, filters);
+  }
+
+  @override
+  Future<List<int>> filterAndSearchSwatchesActual() async {
+    return await IO.filter(_swatches, filters);
   }
 
   @override

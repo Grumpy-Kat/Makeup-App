@@ -59,6 +59,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
         updateSwatches: (List<int> swatches) { this._swatches = swatches; },
         showNoColorsFound: false,
         showNoFilteredColorsFound: true,
+        showSearch: true,
         showPlus: false,
         showDeleteFiltered: true,
         defaultSort: globals.sort,

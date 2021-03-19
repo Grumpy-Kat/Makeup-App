@@ -552,5 +552,11 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   Future sortAndFilterSwatchesActual() { return null; }
 
   @override
+  Future<List<int>> filterAndSearchSwatchesActual() { return null; }
+
+  @override
+  Future<void> searchSwatches(String val) async { }
+
+  @override
   void sortSwatches(val) { }
 }

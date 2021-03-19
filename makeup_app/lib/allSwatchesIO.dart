@@ -3,9 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
+import 'ColorMath/ColorProcessing.dart';
 import 'Widgets/Swatch.dart';
 import 'Widgets/Filter.dart';
 import 'globalIO.dart';
+import 'localizationIO.dart';
 import 'globals.dart' as globals;
 import 'types.dart';
 
@@ -273,6 +275,82 @@ Future<Map<Widget, List<int>>> filterMultiple(List<Widget> keys, List<List<int>>
   Map<Widget, List<int>> ret = {};
   for(int i = 0; i < keys.length; i++) {
     ret[keys[i]] = await filter(values[i], filters);
+  }
+  return ret;
+}
+
+Future<List<int>> search(List<int> ids, String val) async {
+  List<int> ret = ids.toList();
+  if(val == '' || val == ' ') {
+    return ret;
+  }
+  List<String> searchTerms = val.trim().toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"').split(' ');
+  for(int i = ids.length - 1; i >= 0; i--) {
+    Swatch swatch = get(ret[i]);
+    String possibleTerms = '';
+
+    //add brand to possible search terms, must account for different types of quotes
+    String brand = swatch.brand.toLowerCase().trimRight().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"');
+    possibleTerms += ' $brand';
+    possibleTerms += ' ${brand.replaceAll(RegExp(r'[^\w\s]'), '')}';
+
+    //add palette name to possible search terms, must account for different types of quotes
+    String palette = swatch.palette.toLowerCase().trimRight().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"');
+    possibleTerms += ' $palette';
+    possibleTerms += ' ${palette.replaceAll(RegExp(r'[^\w\s]'), '')}';
+
+    //add shade name to possible search terms, must account for different types of quotes
+    String shade = swatch.shade.toLowerCase().trimRight().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"');
+    possibleTerms += ' $shade';
+    possibleTerms += ' ${shade.replaceAll(RegExp(r'[^\w\s]'), '')}';
+
+    //add finish to possible search terms
+    String finish = getString(swatch.finish).toLowerCase().trimRight();
+    possibleTerms += ' $finish';
+
+    //add finish to possible search terms
+    String color = (swatch.colorName == '' ? getString(getColorName(swatch.color)) : swatch.colorName).toLowerCase().trimRight();
+    possibleTerms += ' $color';
+
+    //add brand acronym, either separated by spaces or by capital letters, to possible search terms
+    String spaceAcronym = '';
+    String capsAcronym = '';
+    List<String> brandWords = swatch.brand.split(' ');
+    for(int j = 0; j < brandWords.length; j++) {
+      if(brandWords[j] == '') {
+        continue;
+      }
+      String letter = brandWords[j].substring(0, 1);
+      spaceAcronym += letter;
+      capsAcronym += letter;
+      for(int k = 1; k < brandWords[j].length; k++) {
+        letter = brandWords[j].substring(k, k + 1);
+        if(letter == letter.toUpperCase()) {
+          capsAcronym += letter;
+        }
+      }
+    }
+    possibleTerms += ' ${spaceAcronym.toLowerCase()}';
+    possibleTerms += ' ${capsAcronym.toLowerCase()}';
+
+    //check if search terms are found in possible search terms
+    for(int j = 0; j < searchTerms.length; j++) {
+      if(searchTerms[j] == '') {
+        continue;
+      }
+      if(!possibleTerms.contains(' ${searchTerms[j]}')) {
+        ret.removeAt(i);
+        break;
+      }
+    }
+  }
+  return ret;
+}
+
+Future<Map<Widget, List<int>>> searchMultiple(List<Widget> keys, List<List<int>> values, String val) async {
+  Map<Widget, List<int>> ret = {};
+  for(int i = 0; i < keys.length; i++) {
+    ret[keys[i]] = await search(values[i], val);
   }
   return ret;
 }
