@@ -32,7 +32,7 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
   }
 
   Future<List<Palette>> _addPalettes() async {
-    if(_palettes == null || _palettes.length == 0) {
+    if(_allPalettes == null || _allPalettes.length == 0) {
       Map<String, Palette> map = (await IO.loadFormatted());
       _allPalettes = map.values.toList() ?? [];
       _palettes = _allPalettes;
