@@ -43,8 +43,6 @@ Palette getPalette(String paletteId) {
 }
 
 Future<void> save(Palette palette) async {
-  //assumes just changing palette data, not status, use different method for that
-  hasSaveChanged = true;
   //clean name input
   String brand = removeAllChars(palette.brand, [r';', r'\\']);
   String name = removeAllChars(palette.name, [r';', r'\\']);
@@ -80,6 +78,7 @@ Future<void> save(Palette palette) async {
       }
     );
   }
+  //don't need to change save because will be added to admin app first and must be approved
 }
 
 Future<List<DocumentSnapshot>> load({ bool override = false }) async {
@@ -120,6 +119,7 @@ Future<Map<String, Palette>> loadFormatted({ bool override = false, overrideInne
     print('${palettes.length} palettes');
     hasSaveChanged = false;
     isLoading = false;
+    palettes = await sort();
   }
   return palettes;
 }
@@ -171,6 +171,25 @@ Future<Swatch> loadPresetSwatch(String line) async {
   String colorName = lineSplit[7];
   //combined
   return Swatch(id: -1, color: color, finish: finish, brand: brand, palette: palette, shade: shade, weight: weight, price: price, colorName: colorName);
+}
+
+Future<Map<String, Palette>> sort() async {
+  List<Palette> sortedPalettes = palettes.values.toList();
+  sortedPalettes.sort(
+    (Palette a, Palette b) {
+      int brand = a.brand.compareTo(b.brand);
+      if(brand == 0) {
+        return a.name.compareTo(b.name);
+      } else {
+        return brand;
+      }
+    }
+  );
+  palettes.clear();
+  for(int i = 0; i < sortedPalettes.length; i++) {
+    palettes[sortedPalettes[i].id] = sortedPalettes[i];
+  }
+  return palettes;
 }
 
 Future<List<Palette>> search(String search) async {
