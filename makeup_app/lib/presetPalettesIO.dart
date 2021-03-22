@@ -4,6 +4,7 @@ import 'ColorMath/ColorObjects.dart';
 import 'Widgets/Swatch.dart';
 import 'Widgets/Palette.dart';
 import 'globalIO.dart';
+import 'globalWidgets.dart' as globalWidgets;
 import 'types.dart';
 
 List<DocumentSnapshot> docs;
@@ -44,8 +45,8 @@ Palette getPalette(String paletteId) {
 
 Future<void> save(Palette palette) async {
   //clean name input
-  String brand = removeAllChars(palette.brand, [r';', r'\\']);
-  String name = removeAllChars(palette.name, [r';', r'\\']);
+  String brand = globalWidgets.toTitleCase(removeAllChars(palette.brand, [r';', r'\\']));
+  String name = globalWidgets.toTitleCase(removeAllChars(palette.name, [r';', r'\\']));
   String weight = palette.weight.toStringAsFixed(4);
   String price = palette.price.toStringAsFixed(2);
   String swatchData = '';

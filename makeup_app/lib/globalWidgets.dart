@@ -455,7 +455,7 @@ String toTitleCase(String text) {
   String result = '';
   for(int i = 0; i < words.length; i++) {
     if(words[i].length <= 1) {
-      result += words[i].toUpperCase();
+      result += words[i].toUpperCase() + ' ';
       continue;
     }
     result += words[i].substring(0, 1).toUpperCase() + words[i].substring(1) + ' ';
