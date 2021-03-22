@@ -99,7 +99,7 @@ class SwatchIcon extends StatelessWidget {
       color = [0.5, 0.5, 0.5];
       finish = 'finish_matte';
     } else {
-      color =  swatch.color.getValues();
+      color = swatch.color.getValues();
       finish = swatch.finish.toLowerCase();
     }
     final Widget swatchImg = Image(
@@ -115,7 +115,7 @@ class SwatchIcon extends StatelessWidget {
         children: <Widget>[
           swatchImg,
           Align(
-            alignment: Alignment(1.15, 1.15),
+            alignment: const Alignment(1.15, 1.15),
             child: Container(
               width: 23,
               height: 23,
@@ -140,7 +140,7 @@ class SwatchIcon extends StatelessWidget {
         children: <Widget>[
           swatchImg,
           Align(
-            alignment: Alignment(1.15, -1.15),
+            alignment: const Alignment(1.15, -1.15),
             child: Container(
               width: 23,
               height: 23,

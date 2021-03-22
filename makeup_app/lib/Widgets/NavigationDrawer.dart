@@ -30,7 +30,7 @@ class NavigationDrawer extends StatelessWidget {
     TextStyle unselectedText = theme.primaryTextPrimary;
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.only(left: 7),
+        padding: const EdgeInsets.only(left: 7),
         children: <Widget>[
           //title
           DrawerHeader(
@@ -156,7 +156,7 @@ class NavigationDrawer extends StatelessWidget {
       await onExit();
       navigation.pushReplacement(
         context,
-        Offset(1.0, 0.0),
+        const Offset(1.0, 0.0),
         menus[page],
         routes.enumRoutes[menus[page]](context),
       );

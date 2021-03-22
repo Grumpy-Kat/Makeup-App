@@ -35,10 +35,10 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
       endIndent: 7,
     );
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 35),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 35),
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20),
           child: Column(
             children: <Widget>[
               Text(getString('editSwatchPopup_instructions'), style: theme.primaryTextPrimary),
@@ -77,7 +77,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         //save button
         Container(
           height: 70,
-          padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
           child: FlatButton(
             color: theme.accentColor,
             onPressed: () {
@@ -100,7 +100,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
     return Container(
       height: height,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: <Widget>[
           Text(
@@ -131,7 +131,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         decoration: InputDecoration(
           fillColor: theme.primaryColorLight,
           filled: true,
-          contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(3.0),
             borderSide: BorderSide(
@@ -169,7 +169,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         controller: TextEditingController()..text = (value == null ? '' : value.toString()),
         textAlign: TextAlign.left,
         onChanged: (String val) { onChange((val.trim() == '' ? '' : double.parse(val))); },
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
@@ -177,7 +177,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         decoration: InputDecoration(
           fillColor: theme.primaryColorLight,
           filled: true,
-          contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(3.0),
             borderSide: BorderSide(
@@ -211,7 +211,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         Container(
           height: 55,
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.symmetric(vertical: 15),
+          padding: const EdgeInsets.symmetric(vertical: 15),
           child: Text(
             '$label: ${(value == null ? 0 : value)}/10',
             style: theme.primaryTextPrimary,
@@ -220,7 +220,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         ),
         Container(
           height: 50,
-          padding: EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20),
           child: StarRating(
             starCount: 10,
             starSize: 35,
@@ -261,7 +261,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         ),
       );
       widgets.add(
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
       );
@@ -303,7 +303,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         Container(
           height: 55,
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.symmetric(vertical: 15),
+          padding: const EdgeInsets.symmetric(vertical: 15),
           child: Text(
             '$label: ',
             style: theme.primaryTextPrimary,
@@ -312,7 +312,7 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         ),
         Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20),
           child: Wrap(
             children: widgets,
           ),

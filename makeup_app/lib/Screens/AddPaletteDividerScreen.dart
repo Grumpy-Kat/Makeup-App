@@ -90,7 +90,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       leftBar: globalWidgets.getBackButton(
         () => navigation.pushReplacement(
           context,
-          Offset(-1, 0),
+          const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
           routes.routes['/addPaletteScreen'](context),
         ),
@@ -116,9 +116,9 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   Widget getPaletteListScreen(BuildContext context) {
     //height of num fields
     double height = 55;
-    EdgeInsets padding = EdgeInsets.symmetric(horizontal: 15, vertical: 7);
+    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 7);
     //outer container includes margin if no field below
-    EdgeInsets margin = EdgeInsets.only(bottom: 10);
+    EdgeInsets margin = const EdgeInsets.only(bottom: 10);
     //border and color if no field below
     Decoration decoration = BoxDecoration(
       color: theme.primaryColor,
@@ -145,19 +145,20 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
+      leftBar: globalWidgets.getBackButton(
+        () => navigation.pushReplacement(
           context,
-          Offset(-1, 0),
+          const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
           routes.routes['/addPaletteScreen'](context),
-        )
+        ),
       ),
       rightBar: [
         //delete button
         Container(
-          margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+          margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
           child: IconButton(
-            constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+            constraints: BoxConstraints.tight(const Size.square(theme.quaternaryIconSize + 15)),
             color: theme.primaryColor,
             onPressed: () {
               globalWidgets.openTwoButtonDialog(
@@ -169,7 +170,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                   Navigator.pop(context);
                   navigation.pushReplacement(
                     context,
-                    Offset(-1, 0),
+                    const Offset(-1, 0),
                     routes.ScreenRoutes.AddPaletteScreen,
                     routes.routes['/addPaletteScreen'](context),
                   );
@@ -320,8 +321,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
             child: GridView.builder(
               scrollDirection: Axis.vertical,
               primary: true,
-              padding: EdgeInsets.all(20),
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              padding: const EdgeInsets.all(20),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisSpacing: 30,
                 crossAxisSpacing: 30,
                 crossAxisCount: 4,
@@ -367,7 +368,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         children: <Widget>[
           Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(right: 3),
+            padding: const EdgeInsets.only(right: 3),
             child: Text(title, style: theme.primaryTextSecondary),
           ),
           Expanded(
@@ -378,8 +379,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.numberWithOptions(signed: true),
-                  //initialValue: value.toString(),
+                  keyboardType: const TextInputType.numberWithOptions(signed: true),
                   controller: controller,
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -472,7 +472,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         //return to AllSwatchesScreen
         navigation.pushReplacement(
           context,
-          Offset(-1, 0),
+          const Offset(-1, 0),
           routes.ScreenRoutes.AllSwatchesScreen,
           routes.routes['/allSwatchesScreen'](context),
         );

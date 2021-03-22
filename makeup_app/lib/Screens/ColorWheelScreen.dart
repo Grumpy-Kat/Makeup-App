@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import '../Widgets/ColorPicker.dart';
 import '../Widgets/SingleSwatchList.dart';
-import '../Widgets/NoScreenSwipe.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
 import '../ColorMath/ColorObjects.dart';
@@ -85,22 +84,19 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
           //color picker
           Expanded(
             flex: 4,
-            child: NoScreenSwipe(
-              parent: this,
-              child: ColorPicker(
-                btnText: getString('colorPicker_btn'),
-                onEnter: (double hue, double saturation, double value) {
-                  //sets color and future
-                  _pickedColor = HSVtoRGB(HSVColor(hue, saturation, value));
-                  _settingColor = true;
-                  if(_swatchListKey.currentState != null) {
-                    //no need to refilter because setting state soon
-                    (_swatchListKey.currentState as SingleSwatchListState).clearFilters(refilter: false);
-                  }
-                  _swatchesFuture = _addSwatches();
-                  setState(() { });
-                },
-              ),
+            child: ColorPicker(
+              btnText: getString('colorPicker_btn'),
+              onEnter: (double hue, double saturation, double value) {
+                //sets color and future
+                _pickedColor = HSVtoRGB(HSVColor(hue, saturation, value));
+                _settingColor = true;
+                if(_swatchListKey.currentState != null) {
+                  //no need to refilter because setting state soon
+                  (_swatchListKey.currentState as SingleSwatchListState).clearFilters(refilter: false);
+                }
+                _swatchesFuture = _addSwatches();
+                setState(() { });
+              },
             ),
           ),
           //scroll view to show all swatches

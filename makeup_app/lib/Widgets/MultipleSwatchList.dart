@@ -120,7 +120,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 15),
+                        padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
                         height: (_swatchLabels[i] is SwatchIcon ? 80 : 50),
                         child: _swatchLabels[i],
                       ),
@@ -155,7 +155,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 15),
+                      padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
                       height: 50,
                     ),
                   ),

@@ -80,7 +80,7 @@ mixin SwatchListState {
         return Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Text(
               getString('noColorsFound'),
               style: theme.primaryTextPrimary,
@@ -110,7 +110,7 @@ mixin SwatchListState {
       scrollDirection: axis,
       primary: true,
       padding: EdgeInsets.all(padding),
-      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         mainAxisSpacing: spacing,
         crossAxisSpacing: spacing,
         crossAxisCount: crossAxisCount,
@@ -119,16 +119,14 @@ mixin SwatchListState {
       itemBuilder: (BuildContext context, int i) {
         if(swatchIcons.length == 0) {
           if(snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(theme.accentColor),
-            );
+            return const CircularProgressIndicator();
           }
         }
         if(swatchList.showPlus && swatchIcons.length == i) {
           return Ink(
             decoration: ShapeDecoration(
               color: theme.accentColor,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             child: IconButton(
               color: theme.accentTextColor,
@@ -151,11 +149,11 @@ mixin SwatchListState {
         buildSortDropdown(context),
         if(swatchList.showSearch) buildSearchBar(context),
         AnimatedPositioned(
-          duration: Duration(milliseconds: 375),
+          duration: const Duration(milliseconds: 375),
           left: MediaQuery.of(context).size.width - ((swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns ? 3 : 1) * (theme.quaternaryIconSize + 15)) - 16,
           curve: Curves.easeOut,
           child: Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
+            margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -176,9 +174,9 @@ mixin SwatchListState {
       alignment: Alignment.centerLeft,
       child: AnimatedOpacity(
         opacity: isSearching ? 0.0 : 1.0,
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         child: Container(
-          margin: EdgeInsets.fromLTRB(15, 15, 0, 15),
+          margin: const EdgeInsets.fromLTRB(15, 15, 0, 15),
           child: Row(
             children: <Widget>[
               Text('${getString('sort_sortBy', defaultValue: 'Sort By')}  ', style: theme.primaryTextQuaternary),
@@ -198,7 +196,7 @@ mixin SwatchListState {
                   },
                   underline: Container(
                     decoration: UnderlineTabIndicator(
-                      insets: EdgeInsets.only(bottom: -5),
+                      insets: const EdgeInsets.only(bottom: -5),
                       borderSide: BorderSide(
                         color: theme.primaryColorDark,
                         width: 1.0,
@@ -223,17 +221,17 @@ mixin SwatchListState {
 
   Widget buildSearchBar(BuildContext context) {
     return AnimatedPositioned(
-      duration: Duration(milliseconds: 375),
+      duration: const Duration(milliseconds: 375),
       top: 0,
       left: isSearching ? 16 : MediaQuery.of(context).size.width - ((swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns ? 4 : 2) * (theme.quaternaryIconSize + 15)) - 32,
       curve: Curves.easeOut,
       child: AnimatedContainer(
-        margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
-        duration: Duration(milliseconds: 375),
+        margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+        duration: const Duration(milliseconds: 375),
         width: isSearching ? MediaQuery.of(context).size.width - ((swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns ? 3 : 1) * (theme.quaternaryIconSize + 15)) - 32 : theme.quaternaryIconSize + 47,
         alignment: isSearching ? Alignment.centerLeft : Alignment.centerRight,
         curve: Curves.easeOut,
-        padding: EdgeInsets.symmetric(horizontal: 11),
+        padding: const EdgeInsets.symmetric(horizontal: 11),
         decoration: isSearching ? BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: theme.primaryColorDark,
@@ -242,7 +240,7 @@ mixin SwatchListState {
           //overflow: Overflow.visible,
           children: <Widget>[
             IconButton(
-              constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+              constraints: BoxConstraints.tight(const Size.square(theme.quaternaryIconSize + 15)),
               icon: Icon(
                 Icons.search,
                 size: theme.quaternaryIconSize,
@@ -259,10 +257,10 @@ mixin SwatchListState {
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.fromLTRB(3, 6, 3, 3),
+                padding: const EdgeInsets.fromLTRB(3, 6, 3, 3),
                 child: AnimatedOpacity(
                   opacity: isSearching ? 1.0 : 0.0,
-                  duration: Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 200),
                   child: TextFormField(
                     key: searchKey,
                     textInputAction: TextInputAction.search,
@@ -301,10 +299,10 @@ mixin SwatchListState {
 
   Widget buildFilterBtn(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
       alignment: Alignment.centerRight,
       child: IconButton(
-        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+        constraints: BoxConstraints.tight(const Size.square(theme.quaternaryIconSize + 15)),
         color: theme.primaryColor,
         onPressed: () {
           if(swatchList.openEndDrawer != null) {
@@ -323,9 +321,9 @@ mixin SwatchListState {
 
   Widget buildEditBtn(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
       child: IconButton(
-        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+        constraints: BoxConstraints.tight(const Size.square(theme.quaternaryIconSize + 15)),
         color: theme.primaryColor,
         onPressed: () {
           openEditDialog(context);
@@ -342,9 +340,9 @@ mixin SwatchListState {
 
   Widget buildDeleteBtn(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
       child: IconButton(
-        constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+        constraints: BoxConstraints.tight(const Size.square(theme.quaternaryIconSize + 15)),
         color: theme.primaryColor,
         onPressed: () {
           globalWidgets.openTwoButtonDialog(
@@ -379,9 +377,9 @@ mixin SwatchListState {
         return Padding(
           padding: EdgeInsets.zero,
           child: Dialog(
-            insetPadding: EdgeInsets.symmetric(horizontal: 0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            insetPadding: const EdgeInsets.symmetric(horizontal: 0),
+            shape: const RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
             ),
             child: Container(
               width: MediaQuery.of(context).size.width,

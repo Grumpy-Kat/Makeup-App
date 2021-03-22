@@ -36,12 +36,13 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(() => navigation.pushReplacement(
+      leftBar: globalWidgets.getBackButton(
+        () => navigation.pushReplacement(
           context,
-          Offset(-1, 0),
+          const Offset(-1, 0),
           routes.ScreenRoutes.AllSwatchesScreen,
           routes.routes['/allSwatchesScreen'](context),
-        )
+        ),
       ),
       //help button
       rightBar: [
@@ -55,12 +56,12 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         children: <Widget>[
           //text
           Container(
-            margin: EdgeInsets.only(top: 40, bottom: 25),
+            margin: const EdgeInsets.only(top: 40, bottom: 25),
             child: Text('${getString('addPalette_chooseMode')} ', style: theme.primaryTextBold),
           ),
           //sets mode to palette divider
           FlatButton.icon(
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             color: theme.primaryColorDark,
             icon: Icon(Icons.crop, size: 20, color: theme.iconTextColor),
             label: Text('${getString('addPalette_paletteDivider')}', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
@@ -68,18 +69,18 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             AddPaletteDividerScreenState.reset();
               navigation.pushReplacement(
                 context,
-                Offset(1, 0),
+                const Offset(1, 0),
                 routes.ScreenRoutes.AddPaletteDividerScreen,
                 routes.routes['/addPaletteDividerScreen'](context),
               );
             },
           ),
-          Container(
+          const SizedBox(
             height: 7,
           ),
           //sets mode to preset palette gallery
           FlatButton.icon(
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             color: theme.primaryColorDark,
             icon: Icon(Icons.list, size: 20, color: theme.iconTextColor),
             label: Text('Preset Palettes', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
@@ -87,18 +88,18 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
               AddPresetPaletteScreenState.reset();
               navigation.pushReplacement(
                 context,
-                Offset(1, 0),
+                const Offset(1, 0),
                 routes.ScreenRoutes.AddPresetPaletteScreen,
                 routes.routes['/addPresetPaletteScreen'](context),
               );
             },
           ),
-          Container(
+          const SizedBox(
             height: 7,
           ),
           //sets mode to custom
           FlatButton.icon(
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             color: theme.primaryColorDark,
             icon: Icon(Icons.colorize, size: 20, color: theme.iconTextColor),
             label: Text('${getString('addPalette_custom')}', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
@@ -111,7 +112,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                     AddCustomPaletteScreenState.setValues(brand, palette, weight, price);
                     navigation.pushReplacement(
                       context,
-                      Offset(1, 0),
+                      const Offset(1, 0),
                       routes.ScreenRoutes.AddCustomPaletteScreen,
                       routes.routes['/addCustomPaletteScreen'](context),
                     );

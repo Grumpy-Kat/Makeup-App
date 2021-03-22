@@ -64,7 +64,7 @@ class CurrSwatchBarState extends State<CurrSwatchBar> {
           primary: false,
           padding: const EdgeInsets.all(20),
           separatorBuilder: (BuildContext context, int i) {
-            return SizedBox(
+            return const SizedBox(
               width: 15,
             );
           },
@@ -80,7 +80,7 @@ class CurrSwatchBarState extends State<CurrSwatchBar> {
   void _onDoubleTap() {
     navigation.push(
       context,
-      Offset(1, 0),
+      const Offset(1, 0),
       routes.ScreenRoutes.TodayLookScreen,
       routes.routes['/todayLookScreen'](context),
     );

@@ -14,8 +14,8 @@ Future<void> openDialog(BuildContext context, Widget Function(BuildContext) buil
 
 Widget getAlertDialog(BuildContext context, { Widget title, Widget content, List<Widget> actions }) {
   return AlertDialog(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    shape: const RoundedRectangleBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
     ),
     title: title,
     content: content,
@@ -36,7 +36,7 @@ Future<void> openLoadingDialog(BuildContext context) {
           child: Container(
             width: 100,
             height: 100,
-            child: CircularProgressIndicator(),
+            child: const CircularProgressIndicator(),
           ),
         ),
       );
@@ -145,7 +145,7 @@ Future<void> openPaletteTextDialog(BuildContext context, String title, void Func
                       }
                     }
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   getTextField(
@@ -170,7 +170,7 @@ Future<void> openPaletteTextDialog(BuildContext context, String title, void Func
                       }
                     }
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   getNumField(
@@ -188,7 +188,7 @@ Future<void> openPaletteTextDialog(BuildContext context, String title, void Func
                       });
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   getNumField(
@@ -278,7 +278,7 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
 
 Widget getHelpBtn(BuildContext context, String text) {
   return IconButton(
-    constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+    constraints: BoxConstraints.tight(const Size.fromWidth(theme.primaryIconSize + 15)),
     icon: Icon(
       Icons.help,
       size: 25.0,
@@ -293,13 +293,13 @@ Widget getHelpBtn(BuildContext context, String text) {
             context,
             content: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                 child: Text(text, style: theme.primaryTextSecondary),
               ),
             ),
             actions: <Widget>[
               Container(
-                padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+                padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
                 child: FlatButton(
                   color: theme.accentColor,
                   onPressed: () {
@@ -392,7 +392,7 @@ Widget getNumField(BuildContext context, String label, double value, String erro
     textAlign: TextAlign.left,
     style: theme.primaryTextSecondary,
     textInputAction: TextInputAction.done,
-    keyboardType: TextInputType.numberWithOptions(decimal: true),
+    keyboardType: const TextInputType.numberWithOptions(decimal: true),
     cursorColor: theme.accentColor,
     initialValue: value.toString(),
     inputFormatters: <TextInputFormatter>[
@@ -440,7 +440,7 @@ Widget getNumField(BuildContext context, String label, double value, String erro
 
 Widget getBackButton(OnVoidAction onPressed) {
   return IconButton(
-    constraints: BoxConstraints.tight(Size.fromWidth(26)),
+    constraints: BoxConstraints.tight(const Size.fromWidth(26)),
     icon: Icon(
       Icons.arrow_back_ios,
       size: 19,

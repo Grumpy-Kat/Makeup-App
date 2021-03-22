@@ -36,12 +36,12 @@ mixin ScreenState {
                   children: <Widget>[
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.symmetric(horizontal: 7),
+                      padding: const EdgeInsets.symmetric(horizontal: 7),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           IconButton(
-                            constraints: BoxConstraints.tight(Size.fromWidth(40)),
+                            constraints: BoxConstraints.tight(const Size.fromWidth(40)),
                             icon: Icon(
                               Icons.menu,
                               size: 25,
@@ -59,7 +59,7 @@ mixin ScreenState {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(left: 2, right: 2, top: 3),
+                        padding: const EdgeInsets.only(left: 2, right: 2, top: 3),
                         child: AutoSizeText(
                           title,
                           style: theme.primaryTextBold,
@@ -72,7 +72,7 @@ mixin ScreenState {
                     ),
                     Container(
                       alignment: Alignment.centerRight,
-                      padding: EdgeInsets.symmetric(horizontal: 7),
+                      padding: const EdgeInsets.symmetric(horizontal: 7),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: rightBar ?? [],

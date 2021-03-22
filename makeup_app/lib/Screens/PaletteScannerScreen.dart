@@ -75,13 +75,13 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         getString('screen_paletteScanner'),
         4,
         body: Padding(
-          padding: EdgeInsets.only(top: 15),
+          padding: const EdgeInsets.only(top: 15),
           child: Column(
             children: <Widget>[
               //return to palette divider
               FlatButton(
                 color: theme.bgColor,
-                shape:  Border.all(
+                shape: Border.all(
                   color: theme.primaryColorDark,
                   width: 2.0,
                 ),

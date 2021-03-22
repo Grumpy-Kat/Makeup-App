@@ -8,7 +8,7 @@ class StarRating extends StatelessWidget {
   final int rating;
   final OnIntAction onChange;
 
-  StarRating({ this.starCount = 5, this.starSize = 30, this.rating = 1, this.onChange });
+  const StarRating({ this.starCount = 5, this.starSize = 30, this.rating = 1, this.onChange });
 
   @override
   Widget build(BuildContext context) {

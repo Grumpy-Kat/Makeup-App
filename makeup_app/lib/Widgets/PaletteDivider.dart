@@ -123,8 +123,8 @@ class PaletteDividerState extends State<PaletteDivider> {
               children: <Widget>[
                 getPickImgBtn(),
                 if(!showImg) Container(
-                  alignment: Alignment(0, -0.77),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  alignment: const Alignment(0, -0.77),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
                     getString('paletteDivider_warning'),
                     style: theme.primaryTextSecondary,
@@ -132,7 +132,7 @@ class PaletteDividerState extends State<PaletteDivider> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment(0, -0.73),
+                  alignment: const Alignment(0, -0.73),
                   child: getAnimatedOpacity(
                     showImg,
                     child: Row(
@@ -168,14 +168,14 @@ class PaletteDividerState extends State<PaletteDivider> {
   Widget getAnimatedOpacity(bool showImg, { @required Widget child }) {
     return AnimatedOpacity(
       opacity: (showImg ? 1 : 0),
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       child: child,
     );
   }
 
   Widget getTextField(Size screenSize, String label, TextEditingController controller, OnStringAction onStringAction) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       width: (screenSize == null ? 175 : screenSize.width / 2),
       child: TextFormField(
         textAlign: TextAlign.left,
@@ -211,9 +211,9 @@ class PaletteDividerState extends State<PaletteDivider> {
 
   Widget getPickImgBtn() {
     return Align(
-      alignment: Alignment(0, -1),
+      alignment: const Alignment(0, -1),
       child: FlatButton(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         color: (ImagePicker.img == null ? theme.accentColor : theme.bgColor),
         shape: (ImagePicker.img == null ? null : Border.all(
           color: theme.primaryColorDark,
@@ -254,7 +254,7 @@ class PaletteDividerState extends State<PaletteDivider> {
       child: getAnimatedOpacity(
         showImg,
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 23),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 23),
           child: FlatButton(
             color: theme.primaryColorDark,
             onPressed: save,
@@ -272,7 +272,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     if(globals.debug) {
       //debug assumes to use a static image, instead of actual image picked
       return Align(
-        alignment: Alignment(0, 0.4),
+        alignment: const Alignment(0, 0.4),
         child: Image.asset(
           'imgs/test0.jpg',
           key: _imgKey,
@@ -283,7 +283,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     }
     //release mode uses actual image picked
     return Align(
-      alignment: Alignment(0, 0.4),
+      alignment: const Alignment(0, 0.4),
       child: Image.file(
         (ImagePicker.img == null ? File('imgs/finish_matte.png') : ImagePicker.img),
         key: _imgKey,
@@ -295,7 +295,7 @@ class PaletteDividerState extends State<PaletteDivider> {
 
   Widget getOuterBorder(double width, double height) {
     return Align(
-      alignment: Alignment(0, 0.4),
+      alignment: const Alignment(0, 0.4),
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
@@ -313,7 +313,7 @@ class PaletteDividerState extends State<PaletteDivider> {
 
   Widget getInnerBorders(double width, double height, double boxWidth, double boxHeight) {
     return Align(
-      alignment: Alignment(0, 0.4),
+      alignment: const Alignment(0, 0.4),
       child: Stack(
         children: [
           for(int i = 0; i < _numCols; i++) for(int j = 0; j < _numRows; j++) GestureDetector(
@@ -353,9 +353,9 @@ class PaletteDividerState extends State<PaletteDivider> {
     double boxHeight = _getBoxHeight();
     double innerWidth = boxWidth - (_padding[0] * 2);
     if(innerWidth < minSize) {
-        double diff = minSize - innerWidth;
-        _padding[0] -= diff / 2;
-        _padding[0] = max(_padding[0], minPadding);
+      double diff = minSize - innerWidth;
+      _padding[0] -= diff / 2;
+      _padding[0] = max(_padding[0], minPadding);
     }
     double innerHeight = boxHeight - (_padding[1] * 2);
     if(innerHeight < minSize) {

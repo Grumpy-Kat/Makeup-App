@@ -62,9 +62,9 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     //height of field
     double height = 55;
     //almost every field has padding
-    EdgeInsets padding = EdgeInsets.symmetric(horizontal: 15, vertical: 7);
+    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 7);
     //outer container includes margin if no field below
-    EdgeInsets margin = EdgeInsets.only(bottom: 10);
+    EdgeInsets margin = const EdgeInsets.only(bottom: 10);
     //border and color if no field below
     Decoration decoration = BoxDecoration(
       color: theme.primaryColor,
@@ -160,7 +160,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             flex: 3,
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_default_language')} '),
             ),
           ),
@@ -257,7 +257,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             flex: 3,
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_default_sort')} '),
             ),
           ),
@@ -370,7 +370,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             flex: 3,
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_shade_shade')} '),
             ),
           ),
@@ -468,8 +468,8 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
         getPhotoGreenField(context, height, noBottomDecoration, padding, margin),
         getPhotoBlueField(context, height, decoration, padding, margin),
         getPhotoTitleField(context, height, noBottomDecoration, padding, margin),
-        getPhotoExsField(context, height, noBottomDecoration, padding, EdgeInsets.symmetric(vertical: 15, horizontal: 10), Colors.grey, Colors.brown[800]),
-        getPhotoExsField(context, height, decoration, padding, EdgeInsets.symmetric(vertical: 15, horizontal: 10), Colors.blue, Colors.pink[200]),
+        getPhotoExsField(context, height, noBottomDecoration, padding, const EdgeInsets.symmetric(vertical: 15, horizontal: 10), Colors.grey, Colors.brown[800]),
+        getPhotoExsField(context, height, decoration, padding, const EdgeInsets.symmetric(vertical: 15, horizontal: 10), Colors.blue, Colors.pink[200]),
       ],
     );
   }
@@ -486,7 +486,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             flex: 3,
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_photo_brightness')} '),
             ),
           ),
@@ -499,7 +499,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.numberWithOptions(signed: true),
+                  keyboardType: const TextInputType.numberWithOptions(signed: true),
                   initialValue: globals.brightnessOffset.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -550,7 +550,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             flex: 3,
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_photo_red')} '),
             ),
           ),
@@ -563,7 +563,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.numberWithOptions(signed: true),
+                  keyboardType: const TextInputType.numberWithOptions(signed: true),
                   initialValue: globals.redOffset.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -614,7 +614,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             flex: 3,
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_photo_green')} '),
             ),
           ),
@@ -627,7 +627,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.numberWithOptions(signed: true),
+                  keyboardType: const TextInputType.numberWithOptions(signed: true),
                   initialValue: globals.greenOffset.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -679,7 +679,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             flex: 3,
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_photo_blue')} '),
             ),
           ),
@@ -692,7 +692,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.numberWithOptions(signed: true),
+                  keyboardType: const TextInputType.numberWithOptions(signed: true),
                   initialValue: globals.blueOffset.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -832,7 +832,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             flex: 3,
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_default_sensitivity')} '),
             ),
           ),
@@ -845,7 +845,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 height: height - (padding.vertical * 1.5),
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   initialValue: globals.colorWheelDistance.toString(),
                   textInputAction: TextInputAction.done,
                   style: theme.primaryTextSecondary,
@@ -896,7 +896,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           onTap: () {
             navigation.push(
               context,
-              Offset(1, 0),
+              const Offset(1, 0),
               routes.ScreenRoutes.TutorialScreen,
               routes.routes['/tutorialScreen'](context),
             );
@@ -905,7 +905,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             children: <Widget>[
               Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(right: 3),
+                padding: const EdgeInsets.only(right: 3),
                 child: getLabel('${getString('settings_default_help')} '),
               ),
               Align(
@@ -945,7 +945,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_default_request')} '),
             ),
             Align(
@@ -984,7 +984,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_default_report')} '),
             ),
             Align(
@@ -1027,7 +1027,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             children: <Widget>[
               Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(right: 3),
+                padding: const EdgeInsets.only(right: 3),
                 child: getLabel('${getString('settings_default_about')} '),
               ),
               Align(
@@ -1067,7 +1067,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_default_terms')} '),
             ),
             Align(
@@ -1107,7 +1107,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 3),
               child: getLabel('${getString('settings_default_privacy')} '),
             ),
             Align(
@@ -1152,7 +1152,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                     globals.currSwatches.set([]);
                     navigation.pushReplacement(
                       context,
-                      Offset(1.0, 0.0),
+                      const Offset(1.0, 0.0),
                       routes.ScreenRoutes.AllSwatchesScreen,
                       routes.routes['/allSwatchesScreen'](context),
                     );

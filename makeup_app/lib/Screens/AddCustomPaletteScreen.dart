@@ -58,7 +58,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       leftBar: globalWidgets.getBackButton(
         () => navigation.pushReplacement(
           context,
-          Offset(-1, 0),
+          const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
           routes.routes['/addPaletteScreen'](context),
         ),
@@ -66,9 +66,9 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       rightBar: [
         //delete button
         Container(
-          margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
+          margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
           child: IconButton(
-            constraints: BoxConstraints.tight(Size.square(theme.quaternaryIconSize + 15)),
+            constraints: BoxConstraints.tight(const Size.square(theme.quaternaryIconSize + 15)),
             color: theme.primaryColor,
             onPressed: () {
               globalWidgets.openTwoButtonDialog(
@@ -80,7 +80,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
                   Navigator.pop(context);
                   navigation.pushReplacement(
                     context,
-                    Offset(-1, 0),
+                    const Offset(-1, 0),
                     routes.ScreenRoutes.AddPaletteScreen,
                     routes.routes['/addPaletteScreen'](context),
                   );
@@ -101,8 +101,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       body: GridView.builder(
         scrollDirection: Axis.vertical,
         primary: true,
-        padding: EdgeInsets.all(20),
-        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+        padding: const EdgeInsets.all(20),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           mainAxisSpacing: 30,
           crossAxisSpacing: 30,
           crossAxisCount: 4,
@@ -118,7 +118,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
         children: <Widget>[
           //plus button to add swatches
           Container(
-            margin: EdgeInsets.only(right: 8, bottom: 13),
+            margin: const EdgeInsets.only(right: 8, bottom: 13),
             width: 57,
             height: 57,
             child: FloatingActionButton(
@@ -189,7 +189,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
     setState(() {
       navigation.pushReplacement(
         context,
-        Offset(-1, 0),
+        const Offset(-1, 0),
         routes.ScreenRoutes.AllSwatchesScreen,
         routes.routes['/allSwatchesScreen'](context),
       );

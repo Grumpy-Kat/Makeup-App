@@ -61,10 +61,10 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.fromLTRB(22, 55, 22, 170),
+        padding: const EdgeInsets.fromLTRB(22, 55, 22, 170),
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: const EdgeInsets.only(bottom: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -98,13 +98,13 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
   Widget getField(String label, Widget child) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(bottom: 26),
+      padding: const EdgeInsets.only(bottom: 26),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(bottom: 7),
+            padding: const EdgeInsets.only(bottom: 7),
             child: Text(
               '$label: ',
               style: theme.primaryTextPrimary,
@@ -151,7 +151,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
         ),
       );
       widgets.add(
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
       );
@@ -181,7 +181,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
           //widget.onChange(filters);
         },
         decoration: InputDecoration(
-          contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(3.0),
             borderSide: BorderSide(
@@ -215,7 +215,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
           //widget.onChange(filters);
         },
         decoration: InputDecoration(
-          contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(3.0),
             borderSide: BorderSide(
@@ -300,7 +300,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
         ),
       );
       widgets.add(
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
       );
@@ -355,12 +355,12 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                 _minWeightFilter.threshold = minWeight;
                 //widget.onChange(filters);
               },
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
               ],
               decoration: InputDecoration(
-                contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3.0),
                   borderSide: BorderSide(
@@ -394,12 +394,12 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                 _maxWeightFilter.threshold = maxWeight;
                 //widget.onChange(filters);
               },
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
               ],
               decoration: InputDecoration(
-                contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3.0),
                   borderSide: BorderSide(
@@ -461,12 +461,12 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                 _minPriceFilter.threshold = minPrice;
                 //widget.onChange(filters);
               },
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
               ],
               decoration: InputDecoration(
-                contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3.0),
                   borderSide: BorderSide(
@@ -500,12 +500,12 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
                 _maxPriceFilter.threshold = maxPrice;
                 //widget.onChange(filters);
               },
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
               ],
               decoration: InputDecoration(
-                contentPadding:  EdgeInsets.symmetric(horizontal: 12),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3.0),
                   borderSide: BorderSide(

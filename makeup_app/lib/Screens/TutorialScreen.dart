@@ -55,7 +55,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                   child: Container(
                     color: theme.primaryColor,
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 3),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 3),
                     child: Text('${getString('screen_tutorial')}', style: theme.primaryTextBold),
                   ),
                 ),
@@ -66,7 +66,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                         alignment: Alignment.center,
                         child: Text(
                           '${getString('settings_default_language', defaultValue: 'Language')}',
@@ -76,7 +76,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                       ),
                       Container(
                         width: 170,
-                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                         alignment: Alignment.center,
                         child: DropdownButton<String>(
                           itemHeight: 60,
@@ -105,7 +105,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                         alignment: Alignment.center,
                         child: FlatButton(
                           color: theme.accentColor,
@@ -144,7 +144,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                 child: Container(
                   color: theme.primaryColor,
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 3),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 3),
                   child: Text('${getString('screen_tutorial')}', style: theme.primaryTextBold),
                 ),
               ),
@@ -184,7 +184,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                           child = getScreen4();
                           break;
                         default:
-                          child =  Container();
+                          child = Container();
                           break;
                       }
                       return ParallaxContainer(
@@ -212,7 +212,7 @@ class TutorialScreenState extends State<TutorialScreen> {
     for(int i = 0; i < _count; i++) {
       row.add(
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Icon(
             (i == _curr) ? Icons.radio_button_on : Icons.radio_button_off,
             size: theme.secondaryIconSize,
@@ -262,7 +262,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen0() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen0_0')}\n\n'
         '${getString('tutorial_screen0_1')}',
@@ -273,7 +273,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen1() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen1_0')}\n\n'
         '${getString('tutorial_screen1_1')}',
@@ -284,7 +284,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen2() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen2_0')}\n\n'
         '${getString('tutorial_screen2_1')}\n\n'
@@ -296,7 +296,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen3() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen3_0')}\n\n'
         '${getString('tutorial_screen3_1')}\n\n'
@@ -309,7 +309,7 @@ class TutorialScreenState extends State<TutorialScreen> {
 
   Widget getScreen4() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Text(
         '${getString('tutorial_screen4_0')}\n\n'
         '${getString('tutorial_screen4_1')}',
@@ -327,7 +327,7 @@ class TutorialScreenState extends State<TutorialScreen> {
       //first time finishing tutorial, new user
       navigation.pushReplacement(
         context,
-        Offset(1, 0),
+        const Offset(1, 0),
         routes.ScreenRoutes.AllSwatchesScreen,
         routes.routes['/allSwatchesScreen'](context),
       );

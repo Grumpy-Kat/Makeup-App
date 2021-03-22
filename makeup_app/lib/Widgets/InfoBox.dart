@@ -56,7 +56,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     GestureBinding.instance.pointerRouter.addGlobalRoute(onPointerEvent);
-    _arrowSize = Size(10, 15);
+    _arrowSize = const Size(10, 15);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 120),
@@ -152,7 +152,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
             Container(
               color: theme.primaryColorDark,
               child: Align(
-                alignment: Alignment(-1, -1),
+                alignment: const Alignment(-1, -1),
                 child: CustomPaint(
                 painter: TrianglePainter(
                   size: _arrowSize,
@@ -166,7 +166,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
             Expanded(
               child: Container(
                 margin: EdgeInsets.only(top: _arrowSize.height),
-                padding: EdgeInsets.symmetric(horizontal: 13, vertical: 13),
+                padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 13),
                 color: theme.primaryColorDark,
                 child: Column(
                   children: <Widget>[
@@ -178,14 +178,14 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
                     if(widget.showMoreBtn) Expanded(
                       flex: 4,
                       child: Align(
-                        alignment: Alignment(-1, -1),
+                        alignment: const Alignment(-1, -1),
                         child: FlatButton(
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           onPressed: () {
                             _shouldClose = true;
                             navigation.push(
                               context,
-                              Offset(1, 0),
+                              const Offset(1, 0),
                               routes.ScreenRoutes.SwatchScreen,
                               SwatchScreen(swatch: widget.swatch.id),
                             );
@@ -218,7 +218,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
     return Expanded(
       flex: 3,
       child: Align(
-        alignment: Alignment(-1, -1),
+        alignment: const Alignment(-1, -1),
         child: Text(
           text,
           style: theme.primaryTextSecondary,

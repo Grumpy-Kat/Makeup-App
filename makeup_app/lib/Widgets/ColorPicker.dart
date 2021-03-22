@@ -112,7 +112,7 @@ class ColorPickerState extends State<ColorPicker> {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.all(Radius.circular(7.0)),
+          borderRadius: const BorderRadius.all(const Radius.circular(7.0)),
           gradient: LinearGradient(
             colors: valueColors,
           ),
@@ -141,7 +141,7 @@ class ColorPickerState extends State<ColorPicker> {
       left: screenSize.width * 0.77,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
           color: Color.fromRGBO(rgb[0], rgb[1], rgb[2], 1),
         ),
       ),

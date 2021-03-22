@@ -21,17 +21,17 @@ Color get unselectedTextColor => isDarkTheme ? Color.fromRGBO(244, 245, 248, 1) 
 Color get checkTextColor => isDarkTheme ? Color.fromRGBO(67, 163, 79, 1) : Color.fromRGBO(27, 132, 39, 1);
 Color get errorTextColor => isDarkTheme ? Color.fromRGBO(209, 82, 88, 1) : Color.fromRGBO(230, 0, 32, 1);
 
-double get titleTextSize => 34;
-double get primaryTextSize => 17;
-double get primaryIconSize => 23;
-double get secondaryTextSize => 15;
-double get secondaryIconSize => 21;
-double get tertiaryTextSize => 13;
-double get tertiaryIconSize => 17;
-double get quaternaryTextSize => 12;
-double get quaternaryIconSize => 22;
+const double titleTextSize = 34;
+const double primaryTextSize = 17;
+const double primaryIconSize = 23;
+const double secondaryTextSize = 15;
+const double secondaryIconSize = 21;
+const double tertiaryTextSize = 13;
+const double tertiaryIconSize = 17;
+const double quaternaryTextSize = 12;
+const double quaternaryIconSize = 22;
 
-String get fontFamily => 'Montserrat';
+const String fontFamily = 'Montserrat';
 TextStyle get primaryTitle => TextStyle(color: primaryTextColor, fontSize: titleTextSize, fontWeight: FontWeight.bold, fontFamily: fontFamily);
 TextStyle get primaryTextBold => TextStyle(color: primaryTextColor, fontSize: primaryTextSize, fontWeight: FontWeight.w500, decoration: TextDecoration.none, fontFamily: fontFamily);
 TextStyle get primaryTextPrimary => TextStyle(color: primaryTextColor, fontSize: primaryTextSize, fontWeight: FontWeight.normal, decoration: TextDecoration.none, fontFamily: fontFamily);
@@ -67,14 +67,14 @@ ThemeData get themeData => ThemeData(
   ),
   dialogTheme: DialogTheme(
     backgroundColor: bgColor,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    shape: const RoundedRectangleBorder(
+      borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
     ),
   ),
   popupMenuTheme: PopupMenuThemeData(
     color: bgColor,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    shape: const RoundedRectangleBorder(
+      borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
     ),
   ),
   sliderTheme: SliderThemeData(

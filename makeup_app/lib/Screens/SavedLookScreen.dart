@@ -78,7 +78,7 @@ class SavedLookScreenState extends State<SavedLookScreen>  {
                 Navigator.pop(context);
                 navigation.pushReplacement(
                   context,
-                  Offset(1, 0),
+                  const Offset(1, 0),
                   routes.ScreenRoutes.SavedLookScreen,
                   SavedLookScreen(look: clonedLook),
                 );

@@ -81,7 +81,7 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
       leftBar: globalWidgets.getBackButton(
         () => navigation.pushReplacement(
           context,
-          Offset(-1, 0),
+          const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
           routes.routes['/addPaletteScreen'](context),
         ),
@@ -101,17 +101,17 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
-              alignment: Alignment(-1.0, 0.0),
+              alignment: const Alignment(-1.0, 0.0),
               child: Stack(
                 overflow: Overflow.visible,
                 children: [
                   AnimatedContainer(
-                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    duration: Duration(milliseconds: 375),
+                    margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    duration: const Duration(milliseconds: 375),
                     width: _isSearching ? MediaQuery.of(context).size.width - 103 : MediaQuery.of(context).size.width - 30,
-                    padding: EdgeInsets.symmetric(horizontal: 11, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 10),
                     curve: Curves.easeOut,
-                    alignment: Alignment(-1.0, 0.0),
+                    alignment: const Alignment(-1.0, 0.0),
                     child: TextFormField(
                       initialValue: search,
                       textInputAction: TextInputAction.search,
@@ -145,17 +145,17 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
                     ),
                   ),
                   AnimatedPositioned(
-                    duration: Duration(milliseconds: 375),
+                    duration: const Duration(milliseconds: 375),
                     top: 0,
                     left: _isSearching ? MediaQuery.of(context).size.width - 110 : MediaQuery.of(context).size.width - 30,
                     curve: Curves.easeOut,
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 6.5),
+                      padding: const EdgeInsets.symmetric(vertical: 6.5),
                       width: 100,
-                      alignment: Alignment(1.0, 0.0),
+                      alignment: const Alignment(1.0, 0.0),
                       child: AnimatedOpacity(
                         opacity: _isSearching ? 1.0 : 0.0,
-                        duration: Duration(milliseconds: 200),
+                        duration: const Duration(milliseconds: 200),
                         child: TextButton(
                           child: Text(
                             'Cancel',
@@ -215,8 +215,8 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
                           child: Container(
                             height: 64,
                             decoration: (i == _palettes.length - 1) ? decorationLast : decorationNotLast,
-                            padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
-                            margin: (i == _palettes.length - 1) ? EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
+                            padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+                            margin: (i == _palettes.length - 1) ? const EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -240,10 +240,8 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
                         child: Container(
                           width: 70,
                           height: 70,
-                          margin: EdgeInsets.all(10),
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(theme.accentColor),
-                          ),
+                          margin: const EdgeInsets.all(10),
+                          child: const CircularProgressIndicator(),
                         ),
                       ),
                     );
@@ -282,21 +280,21 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
                   alignment: Alignment.centerLeft,
                   child: Text('${getString('swatch_brand')}: ${_seletedPalette.brand}', style: theme.primaryTextPrimary),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text('${getString('swatch_palette')}: ${_seletedPalette.name}', style: theme.primaryTextPrimary),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text('${getString('swatch_weight')}: ${_seletedPalette.weight}', style: theme.primaryTextPrimary),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -310,8 +308,8 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
             child: GridView.builder(
               scrollDirection: Axis.vertical,
               primary: true,
-              padding: EdgeInsets.all(20),
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              padding: const EdgeInsets.all(20),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisSpacing: 30,
                 crossAxisSpacing: 30,
                 crossAxisCount: 4,
@@ -347,7 +345,7 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
     //return to AllSwatchesScreen
     allSwatchesIO.add(_seletedPalette.swatches).then((value) => navigation.pushReplacement(
       context,
-      Offset(-1, 0),
+      const Offset(-1, 0),
       routes.ScreenRoutes.AllSwatchesScreen,
       routes.routes['/allSwatchesScreen'](context),
     ));

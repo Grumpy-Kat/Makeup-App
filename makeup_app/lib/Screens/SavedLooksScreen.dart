@@ -103,7 +103,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
                     Navigator.pop(context);
                     navigation.push(
                       context,
-                      Offset(1, 0),
+                      const Offset(1, 0),
                       routes.ScreenRoutes.SavedLookScreen,
                       SavedLookScreen(look: Look(id: id, name: name, swatches: [])),
                     );
@@ -127,7 +127,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
     //goes to SavedLookScreen for look pressed or double pressed
     navigation.push(
       context,
-      Offset(1, 0),
+      const Offset(1, 0),
       routes.ScreenRoutes.SavedLookScreen,
       SavedLookScreen(look: _looks[i]),
     );

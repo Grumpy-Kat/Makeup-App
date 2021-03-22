@@ -134,11 +134,13 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
 
   void open(BuildContext context) {
     _isOpening = true;
-    _controllers.add(AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 70),
-      reverseDuration: const Duration(milliseconds: 150),
-    ));
+    _controllers.add(
+      AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 70),
+        reverseDuration: const Duration(milliseconds: 150),
+      )
+    );
     final Widget overlay = Positioned(
       width: _size.width,
       height: _size.height,

@@ -142,7 +142,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+        constraints: BoxConstraints.tight(const Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.delete,
           size: theme.primaryIconSize,
@@ -172,7 +172,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+        constraints: BoxConstraints.tight(const Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.note_add,
           size: theme.primaryIconSize,
@@ -189,7 +189,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Container(
       alignment: Alignment.centerRight,
       child: IconButton(
-        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+        constraints: BoxConstraints.tight(const Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.save,
           size: theme.primaryIconSize,
@@ -206,7 +206,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     return Align(
       alignment: Alignment.centerRight,
       child: IconButton(
-        constraints: BoxConstraints.tight(Size.fromWidth(theme.primaryIconSize + 15)),
+        constraints: BoxConstraints.tight(const Size.fromWidth(theme.primaryIconSize + 15)),
         icon: Icon(
           Icons.mode_edit,
           size: theme.primaryIconSize,
@@ -221,9 +221,9 @@ class LookScreenState extends State<LookScreen> with ScreenState {
                 return Padding(
                   padding: EdgeInsets.zero,
                   child: Dialog(
-                    insetPadding: EdgeInsets.symmetric(horizontal: 0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    insetPadding: const EdgeInsets.symmetric(horizontal: 0),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
                     ),
                     child: Container(
                       width: MediaQuery.of(context).size.width,

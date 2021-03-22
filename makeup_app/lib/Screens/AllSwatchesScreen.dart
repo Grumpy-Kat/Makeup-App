@@ -80,7 +80,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
           onPressed: () {
             navigation.pushReplacement(
               context,
-              Offset(1, 0),
+              const Offset(1, 0),
               routes.ScreenRoutes.AddPaletteScreen,
               routes.routes['/addPaletteScreen'](context),
             );

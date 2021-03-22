@@ -199,7 +199,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
           ),
         ],
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           children: <Widget> [
             getNumSwatchesField(context),
             getFinishField(context),
@@ -241,13 +241,13 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   Widget getField(String label, Widget child) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(bottom: 19),
+      padding: const EdgeInsets.only(bottom: 19),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 8),
             child: Text(
               '$label: ',
               style: theme.primaryTextSecondary,
@@ -282,22 +282,22 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         children: {
           2: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('2', style: (_numSwatches == 2 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           3: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('3', style: (_numSwatches == 3 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           4: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('4', style: (_numSwatches == 4 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           5: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('5', style: (_numSwatches == 5 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           6: Container(
@@ -307,12 +307,12 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
           ),
           7: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('7', style: (_numSwatches == 7 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           8: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('8', style: (_numSwatches == 8 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
         },
@@ -344,7 +344,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         ),
       );
       widgets.add(
-        SizedBox(
+        const SizedBox(
           width: 5,
         ),
       );
@@ -384,7 +384,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         ),
       );
       widgets.add(
-        SizedBox(
+        const SizedBox(
           width: 5,
         ),
       );
@@ -420,22 +420,22 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         children: {
           0: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_type_random')}', style: (_type == 0 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           1: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_type_monochromatic')}', style: (_type == 1 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           2: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_type_dichromatic')}', style: (_type == 2 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           3: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_type_trichromatic')}', style: (_type == 3 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
         },
@@ -462,17 +462,17 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         children: {
           0: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_dichromatic_random')}', style: (_subtype == 0 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           1: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_dichromatic_analogous')}', style: (_subtype == 1 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           2: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_dichromatic_complementary')}', style: (_subtype == 2 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
         },
@@ -499,22 +499,22 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         children: {
           0: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_trichromatic_random')}', style: (_subtype == 0 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           1: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_trichromatic_analogous')}', style: (_subtype == 1 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           2: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_trichromatic_complementary')}', style: (_subtype == 2 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
           3: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text('${getString('randomizeLook_trichromatic_triad')}', style: (_subtype == 3 ? selectedStyle : unselectedStyle), textAlign: TextAlign.center),
           ),
         },
