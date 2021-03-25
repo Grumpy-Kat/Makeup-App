@@ -51,6 +51,7 @@ mixin SwatchListState {
 
   GlobalKey searchKey = GlobalKey();
   FocusNode searchFocusNode = FocusNode();
+  TextEditingController searchController = TextEditingController();
   String search = '';
   bool isSearching = false;
 
@@ -144,28 +145,31 @@ mixin SwatchListState {
   }
 
   Widget buildOptionsBar(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        buildSortDropdown(context),
-        if(swatchList.showSearch) buildSearchBar(context),
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 375),
-          left: MediaQuery.of(context).size.width - ((swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns ? 3 : 1) * (theme.quaternaryIconSize + 15)) - 16,
-          curve: Curves.easeOut,
-          child: Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                if(swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns) buildEditBtn(context),
-                if(swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns) buildDeleteBtn(context),
-                if(swatchList.showEndDrawer) buildFilterBtn(context),
-              ],
+    return Container(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Stack(
+        children: <Widget>[
+          buildSortDropdown(context),
+          if(swatchList.showSearch) buildSearchBar(context),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 375),
+            left: MediaQuery.of(context).size.width - ((swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns ? 3 : 1) * (theme.quaternaryIconSize + 15)) - 16,
+            curve: Curves.easeOut,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  if(swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns) buildEditBtn(context),
+                  if(swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns) buildDeleteBtn(context),
+                  if(swatchList.showEndDrawer) buildFilterBtn(context),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -220,15 +224,16 @@ mixin SwatchListState {
   }
 
   Widget buildSearchBar(BuildContext context) {
+    int pos = swatchList.showEndDrawer ? (swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns ? 4 : 2) : 1;
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 375),
       top: 0,
-      left: isSearching ? 16 : MediaQuery.of(context).size.width - ((swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns ? 4 : 2) * (theme.quaternaryIconSize + 15)) - 32,
+      left: isSearching ? 16 : MediaQuery.of(context).size.width - (pos * (theme.quaternaryIconSize + 15)) - 32,
       curve: Curves.easeOut,
       child: AnimatedContainer(
         margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
         duration: const Duration(milliseconds: 375),
-        width: isSearching ? MediaQuery.of(context).size.width - ((swatchList.showEndDrawer && swatchList.showDeleteFiltered && filters.length > 0 && canShowBtns ? 3 : 1) * (theme.quaternaryIconSize + 15)) - 32 : theme.quaternaryIconSize + 47,
+        width: isSearching ? MediaQuery.of(context).size.width - ((pos - 1) * (theme.quaternaryIconSize + 15)) - 32 : theme.quaternaryIconSize + 47,
         alignment: isSearching ? Alignment.centerLeft : Alignment.centerRight,
         curve: Curves.easeOut,
         padding: const EdgeInsets.symmetric(horizontal: 11),
@@ -237,7 +242,6 @@ mixin SwatchListState {
           color: theme.primaryColorDark,
         ) : null,
         child: Row(
-          //overflow: Overflow.visible,
           children: <Widget>[
             IconButton(
               constraints: BoxConstraints.tight(const Size.square(theme.quaternaryIconSize + 15)),
@@ -265,7 +269,7 @@ mixin SwatchListState {
                     key: searchKey,
                     textInputAction: TextInputAction.search,
                     focusNode: searchFocusNode,
-                    initialValue: search,
+                    controller: searchController,
                     onChanged: (String value) {
                       search = value;
                       filterAndSearchSwatches();
@@ -414,6 +418,7 @@ mixin SwatchListState {
   }
 
   void setState(OnVoidAction func);
+  void parentReset() { }
 
   Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags);
   Future<void> deleteSwatches();

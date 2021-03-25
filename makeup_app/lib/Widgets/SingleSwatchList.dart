@@ -47,6 +47,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   bool _shouldChangeOriginalSwatches = true;
   bool _hasSorted = true;
   bool _hasFiltered = true;
+  bool _hasSearched = true;
 
   @override
   void initState() {
@@ -85,9 +86,14 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
 
   @override
   Widget build(BuildContext context) {
+    //TODO: maintain search even when selecting swatch, need to sort on rebuild
     init(widget.swatchList);
     if(widget.swatchList.showEndDrawer) {
       if(!_hasSorted && !_hasFiltered) {
+        sortAndFilterSwatches();
+      }
+    } else if(widget.swatchList.showSearch) {
+      if(!_hasSearched) {
         sortAndFilterSwatches();
       }
     }
@@ -174,6 +180,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   void searchSwatches(String val) async {
     _shouldChangeOriginalSwatches = false;
     widget.swatchList.addSwatches = IO.search(_allSwatches, val);
+    _hasSearched = true;
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
   }
 
@@ -182,6 +189,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
     _swatches = await IO.filter(_allSwatches, filters);
     _shouldChangeOriginalSwatches = false;
     _hasFiltered = true;
+    _hasSearched = true;
     _swatches = await IO.search(_swatches, search);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
     return _swatches;
@@ -196,6 +204,12 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
     _shouldChangeOriginalSwatches = false;
     _hasSorted = true;
     _hasFiltered = true;
+    _hasSearched = true;
     return await IO.search(_swatches, search);
+  }
+
+  @override
+  void parentReset() {
+    _hasSearched = false;
   }
 }

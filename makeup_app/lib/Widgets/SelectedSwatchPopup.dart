@@ -22,6 +22,8 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
   List<int> _allSwatches = [];
   List<int> _selectedSwatches = [];
 
+  GlobalKey _swatchListKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -40,11 +42,13 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
       children: <Widget> [
         Expanded(
           child: SingleSwatchList(
+            key: _swatchListKey,
             addSwatches: _swatchesFuture,
             updateSwatches: (List<int> swatches) { this._allSwatches = swatches; },
             selectedSwatches: _selectedSwatches,
             showNoColorsFound: false,
             showPlus: false,
+            showSearch: true,
             defaultSort: globals.sort,
             sort: globals.defaultSortOptions(IO.getMultiple([_allSwatches]), step: 16),
             overrideSwatchOnDoubleTap: true,
@@ -56,6 +60,7 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
                   _selectedSwatches.add(id);
                 }
                 widget.onChange(_selectedSwatches);
+                (_swatchListKey.currentState as SingleSwatchListState).parentReset();
               });
             },
             showEndDrawer: false,

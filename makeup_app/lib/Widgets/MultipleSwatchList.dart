@@ -51,6 +51,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   bool _shouldChangeOriginalSwatches = true;
   bool _hasSorted = true;
   bool _hasFiltered = true;
+  bool _hasSearched = true;
 
   @override
   void initState() {
@@ -95,6 +96,10 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
     init(widget.swatchList);
     if(widget.swatchList.showEndDrawer) {
       if(!_hasSorted && !_hasFiltered) {
+        sortAndFilterSwatches();
+      }
+    } else if(widget.swatchList.showSearch) {
+      if(!_hasSearched) {
         sortAndFilterSwatches();
       }
     }
@@ -244,6 +249,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   void searchSwatches(String val) async {
     _shouldChangeOriginalSwatches = false;
     widget.swatchList.addSwatches = IO.searchMultiple(_allSwatchLabels, _allSwatches, val);
+    _hasSearched = true;
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
   }
 
@@ -254,6 +260,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
     _swatches = map.values.toList();
     _shouldChangeOriginalSwatches = false;
     _hasFiltered = true;
+    _hasSearched = true;
     map = await IO.searchMultiple(_swatchLabels, _swatches, search);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
     return map;
@@ -275,6 +282,12 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
     _shouldChangeOriginalSwatches = false;
     _hasSorted = true;
     _hasFiltered = true;
+    _hasSearched = true;
     return await IO.searchMultiple(_swatchLabels, _swatches, search);
+  }
+
+  @override
+  void parentReset() {
+    _hasSearched = false;
   }
 }
