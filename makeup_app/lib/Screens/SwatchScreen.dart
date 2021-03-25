@@ -53,7 +53,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     //all swatch data
     SwatchIcon swatchIcon = SwatchIcon.swatch(_swatch, showInfoBox: false, overrideOnDoubleTap: true, onDoubleTap: (int id) {});
     RGBColor color = _swatch.color;
-    String colorName = globalWidgets.toTitleCase(_swatch.colorName).trim();
+    String colorName = _swatch.colorName.trim();
     String finish = _swatch.finish;
     String brand = globalWidgets.toTitleCase(_swatch.brand).trimRight();
     String palette = globalWidgets.toTitleCase(_swatch.palette).trimRight();
@@ -288,7 +288,8 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
 
   //color field that displays color name and opens popup to color picker
   Widget getColorField(String label, RGBColor color, String colorNameOrg, OnRGBColorAction onChange, OnStringAction onNameChange) {
-    String colorName = (colorNameOrg == '' ? globalWidgets.toTitleCase(getString(getColorName(_swatch.color))) : colorNameOrg);
+    String localizedColorName = (colorNameOrg.contains('color_') ? getString(colorNameOrg) : globalWidgets.toTitleCase(colorNameOrg));
+    String colorName = colorNameOrg == '' ? getString(getColorName(_swatch.color)) : localizedColorName;
     Widget child = Row(
       children: <Widget>[
         Text(
@@ -364,7 +365,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
               (String value) {
                 onNameChange(value);
               },
-              orgValue: colorNameOrg,
+              orgValue: localizedColorName,
               required: false,
             );
           },

@@ -126,7 +126,7 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
   List<String> colorNames = createColorNames().keys.toList();
   String orgColorName = '';
   if(rgbSwatch != null) {
-    orgColorName = 'color_${globalWidgets.toCamelCase(rgbSwatch.colorName)}';
+    orgColorName = rgbSwatch.colorName.contains('color_') ? rgbSwatch.colorName : 'color_${globalWidgets.toCamelCase(rgbSwatch.colorName)}';
   }
   String colorName = ((rgbSwatch != null && rgbSwatch.colorName != '' && colorNames.contains(orgColorName)) ? orgColorName : getColorName(rgb));
   LabColor color0 = RGBtoLab(rgb);
@@ -150,7 +150,7 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
     //find color name
     colorName = '';
     if(getSimilar || getOpposite) {
-      orgColorName = 'color_${globalWidgets.toCamelCase(swatches[i].colorName)}';
+      orgColorName = rgbSwatch.colorName.contains('color_') ? rgbSwatch.colorName : 'color_${globalWidgets.toCamelCase(rgbSwatch.colorName)}';
       colorName = ((swatches[i].colorName != '' && colorNames.contains(orgColorName)) ? orgColorName : getColorName(swatches[i].color));
     }
 

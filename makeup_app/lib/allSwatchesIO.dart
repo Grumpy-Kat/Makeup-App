@@ -309,7 +309,7 @@ Future<List<int>> search(List<int> ids, String val) async {
     possibleTerms += ' $finish';
 
     //add finish to possible search terms
-    String color = (swatch.colorName == '' ? getString(getColorName(swatch.color)) : swatch.colorName).toLowerCase().trimRight();
+    String color = (swatch.colorName == '' ? getString(getColorName(swatch.color)) : (swatch.colorName.contains('color_') ? getString(swatch.colorName) : swatch.colorName)).toLowerCase().trimRight();
     possibleTerms += ' $color';
 
     //add brand acronym, either separated by spaces or by capital letters, to possible search terms

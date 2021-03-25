@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'ColorMath/ColorObjects.dart';
+import 'ColorMath/ColorSorting.dart';
 import 'Widgets/Swatch.dart';
 import 'Widgets/Palette.dart';
+import'localizationIO.dart';
 import 'globalIO.dart';
 import 'globalWidgets.dart' as globalWidgets;
 import 'types.dart';
@@ -143,6 +145,16 @@ Future<String> savePresetSwatch(Swatch swatch) async {
   String price = swatch.price.toStringAsFixed(2);
   //color name
   String colorName = removeAllChars(swatch.colorName.trim(), [r';', r'\\']);
+  if(colorName != '' && !colorName.contains('color_')) {
+    //translate color name
+    List<String> possibleColorNames = createColorNames().keys.toList();
+    for(int i = 0; i < possibleColorNames.length; i++) {
+      if(getString(possibleColorNames[i]).toLowerCase() == colorName.toLowerCase()) {
+        colorName = possibleColorNames[i];
+        break;
+      }
+    }
+  }
   //combined
   return '$color;$finish;$brand;$palette;$shade;$weight;$price;$colorName\n';
 }
