@@ -29,6 +29,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
 
   static bool _hasChosenMode = false;
   static bool _isUsingPaletteDivider = true;
+  static Palette _palette;
   static bool _hasChosenPalette = false;
 
   @override
@@ -39,6 +40,9 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
     _swatchesFuture = _addSwatches();
     //set mode to palette divider
     _hasChosenMode = _labels.isNotEmpty;
+    if(_labels.isNotEmpty) {
+      _palette = null;
+    }
     ImagePicker.error = '';
   }
 
@@ -214,6 +218,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         onPaletteSelected: (Palette palette) {
           setState(() {
             _labels = palette.swatches;
+            _palette = palette;
             _hasChosenPalette = true;
             _swatchesFuture = _addSwatches();
           });
@@ -295,21 +300,26 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   }
 
   void onSave(BuildContext context, List<Swatch> swatches) {
-    //open dialog to enter palette name and brand
-    globalWidgets.openPaletteTextDialog(
-      context,
-      getString('paletteScanner_popupInstructions'),
-      (String brand, String palette, double weight, double price) {
-        //assign brand and palette to all swatches
-        for(int i = 0; i < swatches.length; i++) {
-          swatches[i].brand = brand;
-          swatches[i].palette = palette;
-          swatches[i].weight = double.parse((weight / swatches.length).toStringAsFixed(2));
-          swatches[i].price = double.parse((price / swatches.length).toStringAsFixed(2));
-        }
-        //saves swatches
-        IO.add(swatches);
-      },
-    );
+    if(!_isUsingPaletteDivider && _palette != null) {
+      //using preset palette
+      IO.add(_palette.swatches);
+    } else {
+      //open dialog to enter palette name and brand
+      globalWidgets.openPaletteTextDialog(
+        context,
+        getString('paletteScanner_popupInstructions'),
+        (String brand, String palette, double weight, double price) {
+          //assign brand and palette to all swatches
+          for(int i = 0; i < swatches.length; i++) {
+            swatches[i].brand = brand;
+            swatches[i].palette = palette;
+            swatches[i].weight = double.parse((weight / swatches.length).toStringAsFixed(2));
+            swatches[i].price = double.parse((price / swatches.length).toStringAsFixed(2));
+          }
+          //saves swatches
+          IO.add(swatches);
+        },
+      );
+    }
   }
 }

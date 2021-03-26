@@ -19,6 +19,10 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
   static Palette _seletedPalette = null;
   static List<SwatchIcon> _swatchIcons = [];
 
+  GlobalKey _paletteListKey = GlobalKey();
+
+  String _search = '';
+
   void _addSwatchIcons() {
     _swatchIcons = [];
     if(_seletedPalette == null) {
@@ -61,8 +65,11 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
         ),
       ),
       body: PresetPaletteList(
+        key: _paletteListKey,
+        initialSearch: _search,
         onPaletteSelected: (Palette palette) {
           setState(() {
+            _search = (_paletteListKey.currentState as PresetPaletteListState).search;
             _seletedPalette = palette;
             _addSwatchIcons();
           });

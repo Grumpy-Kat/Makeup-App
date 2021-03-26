@@ -6,9 +6,10 @@ import '../types.dart';
 import 'Palette.dart';
 
 class PresetPaletteList extends StatefulWidget {
+  final String initialSearch;
   final OnPaletteAction onPaletteSelected;
 
-  PresetPaletteList({ Key key, @required this.onPaletteSelected }) : super(key: key);
+  PresetPaletteList({ Key key, @required this.onPaletteSelected, this.initialSearch = '' }) : super(key: key);
 
   @override
   PresetPaletteListState createState() => PresetPaletteListState();
@@ -26,6 +27,7 @@ class PresetPaletteListState extends State<PresetPaletteList> {
   void initState() {
     super.initState();
     _addPalettesFuture = _addPalettes();
+    search = widget.initialSearch;
   }
 
   Future<List<Palette>> _addPalettes() async {
