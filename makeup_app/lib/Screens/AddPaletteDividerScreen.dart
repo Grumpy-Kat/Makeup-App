@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Palette.dart';
 import '../Widgets/PaletteDivider.dart';
+import '../Widgets/ImagePicker.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../routes.dart' as routes;
@@ -22,6 +23,7 @@ class AddPaletteDividerScreen extends StatefulWidget {
 
 class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with ScreenState {
   static bool _isUsingPaletteDivider = true;
+  static bool _hasChosenPhoto = false;
 
   static List<int> _swatches = [];
 
@@ -73,12 +75,79 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   @override
   Widget build(BuildContext context) {
     if(_isUsingPaletteDivider) {
-      //using palette divider mode and hasn't finished
-      return getPaletteDividerScreen(context);
+      if(_hasChosenPhoto) {
+        //using palette divider and hasn't chosen photo
+        return getPhotoPickerScreen(context);
+      } else {
+        //using palette divider and has chosen photo
+        return getPaletteDividerScreen(context);
+      }
     } else {
-      //using palette divider mode and has finished
+      //has finished with palette divider
       return getPaletteListScreen(context);
     }
+  }
+
+  Widget getPhotoPickerScreen(BuildContext context) {
+    return buildComplete(
+      context,
+      getString('screen_addPalette'),
+      10,
+      //back button
+      leftBar: globalWidgets.getBackButton(
+        () => navigation.pushReplacement(
+          context,
+          const Offset(-1, 0),
+          routes.ScreenRoutes.AddPaletteScreen,
+          routes.routes['/addPaletteScreen'](context),
+        ),
+      ),
+      //help button
+      rightBar: [
+        globalWidgets.getHelpBtn(
+          context,
+          '${getString('help_addPalette_2')}\n\n'
+          '${getString('help_addPalette_3')}\n\n'
+          '${getString('help_addPalette_4')}\n\n'
+          '${getString('help_addPalette_5')}\n\n'
+          '${getString('help_addPalette_6')}\n\n',
+        ),
+      ],
+      //palette divider
+      body: Container(
+        padding: EdgeInsets.only(top: 15),
+        child: Column(
+          children: <Widget>[
+            FlatButton(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              color: theme.accentColor,
+              onPressed: () {
+                ImagePicker.error = '';
+                ImagePicker.open(context).then(
+                  (val) {
+                    setState(() {
+                      _hasChosenPhoto = true;
+                    });
+                  }
+                );
+              },
+              child: Text(
+                getString('paletteDivider_add'),
+                style: theme.accentTextBold,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text(
+                getString('paletteDivider_warning'),
+                style: theme.primaryTextSecondary,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget getPaletteDividerScreen(BuildContext context) {
@@ -109,6 +178,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       //palette divider
       body: PaletteDivider(
         onEnter: (List<Swatch> swatches) { onEnter(context, swatches); },
+        initialImg: ImagePicker.img,
       ),
     );
   }

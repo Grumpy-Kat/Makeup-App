@@ -39,14 +39,14 @@ class ImagePicker {
                       icon: Icon(Icons.image, color: theme.iconTextColor),
                       label: Text(getString('imagePicker_gallery'), textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                       onPressed: () {
-                        _openGallery(context, setState);
+                        openGallery(context, setState);
                       },
                     ),
                     FlatButton.icon(
                       icon: Icon(Icons.camera, color: theme.iconTextColor),
                       label: Text(getString('imagePicker_camera'), textAlign: TextAlign.left, style: theme.primaryTextPrimary),
                       onPressed: () {
-                        _openCamera(context, setState);
+                        openCamera(context, setState);
                       },
                     ),
                     if(error != '') Text(error, style: theme.errorTextTertiary),
@@ -60,7 +60,7 @@ class ImagePicker {
     );
   }
 
-  static void _openGallery(BuildContext context, void Function(void Function()) setState) async {
+  static Future<void> openGallery(BuildContext context, void Function(void Function()) setState) async {
     PermissionStatus status;
     if(Platform.isIOS) {
       status = await Permission.photos.request();
@@ -69,7 +69,8 @@ class ImagePicker {
     }
     if(status.isGranted) {
       if(error != '') {
-        setState(() { error = ''; });
+        error = '';
+        setState(() { });
       }
       try {
         File newImg = await Image_Picker.ImagePicker.pickImage(source: Image_Picker.ImageSource.gallery);
@@ -87,17 +88,19 @@ class ImagePicker {
       }
     } else {
       //reopen and reload
+      error = getString('imagePicker_galleryError');
       if(isOpen) {
-        setState(() { error = getString('imagePicker_galleryError'); });
+        setState(() { });
       }
     }
   }
 
-  static void _openCamera(BuildContext context, void Function(void Function()) setState) async {
+  static Future<void> openCamera(BuildContext context, void Function(void Function()) setState) async {
     PermissionStatus status = await Permission.camera.request();
     if(status.isGranted) {
       if(error != '') {
-        setState(() { error = ''; });
+        error = '';
+        setState(() { });
       }
       try {
         File newImg = await Image_Picker.ImagePicker.pickImage(source: Image_Picker.ImageSource.camera);
@@ -115,8 +118,9 @@ class ImagePicker {
       }
     } else {
       //reopen and reload
+      error = getString('imagePicker_cameraError');
       if(isOpen) {
-        setState(() { error = getString('imagePicker_cameraError'); });
+        setState(() { });
       }
     }
   }

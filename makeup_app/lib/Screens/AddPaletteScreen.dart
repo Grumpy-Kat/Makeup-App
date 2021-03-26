@@ -56,7 +56,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         children: <Widget>[
           //text
           Container(
-            margin: const EdgeInsets.only(top: 40, bottom: 25),
+            margin: const EdgeInsets.only(top: 40, bottom: 20),
             child: Text('${getString('addPalette_chooseMode')} ', style: theme.primaryTextBold),
           ),
           //sets mode to palette divider

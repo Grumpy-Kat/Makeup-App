@@ -19,7 +19,9 @@ import 'Swatch.dart';
 class PaletteDivider extends StatefulWidget {
   final void Function(List<Swatch>) onEnter;
 
-  PaletteDivider({Key key, @required this.onEnter }) : super(key: key);
+  final File initialImg;
+
+  PaletteDivider({Key key, @required this.onEnter, this.initialImg }) : super(key: key);
 
   @override
   PaletteDividerState createState() => PaletteDividerState();
@@ -67,7 +69,6 @@ class PaletteDividerState extends State<PaletteDivider> {
     if(includeImg) {
       ImagePicker.img = null;
       ImagePicker.error = '';
-
     }
     _numCols = 1;
     _numRows = 1;
