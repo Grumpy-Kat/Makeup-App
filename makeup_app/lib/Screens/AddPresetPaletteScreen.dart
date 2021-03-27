@@ -11,6 +11,14 @@ import '../localizationIO.dart';
 import 'Screen.dart';
 
 class AddPresetPaletteScreen extends StatefulWidget {
+  final bool reset;
+
+  AddPresetPaletteScreen({ this.reset = false}) {
+    if(reset) {
+      AddPresetPaletteScreenState.reset();
+    }
+  }
+
   @override
   AddPresetPaletteScreenState createState() => AddPresetPaletteScreenState();
 }

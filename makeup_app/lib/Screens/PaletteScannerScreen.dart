@@ -16,20 +16,29 @@ import '../localizationIO.dart';
 import 'Screen.dart';
 
 class PaletteScannerScreen extends StatefulWidget {
+  final bool reset;
+
+  PaletteScannerScreen({ this.reset = false}) {
+    if(reset) {
+      PaletteScannerScreenState.reset();
+    }
+  }
+
   @override
   PaletteScannerScreenState createState() => PaletteScannerScreenState();
 }
 
 class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenState {
-  List<Swatch> _labels = [];
+  static List<Swatch> _labels = [];
   List<List<int>> _swatches = [];
   Future<Map<SwatchIcon, List<int>>> _swatchesFuture;
 
   GlobalKey _swatchListKey = GlobalKey();
 
+  static Palette _palette;
+
   static bool _hasChosenMode = false;
   static bool _isUsingPaletteDivider = true;
-  static Palette _palette;
   static bool _hasChosenPalette = false;
 
   @override
@@ -40,7 +49,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
     _swatchesFuture = _addSwatches();
     //set mode to palette divider
     _hasChosenMode = _labels.isNotEmpty;
-    if(_labels.isNotEmpty) {
+    if(_labels.isEmpty) {
       _palette = null;
     }
     ImagePicker.error = '';
@@ -321,5 +330,13 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         },
       );
     }
+  }
+
+  static void reset() {
+    _labels = [];
+    _palette = null;
+    _hasChosenMode = false;
+    _isUsingPaletteDivider = true;
+    _hasChosenPalette = false;
   }
 }

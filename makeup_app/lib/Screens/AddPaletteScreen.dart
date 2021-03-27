@@ -5,9 +5,7 @@ import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../localizationIO.dart';
 import 'Screen.dart';
-import 'AddPaletteDividerScreen.dart';
 import 'AddCustomPaletteScreen.dart';
-import 'AddPresetPaletteScreen.dart';
 
 class AddPaletteScreen extends StatefulWidget {
   @override
@@ -66,12 +64,12 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             icon: Icon(Icons.crop, size: 20, color: theme.iconTextColor),
             label: Text('${getString('addPalette_paletteDivider')}', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
             onPressed: () {
-            AddPaletteDividerScreenState.reset();
+              //AddPaletteDividerScreenState.reset();
               navigation.pushReplacement(
                 context,
                 const Offset(1, 0),
                 routes.ScreenRoutes.AddPaletteDividerScreen,
-                routes.routes['/addPaletteDividerScreen'](context),
+                routes.routes['/addPaletteDividerScreen'](context, true),
               );
             },
           ),
@@ -85,12 +83,12 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             icon: Icon(Icons.list, size: 20, color: theme.iconTextColor),
             label: Text('Preset Palettes', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
             onPressed: () {
-              AddPresetPaletteScreenState.reset();
+              //AddPresetPaletteScreenState.reset();
               navigation.pushReplacement(
                 context,
                 const Offset(1, 0),
                 routes.ScreenRoutes.AddPresetPaletteScreen,
-                routes.routes['/addPresetPaletteScreen'](context),
+                routes.routes['/addPresetPaletteScreen'](context, true),
               );
             },
           ),

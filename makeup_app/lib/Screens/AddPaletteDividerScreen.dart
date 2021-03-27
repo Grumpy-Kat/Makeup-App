@@ -17,6 +17,14 @@ import 'Screen.dart';
 import 'AddPaletteScreen.dart';
 
 class AddPaletteDividerScreen extends StatefulWidget {
+  final bool reset;
+
+  AddPaletteDividerScreen({ this.reset = false}) {
+    if(reset) {
+      AddPaletteDividerScreenState.reset();
+    }
+  }
+
   @override
   AddPaletteDividerScreenState createState() => AddPaletteDividerScreenState();
 }

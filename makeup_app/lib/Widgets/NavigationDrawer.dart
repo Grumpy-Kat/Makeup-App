@@ -158,7 +158,7 @@ class NavigationDrawer extends StatelessWidget {
         context,
         const Offset(1.0, 0.0),
         menus[page],
-        routes.enumRoutes[menus[page]](context),
+        routes.enumRoutes[menus[page]](context, true),
       );
     } else {
       Navigator.of(context).pop();
