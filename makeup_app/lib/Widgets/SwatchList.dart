@@ -180,7 +180,7 @@ mixin SwatchListState {
         opacity: isSearching ? 0.0 : 1.0,
         duration: const Duration(milliseconds: 200),
         child: Container(
-          margin: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+          margin: const EdgeInsets.fromLTRB(15, 20, 0, 15),
           child: Row(
             children: <Widget>[
               Text('${getString('sort_sortBy', defaultValue: 'Sort By')}  ', style: theme.primaryTextQuaternary),
