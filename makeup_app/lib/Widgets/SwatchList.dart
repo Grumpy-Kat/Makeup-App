@@ -288,7 +288,7 @@ mixin SwatchListState {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       isCollapsed: true,
-                      hintText: 'Search...',
+                      hintText: '${getString('search')}...',
                       hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
                     ),
                   ),

@@ -176,11 +176,11 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       rightBar: [
         globalWidgets.getHelpBtn(
           context,
-          '${getString('help_addPalette_2')}\n\n'
-          '${getString('help_addPalette_3')}\n\n'
-          '${getString('help_addPalette_4')}\n\n'
-          '${getString('help_addPalette_5')}\n\n'
-          '${getString('help_addPalette_6')}\n\n',
+          '${getString('help_addPaletteDivider_0')}\n\n'
+          '${getString('help_addPaletteDivider_1')}\n\n'
+          '${getString('help_addPaletteDivider_2')}\n\n'
+          '${getString('help_addPaletteDivider_3')}\n\n'
+          '${getString('help_addPaletteDivider_4')}\n\n',
         ),
       ],
       //palette divider
@@ -539,7 +539,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   void onCheckButton() {
     globalWidgets.openTwoButtonDialog(
       context,
-      'Do you allow this palette to be added to the GlamKit\'s palette database?',
+      getString('addPalette_database'),
       () {
         _palette.swatches = IO.getMany(_swatches);
         presetPalettesIO.save(_palette);

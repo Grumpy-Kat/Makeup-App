@@ -158,7 +158,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             color: theme.primaryColorDark,
             icon: Icon(Icons.list, size: 20, color: theme.iconTextColor),
-            label: Text('Preset Palettes', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
+            label: Text(getString('addPalette_presetPalettes'), textAlign: TextAlign.left, style: theme.primaryTextPrimary),
             onPressed: () {
               setState(() {
                 _hasChosenMode = true;

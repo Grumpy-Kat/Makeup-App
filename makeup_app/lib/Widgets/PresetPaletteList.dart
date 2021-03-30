@@ -95,7 +95,7 @@ class PresetPaletteListState extends State<PresetPaletteList> {
                         color: theme.tertiaryTextColor,
                         size: theme.secondaryIconSize,
                       ),
-                      hintText: 'Search...',
+                      hintText: '${getString('search')}...',
                       hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
                     ),
                   ),
@@ -118,7 +118,7 @@ class PresetPaletteListState extends State<PresetPaletteList> {
                       duration: const Duration(milliseconds: 200),
                       child: TextButton(
                         child: Text(
-                          'Cancel',
+                          getString('cancel'),
                           style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
                         ),
                         onPressed: () {

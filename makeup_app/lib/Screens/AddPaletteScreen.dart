@@ -47,7 +47,8 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
         globalWidgets.getHelpBtn(
           context,
           '${getString('help_addPalette_0')}\n\n'
-          '${getString('help_addPalette_1')}\n\n',
+          '${getString('help_addPalette_1')}\n\n'
+          '${getString('help_addPalette_2')}\n\n',
         ),
       ],
       body: Column(
@@ -81,7 +82,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             color: theme.primaryColorDark,
             icon: Icon(Icons.list, size: 20, color: theme.iconTextColor),
-            label: Text('Preset Palettes', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
+            label: Text('${getString('addPalette_presetPalettes')}', textAlign: TextAlign.left, style: theme.primaryTextPrimary),
             onPressed: () {
               //AddPresetPaletteScreenState.reset();
               navigation.pushReplacement(
