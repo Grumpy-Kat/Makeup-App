@@ -190,9 +190,10 @@ Future<Map<String, Palette>> sort() async {
   List<Palette> sortedPalettes = palettes.values.toList();
   sortedPalettes.sort(
     (Palette a, Palette b) {
-      int brand = a.brand.compareTo(b.brand);
+      int brand = a.brand.trim().compareTo(b.brand.trim());
       if(brand == 0) {
-        return a.name.compareTo(b.name);
+        int name = a.name.trim().compareTo(b.name.trim());
+        return name;
       } else {
         return brand;
       }
