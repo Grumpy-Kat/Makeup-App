@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import '../Widgets/SizedSafeArea.dart';
+import '../IO/localizationIO.dart';
+import '../IO/settingsIO.dart' as IO;
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
-import '../localizationIO.dart';
-import '../settingsIO.dart' as IO;
 
 class TutorialScreen extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class TutorialScreen extends StatefulWidget {
 }
 
 class TutorialScreenState extends State<TutorialScreen> {
-  bool hasSetLanguage;
+  late bool hasSetLanguage;
 
   IndexController _controller = IndexController();
 
@@ -86,7 +87,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                           style: theme.primaryTextPrimary,
                           iconEnabledColor: theme.iconTextColor,
                           value: globals.language,
-                          onChanged: (String val) { setState(() { globals.language = val; }); },
+                          onChanged: (String? val) { setState(() { globals.language = val!; }); },
                           underline: Container(
                             decoration: UnderlineTabIndicator(
                               borderSide: BorderSide(
@@ -107,8 +108,8 @@ class TutorialScreenState extends State<TutorialScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                         alignment: Alignment.center,
-                        child: FlatButton(
-                          color: theme.accentColor,
+                        child: globalWidgets.getFlatButton(
+                          bgColor: theme.accentColor,
                           onPressed: () {
                             setState(() {
                               hasSetLanguage = true;
@@ -226,7 +227,7 @@ class TutorialScreenState extends State<TutorialScreen> {
       children: <Widget>[
         Container(
           alignment: Alignment.centerLeft,
-          child: FlatButton(
+          child: globalWidgets.getFlatButton(
             onPressed: onFinished,
             child: Text(
               getString('tutorial_skip'),
@@ -242,7 +243,7 @@ class TutorialScreenState extends State<TutorialScreen> {
         ),
         Container(
           alignment: Alignment.centerRight,
-          child: FlatButton(
+          child: globalWidgets.getFlatButton(
             onPressed: () {
               setState(() {
                 _controller.next(animation: true);
@@ -329,7 +330,7 @@ class TutorialScreenState extends State<TutorialScreen> {
         context,
         const Offset(1, 0),
         routes.ScreenRoutes.AllSwatchesScreen,
-        routes.routes['/allSwatchesScreen'](context),
+        routes.routes['/allSwatchesScreen']!(context),
       );
     }
   }

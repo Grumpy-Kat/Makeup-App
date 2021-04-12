@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'SingleSwatchList.dart';
-import '../allSwatchesIO.dart' as IO;
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../types.dart';
-import '../localizationIO.dart';
+import 'SingleSwatchList.dart';
 
 class SelectedSwatchPopup extends StatefulWidget {
   final List<int> swatches;
   final OnSwatchListAction onChange;
   final OnSwatchListAction onSave;
 
-  const SelectedSwatchPopup({ Key key, @required this.swatches, @required this.onChange, @required this.onSave }) : super(key: key);
+  const SelectedSwatchPopup({ Key? key, required this.swatches, required this.onChange, required this.onSave }) : super(key: key);
 
   @override
   SelectedSwatchPopupState createState() => SelectedSwatchPopupState();
 }
 
 class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
-  Future<List<int>> _swatchesFuture;
+  late Future<List<int>> _swatchesFuture;
   List<int> _allSwatches = [];
   List<int> _selectedSwatches = [];
 
@@ -66,8 +67,8 @@ class SelectedSwatchPopupState extends State<SelectedSwatchPopup> {
             showEndDrawer: false,
           ),
         ),
-        FlatButton(
-          color: theme.accentColor,
+        globalWidgets.getFlatButton(
+          bgColor: theme.accentColor,
           onPressed: () {
             widget.onSave(_selectedSwatches);
             Navigator.pop(context);

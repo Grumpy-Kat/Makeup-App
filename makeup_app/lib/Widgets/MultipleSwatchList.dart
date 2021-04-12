@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' hide HSVColor;
 import '../Widgets/Swatch.dart';
 import '../Widgets/SwatchList.dart';
 import '../Widgets/Filter.dart';
-import '../allSwatchesIO.dart' as IO;
+import '../IO/allSwatchesIO.dart' as IO;
 import '../types.dart';
 
 class MultipleSwatchList extends StatefulWidget {
@@ -11,10 +11,10 @@ class MultipleSwatchList extends StatefulWidget {
 
   final int rowCount;
 
-  final OnSwatchAction onTap;
-  final OnSwatchAction onDoubleTap;
+  final OnSwatchAction? onTap;
+  final OnSwatchAction? onDoubleTap;
 
-  MultipleSwatchList({ Key key, @required Future addSwatches, Future orgAddSwatches, @required this.updateSwatches, List<int> selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showSearch = false, bool showDelete = false, bool showDeleteFiltered = false, bool overrideSwatchOnTap = false, void Function(int, int) onSwatchTap, bool overrideSwatchOnDoubleTap = false, void Function(int, int) onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
+  MultipleSwatchList({ Key? key, required Future addSwatches, Future? orgAddSwatches, required this.updateSwatches, List<int>? selectedSwatches, this.rowCount = 1, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction? onPlusPressed, Map<String, OnSortSwatch>? sort, String? defaultSort, bool showSearch = false, bool showDelete = false, bool showDeleteFiltered = false, bool overrideSwatchOnTap = false, void Function(int, int)? onSwatchTap, bool overrideSwatchOnDoubleTap = false, void Function(int, int)? onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction? openEndDrawer }) : this.swatchList = SwatchList(
     addSwatches: addSwatches,
     orgAddSwatches: orgAddSwatches ?? addSwatches,
     selectedSwatches: selectedSwatches ?? [],
@@ -57,14 +57,14 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   void initState() {
     super.initState();
     init(widget.swatchList);
-    currentSort = (swatchList.sort.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort.keys.first);
+    currentSort = (swatchList.sort!.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort!.keys.first);
   }
 
   void _addSwatchIcons() {
     _swatchIcons.clear();
     for(int i = 0; i < _swatches.length; i++) {
       _swatchIcons.add([]);
-      OnSwatchAction onDelete = !widget.swatchList.showDelete ? null : (int id) {
+      OnSwatchAction? onDelete = !widget.swatchList.showDelete ? null : (int id) {
         if(_swatches[i].contains(id)) {
           _swatches[i].remove(id);
           widget.updateSwatches(_swatches);
@@ -75,12 +75,12 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
           SwatchIcon.id(
             _swatches[i][j],
             showInfoBox: widget.swatchList.showInfoBox,
-            showCheck: swatchList.selectedSwatches.contains(_swatches[i]),
+            showCheck: (swatchList.selectedSwatches ?? []).contains(_swatches[i]),
             onDelete: onDelete,
             overrideOnTap: swatchList.overrideOnTap,
-            onTap: (int id) { swatchList.onTap(i, id); },
+            onTap: (int id) { if(swatchList.onTap != null) swatchList.onTap!(i, id); },
             overrideOnDoubleTap: swatchList.overrideOnDoubleTap,
-            onDoubleTap: (int id) { swatchList.onDoubleTap(i, id); },
+            onDoubleTap: (int id) { if(swatchList.onDoubleTap != null) swatchList.onDoubleTap!(i, id); },
           )
         );
       }
@@ -147,8 +147,8 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
                   );
                   column.add(
                     GestureDetector(
-                      onTap: () { widget.onTap(i); },
-                      onDoubleTap: () { widget.onDoubleTap(i); },
+                      onTap: () { if(widget.onTap != null) widget.onTap!(i); },
+                      onDoubleTap: () { if(widget.onDoubleTap != null) widget.onDoubleTap!(i); },
                       child: Column(
                         children: innerColumn,
                       ),
@@ -191,16 +191,16 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   }
 
   @override
-  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags) async {
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, int? rating, List<String>? tags) async {
     Map<int, Swatch> editing = {};
     for(int i = 0; i < _swatches.length; i++) {
       List<Swatch> swatches = IO.getMany(_swatches[i]);
       for(int j = 0; j < _swatches.length; j++) {
-        if (brand != null && brand != '') {
-          swatches[j].brand = brand;
+        if(brand != null && brand != '') {
+          swatches[j].brand = brand.trim();
         }
         if(palette != null && palette != '') {
-          swatches[j].palette = palette;
+          swatches[j].palette = palette.trim();
         }
         if(weight != null) {
           swatches[j].weight = weight;
@@ -212,7 +212,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
           swatches[j].rating = rating;
         }
         if(tags != null) {
-          swatches[j].tags.addAll(tags);
+          swatches[j].tags!.addAll(tags);
         }
         editing[swatches[j].id] = swatches[j];
       }
@@ -233,7 +233,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
   @override
   void sortSwatches(String val) {
     _shouldChangeOriginalSwatches = true;
-    widget.swatchList.addSwatches = IO.sortMultiple(_allSwatchLabels, _allSwatches, widget.swatchList.sort[val]);
+    widget.swatchList.addSwatches = IO.sortMultiple(_allSwatchLabels, _allSwatches, widget.swatchList.sort![val]!);
     _hasSorted = true;
   }
 
@@ -242,7 +242,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
     _shouldChangeOriginalSwatches = false;
     widget.swatchList.addSwatches = IO.filterMultiple(_allSwatchLabels, _allSwatches, filters);
     _hasFiltered = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -250,7 +250,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
     _shouldChangeOriginalSwatches = false;
     widget.swatchList.addSwatches = IO.searchMultiple(_allSwatchLabels, _allSwatches, val);
     _hasSearched = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() { }));
   }
 
   @override
@@ -262,7 +262,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
     _hasFiltered = true;
     _hasSearched = true;
     map = await IO.searchMultiple(_swatchLabels, _swatches, search);
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() { }));
     return map;
   }
 
@@ -271,7 +271,7 @@ class MultipleSwatchListState extends State<MultipleSwatchList> with SwatchListS
     Map<Widget, List<int>> map = await swatchList.orgAddSwatches;
     _swatchLabels = map.keys.toList();
     _swatches = map.values.toList();
-    map = await IO.sortMultiple(_swatchLabels, _swatches, widget.swatchList.sort[currentSort]);
+    map = await IO.sortMultiple(_swatchLabels, _swatches, widget.swatchList.sort![currentSort]!);
     _swatchLabels = map.keys.toList();
     _swatches = map.values.toList();
     _allSwatches = _swatches;

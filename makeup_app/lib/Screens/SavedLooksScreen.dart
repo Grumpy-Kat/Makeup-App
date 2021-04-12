@@ -3,14 +3,14 @@ import '../Widgets/MultipleSwatchList.dart';
 import '../Widgets/Look.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
+import '../IO/savedLooksIO.dart' as IO;
+import '../IO/allSwatchesIO.dart' as allSwatchesIO;
+import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
-import '../savedLooksIO.dart' as IO;
-import '../allSwatchesIO.dart' as allSwatchesIO;
-import '../localizationIO.dart';
 import 'Screen.dart';
 import 'SavedLookScreen.dart';
 
@@ -21,9 +21,9 @@ class SavedLooksScreen extends StatefulWidget {
 
 class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
   List<Look> _looks = [];
-  Future<Map<Text, List<int>>> _swatchesFuture;
+  Future<Map<Text, List<int>>>? _swatchesFuture;
 
-  GlobalKey _swatchListKey = GlobalKey();
+  GlobalKey? _swatchListKey = GlobalKey();
 
   @override
   void initState() {
@@ -47,14 +47,17 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
 
   @override
   Widget build(BuildContext context) {
-    Future<Map<Widget, List<int>>> swatchesFutureActual = _swatchesFuture;
-    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
-      swatchesFutureActual = (_swatchListKey.currentWidget as MultipleSwatchList).swatchList.addSwatches;
+    Future<Map<Widget, List<int>>> swatchesFutureActual = _swatchesFuture!;
+    if(_swatchListKey != null && _swatchListKey!.currentWidget != null) {
+      swatchesFutureActual = (_swatchListKey!.currentWidget as MultipleSwatchList).swatchList.addSwatches as Future<Map<Widget, List<int>>>;
     }
     return buildComplete(
       context,
       getString('screen_savedLooks'),
       1,
+      rightBar: [
+        globalWidgets.getLoginButton(context),
+      ],
       //scroll view to show all look names as labels and looks as horizontal bodies
       body: MultipleSwatchList(
         key: _swatchListKey,
@@ -120,7 +123,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
   }
 
   void onFilterDrawerClose(List<Filter> filters) {
-    (_swatchListKey.currentState as MultipleSwatchListState).onFilterDrawerClose(filters);
+    (_swatchListKey!.currentState as MultipleSwatchListState).onFilterDrawerClose(filters);
   }
 
   void _onTap(int i) {

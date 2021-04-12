@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart' show rootBundle;
-import 'types.dart';
+import '../types.dart';
 
-Map<String, Map<String, String>> _localizations;
+late Map<String, Map<String, String>> _localizations;
 String _language = 'en';
 
-void load() async {
+Future<void> load() async {
   _localizations = {};
   //load and split file into lines
   String file = await rootBundle.loadString('localization/localizations.csv');
@@ -37,11 +37,11 @@ void load() async {
         value = value.substring(1, value.length - 1);
       }
       //ex: localizations['en']['lang'] = 'English'
-      _localizations[languages[j]][values[0]] = value;
+      _localizations[languages[j]]![values[0]] = value;
     }
   }
   //call listeners
-  for(OnVoidAction listener in _hasLoadedListeners) {
+  for(OnVoidAction? listener in _hasLoadedListeners) {
     if(listener != null) {
       listener();
     }
@@ -66,19 +66,19 @@ String getStringOther(String language, String id, { String defaultValue = '' }) 
     print('Localizations does not contain a language of $language.');
     return defaultValue;
   }
-  if(!_localizations[_language].containsKey(id)) {
+  if(!_localizations[_language]!.containsKey(id)) {
     print('Localizations does not contain an id of $id.');
     return defaultValue;
   }
-  String value = _localizations[language][id];
+  String value = _localizations[language]![id]!;
   //empty value, use English as default
   if(value == '' || value == ' ') {
-    value = _localizations['en'][id];
+    value = _localizations['en']![id]!;
   }
   return value;
 }
 
-List<OnVoidAction> _hasLoadedListeners = [];
+List<OnVoidAction?> _hasLoadedListeners = [];
 
 void addHasLocalizationLoadedListener(OnVoidAction hasLoadedListener) {
   _hasLoadedListeners.add(hasLoadedListener);

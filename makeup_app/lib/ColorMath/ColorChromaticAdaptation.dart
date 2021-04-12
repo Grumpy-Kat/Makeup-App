@@ -31,9 +31,9 @@ List<List<double>> dotProductMatrices(List<List<double>> matrix1, List<List<doub
 List<double> applyChromaticAdaptation(double x, double y, double z, String origIlluminant, String targetIlluminant, { String observer = '2', String adaptation = 'bradford' }) {
   adaptation = adaptation.toLowerCase();
   origIlluminant = origIlluminant.toLowerCase();
-  List<double> whitePointsOrig = ILLUMINANTS[observer][origIlluminant];
+  List<double> whitePointsOrig = ILLUMINANTS[observer]![origIlluminant]!;
   targetIlluminant = targetIlluminant.toLowerCase();
-  List<double> whitePointsTarget = ILLUMINANTS[observer][targetIlluminant];
+  List<double> whitePointsTarget = ILLUMINANTS[observer]![targetIlluminant]!;
   List<List<double>> transformationMatrix = _getAdaptationMatrix(whitePointsOrig, whitePointsTarget, observer, adaptation);
   return dotProduct(transformationMatrix, [x, y, z]);
 }
@@ -52,7 +52,7 @@ void applyChromaticAdaptationOnColor(XYZColor color, String targetIlluminant, { 
 }
 
 List<List<double>> _getAdaptationMatrix(List<double> whitePointsOrig, List<double> whitePointsTarget, String observer, String adaptation) {
-    List<List<double>> adaptationMatrix = ADAPTATION[adaptation];
+    List<List<double>> adaptationMatrix = ADAPTATION[adaptation]!;
     List<double> orig = dotProduct(adaptationMatrix, whitePointsOrig);
     List<double> target = dotProduct(adaptationMatrix, whitePointsTarget);
     int n = orig.length;

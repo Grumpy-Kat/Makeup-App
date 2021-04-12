@@ -12,7 +12,7 @@ import 'ColorDifferences.dart';
 import 'ColorConversions.dart';
 import 'ColorSorting.dart';
 
-Future<Image> loadImg(String path) async {
+Future<Image?> loadImg(String path) async {
   //return decodeImage(File(path.replaceAll('/', '\\')).readAsBytesSync());
   if(globals.debug) {
     ByteData data = await rootBundle.load(path);
@@ -21,10 +21,13 @@ Future<Image> loadImg(String path) async {
   File f = File(path);
   Uint8List bytes = await f.readAsBytes();
   ByteData data = ByteData.view(bytes.buffer);
-  Image img = decodeImage(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  Image? img = decodeImage(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   //return img;
-  print('exif ${img.exif.orientation} ${img.exif.hasOrientation}');
-  return bakeOrientation(img);
+  if(img != null) {
+    print('exif ${img.exif.orientation} ${img.exif.hasOrientation}');
+    return bakeOrientation(img);
+  }
+  return null;
 }
 
 RGBColor avgColor(Image img) {
@@ -97,9 +100,9 @@ RGBColor maxFiveColor(Image img) {
   List<double> totalColor = [0, 0, 0];
   for(int i = 0; i < size; i++) {
     Map<String, double> color = colors[numOccurrences.indexOf(sortedNumOccurrences[i])].values;
-    totalColor[0] += color['rgbR'];
-    totalColor[1] += color['rgbG'];
-    totalColor[2] += color['rgbB'];
+    totalColor[0] += color['rgbR']!;
+    totalColor[1] += color['rgbG']!;
+    totalColor[2] += color['rgbB']!;
   }
   return RGBColor(totalColor[0] / size, totalColor[1] / size, totalColor[2] / size);
 }
@@ -112,7 +115,7 @@ String getColorName(RGBColor rgb) {
   List<String> keys = colorWheel.keys.toList();
   for(int i = 0; i < keys.length; i++) {
     String color = keys[i];
-    LabColor color1 = RGBtoLab(colorWheel[color]);
+    LabColor color1 = RGBtoLab(colorWheel[color]!);
     double dist = deltaECie2000(color0, color1);
     if(dist < minDist) {
       minDist = dist;
@@ -122,7 +125,7 @@ String getColorName(RGBColor rgb) {
   return minColor;
 }
 
-Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> swatches, { double maxDist = 15, bool getSimilar = true, bool getOpposite = true }) {
+Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch? rgbSwatch, List<Swatch> swatches, { double maxDist = 15, bool getSimilar = true, bool getOpposite = true }) {
   List<String> colorNames = createColorNames().keys.toList();
   String orgColorName = '';
   if(rgbSwatch != null) {
@@ -134,10 +137,10 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
   List<String> oppositeCategories = [];
   Map<Swatch, int> newSwatches = {};
   if(getSimilar) {
-    similarCategories = createSimilarColorNames()[colorName];
+    similarCategories = createSimilarColorNames()[colorName]!;
   }
   if(getOpposite) {
-    oppositeCategories = createOppositeColorNames()[colorName];
+    oppositeCategories = createOppositeColorNames()[colorName]!;
   }
   for(int i = 0; i < swatches.length; i++) {
     //find color dist
@@ -150,7 +153,7 @@ Map<Swatch, int> getSimilarColors(RGBColor rgb, Swatch rgbSwatch, List<Swatch> s
     //find color name
     colorName = '';
     if(getSimilar || getOpposite) {
-      orgColorName = rgbSwatch.colorName.contains('color_') ? rgbSwatch.colorName : 'color_${globalWidgets.toCamelCase(rgbSwatch.colorName)}';
+      orgColorName = rgbSwatch!.colorName.contains('color_') ? rgbSwatch.colorName : 'color_${globalWidgets.toCamelCase(rgbSwatch.colorName)}';
       colorName = ((swatches[i].colorName != '' && colorNames.contains(orgColorName)) ? orgColorName : getColorName(swatches[i].color));
     }
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../ColorMath/ColorObjects.dart';
+import '../IO/allSwatchesIO.dart' as IO;
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
-import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
 import 'InfoBox.dart';
 
@@ -17,9 +17,9 @@ class Swatch {
   double weight = 0.0;
   double price = 0.0;
   int rating = 5;
-  List<String> tags = [];
+  List<String>? tags = [];
 
-  Swatch({ @required this.color, @required this.finish, this.id = -1, this.colorName = '', this.brand = '', this.palette = '', this.shade = '', this.weight = 0.0, this.price = 0.0, this.rating = 5, this.tags });
+  Swatch({ required this.color, required this.finish, this.id = -1, this.colorName = '', this.brand = '', this.palette = '', this.shade = '', this.weight = 0.0, this.price = 0.0, this.rating = 5, this.tags });
 
   int compareTo(Swatch other, List<double> Function(Swatch) comparator) {
     List<double> thisValues = comparator(this);
@@ -66,7 +66,7 @@ class Swatch {
 }
 
 class SwatchIcon extends StatelessWidget {
-  final Swatch swatch;
+  final Swatch? swatch;
   final int id;
 
   final GlobalKey infoBoxKey = GlobalKey();
@@ -78,16 +78,16 @@ class SwatchIcon extends StatelessWidget {
 
   final bool showCheck;
 
-  final OnSwatchAction onDelete;
+  final OnSwatchAction? onDelete;
 
   final bool overrideOnTap;
-  final OnSwatchAction onTap;
+  final OnSwatchAction? onTap;
 
   final bool overrideOnDoubleTap;
-  final OnSwatchAction onDoubleTap;
+  final OnSwatchAction? onDoubleTap;
 
   //assumes there is no id (probably editing swatch)
-  SwatchIcon.swatch(this.swatch, { this.addSwatch = true, this.showInfoBox = true, this.showMoreBtnInInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.id  = swatch.id;
+  SwatchIcon.swatch(this.swatch, { this.addSwatch = true, this.showInfoBox = true, this.showMoreBtnInInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.id  = (swatch == null ? -1 : swatch.id);
 
   SwatchIcon.id(this.id, { this.addSwatch = true, this.showInfoBox = true, this.showMoreBtnInInfoBox = true, this.showCheck = false, this.onDelete, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap }) : this.swatch = IO.get(id), super(key: GlobalKey(debugLabel: id.toString()));
 
@@ -95,12 +95,12 @@ class SwatchIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     List<double> color;
     String finish;
-    if(swatch == null) {
+    if(swatch != null) {
+      color = swatch!.color.getValues();
+      finish = swatch!.finish.toLowerCase();
+    } else {
       color = [0.5, 0.5, 0.5];
       finish = 'finish_matte';
-    } else {
-      color = swatch.color.getValues();
-      finish = swatch.finish.toLowerCase();
     }
     final Widget swatchImg = Image(
       key: childKey,
@@ -128,7 +128,9 @@ class SwatchIcon extends StatelessWidget {
                   color: theme.primaryColor,
                 ),
                 onPressed: () {
-                  onDelete(id);
+                  if(onDelete != null) {
+                    onDelete!(id);
+                  }
                 },
               ),
             ),
@@ -153,7 +155,9 @@ class SwatchIcon extends StatelessWidget {
                   color: theme.primaryColor,
                 ),
                 onPressed: () {
-                  onDelete(id);
+                  if(onDelete != null) {
+                    onDelete!(id);
+                  }
                 },
               ),
             ),
@@ -167,26 +171,26 @@ class SwatchIcon extends StatelessWidget {
       return InfoBox(
         key: infoBoxKey,
         swatch: swatch,
-        onTap: overrideOnTap ? () { onTap(id); } : _onTap,
-        onDoubleTap: overrideOnDoubleTap ? () { onDoubleTap(id); } : _onDoubleTap,
+        onTap: overrideOnTap ? () { if(onTap != null) onTap!(id); } : _onTap,
+        onDoubleTap: overrideOnDoubleTap ? () { if(onDoubleTap != null) onDoubleTap!(id); } : _onDoubleTap,
         child: child,
         childKey: childKey,
         showMoreBtn: showMoreBtnInInfoBox,
       );
     }
     return GestureDetector(
-      onTap: overrideOnTap ? () { onTap(id); } : _onTap,
-      onDoubleTap: overrideOnDoubleTap ? () { onDoubleTap(id); } : _onDoubleTap,
+      onTap: overrideOnTap ? () { if(onTap != null) onTap!(id); } : _onTap,
+      onDoubleTap: overrideOnDoubleTap ? () { if(onDoubleTap != null) onDoubleTap!(id); } : _onDoubleTap,
       child: child,
     );
   }
 
   void _onTap() {
     if(showInfoBox) {
-      (infoBoxKey?.currentState as InfoBoxState).open();
+      (infoBoxKey.currentState as InfoBoxState).open();
     }
     if(onTap != null) {
-      onTap(id);
+      onTap!(id);
     }
   }
 
@@ -195,7 +199,7 @@ class SwatchIcon extends StatelessWidget {
       globals.currSwatches.add(id);
     }
     if(onDoubleTap != null) {
-      onDoubleTap(id);
+      onDoubleTap!(id);
     }
   }
 }

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
+import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
-import '../allSwatchesIO.dart' as IO;
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 class AllSwatchesScreen extends StatefulWidget {
@@ -17,9 +18,9 @@ class AllSwatchesScreen extends StatefulWidget {
 
 class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
   List<int> _swatches = [];
-  Future<List<int>> _swatchesFuture;
+  Future<List<int>>? _swatchesFuture;
 
-  GlobalKey _swatchListKey = GlobalKey();
+  GlobalKey? _swatchListKey = GlobalKey();
 
   @override
   void initState() {
@@ -37,20 +38,23 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
     //gets all swatches
     _swatches = await IO.loadFormatted();
     //reloads for sort
-    setState(() {});
+    setState(() { });
     return _swatches;
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<List<int>> swatchesFutureActual = _swatchesFuture;
-    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
-      swatchesFutureActual = (_swatchListKey.currentWidget as SingleSwatchList).swatchList.addSwatches;
+    Future<List<int>> swatchesFutureActual = _swatchesFuture!;
+    if(_swatchListKey != null && _swatchListKey!.currentWidget != null) {
+      swatchesFutureActual = (_swatchListKey!.currentWidget as SingleSwatchList).swatchList.addSwatches as Future<List<int>>;
     }
     return buildComplete(
       context,
       getString('screen_allSwatches', defaultValue: 'All Swatches'),
       0,
+      rightBar: [
+        globalWidgets.getLoginButton(context),
+      ],
       //scroll view to show all swatches
       body: SingleSwatchList(
         key: _swatchListKey,
@@ -82,7 +86,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
               context,
               const Offset(1, 0),
               routes.ScreenRoutes.AddPaletteScreen,
-              routes.routes['/addPaletteScreen'](context),
+              routes.routes['/addPaletteScreen']!(context),
             );
           },
         ),
@@ -93,6 +97,6 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
   }
 
   void onFilterDrawerClose(List<Filter> filters) {
-    (_swatchListKey.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
+    (_swatchListKey!.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
   }
 }

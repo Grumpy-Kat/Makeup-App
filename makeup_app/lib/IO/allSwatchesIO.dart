@@ -3,21 +3,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
-import 'ColorMath/ColorProcessing.dart';
-import 'Widgets/Swatch.dart';
-import 'Widgets/Filter.dart';
+import '../ColorMath/ColorProcessing.dart';
+import '../Widgets/Swatch.dart';
+import '../Widgets/Filter.dart';
 import 'globalIO.dart';
 import 'localizationIO.dart';
-import 'globals.dart' as globals;
-import 'types.dart';
+import '../globals.dart' as globals;
+import '../types.dart';
 
-Map<int, String> lines;
-Map<int, Swatch> swatches;
+Map<int, String>? lines;
+Map<int, Swatch?>? swatches;
 List<OnVoidAction> onSaveChanged = [];
 bool hasSaveChanged = true;
 bool isLoading = true;
 
-CollectionReference _database;
+late CollectionReference _database;
 
 void init() {
   _database = FirebaseFirestore.instance.collection('swatches');
@@ -27,7 +27,7 @@ void listenOnSaveChanged(OnVoidAction listener) {
   onSaveChanged.add(listener);
 }
 
-void clear() async {
+Future<void> clear() async {
   print('Clearing');
   await _database.doc(globals.userID).set(
     {
@@ -39,12 +39,12 @@ void clear() async {
 
 Future<List<int>> add(List<Swatch> swatches) async {
   await load();
-  List<int> ids = lines.keys.toList();
+  List<int> ids = lines!.keys.toList();
   int id  = 0;
   if(ids.length > 0) {
     id = ids.reduce(max);
   }
-  Map<int, String> info = lines;
+  Map<int, String> info = lines!;
   List<int> newIds = [];
   for(int i = 0; i < swatches.length; i++) {
     id++;
@@ -55,16 +55,16 @@ Future<List<int>> add(List<Swatch> swatches) async {
   return newIds;
 }
 
-void editId(int i, Swatch swatch) async {
+Future<void> editId(int i, Swatch swatch) async {
   await load();
-  Map<int, String> info = lines;
+  Map<int, String> info = lines!;
   info[i] = await saveSwatch(swatch);
   await save(lines);
 }
 
-void editIds(Map<int, Swatch> idsSwatchesMap) async {
+Future<void> editIds(Map<int, Swatch> idsSwatchesMap) async {
   await load();
-  Map<int, String> info = lines;
+  Map<int, String> info = lines!;
   List<int> ids = idsSwatchesMap.keys.toList();
   List<Swatch> swatches = idsSwatchesMap.values.toList();
   for(int i = 0; i < ids.length; i++) {
@@ -73,23 +73,23 @@ void editIds(Map<int, Swatch> idsSwatchesMap) async {
   await save(lines);
 }
 
-void edit(Swatch old, Swatch swatch) async {
+Future<void> edit(Swatch old, Swatch swatch) async {
   await editId(find(old), swatch);
 }
 
-void removeId(int i) async {
+Future<void> removeId(int i) async {
   if(i > 0) {
     await load();
-    Map<int, String> info = lines;
+    Map<int, String> info = lines!;
     info.remove(i);
     print('removing $i');
     await save(info);
   }
 }
 
-void removeIDsMany(List<int> ids) async {
+Future<void> removeIDsMany(List<int> ids) async {
   await load();
-  Map<int, String> info = lines;
+  Map<int, String> info = lines!;
   for (int i = ids.length - 1; i >= 0; i--) {
     if(ids[i] > 0) {
       info.remove(ids[i]);
@@ -99,11 +99,11 @@ void removeIDsMany(List<int> ids) async {
   await save(info);
 }
 
-void remove(Swatch swatch) async {
+Future<void> remove(Swatch swatch) async {
   await removeId(find(swatch));
 }
 
-void removeMany(List<Swatch> swatches) async {
+Future<void> removeMany(List<Swatch> swatches) async {
   for (int i = swatches.length - 1; i >= 0; i--) {
     await removeId(find(swatches[i]));
   }
@@ -113,7 +113,7 @@ int find(Swatch swatch)  {
   if(swatches == null || hasSaveChanged) {
     loadFormatted();
   }
-  if(swatches.containsKey(swatch.id)) {
+  if(swatches!.containsKey(swatch.id)) {
     return swatch.id;
   }
   return -1;
@@ -131,12 +131,12 @@ List<int> findMany(List<Swatch> currSwatches) {
   return ret;
 }
 
-Swatch get(int i) {
+Swatch? get(int i) {
   if(swatches == null || hasSaveChanged) {
     loadFormatted();
   }
-  if(swatches.containsKey(i)) {
-    return swatches[i];
+  if(swatches!.containsKey(i)) {
+    return swatches![i]!;
   }
   return null;
 }
@@ -144,7 +144,7 @@ Swatch get(int i) {
 List<Swatch> getMany(List<int> ids) {
   List<Swatch> currSwatches = [];
   for(int i = 0; i < ids.length; i++) {
-    Swatch swatch = get(ids[i]);
+    Swatch? swatch = get(ids[i]);
     if(swatch != null) {
       currSwatches.add(swatch);
     }
@@ -161,11 +161,11 @@ List<List<Swatch>> getMultiple(List<List<int>> ids) {
 }
 
 bool isValid(int i) {
-  return swatches.containsKey(i);
+  return swatches!.containsKey(i);
 }
 
-void save(Map<int, String> info, { int tries = 0 }) async {
-  List<int> keys = info.keys.toList();
+Future<void> save(Map<int, String>? info, { int tries = 0 }) async {
+  List<int> keys = info!.keys.toList();
   String string = '';
   for(int i = 0; i < keys.length; i++) {
     string += '${keys[i]}|${info[keys[i]]}\n';
@@ -174,9 +174,9 @@ void save(Map<int, String> info, { int tries = 0 }) async {
   try {
     base64.normalize(compressed);
     await _database.doc(globals.userID).set(
-        {
-          'data': compressed,
-        }
+      {
+        'data': compressed,
+      }
     );
     await loadFormatted(override: true, overrideInner: true);
     for(int i = 0; i < onSaveChanged.length; i++) {
@@ -197,7 +197,7 @@ Future<Map<int, String>> load({ bool override = false }) async {
     isLoading = true;
     DocumentSnapshot docSnapshot = await _database.doc(globals.userID).get();
     List<String> fileLines = [];
-    if(docSnapshot != null) {
+    if(docSnapshot.exists) {
       fileLines = decompress(docSnapshot.get('data') ?? '').split('\n');
     }
     lines = {};
@@ -206,13 +206,13 @@ Future<Map<int, String>> load({ bool override = false }) async {
       if(line != '') {
         List<String> lineSplit = line.split('|');
         if(lineSplit.length > 1) {
-          lines[int.parse(lineSplit[0])] = line.substring(lineSplit[0].length + 1);
+          lines![int.parse(lineSplit[0])] = line.substring(lineSplit[0].length + 1);
         }
       }
     }
     isLoading = false;
   }
-  return lines;
+  return lines!;
 }
 
 Future<List<int>> loadFormatted({ bool override = false, overrideInner = false }) async {
@@ -221,16 +221,16 @@ Future<List<int>> loadFormatted({ bool override = false, overrideInner = false }
     swatches = {};
     Map<int, String> info = await load(override: overrideInner);
     print('${info.length} swatches');
-    await info.forEach(
-      (key, value) async {
-        swatches[key] = await loadSwatch(key, value);
-      }
-    );
+    List<int> keys = info.keys.toList();
+    List<String> values = info.values.toList();
+    for(int i = 0; i < info.length; i++) {
+      swatches![keys[i]] = await loadSwatch(keys[i], values[i]);
+    }
     hasSaveChanged = false;
     isLoading = false;
   }
-  List<int> ret = swatches.keys.toList();
-  return sort(ret, (a, b) => a.compareTo(b, (swatch) => globals.defaultSortOptions([swatches.values.toList()])[globals.sort](swatch, 0)));
+  List<int> ret = swatches!.keys.toList();
+  return sort(ret, (a, b) => a.compareTo(b, (swatch) => globals.defaultSortOptions([swatches!.values.toList() as List<Swatch>])[globals.sort]!(swatch, 0)));
 }
 
 Future<List<int>> sort(List<int> ids, int compare(Swatch a, Swatch b)) async {
@@ -251,14 +251,14 @@ Future<Map<Widget, List<int>>> sortMultiple(List<Widget> keys, List<List<int>> v
 Future<List<int>> filter(List<int> ids, List<Filter> filters) async {
   List<int> ret = ids.toList();
   for(int i = ids.length - 1; i >= 0; i--) {
-    Map<String, dynamic> swatchAttributes = swatches[ids[i]].getMap();
+    Map<String, dynamic> swatchAttributes = swatches![ids[i]]!.getMap();
     for(int j = 0; j < filters.length; j++) {
       String attribute = filters[j].attribute;
       if(swatchAttributes.containsKey(attribute)) {
         dynamic value = swatchAttributes[attribute];
         if(value is String) {
           //make all strings lowercase to avoid issues
-          value = (value as String).toLowerCase();
+          value = value.toLowerCase();
           filters[j].threshold = (filters[j].threshold as String).toLowerCase();
         }
         if(!filters[j].contains(value)) {
@@ -286,7 +286,7 @@ Future<List<int>> search(List<int> ids, String val) async {
   }
   List<String> searchTerms = val.trim().toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"').split(' ');
   for(int i = ids.length - 1; i >= 0; i--) {
-    Swatch swatch = get(ret[i]);
+    Swatch swatch = get(ret[i])!;
     String possibleTerms = '';
 
     //add brand to possible search terms, must account for different types of quotes

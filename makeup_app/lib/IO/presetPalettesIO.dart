@@ -1,22 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
-import 'ColorMath/ColorObjects.dart';
-import 'ColorMath/ColorSorting.dart';
-import 'Widgets/Swatch.dart';
-import 'Widgets/Palette.dart';
+import '../ColorMath/ColorObjects.dart';
+import '../ColorMath/ColorSorting.dart';
+import '../Widgets/Swatch.dart';
+import '../Widgets/Palette.dart';
+import '../globalWidgets.dart' as globalWidgets;
+import '../types.dart';
 import'localizationIO.dart';
 import 'globalIO.dart';
-import 'globalWidgets.dart' as globalWidgets;
-import 'types.dart';
 
-List<DocumentSnapshot> docs;
-Map<String, Palette> palettes;
+List<DocumentSnapshot>? docs;
+Map<String, Palette>? palettes;
 List<OnVoidAction> onSaveChanged = [];
 bool hasSaveChanged = true;
 bool isLoading = true;
 
-CollectionReference _database;
-CollectionReference _databasePending;
+late CollectionReference _database;
+late CollectionReference _databasePending;
 
 void init() {
   _database = FirebaseFirestore.instance.collection('presetPalettes');
@@ -27,20 +27,20 @@ void listenOnSaveChanged(OnVoidAction listener) {
   onSaveChanged.add(listener);
 }
 
-Swatch getSwatch(String paletteId, int swatchId) {
-  Palette palette = getPalette(paletteId);
+Swatch? getSwatch(String paletteId, int swatchId) {
+  Palette? palette = getPalette(paletteId);
   if(palette != null && palette.swatches.length > swatchId) {
     return palette.swatches[swatchId];
   }
   return null;
 }
 
-Palette getPalette(String paletteId) {
+Palette? getPalette(String paletteId) {
   if(palettes == null || hasSaveChanged) {
     loadFormatted();
   }
-  if(palettes.containsKey(paletteId)) {
-    return palettes[paletteId];
+  if(palettes!.containsKey(paletteId)) {
+    return palettes![paletteId];
   }
   return null;
 }
@@ -88,7 +88,7 @@ Future<List<DocumentSnapshot>> load({ bool override = false }) async {
   if(docs == null || hasSaveChanged || override) {
     docs = (await _database.get()).docs;
   }
-  return docs;
+  return docs!;
 }
 
 Future<Map<String, Palette>> loadFormatted({ bool override = false, overrideInner = false }) async {
@@ -97,34 +97,39 @@ Future<Map<String, Palette>> loadFormatted({ bool override = false, overrideInne
     palettes = {};
     List<DocumentSnapshot> info = await load(override: overrideInner);
     for(int i = 0; i < info.length; i++) {
-      Map<String, dynamic> data = info[i].data();
-      List<Swatch> swatches = [];
-      List<String> swatchLines = decompress(data['data']).split('\n');
-      for(int j = 0; j < swatchLines.length; j++) {
-        String line = swatchLines[j];
-        if(line != '') {
-          swatches.add(await loadPresetSwatch(line));
+      Map<String, dynamic>? data = info[i].data();
+      if (data != null) {
+        List<Swatch> swatches = [];
+        List<String> swatchLines = decompress(data['data']).split('\n');
+        for(int j = 0; j < swatchLines.length; j++) {
+          String line = swatchLines[j];
+          if(line != '') {
+            Swatch? swatch = await loadPresetSwatch(line);
+            if(swatch != null) {
+              swatches.add(swatch);
+            }
+          }
         }
+        if(swatches.length == 0) {
+          continue;
+        }
+        Palette palette = Palette(
+          id: info[i].id,
+          brand: data['brand'] ?? '',
+          name: data['name'] ?? '',
+          weight: double.parse((data['weight'] ?? 0).toString()),
+          price: double.parse((data['price'] ?? 0).toString()),
+          swatches: swatches,
+        );
+        palettes![palette.id] = palette;
       }
-      if(swatches.length == 0) {
-        continue;
-      }
-      Palette palette = Palette(
-        id: info[i].id,
-        brand: data['brand'] ?? '',
-        name: data['name'] ?? '',
-        weight: double.parse((data['weight'] ?? 0).toString()),
-        price: double.parse((data['price'] ?? 0).toString()),
-        swatches: swatches,
-      );
-      palettes[palette.id] = palette;
+      hasSaveChanged = false;
+      isLoading = false;
+      palettes = await sort();
     }
-    print('${palettes.length} palettes');
-    hasSaveChanged = false;
-    isLoading = false;
-    palettes = await sort();
+    print('${palettes!.length} palettes');
   }
-  return palettes;
+  return palettes!;
 }
 Future<String> savePresetSwatch(Swatch swatch) async {
   //color
@@ -159,7 +164,7 @@ Future<String> savePresetSwatch(Swatch swatch) async {
   return '$color;$finish;$brand;$palette;$shade;$weight;$price;$colorName\n';
 }
 
-Future<Swatch> loadPresetSwatch(String line) async {
+Future<Swatch?> loadPresetSwatch(String line) async {
   if(line == '') {
     return null;
   }
@@ -169,7 +174,7 @@ Future<Swatch> loadPresetSwatch(String line) async {
   RGBColor color = RGBColor(double.parse(colorValues[0]), double.parse(colorValues[1]), double.parse(colorValues[2]));
   //finish
   Map<String, String> finishes = { '0': 'finish_matte', '1': 'finish_satin', '2': 'finish_shimmer', '3': 'finish_metallic', '4': 'finish_glitter' };
-  String finish = finishes[lineSplit[1]];
+  String finish = finishes[lineSplit[1]]!;
   //brand
   String brand = lineSplit[2];
   //palette
@@ -187,7 +192,7 @@ Future<Swatch> loadPresetSwatch(String line) async {
 }
 
 Future<Map<String, Palette>> sort() async {
-  List<Palette> sortedPalettes = palettes.values.toList();
+  List<Palette> sortedPalettes = palettes!.values.toList();
   sortedPalettes.sort(
     (Palette a, Palette b) {
       int brand = a.brand.trim().compareTo(b.brand.trim());
@@ -199,20 +204,20 @@ Future<Map<String, Palette>> sort() async {
       }
     }
   );
-  palettes.clear();
+  palettes!.clear();
   for(int i = 0; i < sortedPalettes.length; i++) {
-    palettes[sortedPalettes[i].id] = sortedPalettes[i];
+    palettes![sortedPalettes[i].id] = sortedPalettes[i];
   }
-  return palettes;
+  return palettes!;
 }
 
 Future<List<Palette>> search(String search) async {
-  List<Palette> ret = palettes.values.toList();
+  List<Palette> ret = palettes!.values.toList();
   if(search == '' || search == ' ') {
     return ret;
   }
   List<String> searchTerms = search.trim().toLowerCase().replaceAll('‘', '\'').replaceAll('’', '\'').replaceAll('“', '\'').replaceAll('”', '\"').split(' ');
-  for(int i = palettes.length - 1; i >= 0; i--) {
+  for(int i = palettes!.length - 1; i >= 0; i--) {
     Palette palette = ret[i];
     String possibleTerms = '';
 

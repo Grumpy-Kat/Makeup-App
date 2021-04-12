@@ -152,7 +152,7 @@ List<int> getColorIndexes(List<String> possibleColorCategories, List<String> col
 
 List<HSVColor> getMonochromaticColors(Map<String, HSVColor> colorWheel, List<int> indexes, List<String> colorNames, Random random) {
   int i = indexes[random.nextInt(indexes.length)];
-  return [colorWheel[colorNames[i]]];
+  return [colorWheel[colorNames[i]]!];
 }
 
 List<HSVColor> getDuochromaticColors(Map<String, HSVColor> colorWheel, List<int> indexes, List<String> colorNames, int subtype, Random random) {
@@ -167,13 +167,13 @@ List<HSVColor> getDuochromaticColors(Map<String, HSVColor> colorWheel, List<int>
       //no analogous colors, so just choose random colors
       int i = random.nextInt(indexes.length);
       String color = colorNames[indexes[i]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
       color = colorNames[indexes[(i + 1) % indexes.length]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
     } else {
       int i = analogous[random.nextInt(analogous.length)];
-      ret.add(colorWheel[colorNames[i]]);
-      ret.add(colorWheel[colorNames[(i + 1) % colorNames.length]]);
+      ret.add(colorWheel[colorNames[i]]!);
+      ret.add(colorWheel[colorNames[(i + 1) % colorNames.length]]!);
     }
 
   } else {
@@ -185,14 +185,14 @@ List<HSVColor> getDuochromaticColors(Map<String, HSVColor> colorWheel, List<int>
       //no complementary colors, so just choose random colors
       int i = random.nextInt(indexes.length);
       String color = colorNames[indexes[i]].toLowerCase();
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
 
       color = colorNames[indexes[(i + (indexes.length / 2).round()) % indexes.length]].toLowerCase();
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
     } else {
       int i = complementary[random.nextInt(complementary.length)];
-      ret.add(colorWheel[colorNames[i]]);
-      ret.add(colorWheel[colorNames[(i + (colorNames.length / 2).round()) % colorNames.length]]);
+      ret.add(colorWheel[colorNames[i]]!);
+      ret.add(colorWheel[colorNames[(i + (colorNames.length / 2).round()) % colorNames.length]]!);
     }
 
   }
@@ -212,18 +212,18 @@ List<HSVColor> getTrichromaticColors(Map<String, HSVColor> colorWheel, List<int>
       //no analogous colors, so just choose random colors
       int i = random.nextInt(indexes.length);
       String color = colorNames[indexes[i]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
 
       color = colorNames[indexes[(i + 1) % indexes.length]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
 
       color = colorNames[indexes[(i + 2) % indexes.length]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
     } else {
       int i = analogous[random.nextInt(analogous.length)];
-      ret.add(colorWheel[colorNames[i]]);
-      ret.add(colorWheel[colorNames[(i + 1) % colorNames.length]]);
-      ret.add(colorWheel[colorNames[(i + 2) % colorNames.length]]);
+      ret.add(colorWheel[colorNames[i]]!);
+      ret.add(colorWheel[colorNames[(i + 1) % colorNames.length]]!);
+      ret.add(colorWheel[colorNames[(i + 2) % colorNames.length]]!);
     }
 
     ret = shuffleColors(ret, random);
@@ -238,19 +238,19 @@ List<HSVColor> getTrichromaticColors(Map<String, HSVColor> colorWheel, List<int>
       int i = random.nextInt(indexes.length);
       int complementary = i + (indexes.length / 2).round();
       String color = colorNames[indexes[i]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
 
       color = colorNames[indexes[(complementary) % indexes.length]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
 
       color = colorNames[indexes[(complementary + 1) % indexes.length]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
     } else {
       int i = splitComplementary[random.nextInt(splitComplementary.length)];
       int complementary = i + (colorNames.length / 2).round();
-      ret.add(colorWheel[colorNames[i]]);
-      ret.add(colorWheel[colorNames[(complementary) % colorNames.length]]);
-      ret.add(colorWheel[colorNames[(complementary + 1) % colorNames.length]]);
+      ret.add(colorWheel[colorNames[i]]!);
+      ret.add(colorWheel[colorNames[(complementary) % colorNames.length]]!);
+      ret.add(colorWheel[colorNames[(complementary + 1) % colorNames.length]]!);
     }
 
     ret = shuffleColors(ret, random);
@@ -265,19 +265,19 @@ List<HSVColor> getTrichromaticColors(Map<String, HSVColor> colorWheel, List<int>
       int i = random.nextInt(indexes.length);
       int third = (indexes.length / 3).round();
       String color = colorNames[indexes[i]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
 
       color = colorNames[indexes[(i - third) % indexes.length]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
 
       color = colorNames[indexes[(i + third) % indexes.length]];
-      ret.add(colorWheel[color]);
+      ret.add(colorWheel[color]!);
     } else {
       int i = triad[random.nextInt(triad.length)];
       int third = (colorNames.length / 3).ceil();
-      ret.add(colorWheel[colorNames[i]]);
-      ret.add(colorWheel[colorNames[(i - third) % colorNames.length]]);
-      ret.add(colorWheel[colorNames[(i + third) % colorNames.length]]);
+      ret.add(colorWheel[colorNames[i]]!);
+      ret.add(colorWheel[colorNames[(i - third) % colorNames.length]]!);
+      ret.add(colorWheel[colorNames[(i + third) % colorNames.length]]!);
     }
 
     for(int i = 0; i < 3 ; i++) {
@@ -295,15 +295,15 @@ List<HSVColor> getTrichromaticColors(Map<String, HSVColor> colorWheel, List<int>
 List<double> getHueDist(Map<String, HSVColor> colorWheel, HSVColor color, List<String> colorNames) {
   int i = colorWheel.values.toList().indexOf(color);
   double hue = color.getValues()[0];
-  double startDist = (colorWheel[colorNames[(i - 1) % colorNames.length]].getValues()[0] - hue).abs();
+  double startDist = (colorWheel[colorNames[(i - 1) % colorNames.length]]!.getValues()[0] - hue).abs();
   if(startDist > 120) {
     //distance is too great, most likely looped over
-    startDist = ((360 - colorWheel[colorNames[(i - 1) % colorNames.length]].getValues()[0]) - hue).abs();
+    startDist = ((360 - colorWheel[colorNames[(i - 1) % colorNames.length]]!.getValues()[0]) - hue).abs();
   }
-  double endDist = (colorWheel[colorNames[(i + 1) % colorNames.length]].getValues()[0] - hue).abs();
+  double endDist = (colorWheel[colorNames[(i + 1) % colorNames.length]]!.getValues()[0] - hue).abs();
   if(endDist > 120) {
     //distance is too great, most likely looped over
-    endDist = ((360 + colorWheel[colorNames[(i + 1) % colorNames.length]].getValues()[0]) - hue).abs();
+    endDist = ((360 + colorWheel[colorNames[(i + 1) % colorNames.length]]!.getValues()[0]) - hue).abs();
   }
   return [startDist, endDist];
 }
@@ -570,7 +570,7 @@ List<List<Swatch>> generateRange(List<Swatch> swatches, List<double> orgColorVal
   for(int i = 0; i < numShades; i++) {
     //avoid 0/0 error
     double percent = i / (numShades == 1 ? 1.0 : (numShades - 1.0));
-    HSVColor color = HSVColor(lerpDouble(startValues[0], endValues[0], percent) % 360, lerpDouble(startValues[1], endValues[1], percent), lerpDouble(startValues[2], endValues[2], percent));
+    HSVColor color = HSVColor(lerpDouble(startValues[0], endValues[0], percent)! % 360, lerpDouble(startValues[1], endValues[1], percent)!, lerpDouble(startValues[2], endValues[2], percent)!);
     Swatch swatch = findClosestSwatch(HSVtoRGB(color), swatches, finish: finish, possibleFinishes: possibleFinishes, maxColorDistance: maxColorDistance);
     swatches.remove(swatch);
     ret.add(swatch);
@@ -579,7 +579,7 @@ List<List<Swatch>> generateRange(List<Swatch> swatches, List<double> orgColorVal
   return [ret, swatches];
 }
 
-Swatch findClosestSwatch(RGBColor rgb, List<Swatch> swatches, { String finish, List<String> possibleFinishes, double maxColorDistance = -1 }) {
+Swatch findClosestSwatch(RGBColor rgb, List<Swatch> swatches, { String finish = '', List<String>? possibleFinishes, double maxColorDistance = -1 }) {
   LabColor color0 = RGBtoLab(rgb);
   double minDist = 1000;
   int minIndex = 0;
@@ -595,7 +595,7 @@ Swatch findClosestSwatch(RGBColor rgb, List<Swatch> swatches, { String finish, L
         minIndex = i;
       }
       continue;
-    } else if(maxColorDistance != -1 && possibleFinishes.contains(swatches[i].finish)) {
+    } else if(maxColorDistance != -1 && possibleFinishes!.contains(swatches[i].finish)) {
       LabColor color1 = RGBtoLab(swatches[i].color);
       double dist = deltaECie2000(color0, color1);
       if(dist < possibleMinDist) {

@@ -65,7 +65,6 @@ class Filter<T> {
         return false;
       }
     }
-    return false;
   }
 
   @override

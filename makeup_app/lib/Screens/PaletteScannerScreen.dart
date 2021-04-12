@@ -8,11 +8,11 @@ import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
 import '../Widgets/ImagePicker.dart';
 import '../ColorMath/ColorProcessing.dart';
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
-import '../allSwatchesIO.dart' as IO;
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 class PaletteScannerScreen extends StatefulWidget {
@@ -31,11 +31,11 @@ class PaletteScannerScreen extends StatefulWidget {
 class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenState {
   static List<Swatch> _labels = [];
   List<List<int>> _swatches = [];
-  Future<Map<SwatchIcon, List<int>>> _swatchesFuture;
+  Future<Map<SwatchIcon, List<int>>>? _swatchesFuture;
 
-  GlobalKey _swatchListKey = GlobalKey();
+  GlobalKey? _swatchListKey = GlobalKey();
 
-  static Palette _palette;
+  static Palette? _palette;
 
   static bool _hasChosenMode = false;
   static bool _isUsingPaletteDivider = true;
@@ -203,9 +203,9 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
             int blueOffset = globals.blueOffset;
             for(int i = 0; i < swatches.length; i++) {
               Swatch swatch = swatches[i];
-              swatch.color.values['rgbR'] = swatch.color.clampValue(swatch.color.values['rgbR'] + (redOffset / 255.0) + (brightnessOffset / 255.0));
-              swatch.color.values['rgbG'] = swatch.color.clampValue(swatch.color.values['rgbG'] + (greenOffset / 255.0) + (brightnessOffset / 255.0));
-              swatch.color.values['rgbB'] = swatch.color.clampValue(swatch.color.values['rgbB'] + (blueOffset / 255.0) + (brightnessOffset / 255.0));
+              swatch.color.values['rgbR'] = swatch.color.clampValue(swatch.color.values['rgbR']! + (redOffset / 255.0) + (brightnessOffset / 255.0));
+              swatch.color.values['rgbG'] = swatch.color.clampValue(swatch.color.values['rgbG']! + (greenOffset / 255.0) + (brightnessOffset / 255.0));
+              swatch.color.values['rgbB'] = swatch.color.clampValue(swatch.color.values['rgbB']! + (blueOffset / 255.0) + (brightnessOffset / 255.0));
             }
             //sets mode and future
             _labels = swatches;
@@ -237,9 +237,9 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   }
 
   Widget getCompareSwatchesScreen(BuildContext context) {
-    Future<Map<Widget, List<int>>> swatchesFutureActual = _swatchesFuture;
-    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
-      swatchesFutureActual = (_swatchListKey.currentWidget as MultipleSwatchList).swatchList.addSwatches;
+    Future<Map<Widget, List<int>>> swatchesFutureActual = _swatchesFuture!;
+    if(_swatchListKey != null && _swatchListKey!.currentWidget != null) {
+      swatchesFutureActual = (_swatchListKey!.currentWidget as MultipleSwatchList).swatchList.addSwatches as Future<Map<Widget, List<int>>>;
     }
     return buildComplete(
       context,
@@ -250,12 +250,10 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         child: Column(
           children: <Widget>[
             //return to palette divider
-            FlatButton(
-              color: theme.bgColor,
-              shape: Border.all(
-                color: theme.primaryColorDark,
-                width: 2.0,
-              ),
+            globalWidgets.getOutlineButton(
+              bgColor: theme.bgColor,
+              outlineColor: theme.primaryColorDark,
+              outlineWidth: 2.0,
               onPressed: () {
                 setState(
                   () {
@@ -270,8 +268,8 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
               ),
             ),
             //save palette to collection
-            FlatButton(
-              color: theme.primaryColorDark,
+            globalWidgets.getFlatButton(
+              bgColor: theme.primaryColorDark,
               onPressed: () {
                 onSave(context, _labels);
               },
@@ -305,13 +303,13 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   }
 
   void onFilterDrawerClose(List<Filter> filters) {
-    (_swatchListKey.currentState as MultipleSwatchListState).onFilterDrawerClose(filters);
+    (_swatchListKey!.currentState as MultipleSwatchListState).onFilterDrawerClose(filters);
   }
 
   void onSave(BuildContext context, List<Swatch> swatches) {
     if(!_isUsingPaletteDivider && _palette != null) {
       //using preset palette
-      IO.add(_palette.swatches);
+      IO.add(_palette!.swatches);
     } else {
       //open dialog to enter palette name and brand
       globalWidgets.openPaletteTextDialog(

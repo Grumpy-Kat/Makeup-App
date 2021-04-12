@@ -12,28 +12,28 @@ XYZColor LabtoXYZ(LabColor color) {
   double x = values[1] / 500.0 + y;
   double z = y - values[2] / 200.0;
 
-  double xPow = pow(x, 3);
+  double xPow = pow(x, 3) as double;
   if(xPow > CIE_E) {
     x = xPow;
   } else {
     x = (x - 16.0 / 116.0) / 7.787;
   }
-  double yPow = pow(y, 3);
+  double yPow = pow(y, 3) as double;
   if(yPow > CIE_E) {
     y = yPow;
   } else {
     y = (y - 16.0 / 116.0) / 7.787;
   }
-  double zPow = pow(z, 3);
+  double zPow = pow(z, 3) as double;
   if(zPow > CIE_E) {
     z = zPow;
   } else {
     z = (z - 16.0 / 116.0) / 7.787;
   }
 
-  x = illuminant['X'] * x;
-  y = illuminant['Y'] * y;
-  z = illuminant['Z'] * z;
+  x = illuminant['X']! * x;
+  y = illuminant['Y']! * y;
+  z = illuminant['Z']! * z;
 
   return XYZColor(x, y, z, observer: color.observer, illuminant: color.illuminant);
 }
@@ -41,22 +41,22 @@ XYZColor LabtoXYZ(LabColor color) {
 LabColor XYZtoLab(XYZColor color) {
   Map<String, double> illuminant = color.getIlluminantXYZ();
   List<double> values = color.getValues();
-  double x = values[0] / illuminant["X"];
-  double y = values[1] / illuminant["Y"];
-  double z = values[2] / illuminant["Z"];
+  double x = values[0] / illuminant['X']!;
+  double y = values[1] / illuminant['Y']!;
+  double z = values[2] / illuminant['Z']!;
 
   if(x > CIE_E) {
-    x = pow(x, (1.0 / 3.0));
+    x = pow(x, (1.0 / 3.0)) as double;
   } else {
     x = (7.787 * x) + (16.0 / 116.0);
   }
   if(y > CIE_E) {
-    y = pow(y, (1.0 / 3.0));
+    y = pow(y, (1.0 / 3.0)) as double;
   } else {
     y = (7.787 * y) + (16.0 / 116.0);
   }
   if(z > CIE_E) {
-    z = pow(z, (1.0 / 3.0));
+    z = pow(z, (1.0 / 3.0)) as double;
   } else {
     z = (7.787 * z) + (16.0 / 116.0);
   }
@@ -163,7 +163,7 @@ XYZColor RGBtoXYZ(RGBColor color, { targetIlluminant = '' }) {
     if(values[i] <= 0.04045) {
       linearChannels.add(values[i] / 12.92);
     } else {
-      linearChannels.add(pow((values[i] + 0.055) / 1.055, 2.4));
+      linearChannels.add(pow((values[i] + 0.055) / 1.055, 2.4) as double);
     }
   }
   List<double> xyz = _applyRGBMatrix(linearChannels, 'RGBtoXYZ');
@@ -176,7 +176,7 @@ XYZColor RGBtoXYZ(RGBColor color, { targetIlluminant = '' }) {
 }
 
 List<double> _applyRGBMatrix(List<double> xyz, String conversionType) {
-  List<List<double>> rgbMatrix = RGBColor.conversionMatrices[conversionType];
+  List<List<double>> rgbMatrix = RGBColor.conversionMatrices[conversionType]!;
   List<double> result = dotProduct(rgbMatrix, xyz);
   result[0] = max(result[0], 0);
   result[1] = max(result[1], 0);

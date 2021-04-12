@@ -3,13 +3,14 @@ import 'dart:math';
 import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorConversions.dart';
 import '../theme.dart' as theme;
+import '../globalWidgets.dart' as globalWidgets;
 
 class ColorPicker extends StatefulWidget {
   final void Function(double, double, double) onEnter;
   final String btnText;
-  final HSVColor initialColor;
+  final HSVColor? initialColor;
 
-  ColorPicker({Key key, @required this.onEnter, @required this.btnText, this.initialColor }) : super(key: key);
+  ColorPicker({Key? key, required this.onEnter, required this.btnText, this.initialColor }) : super(key: key);
 
   @override
   ColorPickerState createState() => ColorPickerState();
@@ -42,7 +43,7 @@ class ColorPickerState extends State<ColorPicker> {
   void initState() {
     super.initState();
     if(widget.initialColor != null) {
-      List<double> values = widget.initialColor.getValues();
+      List<double> values = widget.initialColor!.getValues();
       hue = values[0];
       saturation = values[1];
       value = values[2];
@@ -153,8 +154,8 @@ class ColorPickerState extends State<ColorPicker> {
       height: 40,
       top: screenSize.height * 0.325,
       left: (screenSize.width * 0.5) - 75,
-      child: FlatButton(
-        color: theme.accentColor,
+      child: globalWidgets.getFlatButton(
+        bgColor: theme.accentColor,
         onPressed: () { widget.onEnter(hue, saturation, value); },
         child: Align(
           alignment: Alignment.center,
@@ -193,7 +194,7 @@ class _WheelPickerPainter extends CustomPainter {
 
   final double pickerRadius;
 
-  _WheelPickerPainter({@required this.radius, @required this.center, @required this.hue, @required this.saturation, this.pickerRadius = 10});
+  _WheelPickerPainter({required this.radius, required this.center, required this.hue, required this.saturation, this.pickerRadius = 10});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -228,7 +229,7 @@ class _SliderPickerPainter extends CustomPainter {
 
   final double pickerRadius;
 
-  _SliderPickerPainter({@required this.size, @required this.value, this.pickerRadius = 10});
+  _SliderPickerPainter({required this.size, required this.value, this.pickerRadius = 10});
 
   @override
   void paint(Canvas canvas, Size size) {

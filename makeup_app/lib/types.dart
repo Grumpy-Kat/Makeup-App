@@ -14,5 +14,5 @@ typedef OnSwatchAction = void Function(int);
 typedef OnSwatchListAction = void Function(List<int>);
 typedef OnDoubleSwatchListAction = void Function(List<List<int>>);
 typedef OnSortSwatch = List<double> Function(Swatch, int);
-typedef OnScreenAction = StatefulWidget Function(BuildContext, [bool]);
+typedef OnScreenAction = StatefulWidget Function(BuildContext?, [bool]);
 typedef OnPaletteAction = void Function(Palette);

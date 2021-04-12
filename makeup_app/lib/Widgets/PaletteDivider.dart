@@ -7,11 +7,11 @@ import 'dart:io';
 import '../ColorMath/ColorProcessing.dart';
 import '../ColorMath/ColorProcessingTF.dart';
 import '../ColorMath/ColorObjects.dart';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
-import '../localizationIO.dart';
 import 'ImagePicker.dart';
 import 'BorderBox.dart';
 import 'Swatch.dart';
@@ -19,9 +19,9 @@ import 'Swatch.dart';
 class PaletteDivider extends StatefulWidget {
   final void Function(List<Swatch>) onEnter;
 
-  final File initialImg;
+  final File? initialImg;
 
-  PaletteDivider({Key key, @required this.onEnter, this.initialImg }) : super(key: key);
+  PaletteDivider({Key? key, required this.onEnter, this.initialImg }) : super(key: key);
 
   @override
   PaletteDividerState createState() => PaletteDividerState();
@@ -41,21 +41,21 @@ class PaletteDividerState extends State<PaletteDivider> {
   GlobalKey _borderKey = GlobalKey();
   List<GlobalKey> _borderKeys = [];
 
-  Size _imgSize;
-  Future<Size> _actualImg;
+  Size _imgSize = Size.zero;
+  late Future<Size> _actualImg;
 
   static int _numCols = 1;
   static int _numRows = 1;
 
-  TextEditingController _colsController;
-  TextEditingController _rowsController;
+  late TextEditingController _colsController;
+  late TextEditingController _rowsController;
 
   static List<double> _borders = [orgBorders, orgBorders, orgBorders, orgBorders];
   static List<double> _padding = [orgPadding, orgPadding];
 
   int _draggingCorner = 0;
 
-  List<Swatch> _swatches;
+  List<Swatch> _swatches = [];
 
   @override
   void initState() {
@@ -115,7 +115,7 @@ class PaletteDividerState extends State<PaletteDivider> {
           onTap: () {
             FocusScopeNode currentFocus = FocusScope.of(context);
             if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-              currentFocus.focusedChild.unfocus();
+              currentFocus.focusedChild!.unfocus();
             }
           },
           child: Padding(
@@ -166,7 +166,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     );
   }
 
-  Widget getAnimatedOpacity(bool showImg, { @required Widget child }) {
+  Widget getAnimatedOpacity(bool showImg, { required Widget child }) {
     return AnimatedOpacity(
       opacity: (showImg ? 1 : 0),
       duration: const Duration(milliseconds: 300),
@@ -174,7 +174,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     );
   }
 
-  Widget getTextField(Size screenSize, String label, TextEditingController controller, OnStringAction onStringAction) {
+  Widget getTextField(Size? screenSize, String label, TextEditingController controller, OnStringAction onStringAction) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: (screenSize == null ? 175 : screenSize.width / 2),
@@ -211,40 +211,45 @@ class PaletteDividerState extends State<PaletteDivider> {
   }
 
   Widget getPickImgBtn() {
+    OnVoidAction onPressed = () {
+      ImagePicker.error = '';
+      ImagePicker.open(context).then(
+        (val) {
+          setState(() {
+            if(ImagePicker.prevImg != ImagePicker.img) {
+              reset(includeImg: false);
+              this._actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
+              this._colsController.value = TextEditingValue(
+                text: _numCols.toString(),
+                selection: this._colsController.selection,
+              );
+              this._rowsController.value = TextEditingValue(
+                text: _numRows.toString(),
+                selection: this._rowsController.selection,
+              );
+            }
+          });
+        }
+      );
+    };
+    Widget child = Text(
+      getString('paletteDivider_add'),
+      style: (ImagePicker.img == null ? theme.accentTextBold : TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily)),
+    );
     return Align(
       alignment: const Alignment(0, -1),
-      child: FlatButton(
+      child: ImagePicker.img == null ? globalWidgets.getFlatButton(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-        color: (ImagePicker.img == null ? theme.accentColor : theme.bgColor),
-        shape: (ImagePicker.img == null ? null : Border.all(
-          color: theme.primaryColorDark,
-          width: 2.0,
-        )),
-        onPressed: () {
-          ImagePicker.error = '';
-          ImagePicker.open(context).then(
-            (val) {
-              setState(() {
-                if(ImagePicker.prevImg != ImagePicker.img) {
-                  reset(includeImg: false);
-                  this._actualImg = ImagePicker.getActualImgSize(ImagePicker.img);
-                  this._colsController.value = TextEditingValue(
-                    text: _numCols.toString(),
-                    selection: this._colsController.selection,
-                  );
-                  this._rowsController.value = TextEditingValue(
-                    text: _numRows.toString(),
-                    selection: this._rowsController.selection,
-                  );
-                }
-              });
-            }
-          );
-        },
-        child: Text(
-          getString('paletteDivider_add'),
-          style: (ImagePicker.img == null ? theme.accentTextBold : TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily)),
-        ),
+        bgColor: theme.accentColor,
+        onPressed: onPressed,
+        child: child,
+      ) : globalWidgets.getOutlineButton(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        bgColor: theme.bgColor,
+        outlineColor: theme.primaryColorDark,
+        outlineWidth: 2.0,
+        onPressed: onPressed,
+        child: child,
       ),
     );
   }
@@ -256,8 +261,8 @@ class PaletteDividerState extends State<PaletteDivider> {
         showImg,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 23),
-          child: FlatButton(
-            color: theme.primaryColorDark,
+          child: globalWidgets.getFlatButton(
+            bgColor: theme.primaryColorDark,
             onPressed: save,
             child: Text(
               getString('save'),
@@ -286,7 +291,7 @@ class PaletteDividerState extends State<PaletteDivider> {
     return Align(
       alignment: const Alignment(0, 0.4),
       child: Image.file(
-        (ImagePicker.img == null ? File('imgs/finish_matte.png') : ImagePicker.img),
+        (ImagePicker.img == null ? File('imgs/finish_matte.png') : ImagePicker.img!),
         key: _imgKey,
         width: _imgSize.width,
         height: _imgSize.height,
@@ -299,7 +304,7 @@ class PaletteDividerState extends State<PaletteDivider> {
       alignment: const Alignment(0, 0.4),
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget); },
+        onPanUpdate: (DragUpdateDetails drag) { onBordersChange(drag, _borderKey.currentWidget as BorderBox); },
         child: BorderBox(
           key: _borderKey,
           width: width,
@@ -318,7 +323,7 @@ class PaletteDividerState extends State<PaletteDivider> {
       child: Stack(
         children: [
           for(int i = 0; i < _numCols; i++) for(int j = 0; j < _numRows; j++) GestureDetector(
-            onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * _numCols + i].currentWidget); },
+            onPanUpdate: (DragUpdateDetails drag) { onPaddingChange(drag, _borderKeys[j * _numCols + i].currentWidget as BorderBox); },
             child: BorderBox(
               key: _borderKeys[j * _numCols + i],
               width: boxWidth,
@@ -475,72 +480,74 @@ class PaletteDividerState extends State<PaletteDivider> {
     widget.onEnter(_swatches);
   }
 
-  void saveActual() async {
+  Future<void> saveActual() async {
     await getModel();
     _swatches = [];
-    image.Image img;
+    image.Image? img;
     Size actualImg;
     if(globals.debug) {
       img = await loadImg('imgs/test0.jpg');
       actualImg = Size(355, 355);
     } else {
-      img = await loadImg(ImagePicker.img.path);
+      img = await loadImg(ImagePicker.img!.path);
       actualImg = await ImagePicker.getActualImgSize(ImagePicker.img);
     }
-    double imgScale = _imgSize.width / actualImg.width;
-    double boxWidth = _getBoxWidth();
-    double scaledBoxWidth = boxWidth / imgScale;
-    double boxHeight = _getBoxHeight();
-    double scaledBoxHeight = boxHeight / imgScale;
-    List<double> scaledBorders = [_borders[0] / imgScale, _borders[1] / imgScale, _borders[2] / imgScale, _borders[3] / imgScale];
-    List<double> scaledPadding = [_padding[0] / imgScale, _padding[1] / imgScale];
-    for(int j = 0; j < _numRows; j++) {
-     //for(int i = _numCols - 1; i >= 0; i--) {
-      //I'm constantly changing between the two, they sometimes look wrong, is not consistent? Try printing cropped.exif.orientation
-      for(int i = 0; i < _numCols; i++) {
-        //get dimensions
-        int x = (scaledBorders[0] + (scaledBoxWidth * i) + scaledPadding[0]).floor();
-        int y = (scaledBorders[1] + (scaledBoxHeight * j) + scaledPadding[1]).floor();
-        int w = (scaledBoxWidth - (scaledPadding[0] * 2)).floor();
-        int h = (scaledBoxHeight - (scaledPadding[1] * 2)).floor();
-        //crop image
-        image.Image cropped;
-        if(img.width == actualImg.width) {
-          //correct orientation
-          cropped = cropWithBorder(img, x, y, w, h);
-        } else {
-          //rotated orientation
-          cropped = cropWithBorder(img, y, x, h, w);
+    if(img != null) {
+      double imgScale = _imgSize.width / actualImg.width;
+      double boxWidth = _getBoxWidth();
+      double scaledBoxWidth = boxWidth / imgScale;
+      double boxHeight = _getBoxHeight();
+      double scaledBoxHeight = boxHeight / imgScale;
+      List<double> scaledBorders = [_borders[0] / imgScale, _borders[1] / imgScale, _borders[2] / imgScale, _borders[3] / imgScale];
+      List<double> scaledPadding = [_padding[0] / imgScale, _padding[1] / imgScale];
+      for(int j = 0; j < _numRows; j++) {
+       //for(int i = _numCols - 1; i >= 0; i--) {
+        //I'm constantly changing between the two, they sometimes look wrong, is not consistent? Try printing cropped.exif.orientation
+        for(int i = 0; i < _numCols; i++) {
+          //get dimensions
+          int x = (scaledBorders[0] + (scaledBoxWidth * i) + scaledPadding[0]).floor();
+          int y = (scaledBorders[1] + (scaledBoxHeight * j) + scaledPadding[1]).floor();
+          int w = (scaledBoxWidth - (scaledPadding[0] * 2)).floor();
+          int h = (scaledBoxHeight - (scaledPadding[1] * 2)).floor();
+          //crop image
+          image.Image? cropped;
+          if(img.width == actualImg.width) {
+            //correct orientation
+            cropped = cropWithBorder(img, x, y, w, h);
+          } else {
+            //rotated orientation
+            cropped = cropWithBorder(img, y, x, h, w);
+          }
+          if(cropped == null) {
+            return;
+          }
+          //get color
+          RGBColor color = avgColor(cropped);
+          //get finish
+          String finish = await getFinish(cropped);
+          //get shade name
+          List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+          String shade = '';
+          switch(globals.autoShadeNameMode) {
+            case globals.AutoShadeNameMode.ColLetters:
+              shade = '${j + 1}${letters[i % letters.length]}';
+              break;
+            case globals.AutoShadeNameMode.RowLetters:
+              shade = '${letters[j % letters.length]}${i + 1}';
+              break;
+            default:
+              shade = '';
+              break;
+          }
+          //create swatch
+          _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: shade, rating: 5, tags: []));
+          //print('${_swatches.last.color.getValues()} $finish');
         }
-        if(cropped == null) {
-          return;
-        }
-        //get color
-        RGBColor color = avgColor(cropped);
-        //get finish
-        String finish = await getFinish(cropped);
-        //get shade name
-        List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-        String shade = '';
-        switch(globals.autoShadeNameMode) {
-          case globals.AutoShadeNameMode.ColLetters:
-            shade = '${j + 1}${letters[i % letters.length]}';
-            break;
-          case globals.AutoShadeNameMode.RowLetters:
-            shade = '${letters[j % letters.length]}${i + 1}';
-            break;
-          default:
-            shade = '';
-            break;
-        }
-        //create swatch
-        _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: shade, rating: 5, tags: []));
-        //print('${_swatches.last.color.getValues()} $finish');
       }
     }
   }
 
-  image.Image cropWithBorder(image.Image src, int x, int y, int w, int h) {
+  image.Image? cropWithBorder(image.Image src, int x, int y, int w, int h) {
     //crops with a 10% border
     x += (w * 0.1).toInt();
     w = (w * 0.8).toInt();

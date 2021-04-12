@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'dart:async';
 import 'globalIO.dart';
-import 'globals.dart' as globals;
+import '../globals.dart' as globals;
 
-CollectionReference _database;
+late CollectionReference _database;
 
-void init() {
+Future<void> init() async {
   _database = FirebaseFirestore.instance.collection('users');
 }
 
@@ -19,13 +19,13 @@ Future<File> getSaveFile() async {
   return file;
 }
 
-void clear() async {
+Future<void> clear() async {
   print('Clearing');
   File file = await getSaveFile();
   file.delete();
 }
 
-void save() async {
+Future<void> save() async {
   print('saving settings');
   //store user id, has done initial tutorial, and language locally
   File file = await getSaveFile();
@@ -58,9 +58,8 @@ void save() async {
     //ColorWheelScreen distance
     double colorWheel = globals.colorWheelDistance;
     //save to database
-    DocumentSnapshot docSnapshot;
-    docSnapshot = await _database.doc(globals.userID).get();
-    Map<String, dynamic> data = ((docSnapshot != null && docSnapshot.exists) ? docSnapshot.data() : {});
+    DocumentSnapshot docSnapshot = await _database.doc(globals.userID).get();
+    Map<String, dynamic> data = (docSnapshot.exists ? docSnapshot.data()! : {});
     await _database.doc(globals.userID).set(
         {
           'sort': sort,
@@ -91,7 +90,7 @@ Future<bool> load() async {
     //read everything else from Firestore
     if(globals.userID != '') {
       DocumentSnapshot docSnapshot = await _database.doc(globals.userID).get();
-      if(docSnapshot == null || !docSnapshot.exists) {
+      if(!docSnapshot.exists) {
         await save();
       } else {
         //sort
@@ -123,14 +122,16 @@ Future<void> addDebug(String debug) async {
   if(globals.userID != '') {
     try {
       DocumentReference doc = _database.doc(globals.userID);
-      Map<String, dynamic> data = (await doc.get()).data();
-      List<dynamic> prevDebug = data.containsKey('debug') ? data['debug'] : [];
-      prevDebug.add(debug);
-      await doc.update(
-          {
-            'debug': prevDebug,
-          }
-      );
+      Map<String, dynamic>? data = (await doc.get()).data();
+      if(data != null) {
+        List<dynamic> prevDebug = data.containsKey('debug') ? data['debug'] : [];
+        prevDebug.add(debug);
+        await doc.update(
+            {
+              'debug': prevDebug,
+            }
+        );
+      }
     } catch(e) {
       print(e);
     }

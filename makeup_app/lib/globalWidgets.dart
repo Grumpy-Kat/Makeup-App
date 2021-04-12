@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'IO/localizationIO.dart';
 import 'theme.dart' as theme;
 import 'types.dart';
-import 'localizationIO.dart';
+import 'routes.dart' as routes;
+import 'navigation.dart' as navigation;
 
 Future<void> openDialog(BuildContext context, Widget Function(BuildContext) builder) {
   return showDialog(
@@ -12,7 +14,7 @@ Future<void> openDialog(BuildContext context, Widget Function(BuildContext) buil
   );
 }
 
-Widget getAlertDialog(BuildContext context, { Widget title, Widget content, List<Widget> actions }) {
+Widget getAlertDialog(BuildContext context, { Widget? title, Widget? content, List<Widget>? actions }) {
   return AlertDialog(
     shape: const RoundedRectangleBorder(
       borderRadius: const BorderRadius.all(Radius.circular(10.0)),
@@ -64,7 +66,7 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
               (String val) {
                 value = val;
                 if(required) {
-                  if(showErrorText && !(val == '' || val == null)) {
+                  if(showErrorText && val != '') {
                     setState(() { showErrorText = false; });
                   }
                 }
@@ -72,20 +74,20 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
               (String val) {
                 value = val;
                 if(required) {
-                  if(!(value == '' || value == null)) {
+                  if(showErrorText && val != '') {
                     setState(() { showErrorText = false; });
                   }
-                  if(value == '' || value == null) {
+                  if(val == '') {
                     setState(() { showErrorText = true; });
                   }
                 }
               }
             ),
             actions: <Widget>[
-              FlatButton(
-                color: theme.accentColor,
+              getFlatButton(
+                bgColor: theme.accentColor,
                 onPressed: () {
-                  if(required && (value == '' || value == null)) {
+                  if(required && value == '') {
                     setState(() { showErrorText = true; });
                   } else {
                     //doesn't use navigation because is popping a Dialog
@@ -131,16 +133,16 @@ Future<void> openPaletteTextDialog(BuildContext context, String title, void Func
                     showErrorTexts[0],
                     (String val) {
                       brand = val;
-                      if(showErrorTexts[0] && !(val == '' || val == null)) {
+                      if(showErrorTexts[0] && val != '') {
                         setState(() { showErrorTexts[0] = false; });
                       }
                     },
                     (String val) {
                       brand = val;
-                      if(!(brand == '' || brand == null)) {
+                      if(brand != '') {
                         setState(() { showErrorTexts[0] = false; });
                       }
-                      if(brand == '' || brand == null) {
+                      if(brand == '') {
                         setState(() { showErrorTexts[0] = true; });
                       }
                     }
@@ -156,16 +158,16 @@ Future<void> openPaletteTextDialog(BuildContext context, String title, void Func
                     showErrorTexts[1],
                     (String val) {
                       palette = val;
-                      if(showErrorTexts[1] && !(val == '' || val == null)) {
+                      if(showErrorTexts[1] && val != '') {
                         setState(() { showErrorTexts[1] = false; });
                       }
                     },
                     (String val) {
                       palette = val;
-                      if(!(palette == '' || palette == null)) {
+                      if(palette != '') {
                         setState(() { showErrorTexts[1] = false; });
                       }
-                      if(palette == '' || palette == null) {
+                      if(palette == '') {
                         setState(() { showErrorTexts[1] = true; });
                       }
                     }
@@ -210,14 +212,14 @@ Future<void> openPaletteTextDialog(BuildContext context, String title, void Func
               ),
             ),
             actions: <Widget>[
-              FlatButton(
-                color: theme.accentColor,
+              getFlatButton(
+                bgColor: theme.accentColor,
                 onPressed: () {
-                  if(brand == '' || brand == null || palette == '' || palette == null) {
-                    if(brand == '' || brand == null) {
+                  if(brand == '' || palette == '') {
+                    if(brand == '') {
                       setState(() { showErrorTexts[0] = true; });
                     }
-                    if(palette == '' || palette == null) {
+                    if(palette == '') {
                       setState(() { showErrorTexts[1] = true; });
                     }
                   } else {
@@ -247,8 +249,8 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
         context,
         title: Text(title, style: theme.primaryTextPrimary),
         actions: <Widget>[
-          FlatButton(
-            color: theme.accentColor,
+          getFlatButton(
+            bgColor: theme.accentColor,
             onPressed: () {
               //doesn't use navigation because is popping an Dialog
               Navigator.pop(context);
@@ -259,8 +261,8 @@ Future<void> openTwoButtonDialog(BuildContext context, String title, OnVoidActio
               style: theme.accentTextBold,
             ),
           ),
-          FlatButton(
-            color: theme.accentColor,
+          getFlatButton(
+            bgColor: theme.accentColor,
             onPressed: () {
               Navigator.pop(context);
               onPressedNo();
@@ -300,8 +302,8 @@ Widget getHelpBtn(BuildContext context, String text) {
             actions: <Widget>[
               Container(
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                child: FlatButton(
-                  color: theme.accentColor,
+                child: getFlatButton(
+                  bgColor: theme.accentColor,
                   onPressed: () {
                     //doesn't use navigation because is popping an Dialog
                     Navigator.pop(context);
@@ -341,7 +343,7 @@ PageRouteBuilder slideTransition(BuildContext context, Widget nextScreen, int du
   );
 }
 
-Widget getTextField(BuildContext context, String label, String value, String error, bool showErrorText, OnStringAction onChanged, OnStringAction onSubmitted) {
+Widget getTextField(BuildContext context, String? label, String? value, String? error, bool showErrorText, OnStringAction? onChanged, OnStringAction? onSubmitted) {
   return TextFormField(
     autofocus: true,
     textAlign: TextAlign.left,
@@ -386,7 +388,7 @@ Widget getTextField(BuildContext context, String label, String value, String err
   );
 }
 
-Widget getNumField(BuildContext context, String label, double value, String error, bool showErrorText, OnDoubleAction onChanged, OnDoubleAction onSubmitted) {
+Widget getNumField(BuildContext context, String? label, double? value, String? error, bool showErrorText, OnDoubleAction? onChanged, OnDoubleAction? onSubmitted) {
   return TextFormField(
     autofocus: true,
     textAlign: TextAlign.left,
@@ -430,10 +432,14 @@ Widget getNumField(BuildContext context, String label, double value, String erro
       ),
     ),
     onChanged: (String val) {
-      onChanged(double.parse(val));
+      if(onChanged != null) {
+        onChanged(double.parse(val));
+      }
     },
     onFieldSubmitted: (String val) {
-      onSubmitted(double.parse(val));
+      if(onSubmitted != null) {
+        onSubmitted(double.parse(val));
+      }
     },
   );
 }
@@ -447,6 +453,82 @@ Widget getBackButton(OnVoidAction onPressed) {
       color: theme.iconTextColor,
     ),
     onPressed: onPressed,
+  );
+}
+
+Widget getLoginButton(BuildContext context) {
+  return IconButton(
+    constraints: BoxConstraints.tight(const Size.fromWidth(40)),
+    icon: Icon(
+      Icons.account_circle,
+      size: 25,
+      color: theme.iconTextColor,
+    ),
+    onPressed: () {
+      navigation.push(
+        context,
+        const Offset(-1, 0),
+        routes.ScreenRoutes.LoginScreen,
+        routes.routes['/loginScreen']!(context),
+      );
+    },
+  );
+}
+
+Widget getFlatButton({ OnVoidAction? onPressed, required Widget child, EdgeInsets? padding, Color? bgColor, Color? splashColor }) {
+  return TextButton(
+    onPressed: onPressed,
+    style: TextButton.styleFrom(
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
+      backgroundColor: bgColor ?? Colors.transparent,
+      shape: const RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(const Radius.circular(2)),
+      ),
+    ).copyWith(
+      overlayColor: MaterialStateProperty.resolveWith<Color?>(
+        (Set<MaterialState> states) {
+          if(states.contains(MaterialState.pressed)) {
+            return splashColor ?? theme.accentColor.withAlpha(130);
+          }
+          return null;
+        },
+      ),
+    ),
+    child: child,
+  );
+}
+
+Widget getOutlineButton({ OnVoidAction? onPressed, required Widget child, EdgeInsets? padding, Color? bgColor, Color? outlineColor, double? outlineWidth, Color? splashColor }) {
+  return OutlinedButton(
+    onPressed: onPressed,
+    style: OutlinedButton.styleFrom(
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 16),
+      backgroundColor: bgColor ?? Colors.transparent,
+      shape: const RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(const Radius.circular(2)),
+      ),
+    ).copyWith(
+      side: MaterialStateProperty.resolveWith<BorderSide?>(
+        (Set<MaterialState> states) {
+          if(states.contains(MaterialState.pressed)) {
+            return BorderSide(
+              color: outlineColor ?? theme.primaryColorDark,
+              width: outlineWidth ?? 1,
+            );
+          }
+          return null;
+        },
+      ),
+      overlayColor: MaterialStateProperty.resolveWith<Color?>(
+        (Set<MaterialState> states) {
+          if(states.contains(MaterialState.pressed)) {
+            return splashColor ?? theme.accentColor.withAlpha(130);
+          }
+          return null;
+        },
+      ),
+    ),
+    child: child,
   );
 }
 

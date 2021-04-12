@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../IO/localizationIO.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
-import '../localizationIO.dart';
 import 'Screen.dart';
 import 'AddCustomPaletteScreen.dart';
 
@@ -39,7 +39,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AllSwatchesScreen,
-          routes.routes['/allSwatchesScreen'](context),
+          routes.routes['/allSwatchesScreen']!(context),
         ),
       ),
       //help button
@@ -70,7 +70,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                 context,
                 const Offset(1, 0),
                 routes.ScreenRoutes.AddPaletteDividerScreen,
-                routes.routes['/addPaletteDividerScreen'](context, true),
+                routes.routes['/addPaletteDividerScreen']!(context, true),
               );
             },
           ),
@@ -89,7 +89,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                 context,
                 const Offset(1, 0),
                 routes.ScreenRoutes.AddPresetPaletteScreen,
-                routes.routes['/addPresetPaletteScreen'](context, true),
+                routes.routes['/addPresetPaletteScreen']!(context, true),
               );
             },
           ),
@@ -113,7 +113,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                       context,
                       const Offset(1, 0),
                       routes.ScreenRoutes.AddCustomPaletteScreen,
-                      routes.routes['/addCustomPaletteScreen'](context),
+                      routes.routes['/addCustomPaletteScreen']!(context),
                     );
                   });
                 },

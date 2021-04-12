@@ -6,17 +6,17 @@ import '../Widgets/ColorPicker.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorConversions.dart';
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import '../navigation.dart' as navigation;
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
-import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 class SwatchScreen extends StatefulWidget {
-  final int swatch;
+  final int? swatch;
 
   SwatchScreen({ this.swatch });
 
@@ -25,7 +25,7 @@ class SwatchScreen extends StatefulWidget {
 }
 
 class SwatchScreenState extends State<SwatchScreen> with ScreenState {
-  static Swatch _swatch;
+  static late Swatch _swatch;
 
   bool _isEditing = false;
   bool _hasChanged = false;
@@ -36,7 +36,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
     super.initState();
     //get swatch from id
     if(widget.swatch != null) {
-      _swatch = IO.get(widget.swatch);
+      _swatch = IO.get(widget.swatch!)!;
     }
   }
 
@@ -134,17 +134,15 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                 getStarField('${getString('swatch_rating')}', _swatch.rating, (int value) { _swatch.rating = value; onChange(false); }),
                 divider,
                 //tags
-                getChipField('${getString('swatch_tags')}', tags, _swatch.tags, (String value) { tags.add(value); globals.tags = tags; }, (List<String> value) { _swatch.tags = value; onChange(true); }),
+                getChipField('${getString('swatch_tags')}', tags, _swatch.tags!, (String value) { tags.add(value); globals.tags = tags; }, (List<String> value) { _swatch.tags = value; onChange(true); }),
                 divider,
                 //delete button
                 Container(
                   height: 70,
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                  child: OutlineButton(
-                    color: theme.bgColor,
-                    borderSide: BorderSide(
-                      color: theme.primaryColorDark,
-                    ),
+                  child: globalWidgets.getOutlineButton(
+                    bgColor: theme.bgColor,
+                    outlineColor: theme.primaryColorDark,
                     onPressed: () async {
                       await globalWidgets.openTwoButtonDialog(
                         context,
@@ -419,9 +417,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           isExpanded: true,
           style: theme.primaryTextPrimary,
           value: value,
-          onChanged: !_isEditing ? null : (String value) {
+          onChanged: !_isEditing ? null : (String? value) {
             if(_isEditing) {
-              onChange(value);
+              onChange(value ?? '');
             }
           },
           icon: null,
@@ -588,7 +586,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   }
 
   @override
-  void onExit() async {
+  Future<void> onExit() async {
     super.onExit();
     //save changes to swatch
     if(_hasChanged && !_hasSaved) {

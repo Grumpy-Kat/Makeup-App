@@ -4,15 +4,15 @@ import '../Widgets/Swatch.dart';
 import '../Widgets/Palette.dart';
 import '../Widgets/PaletteDivider.dart';
 import '../Widgets/ImagePicker.dart';
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/presetPalettesIO.dart' as presetPalettesIO;
+import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
-import '../allSwatchesIO.dart' as IO;
-import '../presetPalettesIO.dart' as presetPalettesIO;
 import '../types.dart';
-import '../localizationIO.dart';
 import 'Screen.dart';
 import 'AddPaletteScreen.dart';
 
@@ -44,19 +44,19 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   static int _blueOffset = 0;
 
   //doesn't actually contain swatches, just other values
-  static Palette _palette;
+  static Palette? _palette;
 
-  TextEditingController _brightnessController;
-  TextEditingController _redController;
-  TextEditingController _greenController;
-  TextEditingController _blueController;
+  late TextEditingController _brightnessController;
+  late TextEditingController _redController;
+  late TextEditingController _greenController;
+  late TextEditingController _blueController;
 
   @override
   void initState() {
     super.initState();
     PaletteDividerState.reset();
     for(int i = _swatches.length - 1; i >= 0; i--) {
-      Swatch swatch = IO.get(_swatches[i]);
+      Swatch? swatch = IO.get(_swatches[i]);
       if(swatch == null) {
         _swatches.removeAt(i);
         _orgRed.removeAt(i);
@@ -69,9 +69,9 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       double blue = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
       //might break something, only do it if absolutely necessary
       if(swatch.color.values['rgbR'] != red || swatch.color.values['rgbG'] != green || swatch.color.values['rgbB'] != blue) {
-        _orgRed[i] = swatch.color.clampValue(swatch.color.values['rgbR'] - (_redOffset / 255.0) - (_brightnessOffset / 255.0));
-        _orgGreen[i] = swatch.color.clampValue(swatch.color.values['rgbG'] - (_greenOffset / 255.0) - (_brightnessOffset / 255.0));
-        _orgBlue[i] = swatch.color.clampValue(swatch.color.values['rgbB'] - (_blueOffset / 255.0) - (_brightnessOffset / 255.0));
+        _orgRed[i] = swatch.color.clampValue(swatch.color.values['rgbR']! - (_redOffset / 255.0) - (_brightnessOffset / 255.0));
+        _orgGreen[i] = swatch.color.clampValue(swatch.color.values['rgbG']! - (_greenOffset / 255.0) - (_brightnessOffset / 255.0));
+        _orgBlue[i] = swatch.color.clampValue(swatch.color.values['rgbB']! - (_blueOffset / 255.0) - (_brightnessOffset / 255.0));
       }
     }
     _brightnessController = TextEditingController(text: _brightnessOffset.toString());
@@ -107,7 +107,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
-          routes.routes['/addPaletteScreen'](context),
+          routes.routes['/addPaletteScreen']!(context),
         ),
       ),
       //help button
@@ -126,9 +126,9 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         padding: EdgeInsets.only(top: 15),
         child: Column(
           children: <Widget>[
-            FlatButton(
+            globalWidgets.getFlatButton(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              color: theme.accentColor,
+              bgColor: theme.accentColor,
               onPressed: () {
                 ImagePicker.error = '';
                 ImagePicker.open(context).then(
@@ -169,7 +169,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
-          routes.routes['/addPaletteScreen'](context),
+          routes.routes['/addPaletteScreen']!(context),
         ),
       ),
       //help button
@@ -228,7 +228,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
-          routes.routes['/addPaletteScreen'](context),
+          routes.routes['/addPaletteScreen']!(context),
         ),
       ),
       rightBar: [
@@ -250,7 +250,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                     context,
                     const Offset(-1, 0),
                     routes.ScreenRoutes.AddPaletteScreen,
-                    routes.routes['/addPaletteScreen'](context),
+                    routes.routes['/addPaletteScreen']!(context),
                   );
                 },
                 () { },
@@ -294,7 +294,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               _brightnessOffset = val;
               Map<int, Swatch> swatches = {};
               for(int i = 0; i < _swatches.length; i++) {
-                Swatch swatch = IO.get(_swatches[i]);
+                Swatch? swatch = IO.get(_swatches[i]);
                 if(swatch != null) {
                   swatch.color.values['rgbR'] = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
                   swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
@@ -324,7 +324,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               _redOffset = val;
               Map<int, Swatch> swatches = {};
               for(int i = 0; i < _swatches.length; i++) {
-                Swatch swatch = IO.get(_swatches[i]);
+                Swatch? swatch = IO.get(_swatches[i]);
                 if(swatch != null) {
                   swatch.color.values['rgbR'] = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
                   swatches[_swatches[i]] = swatch;
@@ -352,7 +352,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               _greenOffset = val;
               Map<int, Swatch> swatches = {};
               for(int i = 0; i < _swatches.length; i++) {
-                Swatch swatch = IO.get(_swatches[i]);
+                Swatch? swatch = IO.get(_swatches[i]);
                 if(swatch != null) {
                   swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
                   swatches[_swatches[i]] = swatch;
@@ -380,7 +380,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
               _blueOffset = val;
               Map<int, Swatch> swatches = {};
               for(int i = 0; i < _swatches.length; i++) {
-                Swatch swatch = IO.get(_swatches[i]);
+                Swatch? swatch = IO.get(_swatches[i]);
                 if(swatch != null) {
                   swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
                   swatches[_swatches[i]] = swatch;
@@ -468,7 +468,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                   textAlignVertical: TextAlignVertical.center,
                   cursorColor: theme.accentColor,
                   decoration: InputDecoration(
-                    fillColor: theme.primaryColor,
+                    filled: false,
+                    //fillColor: theme.primaryColor,
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: theme.primaryColorDark,
@@ -483,7 +484,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
                     ),
                   ),
                   onChanged: (String val) {
-                    onChanged(int.parse(val));
+                    onChanged(int.tryParse(val) ?? 0);
                   },
                 ),
               ),
@@ -514,9 +515,9 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           swatch.palette = palette;
           swatch.weight = double.parse((weight / swatches.length).toStringAsFixed(4));
           swatch.price = double.parse((price / swatches.length).toStringAsFixed(2));
-          _orgRed.add(swatch.color.values['rgbR']);
-          _orgGreen.add(swatch.color.values['rgbG']);
-          _orgBlue.add(swatch.color.values['rgbB']);
+          _orgRed.add(swatch.color.values['rgbR']!);
+          _orgGreen.add(swatch.color.values['rgbG']!);
+          _orgBlue.add(swatch.color.values['rgbB']!);
           swatch.color.values['rgbR'] = swatch.color.clampValue(_orgRed[i] + (_redOffset / 255.0) + (_brightnessOffset / 255.0));
           swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
           swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
@@ -541,8 +542,10 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       context,
       getString('addPalette_database'),
       () {
-        _palette.swatches = IO.getMany(_swatches);
-        presetPalettesIO.save(_palette);
+        if(_palette != null) {
+          _palette!.swatches = IO.getMany(_swatches);
+          presetPalettesIO.save(_palette!);
+        }
       },
       () { },
     ).then(
@@ -552,7 +555,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AllSwatchesScreen,
-          routes.routes['/allSwatchesScreen'](context),
+          routes.routes['/allSwatchesScreen']!(context),
         );
       },
     );

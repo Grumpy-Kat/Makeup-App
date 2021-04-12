@@ -3,14 +3,13 @@ import 'ColorDifferences.dart';
 import 'ColorConversions.dart';
 import '../Widgets/Swatch.dart';
 
-Map<String, HSVColor> colorWheel;
-Map<String, RGBColor> colorNames;
-Map<String, List<String>> similarColorNames;
-Map<String, List<String>> oppositeColorNames;
+Map<String, HSVColor> colorWheel = Map<String, HSVColor>();
+Map<String, RGBColor> colorNames = Map<String, RGBColor>();
+Map<String, List<String>> similarColorNames = Map<String, List<String>>();
+Map<String, List<String>> oppositeColorNames = Map<String, List<String>>();
 
 Map<String, HSVColor> createColorWheel() {
-  if(colorWheel == null) {
-    colorWheel = Map<String, HSVColor>();
+  if(colorWheel.isEmpty) {
     //colorWheel['neutral'] = HSVColor(40.0, 0.5, 0.5);
     colorWheel['red'] = HSVColor(355.0, 0.5, 0.5);
     colorWheel['orange'] = HSVColor(25.0, 0.5, 0.5);
@@ -25,8 +24,7 @@ Map<String, HSVColor> createColorWheel() {
 }
 
 Map<String, RGBColor> createColorNames() {
-  if(colorNames == null) {
-    colorNames = Map<String, RGBColor>();
+  if(colorNames.isEmpty) {
     colorNames['color_pastelRed'] = RGBColor(1, 0.95, 0.95);
     colorNames['color_nude'] = RGBColor(0.920, 0.804, 0.745);
     colorNames['color_lightRed'] = RGBColor(1, 0.8, 0.8);
@@ -98,8 +96,7 @@ Map<String, RGBColor> createColorNames() {
 }
 
 Map<String, List<String>> createSimilarColorNames() {
-  if(similarColorNames == null) {
-    similarColorNames = Map<String, List<String>>();
+  if(similarColorNames.isEmpty) {
     similarColorNames['color_white'] = ['color_lightGray', 'color_gray', 'color_darkGray', 'color_black', 'color_cream', 'color_pastelRed', 'color_pastelOrange', 'color_pastelYellow', 'color_pastelGreen', 'color_pastelMint', 'color_pastelTurquoise', 'color_pastelBlue', 'color_pastelLavender', 'color_pastelPink'];
     similarColorNames['color_lightGray'] = ['color_white', 'color_gray', 'color_darkGray', 'color_black'];
     similarColorNames['color_gray'] = ['color_white', 'color_lightGray', 'color_darkGray', 'color_black', 'color_taupe'];
@@ -171,8 +168,7 @@ Map<String, List<String>> createSimilarColorNames() {
 }
 
 Map<String, List<String>> createOppositeColorNames() {
-  if(oppositeColorNames == null) {
-    oppositeColorNames = Map<String, List<String>>();
+  if(oppositeColorNames.isEmpty) {
     oppositeColorNames['color_white'] = [];
     oppositeColorNames['color_lightGray'] = [];
     oppositeColorNames['color_gray'] = [];
@@ -271,7 +267,7 @@ List<double> colorWheelSort(RGBColor rgb, { int step = 1 }) {
   List<String> keys = colorWheel.keys.toList();
   for(int i = 0; i < keys.length; i++) {
     String color = keys[i];
-    LabColor color1 = RGBtoLab(colorWheel[color]);
+    LabColor color1 = RGBtoLab(colorWheel[color]!);
     double dist = deltaECie2000(color0, color1);
     if(dist < minDist) {
       minDist = dist;

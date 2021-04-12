@@ -1,16 +1,17 @@
-import 'dart:io';
-import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart' as Image_Picker;
+import 'dart:io';
+import 'dart:ui';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
-import '../localizationIO.dart';
 
 class ImagePicker {
-  static BuildContext _context;
-  static File prevImg;
-  static File img;
+  static late BuildContext _context;
+  static final picker = Image_Picker.ImagePicker();
+  static File? prevImg;
+  static File? img;
   static String error = '';
   static bool isOpen = false;
 
@@ -73,14 +74,17 @@ class ImagePicker {
         setState(() { });
       }
       try {
-        File newImg = await Image_Picker.ImagePicker.pickImage(source: Image_Picker.ImageSource.gallery);
-        prevImg = img;
-        if(newImg != null) {
-          img = newImg;
-          if(isOpen) {
-            isOpen = false;
-            //doesn't use navigation because is popping an Dialog
-            Navigator.pop(_context);
+        Image_Picker.PickedFile? file = await picker.getImage(source: Image_Picker.ImageSource.gallery);
+        if(file != null) {
+          File newImg = File(file.path);
+          prevImg = img;
+          if(await newImg.exists()) {
+            img = newImg;
+            if(isOpen) {
+              isOpen = false;
+              //doesn't use navigation because is popping an Dialog
+              Navigator.pop(_context);
+            }
           }
         }
       } catch(e) {
@@ -103,14 +107,17 @@ class ImagePicker {
         setState(() { });
       }
       try {
-        File newImg = await Image_Picker.ImagePicker.pickImage(source: Image_Picker.ImageSource.camera);
-        prevImg = img;
-        if(newImg != null) {
-          img = newImg;
-          if(isOpen) {
-            isOpen = false;
-            //doesn't use navigation because is popping an Dialog
-            Navigator.pop(_context);
+        Image_Picker.PickedFile? file = await picker.getImage(source: Image_Picker.ImageSource.camera);
+        if(file != null) {
+          File newImg = File(file.path);
+          prevImg = img;
+          if(await newImg.exists()) {
+            img = newImg;
+            if(isOpen) {
+              isOpen = false;
+              //doesn't use navigation because is popping an Dialog
+              Navigator.pop(_context);
+            }
           }
         }
       } catch(e) {
@@ -125,7 +132,7 @@ class ImagePicker {
     }
   }
 
-  static Future<Size> getActualImgSize(File f) async {
+  static Future<Size> getActualImgSize(File? f) async {
     if(f == null) {
       print('getActualImgSize: Img is null');
       return Size(0, 0);
@@ -134,7 +141,7 @@ class ImagePicker {
     return Size(decoded.width.toDouble(), decoded.height.toDouble());
   }
 
-  static Size getScaledImgSize(Size maxSize, Size actualImg) {
+  static Size getScaledImgSize(Size? maxSize, Size? actualImg) {
     if(maxSize == null || actualImg == null) {
       return Size(0, 0);
     }

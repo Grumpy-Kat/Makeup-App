@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../Widgets/Look.dart';
+import '../IO/savedLooksIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../navigation.dart' as navigation;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
-import '../savedLooksIO.dart' as IO;
-import '../localizationIO.dart';
 import 'LookScreen.dart';
 
 class TodayLookScreen extends StatefulWidget {
@@ -13,7 +13,7 @@ class TodayLookScreen extends StatefulWidget {
 }
 
 class TodayLookScreenState extends State<TodayLookScreen>  {
-  Look look;
+  late Look look;
 
   bool hasSaved = false;
   int _listenerIndex = -1;

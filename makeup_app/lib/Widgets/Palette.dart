@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'Swatch.dart';
 
 class Palette {
@@ -9,7 +8,7 @@ class Palette {
   double price = 0;
   List<Swatch> swatches = [];
 
-  Palette({ @required this.id, @required this.brand, @required this.name, @required this.swatches, this.weight = 0, this.price = 0 });
+  Palette({ required this.id, required this.brand, required this.name, required this.swatches, this.weight = 0, this.price = 0 });
 
   int compareTo(Palette other, List<double> Function(Palette) comparator) {
     List<double> thisValues = comparator(this);

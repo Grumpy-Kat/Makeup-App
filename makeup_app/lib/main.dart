@@ -8,15 +8,15 @@ import 'ColorMath/ColorObjects.dart';
 import 'ColorMath/ColorConversions.dart';
 import 'ColorMath/ColorProcessingTF.dart';
 import 'Widgets/Swatch.dart';
+import 'IO/settingsIO.dart' as IO;
+import 'IO/allSwatchesIO.dart' as allSwatchesIO;
+import 'IO/savedLooksIO.dart' as savedLooksIO;
+import 'IO/presetPalettesIO.dart' as presetPalettesIO;
+import 'IO/localizationIO.dart' as localizationIO;
 import 'globals.dart' as globals;
 import 'theme.dart' as theme;
 import 'routes.dart' as routes;
 import 'navigation.dart' as navigation;
-import 'settingsIO.dart' as IO;
-import 'allSwatchesIO.dart' as allSwatchesIO;
-import 'savedLooksIO.dart' as savedLooksIO;
-import 'presetPalettesIO.dart' as presetPalettesIO;
-import 'localizationIO.dart' as localizationIO;
 
 void main() => runApp(GlamKitApp());
 
@@ -52,7 +52,7 @@ class GlamKitAppState extends State<GlamKitApp> {
     await globals.login();
     print(globals.userID);
     await localizationIO.load();
-    theme.isDarkTheme = (WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
+    theme.isDarkTheme = (WidgetsBinding.instance!.window.platformBrightness == Brightness.dark);
     //theme.isDarkTheme = true;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     routes.setRoutes();
@@ -102,10 +102,10 @@ class GlamKitAppState extends State<GlamKitApp> {
     if(globals.hasLoaded) {
       if(globals.hasDoneTutorial) {
         navigation.init(routes.ScreenRoutes.AllSwatchesScreen);
-        return routes.routes[routes.defaultRoute](null);
+        return routes.routes[routes.defaultRoute]!(null);
       } else {
         navigation.init(routes.ScreenRoutes.TutorialScreen);
-        return routes.routes['/tutorialScreen'](null);
+        return routes.routes['/tutorialScreen']!(null);
       }
     }
     return Container();

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import '../Widgets/Palette.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/PresetPaletteList.dart';
+import '../IO/allSwatchesIO.dart' as allSwatchesIO;
+import '../IO/localizationIO.dart';
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
-import '../allSwatchesIO.dart' as allSwatchesIO;
 import '../globalWidgets.dart' as globalWidgets;
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 class AddPresetPaletteScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class AddPresetPaletteScreen extends StatefulWidget {
 }
 
 class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with ScreenState {
-  static Palette _seletedPalette = null;
+  static Palette? _selectedPalette;
   static List<SwatchIcon> _swatchIcons = [];
 
   GlobalKey _paletteListKey = GlobalKey();
@@ -33,26 +33,25 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
 
   void _addSwatchIcons() {
     _swatchIcons = [];
-    if(_seletedPalette == null) {
-      return;
-    }
-    //create icon widgets for all swatch data
-    for(int i = 0; i < _seletedPalette.swatches.length; i++) {
-      _swatchIcons.add(
-        SwatchIcon.swatch(
-          _seletedPalette.swatches[i],
-          showInfoBox: true,
-          showMoreBtnInInfoBox: false,
-          showCheck: false,
-          onDelete: null,
-        ),
-      );
+    if(_selectedPalette != null) {
+      //create icon widgets for all swatch data
+      for(int i = 0; i < _selectedPalette!.swatches.length; i++) {
+        _swatchIcons.add(
+          SwatchIcon.swatch(
+            _selectedPalette!.swatches[i],
+            showInfoBox: true,
+            showMoreBtnInInfoBox: false,
+            showCheck: false,
+            onDelete: null,
+          ),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if(_seletedPalette == null) {
+    if(_selectedPalette == null) {
       return getPaletteListScreen(context);
     } else {
       return getSelectedPaletteScreen(context);
@@ -69,7 +68,7 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
-          routes.routes['/addPaletteScreen'](context),
+          routes.routes['/addPaletteScreen']!(context),
         ),
       ),
       body: PresetPaletteList(
@@ -78,7 +77,7 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
         onPaletteSelected: (Palette palette) {
           setState(() {
             _search = (_paletteListKey.currentState as PresetPaletteListState).search;
-            _seletedPalette = palette;
+            _selectedPalette = palette;
             _addSwatchIcons();
           });
         }
@@ -94,7 +93,7 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
       leftBar: globalWidgets.getBackButton(
         () {
           setState(() {
-            _seletedPalette = null;
+            _selectedPalette = null;
           });
         },
       ),
@@ -106,28 +105,28 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text('${getString('swatch_brand')}: ${_seletedPalette.brand}', style: theme.primaryTextPrimary),
+                  child: Text('${getString('swatch_brand')}: ${_selectedPalette!.brand}', style: theme.primaryTextPrimary),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text('${getString('swatch_palette')}: ${_seletedPalette.name}', style: theme.primaryTextPrimary),
+                  child: Text('${getString('swatch_palette')}: ${_selectedPalette!.name}', style: theme.primaryTextPrimary),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text('${getString('swatch_weight')}: ${_seletedPalette.weight}', style: theme.primaryTextPrimary),
+                  child: Text('${getString('swatch_weight')}: ${_selectedPalette!.weight}', style: theme.primaryTextPrimary),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text('${getString('swatch_price')}: ${_seletedPalette.price}', style: theme.primaryTextPrimary),
+                  child: Text('${getString('swatch_price')}: ${_selectedPalette!.price}', style: theme.primaryTextPrimary),
                 ),
               ],
             ),
@@ -171,17 +170,17 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
 
   void onCheckButton() {
     //return to AllSwatchesScreen
-    allSwatchesIO.add(_seletedPalette.swatches).then((value) => navigation.pushReplacement(
+    allSwatchesIO.add(_selectedPalette!.swatches).then((value) => navigation.pushReplacement(
       context,
       const Offset(-1, 0),
       routes.ScreenRoutes.AllSwatchesScreen,
-      routes.routes['/allSwatchesScreen'](context),
+      routes.routes['/allSwatchesScreen']!(context),
     ));
   }
 
   static void reset() {
     //reset all modes and data
-    _seletedPalette = null;
+    _selectedPalette = null;
     _swatchIcons = [];
   }
 }

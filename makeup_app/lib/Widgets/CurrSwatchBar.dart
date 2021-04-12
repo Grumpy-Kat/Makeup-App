@@ -38,18 +38,16 @@ class CurrSwatchBarState extends State<CurrSwatchBar> {
   void _addSwatches() {
     swatchIcons.clear();
     for(int i = 0; i < globals.currSwatches.length; i++) {
-      if(globals.currSwatches.currSwatches[i] != null) {
-        swatchIcons.add(
-          SwatchIcon.id(
-            globals.currSwatches.currSwatches[i],
-            showInfoBox: false,
-            overrideOnDoubleTap: true,
-            onDoubleTap: (int i) {
-              _onDoubleTap();
-            },
-          ),
-        );
-      }
+      swatchIcons.add(
+        SwatchIcon.id(
+          globals.currSwatches.currSwatches[i],
+          showInfoBox: false,
+          overrideOnDoubleTap: true,
+          onDoubleTap: (int i) {
+            _onDoubleTap();
+          },
+        ),
+      );
     }
   }
 
@@ -82,7 +80,7 @@ class CurrSwatchBarState extends State<CurrSwatchBar> {
       context,
       const Offset(1, 0),
       routes.ScreenRoutes.TodayLookScreen,
-      routes.routes['/todayLookScreen'](context),
+      routes.routes['/todayLookScreen']!(context),
     );
   }
 }

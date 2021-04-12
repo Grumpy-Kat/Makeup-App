@@ -5,11 +5,11 @@ import '../Widgets/SwatchList.dart';
 import '../Widgets/Look.dart';
 import '../ColorMath/ColorLookGeneration.dart';
 import '../ColorMath/ColorSorting.dart';
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/savedLooksIO.dart' as savedLooksIo;
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
-import '../allSwatchesIO.dart' as IO;
-import '../savedLooksIO.dart' as savedLooksIo;
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 class RandomizeLookScreen extends StatefulWidget {
@@ -20,9 +20,9 @@ class RandomizeLookScreen extends StatefulWidget {
 class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenState, SwatchListState {
   List<int> _swatches = [];
   List<SwatchIcon> _swatchIcons = [];
-  Future<List<int>> _swatchesFuture;
+  Future<List<int>>? _swatchesFuture;
 
-  SwatchList _swatchList;
+  late SwatchList _swatchList;
 
   int _numSwatches = 5;
   List<String> _selectedFinishes = [];
@@ -100,12 +100,10 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         body: Column(
           children: <Widget>[
             //return to randomize settings
-            FlatButton(
-              color: theme.bgColor,
-              shape:  Border.all(
-                color: theme.primaryColorDark,
-                width: 2.0,
-              ),
+            globalWidgets.getOutlineButton(
+              bgColor: theme.bgColor,
+              outlineColor: theme.primaryColorDark,
+              outlineWidth: 2.0,
               onPressed: () {
                 setState(() {
                   hasGeneratedSwatches = false;
@@ -118,12 +116,10 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
               ),
             ),
             //generate another look with the same settings
-            FlatButton(
-              color: theme.bgColor,
-              shape:  Border.all(
-                color: theme.primaryColorDark,
-                width: 2.0,
-              ),
+            globalWidgets.getOutlineButton(
+              bgColor: theme.bgColor,
+              outlineColor: theme.primaryColorDark,
+              outlineWidth: 2.0,
               onPressed: () {
                 setState(() {
                   _swatchesFuture = _addSwatches();
@@ -135,8 +131,8 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
               ),
             ),
             //save look
-            FlatButton(
-              color: theme.primaryColorDark,
+            globalWidgets.getFlatButton(
+              bgColor: theme.primaryColorDark,
               onPressed: () {
                 globalWidgets.openTextDialog(
                   context,
@@ -212,8 +208,8 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
               child: Container(
                 width: 170,
                 height: 37,
-                child: FlatButton(
-                  color: theme.accentColor,
+                child: globalWidgets.getFlatButton(
+                  bgColor: theme.accentColor,
                   onPressed: () {
                     setState(() {
                       //sets future
@@ -275,7 +271,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         onValueChanged: (val) {
           if(val != _numSwatches) {
             setState(() {
-              _numSwatches = val;
+              _numSwatches = val!;
             });
           }
         },
@@ -413,7 +409,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
           if(val != _type) {
             setState(() {
               _subtype = 0;
-              _type = val;
+              _type = val!;
             });
           }
         },
@@ -455,7 +451,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         onValueChanged: (val) {
           if(val != _subtype) {
             setState(() {
-              _subtype = val;
+              _subtype = val!;
             });
           }
         },
@@ -492,7 +488,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         onValueChanged: (val) {
           if(val != _subtype) {
             setState(() {
-              _subtype = val;
+              _subtype = val!;
             });
           }
         },
@@ -540,19 +536,19 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   }
 
   @override
-  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags) { return null; }
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, int? rating, List<String>? tags) async { }
 
   @override
-  Future<void> deleteSwatches() { return null; }
+  Future<void> deleteSwatches() async { }
 
   @override
   void filterSwatches(filters) { }
 
   @override
-  Future sortAndFilterSwatchesActual() { return null; }
+  Future sortAndFilterSwatchesActual() async { return null; }
 
   @override
-  Future<List<int>> filterAndSearchSwatchesActual() { return null; }
+  Future<List<int>> filterAndSearchSwatchesActual() async { return []; }
 
   @override
   Future<void> searchSwatches(String val) async { }

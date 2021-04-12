@@ -17,7 +17,7 @@ class ColorBase {
       return false;
     }
     List<double> values = getValues();
-    List<double> otherValues = other.getValues();
+    List<double> otherValues = (other as ColorBase).getValues();
     double threshold = 0.00001;
     //should be in same order unless something instantiated badly (which will cause any conversions or calculations to be incorrect)
     for(int i = 0; i < values.length; i++) {
@@ -58,7 +58,7 @@ class LabColor extends ColorBase {
 
   void setIlluminant(illuminant) {
     illuminant = illuminant.toLowerCase();
-    if(!ILLUMINANTS[observer].containsKey(illuminant)) {
+    if(!ILLUMINANTS[observer]!.containsKey(illuminant)) {
       throw InvalidIlluminantException(illuminant);
     }
     this.illuminant = illuminant;
@@ -71,7 +71,7 @@ class LabColor extends ColorBase {
       if(observer == '') {
         observer = this.observer;
       }
-      illuminantObserver = ILLUMINANTS[observer];
+      illuminantObserver = ILLUMINANTS[observer]!;
     } catch(e) {
       throw InvalidObserverException(observer);
     }
@@ -79,7 +79,7 @@ class LabColor extends ColorBase {
       if(illuminant == '') {
         illuminant = this.illuminant;
       }
-      illuminantXYZ = illuminantObserver[illuminant];
+      illuminantXYZ = illuminantObserver[illuminant]!;
     } catch(e) {
       throw InvalidIlluminantException(illuminant);
     }
@@ -108,7 +108,7 @@ class XYZColor extends ColorBase {
 
   void setIlluminant(illuminant) {
     illuminant = illuminant.toLowerCase();
-    if(!ILLUMINANTS[observer].containsKey(illuminant)) {
+    if(!ILLUMINANTS[observer]!.containsKey(illuminant)) {
       throw InvalidIlluminantException(illuminant);
     }
     this.illuminant = illuminant;
@@ -121,7 +121,7 @@ class XYZColor extends ColorBase {
       if (observer == '') {
         observer = this.observer;
       }
-      illuminantObserver = ILLUMINANTS[observer];
+      illuminantObserver = ILLUMINANTS[observer]!;
     } catch (e) {
       throw InvalidObserverException(observer);
     }
@@ -129,7 +129,7 @@ class XYZColor extends ColorBase {
       if (illuminant == '') {
         illuminant = this.illuminant;
       }
-      illuminantXYZ = illuminantObserver[illuminant];
+      illuminantXYZ = illuminantObserver[illuminant]!;
     } catch (e) {
       throw InvalidIlluminantException(illuminant);
     }
@@ -199,9 +199,9 @@ class RGBColor extends ColorBase {
   }
 
   List<int> getUpscaledValues() {
-    int rgbR = (0.5 + values['rgbR'] * 255).floor();
-    int rgbG = (0.5 + values['rgbG'] * 255).floor();
-    int rgbB = (0.5 + values['rgbB'] * 255).floor();
+    int rgbR = (0.5 + values['rgbR']! * 255).floor();
+    int rgbG = (0.5 + values['rgbG']! * 255).floor();
+    int rgbB = (0.5 + values['rgbB']! * 255).floor();
     return [rgbR, rgbG, rgbB];
   }
 
