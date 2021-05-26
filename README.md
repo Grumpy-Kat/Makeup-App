@@ -15,6 +15,7 @@ Features:
 - If you're shopping, you can just upload a picture of a palette you're considering. GlamKit will show you all the similar shades in your collection. It's a great way to save some money and avoid buying an almost identical shade for the hundredth time.
 - If you're trying to recreate a look that you saw on Instagram or Youtube, just upload a picture of a palette that the original artist used. You can easily find dupes in your collection. It saves you time because you no longer have to spend time comparing swatches or Googling dupes that you might not even own.
 - Create randomized looks from your collection. It's great for inspiration on days where you have trouble decing what look to do or want to experiment. You can specify which colors you want and don't want, how many shades you want, and if you want it monochromatic, dichromatic, or trichromatic.
+- Database of preset popular palettes to make it quicker to add the palettes of your collection.
 
 Planned features:
 - Adding photos of swatches to each shade, including in different lights, in case the shadows look different than in the pan.
