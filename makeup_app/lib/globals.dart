@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'ColorMath/ColorObjects.dart';
 import 'ColorMath/ColorSorting.dart';
 import 'Widgets/Swatch.dart';
@@ -136,16 +135,6 @@ set userID(String value) {
   if(hasLoaded) {
     IO.save();
   }
-}
-
-Future<void> login() async {
-  if(FirebaseAuth.instance.currentUser == null) {
-    await FirebaseAuth.instance.signInAnonymously();
-  }
-  await FirebaseAuth.instance.currentUser!.updateProfile(displayName: userID);
-  FirebaseAuth.instance.currentUser!.getIdToken(true);
-  //print(FirebaseAuth.instance.currentUser.displayName);
-  //print(userID);
 }
 
 //has done initial tutorial

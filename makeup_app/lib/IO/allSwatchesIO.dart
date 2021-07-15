@@ -37,7 +37,7 @@ Future<void> clear() async {
   hasSaveChanged = true;
 }
 
-Future<List<int>> add(List<Swatch> swatches) async {
+Future<List<int>> add(List<Swatch?> swatches) async {
   await load();
   List<int> ids = lines!.keys.toList();
   int id  = 0;
@@ -47,9 +47,11 @@ Future<List<int>> add(List<Swatch> swatches) async {
   Map<int, String> info = lines!;
   List<int> newIds = [];
   for(int i = 0; i < swatches.length; i++) {
-    id++;
-    newIds.add(id);
-    info[id] = await saveSwatch(swatches[i]);
+    if(swatches[i] != null) {
+      id++;
+      newIds.add(id);
+      info[id] = await saveSwatch(swatches[i]!);
+    }
   }
   await save(info);
   return newIds;

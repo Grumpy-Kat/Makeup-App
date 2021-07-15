@@ -9,6 +9,7 @@ import 'ColorMath/ColorConversions.dart';
 import 'ColorMath/ColorProcessingTF.dart';
 import 'Widgets/Swatch.dart';
 import 'IO/settingsIO.dart' as IO;
+import 'IO/loginIO.dart' as loginIO;
 import 'IO/allSwatchesIO.dart' as allSwatchesIO;
 import 'IO/savedLooksIO.dart' as savedLooksIO;
 import 'IO/presetPalettesIO.dart' as presetPalettesIO;
@@ -49,7 +50,7 @@ class GlamKitAppState extends State<GlamKitApp> {
     if(!globals.hasLoaded) {
       await IO.load();
     }
-    await globals.login();
+    await loginIO.signIn();
     print(globals.userID);
     await localizationIO.load();
     theme.isDarkTheme = (WidgetsBinding.instance!.window.platformBrightness == Brightness.dark);

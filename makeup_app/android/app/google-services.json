@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "32233212199-jeks9ve9m7flc32ci71r1h806f2bf6tv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glamkit",
+            "certificate_hash": "3e5b5678ab93eb2219c0b1816b87e78a6296dce9"
+          }
+        },
+        {
+          "client_id": "32233212199-lboscgei1nsnln0ah9fpjilks17pciqh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glamkit",
+            "certificate_hash": "b7546cd1bcb94d1af821ac137d2acc4e186decd0"
+          }
+        },
+        {
           "client_id": "32233212199-s0udv050i85ruu2dgit3j3nvj7j3l9l5.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +45,13 @@
             {
               "client_id": "32233212199-s0udv050i85ruu2dgit3j3nvj7j3l9l5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "32233212199-oao7vpqsl36k4tvi4cmkothfdpp5olpb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.glamkit"
+              }
             }
           ]
         }

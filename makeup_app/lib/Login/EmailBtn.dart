@@ -19,8 +19,9 @@ class EmailBtn extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Icon(
+          Icon(
             Icons.email,
+            color: theme.iconTextColor,
             size: theme.secondaryIconSize,
           ),
           Container(

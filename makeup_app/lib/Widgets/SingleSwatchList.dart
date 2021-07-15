@@ -109,7 +109,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
               if(_shouldChangeOriginalSwatches) {
                 _allSwatches = _swatches;
               }
-              print('${_swatches.length} ${_allSwatches.length}');
+              //print('${_swatches.length} ${_allSwatches.length}');
               _addSwatchIcons();
             }
             return buildSwatchList(

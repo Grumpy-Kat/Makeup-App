@@ -19,8 +19,9 @@ class PhoneBtn extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Icon(
+          Icon(
             Icons.phone,
+            color: theme.iconTextColor,
             size: theme.secondaryIconSize,
           ),
           Container(

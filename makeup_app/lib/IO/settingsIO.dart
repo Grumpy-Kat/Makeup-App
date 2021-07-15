@@ -79,7 +79,7 @@ Future<void> save() async {
 Future<bool> load() async {
   File file = await getSaveFile();
   List<String> lines = (await file.readAsString()).split('\n');
-  if(lines.length > 1) {
+  if(lines.length > 2) {
     //read user id, has done initial tutorial, and language locally
     //user id
     globals.userID = lines[0];

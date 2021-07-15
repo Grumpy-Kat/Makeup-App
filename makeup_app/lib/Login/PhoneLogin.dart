@@ -1,7 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../Widgets/Swatch.dart';
+import '../Widgets/Look.dart';
+import '../IO/loginIO.dart' as IO;
+import '../IO/allSwatchesIO.dart' as allSwatchesIO;
+import '../IO/savedLooksIO.dart' as savedLooksIO;
+import '../navigation.dart' as navigation;
+import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
+import 'AccountScreen.dart';
+import 'PhoneNumberTextInputFormatter.dart';
 
 class PhoneLogin extends StatefulWidget {
   final bool hasAccount;
@@ -15,15 +25,42 @@ class PhoneLogin extends StatefulWidget {
 class PhoneLoginState extends State<PhoneLogin> {
   late PhoneNumberTextInputFormatter _phoneNumberTextInputFormatter;
   String _countryCode = '1';
+  String? _phoneNumber;
+
+  String? _verificationId;
+  String _smsCode = '';
 
   bool _hasSentMsg = false;
 
   String _error = '';
 
+  late Map<int, Swatch?> _orgAccountSwatches;
+  late Map<String, Look> _orgAccountLooks;
+
   @override
   void initState() {
     super.initState();
     _phoneNumberTextInputFormatter = PhoneNumberTextInputFormatter(_countryCode);
+    //save original swatches for later use
+    if(allSwatchesIO.swatches == null || allSwatchesIO.hasSaveChanged) {
+      allSwatchesIO.loadFormatted().then(
+        (value) {
+          _orgAccountSwatches = allSwatchesIO.swatches!;
+        }
+      );
+    } else {
+      _orgAccountSwatches = allSwatchesIO.swatches!;
+    }
+    //save original looks for later use
+    if(savedLooksIO.looks == null || savedLooksIO.hasSaveChanged) {
+      savedLooksIO.loadFormatted().then(
+        (value) {
+          _orgAccountLooks = savedLooksIO.looks!;
+        }
+      );
+    } else {
+      _orgAccountLooks = savedLooksIO.looks!;
+    }
   }
 
   @override
@@ -31,17 +68,31 @@ class PhoneLoginState extends State<PhoneLogin> {
     Widget child;
     Widget btn;
     if(_hasSentMsg) {
-      child = getMessageCodeField(context);
+      child = getSMSCodeField(context);
       btn = globalWidgets.getFlatButton(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         bgColor: theme.accentColor,
         onPressed: () {
-          //TODO
+          AuthCredential credential = PhoneAuthProvider.credential(verificationId: _verificationId ?? '', smsCode: _smsCode);
+          globalWidgets.openLoadingDialog(context);
+          signIn(credential).then(
+            (bool value) {
+              Navigator.of(context).pop();
+              if(value) {
+                navigation.pushReplacement(
+                  context,
+                  const Offset(1, 0),
+                  routes.ScreenRoutes.AccountScreen,
+                  AccountScreen(),
+                );
+              }
+            },
+          );
         },
         child: Align(
           alignment: Alignment.center,
           child: Text(
-            widget.hasAccount ? 'Login' : 'Sign Up',
+            widget.hasAccount ? 'Sign In' : 'Sign Up',
             style: theme.accentTextBold,
           ),
         ),
@@ -52,7 +103,7 @@ class PhoneLoginState extends State<PhoneLogin> {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         bgColor: theme.accentColor,
         onPressed: () {
-          //TODO
+          verify(_countryCode, _phoneNumber ?? '');
         },
         child: Align(
           alignment: Alignment.center,
@@ -69,13 +120,95 @@ class PhoneLoginState extends State<PhoneLogin> {
         const SizedBox(
           height: 7,
         ),
-        btn,
-        if(_error != '') Text(_error, style: theme.errorText),
+        if(_error != '') Text(_error, style: theme.errorTextSecondary),
+        Container(
+          width: 200,
+          child: btn,
+        ),
       ],
     );
   }
 
-  Widget getMessageCodeField(BuildContext context) {
+  Future<void> verify(String countryCode, String phoneNumber) async {
+    globalWidgets.openLoadingDialog(context);
+    await IO.auth.verifyPhoneNumber(
+      phoneNumber: '+$countryCode$phoneNumber',
+      timeout: const Duration(milliseconds: 5000),
+      verificationCompleted: (PhoneAuthCredential credential) {
+        signIn(credential).then(
+          (bool value) {
+            Navigator.of(context).pop();
+            if(value) {
+              navigation.pushReplacement(
+                context,
+                const Offset(1, 0),
+                routes.ScreenRoutes.AccountScreen,
+                AccountScreen(),
+              );
+            }
+          },
+        );
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        _hasSentMsg = false;
+        switch(e.code) {
+          case 'invalid-phone-number': {
+            _error = 'An error occurred. The phone number is invalid. Please try again or use a different method.';
+            break;
+          }
+          default: {
+            _error = 'An error occurred. ${e.message} Please try again or use a different method.';
+            break;
+          }
+        }
+        Navigator.of(context).pop();
+        setState(() {});
+      },
+      codeSent: (String verificationId, [int? forceResendingToken]) {
+        setState(() {
+          _hasSentMsg = true;
+          _error = '';
+          _verificationId = verificationId;
+          Navigator.of(context).pop();
+          setState(() {});
+        });
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        _verificationId = verificationId;
+      },
+    );
+  }
+
+  Future<bool> signIn(AuthCredential credential) async {
+    //check to make sure not signed in
+    if(IO.auth.currentUser != null && IO.auth.currentUser!.phoneNumber == null) {
+      try {
+        await IO.auth.signInWithCredential(credential);
+        await IO.combineAccounts(context, _orgAccountSwatches, _orgAccountLooks);
+      } on FirebaseAuthException catch (e) {
+        switch(e.code) {
+          case 'invalid-verification-code': {
+            setState(() {
+              _hasSentMsg = false;
+              _error = 'The incorrect verification code was typed. Please try again.';
+            });
+            break;
+          }
+          default: {
+            setState(() {
+              _hasSentMsg = false;
+              _error = 'An error occurred while signing in. Please try again or use a different method.';
+            });
+            break;
+          }
+        }
+        return false;
+      }
+    }
+    return true;
+  }
+
+  Widget getSMSCodeField(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width - 40,
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -93,16 +226,19 @@ class PhoneLoginState extends State<PhoneLogin> {
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
         autofocus: true,
-        style: theme.primaryTextPrimary,
+        style: TextStyle(color: theme.primaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily, letterSpacing: 7.0),
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
         ],
         maxLines: 1,
         textAlignVertical: TextAlignVertical.center,
         cursorColor: theme.accentColor,
+        onChanged: (String val) {
+          _smsCode = val;
+        },
         decoration: InputDecoration(
-          hintText: 'Code',
-          hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
+          hintText: 'A verification code was sent to your phone.',
+          hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.tertiaryTextSize, fontFamily: theme.fontFamily, letterSpacing: 0.78),
           border: InputBorder.none,
         ),
       ),
@@ -164,6 +300,9 @@ class PhoneLoginState extends State<PhoneLogin> {
                 FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                 _phoneNumberTextInputFormatter,
               ],
+              onChanged: (String val) {
+                _phoneNumber = val;
+              },
               maxLines: 1,
               textAlignVertical: TextAlignVertical.center,
               cursorColor: theme.accentColor,
@@ -176,257 +315,6 @@ class PhoneLoginState extends State<PhoneLogin> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class PhoneNumberTextInputFormatter extends TextInputFormatter {
-  String countryCode;
-
-  PhoneNumberTextInputFormatter(this.countryCode);
-
-  @override
-  TextEditingValue formatEditUpdate(TextEditingValue orgVal, TextEditingValue newVal) {
-    int length = newVal.text.length;
-    int selection = newVal.selection.end;
-    int substringIndex = 0;
-    String text = '';
-    switch(countryCode) {
-      case '1':
-      case '52':
-      case '98': {
-        //United States, Canada, Mexico, Iran, etc.
-        if(length >= 1) {
-          text += '(';
-          if(newVal.selection.end >= 1) {
-            selection++;
-          }
-        }
-        if(length >= 4) {
-          text += newVal.text.substring(0, substringIndex = 3) + ') ';
-          if(newVal.selection.end >= 3) {
-            selection += 2;
-          }
-        }
-        if(length >= 7) {
-          text += newVal.text.substring(3, substringIndex = 6) + ' - ';
-          if(newVal.selection.end >= 6) {
-            selection += 3;
-          }
-        }
-        break;
-      }
-      case '33':
-      case '212': {
-        //France and Morocco
-        if(length >= 1) {
-          text += newVal.text.substring(0, substringIndex = 1) + ' ';
-          if(newVal.selection.end >= 2) {
-            selection++;
-          }
-        }
-        if(length >= 3) {
-          int end = length;
-          if(length % 2 == 0) {
-            end = length - 1;
-          }
-          if(length > 9) {
-            end = 9;
-          }
-          for(int i = 1; i < end; i += 2) {
-            text += newVal.text.substring(i, substringIndex = substringIndex + 2) + ' ';
-            if(newVal.selection.end >= substringIndex + 1) {
-              selection++;
-            }
-          }
-        }
-        break;
-      }
-      case '61':
-      case '86': {
-        //China
-        if(length >= 3) {
-          text += newVal.text.substring(0, substringIndex = 3) + ' ';
-          if(newVal.selection.end >= 4) {
-            selection++;
-          }
-        }
-        if(length >= 6) {
-          text += newVal.text.substring(3, substringIndex = 6) + ' ';
-          if(newVal.selection.end >= 7) {
-            selection++;
-          }
-        }
-        break;
-      }
-      case '64': {
-        //New Zealand
-        if(length >= 2) {
-          text += newVal.text.substring(0, substringIndex = 2) + ' ';
-          if(newVal.selection.end >= 3) {
-            selection++;
-          }
-        }
-        if(length >= 5) {
-          text += newVal.text.substring(2, substringIndex = 5) + ' ';
-          if(newVal.selection.end >= 6) {
-            selection++;
-          }
-        }
-        break;
-      }
-      case '49':
-      case '65':
-      case '852':
-      case '853': {
-        //Germany, Singapore, Hong Kong, Macau, etc.
-        if(length >= 4) {
-          text += newVal.text.substring(0, substringIndex = 4) + ' ';
-          if(newVal.selection.end >= 5) {
-            selection++;
-          }
-        }
-        break;
-      }
-      case '7': {
-        //Russia
-        if(length >= 3) {
-          text += newVal.text.substring(0, substringIndex = 3) + ' ';
-          if(newVal.selection.end >= 4) {
-            selection++;
-          }
-        }
-        if(length >= 6) {
-          text += newVal.text.substring(3, substringIndex = 6) + ' ';
-          if(newVal.selection.end >= 7) {
-            selection++;
-          }
-        }
-        if(length >= 8) {
-          text += newVal.text.substring(6, substringIndex = 8) + ' ';
-          if(newVal.selection.end >= 9) {
-            selection++;
-          }
-        }
-        break;
-      }
-      case '46': {
-        //Sweden
-        if(length >= 3) {
-          text += newVal.text.substring(0, substringIndex = 3) + ' - ';
-          if(newVal.selection.end >= 4) {
-            selection += 3;
-          }
-        }
-        if(length >= 6) {
-          text += newVal.text.substring(3, substringIndex = 6) + ' ';
-          if(newVal.selection.end >= 7) {
-            selection++;
-          }
-        }
-        if(length >= 8) {
-          text += newVal.text.substring(6, substringIndex = 8) + ' ';
-          if(newVal.selection.end >= 9) {
-            selection++;
-          }
-        }
-        break;
-      }
-      case '41':
-      case '380': {
-        //Switzerland and Ukraine
-        if(length >= 2) {
-          text += newVal.text.substring(0, substringIndex = 2) + ' ';
-          if(newVal.selection.end >= 3) {
-            selection++;
-          }
-        }
-        if(length >= 5) {
-          text += newVal.text.substring(2, substringIndex = 5) + ' ';
-          if(newVal.selection.end >= 6) {
-            selection++;
-          }
-        }
-        if(length >= 7) {
-          text += newVal.text.substring(5, substringIndex = 7) + ' ';
-          if(newVal.selection.end >= 8) {
-            selection++;
-          }
-        }
-        break;
-      }
-      case '34':
-      case '351': {
-        //Spain and Portugal
-        if(length >= 3) {
-          text += newVal.text.substring(0, substringIndex = 3) + ' ';
-          if(newVal.selection.end >= 4) {
-            selection++;
-          }
-        }
-        if(length >= 6) {
-          text += newVal.text.substring(3, substringIndex = 6) + ' ';
-          if(newVal.selection.end >= 7) {
-            selection++;
-          }
-        }
-        break;
-      }
-      case '48': {
-        //Poland
-        if(length >= 3) {
-          text += newVal.text.substring(0, substringIndex = 3) + ' - ';
-          if(newVal.selection.end >= 4) {
-            selection += 3;
-          }
-        }
-        if(length >= 6) {
-          text += newVal.text.substring(3, substringIndex = 6) + ' - ';
-          if(newVal.selection.end >= 7) {
-            selection += 3;
-          }
-        }
-        break;
-      }
-      case '91': {
-        //India
-        if(length >= 5) {
-          text += newVal.text.substring(0, substringIndex = 5) + ' ';
-          if(newVal.selection.end >= 6) {
-            selection++;
-          }
-        }
-        break;
-      }
-    }
-    if(length >= substringIndex) {
-      text += newVal.text.substring(substringIndex);
-    }
-    return TextEditingValue(
-      text: text,
-      selection: TextSelection.collapsed(offset: selection),
-    );
-  }
-}
-
-class CountryCodeTextInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(TextEditingValue orgVal, TextEditingValue newVal) {
-    String text = newVal.text;
-    int selection = newVal.selection.end;
-    if(newVal.text.length >= 1) {
-      text = '+${newVal.text}';
-      selection++;
-      if(text.length > 4) {
-        text = text.substring(0, 4);
-        if(selection > 4) {
-          selection = 4;
-        }
-      }
-    }
-    return TextEditingValue(
-      text: text,
-      selection: TextSelection.collapsed(offset: selection),
     );
   }
 }

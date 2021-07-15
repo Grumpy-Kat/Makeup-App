@@ -13,6 +13,7 @@ import 'Screens/TodayLookScreen.dart';
 import 'Screens/SavedLookScreen.dart';
 import 'Screens/SwatchScreen.dart';
 import 'Login/LoginScreen.dart';
+import 'Login/AccountScreen.dart';
 import 'types.dart';
 
 Map<String, OnScreenAction> routes = {};
@@ -37,6 +38,7 @@ enum ScreenRoutes {
   SavedLookScreen,
   SwatchScreen,
   LoginScreen,
+  AccountScreen,
 }
 
 void setRoutes() {
@@ -55,7 +57,8 @@ void setRoutes() {
     '/todayLookScreen': (context, [shouldReset = false]) => TodayLookScreen(),
     '/savedLookScreen': (context, [shouldReset = false]) => SavedLookScreen(look: null),
     '/swatchScreen': (context, [shouldReset = false]) => SwatchScreen(swatch: null),
-    '/loginScreen': (context, [shouldReset = false]) => LoginScreen(true),
+    '/loginScreen': (context, [shouldReset = false]) => LoginScreen(false),
+    '/accountScreen': (context, [shouldReset = false]) => AccountScreen(),
   };
   enumRoutes = {
     ScreenRoutes.TutorialScreen: routes['/tutorialScreen']!,
@@ -73,5 +76,6 @@ void setRoutes() {
     ScreenRoutes.SavedLookScreen: routes['/savedLookScreen']!,
     ScreenRoutes.SwatchScreen: routes['/swatchScreen']!,
     ScreenRoutes.LoginScreen: routes['/loginScreen']!,
+    ScreenRoutes.AccountScreen: routes['/accountScreen']!,
   };
 }

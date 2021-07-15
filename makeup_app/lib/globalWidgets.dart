@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'IO/localizationIO.dart';
+import 'IO/loginIO.dart' as loginIO;
 import 'theme.dart' as theme;
 import 'types.dart';
 import 'routes.dart' as routes;
@@ -465,12 +466,21 @@ Widget getLoginButton(BuildContext context) {
       color: theme.iconTextColor,
     ),
     onPressed: () {
-      navigation.push(
-        context,
-        const Offset(-1, 0),
-        routes.ScreenRoutes.LoginScreen,
-        routes.routes['/loginScreen']!(context),
-      );
+      if(loginIO.auth.currentUser != null && !loginIO.auth.currentUser!.isAnonymous) {
+        navigation.pushReplacement(
+          context,
+          const Offset(1, 0),
+          routes.ScreenRoutes.AccountScreen,
+          routes.routes['/accountScreen']!(context),
+        );
+      } else {
+        navigation.push(
+          context,
+          const Offset(1, 0),
+          routes.ScreenRoutes.LoginScreen,
+          routes.routes['/loginScreen']!(context),
+        );
+      }
     },
   );
 }

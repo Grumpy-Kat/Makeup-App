@@ -4,6 +4,7 @@ import 'package:transformer_page_view/transformer_page_view.dart';
 import '../Widgets/SizedSafeArea.dart';
 import '../IO/localizationIO.dart';
 import '../IO/settingsIO.dart' as IO;
+import '../IO/loginIO.dart' as loginIO;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
@@ -35,7 +36,7 @@ class TutorialScreenState extends State<TutorialScreen> {
           globals.userID = value.id;
           IO.save();
           print('${globals.hasLoaded} ${globals.userID}');
-          globals.login();
+          loginIO.signIn();
         }
       );
     }
