@@ -11,6 +11,7 @@ import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 import 'AccountScreen.dart';
+import 'PasswordField.dart';
 
 class EmailLogin extends StatefulWidget {
   final bool hasAccount;
@@ -23,12 +24,11 @@ class EmailLogin extends StatefulWidget {
 
 class EmailLoginState extends State<EmailLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey _passwordKey = GlobalKey();
 
   String? _email = '';
-  String? _password = '';
 
   bool _autovalidate = false;
-  bool _passwordVisible = false;
   
   bool _isResettingPassword = false;
 
@@ -73,7 +73,9 @@ class EmailLoginState extends State<EmailLogin> {
           const SizedBox(
             height: 12,
           ),
-          if(!_isResettingPassword) getPasswordField(context),
+          //do not validate if has account
+          //password might have been changed through firebase or another source, where the password was not properly validated
+          if(!_isResettingPassword) PasswordField(shouldValidate: !(widget.hasAccount || _isResettingPassword), key: _passwordKey),
           if(!_isResettingPassword) const SizedBox(
             height: 7,
           ),
@@ -100,7 +102,13 @@ class EmailLoginState extends State<EmailLogin> {
                     );
                   } else {
                     globalWidgets.openLoadingDialog(context);
-                    signIn(widget.hasAccount, _email ?? '', _password ?? '').then(
+
+                    String? password;
+                    if(_passwordKey.currentState != null) {
+                      password = (_passwordKey.currentState as PasswordFieldState).password;
+                    }
+
+                    signIn(widget.hasAccount, _email ?? '', password ?? '').then(
                       (bool value) {
                         Navigator.of(context).pop();
                         if(value) {
@@ -236,84 +244,6 @@ class EmailLoginState extends State<EmailLogin> {
     );
   }
 
-  Widget getPasswordField(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width - 40,
-      child: TextFormField(
-        textAlign: TextAlign.left,
-        keyboardType: TextInputType.visiblePassword,
-        textInputAction: widget.hasAccount ? TextInputAction.done : TextInputAction.next,
-        style: theme.primaryTextPrimary,
-        maxLines: 1,
-        textAlignVertical: TextAlignVertical.center,
-        cursorColor: theme.accentColor,
-        obscureText: !_passwordVisible,
-        onChanged: (String val) {
-          _password = val;
-        },
-        onEditingComplete: () {
-          if(!widget.hasAccount) {
-            do {
-              FocusScope.of(context).nextFocus();
-            } while(FocusScope.of(context).focusedChild!.context!.widget is! EditableText);
-          } else {
-            FocusScope.of(context).unfocus();
-          }
-        },
-        validator: (String? val) {
-          if(_password == null) {
-            if(val != '') {
-              _password = val ?? '';
-            }
-          }
-          return passwordValidate(val ?? '');
-        },
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-          fillColor: theme.primaryColor,
-          labelText: 'Password',
-          labelStyle: theme.primaryTextPrimary,
-          errorStyle: theme.errorTextSecondary,
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.errorTextColor,
-              width: 1.0,
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.errorTextColor,
-              width: 1.0,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.primaryColorDark,
-              width: 1.0,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.accentColor,
-              width: 2.5,
-            ),
-          ),
-          suffixIcon: IconButton(
-            icon: Icon(
-              _passwordVisible ? Icons.visibility : Icons.visibility_off,
-              color: theme.iconTextColor,
-            ),
-            onPressed: () {
-              setState(() {
-                _passwordVisible = !_passwordVisible;
-              });
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget getResetField(BuildContext context) {
     return TextButton(
       onPressed: () {
@@ -336,28 +266,6 @@ class EmailLoginState extends State<EmailLogin> {
     }
     if(!RegExp('^[a-zA-Z0-9.!#\$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*\$').hasMatch(val)) {
       return 'Email is not valid.';
-    }
-    return null;
-  }
-
-  String? passwordValidate(String? val) {
-    if(_isResettingPassword) {
-      return null;
-    }
-    if(val == null || val.length < 1) {
-      return 'Password is required.';
-    }
-    if(val.length < 5) {
-      return 'Password must be at least 5 characters.';
-    }
-    if(!RegExp('(?=.*?[a-z]).{1,}').hasMatch(val)) {
-      return 'Password must contain a lowercase letter.';
-    }
-    if(!RegExp('(?=.*?[A-Z]).{1,}').hasMatch(val)) {
-      return 'Password must contain an uppercase letter.';
-    }
-    if(!RegExp('(?=.*?[0-9]).{1,}').hasMatch(val)) {
-      return 'Password must contain a number.';
     }
     return null;
   }

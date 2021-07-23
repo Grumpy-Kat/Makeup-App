@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Look.dart';
 import '../IO/loginIO.dart' as IO;
@@ -11,7 +10,8 @@ import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 import 'AccountScreen.dart';
-import 'PhoneNumberTextInputFormatter.dart';
+import 'PhoneNumberField.dart';
+import 'SMSCodeField.dart';
 
 class PhoneLogin extends StatefulWidget {
   final bool hasAccount;
@@ -23,12 +23,10 @@ class PhoneLogin extends StatefulWidget {
 }
 
 class PhoneLoginState extends State<PhoneLogin> {
-  late PhoneNumberTextInputFormatter _phoneNumberTextInputFormatter;
-  String _countryCode = '1';
-  String? _phoneNumber;
+  final GlobalKey _phoneNumberKey = GlobalKey();
+  final GlobalKey _smsCodeKey = GlobalKey();
 
   String? _verificationId;
-  String _smsCode = '';
 
   bool _hasSentMsg = false;
 
@@ -40,7 +38,6 @@ class PhoneLoginState extends State<PhoneLogin> {
   @override
   void initState() {
     super.initState();
-    _phoneNumberTextInputFormatter = PhoneNumberTextInputFormatter(_countryCode);
     //save original swatches for later use
     if(allSwatchesIO.swatches == null || allSwatchesIO.hasSaveChanged) {
       allSwatchesIO.loadFormatted().then(
@@ -68,13 +65,19 @@ class PhoneLoginState extends State<PhoneLogin> {
     Widget child;
     Widget btn;
     if(_hasSentMsg) {
-      child = getSMSCodeField(context);
+      child = SMSCodeField(key: _smsCodeKey);
       btn = globalWidgets.getFlatButton(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         bgColor: theme.accentColor,
         onPressed: () {
-          AuthCredential credential = PhoneAuthProvider.credential(verificationId: _verificationId ?? '', smsCode: _smsCode);
           globalWidgets.openLoadingDialog(context);
+
+          String? smsCode;
+          if(_smsCodeKey.currentState != null) {
+            smsCode = (_smsCodeKey.currentState as SMSCodeFieldState).smsCode;
+          }
+          AuthCredential credential = PhoneAuthProvider.credential(verificationId: _verificationId ?? '', smsCode: smsCode ?? '');
+
           signIn(credential).then(
             (bool value) {
               Navigator.of(context).pop();
@@ -98,12 +101,22 @@ class PhoneLoginState extends State<PhoneLogin> {
         ),
       );
     } else {
-      child = getPhoneNumberFields(context);
+      child = PhoneNumberField(key: _phoneNumberKey);
       btn = globalWidgets.getFlatButton(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         bgColor: theme.accentColor,
         onPressed: () {
-          verify(_countryCode, _phoneNumber ?? '');
+          String? countryCode;
+          if(_phoneNumberKey.currentState != null) {
+            countryCode = (_phoneNumberKey.currentState as PhoneNumberFieldState).countryCode;
+          }
+
+          String? phoneNumber;
+          if(_phoneNumberKey.currentState != null) {
+            phoneNumber = (_phoneNumberKey.currentState as PhoneNumberFieldState).phoneNumber;
+          }
+
+          verify(countryCode ?? '1', phoneNumber ?? '');
         },
         child: Align(
           alignment: Alignment.center,
@@ -206,116 +219,6 @@ class PhoneLoginState extends State<PhoneLogin> {
       }
     }
     return true;
-  }
-
-  Widget getSMSCodeField(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width - 40,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: theme.accentColor,
-            width: 2.5,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-        ),
-      ),
-      child: TextFormField(
-        textAlign: TextAlign.left,
-        keyboardType: TextInputType.number,
-        textInputAction: TextInputAction.done,
-        autofocus: true,
-        style: TextStyle(color: theme.primaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily, letterSpacing: 7.0),
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-        ],
-        maxLines: 1,
-        textAlignVertical: TextAlignVertical.center,
-        cursorColor: theme.accentColor,
-        onChanged: (String val) {
-          _smsCode = val;
-        },
-        decoration: InputDecoration(
-          hintText: 'A verification code was sent to your phone.',
-          hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.tertiaryTextSize, fontFamily: theme.fontFamily, letterSpacing: 0.78),
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
-
-  Widget getPhoneNumberFields(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width - 40,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: theme.accentColor,
-            width: 2.5,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(7)),
-        ),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: TextFormField(
-              textAlign: TextAlign.left,
-              initialValue: '+' + _countryCode,
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.next,
-              autofocus: true,
-              onChanged: (String val) {
-                if(val[0] == '+') {
-                  _countryCode = val.substring(1);
-                } else {
-                  _countryCode = val;
-                }
-                _phoneNumberTextInputFormatter.countryCode = _countryCode;
-              },
-              style: theme.primaryTextPrimary,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                CountryCodeTextInputFormatter(),
-              ],
-              maxLines: 1,
-              textAlignVertical: TextAlignVertical.center,
-              cursorColor: theme.accentColor,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 13,
-            child: TextFormField(
-              textAlign: TextAlign.left,
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.done,
-              style: theme.primaryTextPrimary,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                _phoneNumberTextInputFormatter,
-              ],
-              onChanged: (String val) {
-                _phoneNumber = val;
-              },
-              maxLines: 1,
-              textAlignVertical: TextAlignVertical.center,
-              cursorColor: theme.accentColor,
-              decoration: InputDecoration(
-                hintText: 'Your Phone Number',
-                hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
 

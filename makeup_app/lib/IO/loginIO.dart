@@ -153,8 +153,10 @@ Future<void> signIn([bool setDisplayName = true]) async {
 
 Future<void> signOut() async {
   //not actually signing out, just signing in anonymously
-  await auth.signOut();
-  await auth.signInAnonymously();
+  if(auth.currentUser != null) {
+    await auth.signOut();
+    await auth.signInAnonymously();
+  }
   String newId = (await FirebaseFirestore.instance.collection('swatches').add({ 'data': '' })).id;
   globals.userID = newId;
   await signIn();
