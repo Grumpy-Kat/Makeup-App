@@ -540,7 +540,7 @@ class PaletteDividerState extends State<PaletteDivider> {
               break;
           }
           //create swatch
-          _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: shade, rating: 5, tags: []));
+          _swatches.add(Swatch(color: color, finish: finish, brand: '', palette: '', shade: shade, rating: 5, tags: [], imgIds: []));
           //print('${_swatches.last.color.getValues()} $finish');
         }
       }

@@ -202,6 +202,16 @@ set tags(List<String> value) {
   }
 }
 
+//all swatch photo label
+List<String> _swatchImgLabels = ['Direct lighting', 'Indirect lighting', 'Outdoor lighting', 'Indoor lighting', 'Black background', 'White background'];
+List<String> get swatchImgLabels => _swatchImgLabels;
+set swatchImgLabels(List<String> value) {
+  _swatchImgLabels = value.toSet().toList();
+  if(hasLoaded) {
+    IO.save();
+  }
+}
+
 //auto shade name lettering for new palettes
 enum AutoShadeNameMode {
   ColLetters,

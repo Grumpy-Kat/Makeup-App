@@ -5,8 +5,9 @@ import 'package:string_validator/string_validator.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
-import '../Widgets/Swatch.dart';
 import '../ColorMath/ColorObjects.dart';
+import '../Widgets/Swatch.dart';
+import '../globalWidgets.dart' as globalWidgets;
 
 Map<String, String> _finishes = { '0': 'finish_matte', '1': 'finish_satin', '2': 'finish_shimmer', '3': 'finish_metallic', '4': 'finish_glitter' };
 
@@ -74,8 +75,21 @@ Future<String> saveSwatch(Swatch swatch) async {
   }
   //color name
   String colorName = removeAllChars(swatch.colorName.trim(), [r';', r'\\']);
+  //image ids from Firebase Storage
+  String imgIds = '';
+  if(swatch.imgIds != null) {
+    for(int i = 0; i < swatch.imgIds!.length; i++) {
+      if(swatch.imgIds![i] != '') {
+        imgIds += swatch.imgIds![i] + ',';
+      }
+    }
+  }
+  //date palette was opened
+  String openDate = swatch.openDate == null ? '' : globalWidgets.displayTimeSimple(swatch.openDate!);
+  //date palette will expire
+  String expirationDate = swatch.expirationDate == null ? '' : globalWidgets.displayTimeSimple(swatch.expirationDate!);
   //combined
-  return '$color;$finish;$brand;$palette;$shade;$weight;$price;$rating;$tags;$colorName\n';
+  return '$color;$finish;$brand;$palette;$shade;$weight;$price;$rating;$tags;$colorName;$imgIds;$openDate;$expirationDate\n';
 }
 
 String removeAllChars(String orgString, List<String> patterns) {
@@ -115,6 +129,27 @@ Future<Swatch?> loadSwatch(int id, String line) async {
   if(lineSplit.length > 9) {
     colorName = lineSplit[9];
   }
+  //if exists, image ids from Firebase Storage
+  List<String> imgIds = [];
+  if(lineSplit.length > 10) {
+    imgIds = lineSplit[10].split(',');
+  }
+  //if exists, date palette was opened
+  DateTime? openDate;
+  if(lineSplit.length > 11) {
+    if(lineSplit[11] != '') {
+      List<String> split = lineSplit[11].split('-');
+      openDate = DateTime.utc(int.parse(split[2]), int.parse(split[0]), int.parse(split[1]));
+    }
+  }
+  //if exists, date palette will expire
+  DateTime? expirationDate;
+  if(lineSplit.length > 12) {
+    if(lineSplit[12] != '') {
+      List<String> split = lineSplit[12].split('-');
+      expirationDate = DateTime.utc(int.parse(split[2]), int.parse(split[0]), int.parse(split[1]));
+    }
+  }
   //combined
-  return Swatch(id: id, color: color, finish: finish, brand: brand, palette: palette, shade: shade, weight: weight, price: price, rating: rating, tags: tags, colorName: colorName);
+  return Swatch(id: id, color: color, finish: finish, brand: brand, palette: palette, shade: shade, weight: weight, price: price, rating: rating, tags: tags, colorName: colorName, imgIds: imgIds, openDate: openDate, expirationDate: expirationDate);
 }

@@ -45,6 +45,11 @@ Future<void> save() async {
     for(int i = 0; i < globals.tags.length; i++) {
       tags += '${globals.tags[i]};';
     }
+    //swatch image labels
+    String swatchImgLabels = '';
+    for(int i = 0; i < globals.swatchImgLabels.length; i++) {
+      swatchImgLabels += '${globals.swatchImgLabels[i]};';
+    }
     //brightness offset
     int brightness = globals.brightnessOffset;
     //red offset
@@ -64,6 +69,7 @@ Future<void> save() async {
         {
           'sort': sort,
           'tags': tags,
+          'swatchImgLabels': swatchImgLabels,
           'brightness': brightness,
           'red': red,
           'green': green,
@@ -97,6 +103,13 @@ Future<bool> load() async {
         globals.sort = docSnapshot.get('sort');
         //tags
         globals.tags = docSnapshot.get('tags').split(';');
+        //swatch image labels
+        try {
+          globals.swatchImgLabels = docSnapshot.get('swatchImgLabels').split(';');
+        } catch(e) {
+          print(e);
+          globals.swatchImgLabels = [];
+        }
         //brightness offset
         globals.brightnessOffset = docSnapshot.get('brightness');
         //red offset

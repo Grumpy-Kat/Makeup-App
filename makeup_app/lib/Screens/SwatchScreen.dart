@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import 'package:flutter/services.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/SwatchImagesDisplay.dart';
 import '../Widgets/StarRating.dart';
 import '../Widgets/ColorPicker.dart';
 import '../ColorMath/ColorProcessing.dart';
@@ -30,6 +32,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   bool _isEditing = false;
   bool _hasChanged = false;
   bool _hasSaved = false;
+  bool _isSaving = false;
 
   @override
   void initState() {
@@ -50,19 +53,31 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       indent: 37,
       endIndent: 37,
     );
+
     //all swatch data
-    SwatchIcon swatchIcon = SwatchIcon.swatch(_swatch, showInfoBox: false, overrideOnDoubleTap: true, onDoubleTap: (int id) {});
     RGBColor color = _swatch.color;
     String colorName = _swatch.colorName.trim();
     String finish = _swatch.finish;
     String brand = globalWidgets.toTitleCase(_swatch.brand).trimRight();
     String palette = globalWidgets.toTitleCase(_swatch.palette).trimRight();
     String shade = globalWidgets.toTitleCase(_swatch.shade).trimRight();
+
     double weight = _swatch.weight;
     double price = _swatch.price;
+
+    DateTime? openDate = _swatch.openDate;
+    if(openDate != null) {
+      openDate = globalWidgets.removeTime(openDate);
+    }
+    DateTime? expirationDate = _swatch.expirationDate;
+    if(expirationDate != null) {
+      expirationDate = globalWidgets.removeTime(expirationDate);
+    }
+
     //various options
     List<String> finishes = ['finish_matte', 'finish_satin', 'finish_shimmer', 'finish_metallic', 'finish_glitter'];
     List<String> tags = globals.tags;
+
     return buildComplete(
       context,
       getString('screen_swatch'),
@@ -95,8 +110,10 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
             setState(
               () {
                 _isEditing = !_isEditing;
-                if(!_isEditing) {
-                  IO.editId(_swatch.id, _swatch);
+                if(!_isEditing && !_isSaving) {
+                  _isSaving = true;
+                  _hasSaved = true;
+                  IO.editId(_swatch.id, _swatch).then((value) { _isSaving = false; });
                 }
               }
             );
@@ -107,9 +124,22 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
         children: <Widget>[
           //swatch preview
           Container(
-            height: 150,
-            margin: const EdgeInsets.only(top: 20, bottom: 50),
-            child: swatchIcon,
+            height: 190,
+            margin: const EdgeInsets.only(top: 20, bottom: 30),
+            child: SwatchImagesDisplay(
+              isEditing: _isEditing,
+              imgIds: _swatch.imgIds ?? [],
+              swatch: _swatch,
+              onChange: (List<String> value) {
+                _swatch.imgIds = value;
+                onChange(true);
+                if(!_isSaving) {
+                  _isSaving = true;
+                  _hasSaved = true;
+                  IO.editId(_swatch.id, _swatch).then((value) { _isSaving = false; });
+                }
+              },
+            ),
           ),
           //all fields
           Expanded(
@@ -130,6 +160,11 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                 //price
                 getNumField('${getString('swatch_price')}', price, (double value) { _swatch.price = value; onChange(false); }),
                 divider,
+                //open date
+                getDateField('Open Date', openDate, null, (DateTime value) { _swatch.openDate = value; onChange(true); }),
+                //expiration date
+                getDateField('Expiration Date', expirationDate, openDate, (DateTime value) { _swatch.expirationDate = value; onChange(true); }),
+                divider,
                 //rating
                 getStarField('${getString('swatch_rating')}', _swatch.rating, (int value) { _swatch.rating = value; onChange(false); }),
                 divider,
@@ -148,7 +183,6 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                         context,
                         getString('swatch_deleteWarning'),
                         () async {
-                          //action determined by screen that uses it
                           await IO.removeId(_swatch.id);
                           _hasSaved = true;
                           _hasChanged = true;
@@ -438,6 +472,140 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
             }
           ).toList(),
         ),
+      ),
+    );
+  }
+
+  //date field that opens popup to calendar
+  Widget getDateField(String label, DateTime? date, DateTime? relativeDate, OnDateAction onChange) {
+    Widget child = Row(
+      children: <Widget>[
+        Text(
+          date == null ? '' : globalWidgets.displayTimeLong(date),
+          style: theme.primaryTextPrimary,
+          textAlign: TextAlign.left,
+        ),
+        if(_isEditing) IconButton(
+          padding: const EdgeInsets.only(left: 12, bottom: 70),
+          constraints: BoxConstraints.tight(const Size.fromWidth(theme.primaryIconSize + 15)),
+          alignment: Alignment.topLeft,
+          icon: Icon(
+            Icons.calendar_today,
+            size: theme.secondaryIconSize,
+          ),
+          onPressed: () {
+            globalWidgets.openDialog(
+              context,
+              (BuildContext context) {
+                if(date == null && relativeDate != null) {
+                  date = DateTime(relativeDate.year + 1, relativeDate.month, relativeDate.day);
+                }
+                DateTime focusedDate = date ?? DateTime.now();
+                return Padding(
+                  padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height * 0.5) - 251),
+                  child: Dialog(
+                    insetPadding: const EdgeInsets.symmetric(horizontal: 0),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
+                    ),
+                    child: StatefulBuilder(
+                      builder: (context, setState) {
+                        return Container(
+                          padding: EdgeInsets.all(20),
+                          width: MediaQuery.of(context).size.width,
+                          height: 502,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget> [
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.only(bottom: 30),
+                                  alignment: Alignment.topLeft,
+                                  child: TableCalendar(
+                                    firstDay: DateTime.utc(1989, 12, 31),
+                                    lastDay: DateTime.utc(2041, 1, 5),
+                                    focusedDay: focusedDate,
+                                    calendarStyle: CalendarStyle(
+                                      defaultTextStyle: theme.primaryTextSecondary,
+                                      isTodayHighlighted: false,
+                                      disabledDecoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      todayTextStyle: theme.primaryTextSecondary,
+                                      selectedDecoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: theme.accentColor,
+                                      ),
+                                      selectedTextStyle: theme.accentTextSecondary,
+                                    ),
+                                    headerStyle: HeaderStyle(
+                                      formatButtonVisible: false,
+                                      titleTextStyle: theme.primaryTextBold,
+                                    ),
+                                    onPageChanged: (DateTime newFocusedDate) {
+                                      focusedDate = newFocusedDate;
+                                    },
+                                    selectedDayPredicate: (DateTime possibleDate) {
+                                      return isSameDay(possibleDate, date ?? DateTime.now());
+                                    },
+                                    onDaySelected: (DateTime selectedDate, DateTime newFocusedDate) {
+                                      setState(() {
+                                        date = selectedDate;
+                                        focusedDate = newFocusedDate;
+                                      });
+                                      onChange(selectedDate);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                height: 40,
+                                child: globalWidgets.getFlatButton(
+                                  bgColor: theme.accentColor,
+                                  onPressed: () {
+                                    onChange(date ?? focusedDate);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '${getString('save')}',
+                                      style: theme.accentTextBold,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ],
+    );
+    return getField(
+      55,
+      label,
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: _isEditing ? theme.primaryColorLight : theme.bgColor,
+          borderRadius: BorderRadius.circular(3.0),
+          border: Border.fromBorderSide(
+            BorderSide(
+              color: _isEditing ? theme.primaryColorDark : theme.bgColor,
+              width: 1.0,
+            ),
+          ),
+        ),
+        child: child,
       ),
     );
   }

@@ -542,6 +542,74 @@ Widget getOutlineButton({ OnVoidAction? onPressed, required Widget child, EdgeIn
   );
 }
 
+String displayTimeSimple(DateTime date) {
+  return '${date.month}-${date.day}-${date.year}';
+}
+
+String displayTimeLong(DateTime date) {
+  String month;
+  switch(date.month) {
+    case DateTime.january: {
+      month = 'January';
+      break;
+    }
+    case DateTime.february: {
+      month = 'February';
+      break;
+    }
+    case DateTime.march: {
+      month = 'March';
+      break;
+    }
+    case DateTime.april: {
+      month = 'April';
+      break;
+    }
+    case DateTime.may: {
+      month = 'May';
+      break;
+    }
+    case DateTime.june: {
+      month = 'June';
+      break;
+    }
+    case DateTime.july: {
+      month = 'July';
+      break;
+    }
+    case DateTime.august: {
+      month = 'August';
+      break;
+    }
+    case DateTime.september: {
+      month = 'September';
+      break;
+    }
+    case DateTime.october: {
+      month = 'October';
+      break;
+    }
+    case DateTime.november: {
+      month = 'November';
+      break;
+    }
+    case DateTime.december: {
+      month = 'December';
+      break;
+    }
+    default: {
+      month = 'None';
+      break;
+    }
+  }
+  return '$month ${date.day}, ${date.year}';
+}
+
+
+DateTime removeTime(DateTime date) {
+  return date.subtract(Duration(hours: date.hour, minutes: date.minute, seconds: date.second, milliseconds: date.millisecond, microseconds: date.microsecond));
+}
+
 String toTitleCase(String text) {
   List<String> words = text.split(' ');
   String result = '';

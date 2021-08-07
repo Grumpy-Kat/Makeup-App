@@ -11,6 +11,7 @@ import 'Widgets/Swatch.dart';
 import 'IO/settingsIO.dart' as IO;
 import 'IO/loginIO.dart' as loginIO;
 import 'IO/allSwatchesIO.dart' as allSwatchesIO;
+import 'IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import 'IO/savedLooksIO.dart' as savedLooksIO;
 import 'IO/presetPalettesIO.dart' as presetPalettesIO;
 import 'IO/localizationIO.dart' as localizationIO;
@@ -61,6 +62,7 @@ class GlamKitAppState extends State<GlamKitApp> {
     //globals.debug = !kReleaseMode;
     globals.debug = false;
     allSwatchesIO.init();
+    allSwatchesStorageIO.init();
     savedLooksIO.init();
     presetPalettesIO.init();
     /*for(int i = 0; i < 3; i++) {

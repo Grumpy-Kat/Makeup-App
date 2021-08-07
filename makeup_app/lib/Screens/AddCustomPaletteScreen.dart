@@ -158,6 +158,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
                     shade: '',
                     rating: 5,
                     tags: [],
+                    imgIds: [],
                   ),
                 ]).then(
                   (List<int> val) {

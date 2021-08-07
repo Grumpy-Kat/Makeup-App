@@ -14,12 +14,19 @@ class Swatch {
   String brand;
   String palette;
   String shade = '';
+
   double weight = 0.0;
   double price = 0.0;
+
   int rating = 5;
   List<String>? tags = [];
 
-  Swatch({ required this.color, required this.finish, this.id = -1, this.colorName = '', this.brand = '', this.palette = '', this.shade = '', this.weight = 0.0, this.price = 0.0, this.rating = 5, this.tags });
+  List<String>? imgIds = [];
+
+  DateTime? openDate = DateTime.now();
+  DateTime? expirationDate = DateTime.now();
+
+  Swatch({ required this.color, required this.finish, this.id = -1, this.colorName = '', this.brand = '', this.palette = '', this.shade = '', this.weight = 0.0, this.price = 0.0, this.rating = 5, this.tags, this.imgIds, this.openDate, this.expirationDate });
 
   int compareTo(Swatch other, List<double> Function(Swatch) comparator) {
     List<double> thisValues = comparator(this);
@@ -53,6 +60,9 @@ class Swatch {
       'price': price,
       'rating': rating,
       'tags': tags,
+      'imgIds': imgIds,
+      'openDate': openDate,
+      'expirationDate': expirationDate,
     };
   }
 
