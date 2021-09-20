@@ -7,33 +7,41 @@ import '../globals.dart' as globals;
 
 late Reference _folderRef;
 
-//TODO: cache this in the future if worried about performanced
+//TODO: cache this in the future if worried about performance
+//TODO: deleted image in deleted swatch will not refresh if new image with same swatch id is added
 
 void init() {
   _folderRef = FirebaseStorage.instance.ref('swatchesImgs/${globals.userID}');
 }
 
 Future<String> addImg({ required File file, required int swatchId, required List<String> labels, List<String>? otherImgIds, bool shouldCompress = true }) async {
+  try {
+    return await addImgBytes(bytes: file.readAsBytesSync(), swatchId: swatchId, labels: labels, otherImgIds: otherImgIds, shouldCompress: shouldCompress);
+  } on FirebaseException catch(e) {
+    print('${e.code} ${e.message}');
+  }
+  return '0';
+}
+
+Future<String> addImgBytes({ required Uint8List bytes, required int swatchId, required List<String> labels, List<String>? otherImgIds, bool shouldCompress = true }) async {
   int imgId = 0;
 
   try {
     if(otherImgIds != null && otherImgIds.length > 0) {
-      print('otherImgIds $otherImgIds');
       String lastId = '';
       int i = otherImgIds.length;
       do {
         i--;
         lastId = otherImgIds[i];
       } while(lastId == '' && i > 0);
-      print(lastId);
       imgId = (int.tryParse(lastId) ?? -1) + 1;
     }
 
-    image.Image fileImg = image.decodeImage(file.readAsBytesSync())!;
+    image.Image fileImg = image.decodeImage(bytes.toList())!;
     if(shouldCompress) {
       fileImg = image.copyResize(fileImg, height: 300);
     }
-    Uint8List bytes = Uint8List.fromList(image.encodeJpg(fileImg, quality: shouldCompress ? 85 : 100));
+    bytes = Uint8List.fromList(image.encodeJpg(fileImg, quality: shouldCompress ? 85 : 100));
 
     String labelsCombined = '';
     for(int i = 0; i < labels.length; i++) {

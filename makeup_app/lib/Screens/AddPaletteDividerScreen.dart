@@ -1,10 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FlatButton, BackButton;
 import 'package:flutter/services.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/SwatchImage.dart';
 import '../Widgets/Palette.dart';
 import '../Widgets/PaletteDivider.dart';
 import '../Widgets/ImagePicker.dart';
+import '../Widgets/FlatButton.dart';
+import '../Widgets/BackButton.dart';
+import '../Widgets/HelpButton.dart';
 import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import '../IO/presetPalettesIO.dart' as presetPalettesIO;
 import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
@@ -102,8 +107,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(
-        () => navigation.pushReplacement(
+      leftBar: BackButton(
+        onPressed: () => navigation.pushReplacement(
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
@@ -112,9 +117,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       ),
       //help button
       rightBar: [
-        globalWidgets.getHelpBtn(
-          context,
-          '${getString('help_addPalette_2')}\n\n'
+        HelpButton(
+          text: '${getString('help_addPalette_2')}\n\n'
           '${getString('help_addPalette_3')}\n\n'
           '${getString('help_addPalette_4')}\n\n'
           '${getString('help_addPalette_5')}\n\n'
@@ -126,7 +130,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         padding: EdgeInsets.only(top: 15),
         child: Column(
           children: <Widget>[
-            globalWidgets.getFlatButton(
+            FlatButton(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
               bgColor: theme.accentColor,
               onPressed: () {
@@ -164,8 +168,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(
-        () => navigation.pushReplacement(
+      leftBar: BackButton(
+        onPressed: () => navigation.pushReplacement(
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
@@ -174,9 +178,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       ),
       //help button
       rightBar: [
-        globalWidgets.getHelpBtn(
-          context,
-          '${getString('help_addPaletteDivider_0')}\n\n'
+        HelpButton(
+          text: '${getString('help_addPaletteDivider_0')}\n\n'
           '${getString('help_addPaletteDivider_1')}\n\n'
           '${getString('help_addPaletteDivider_2')}\n\n'
           '${getString('help_addPaletteDivider_3')}\n\n'
@@ -223,8 +226,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(
-        () => navigation.pushReplacement(
+      leftBar: BackButton(
+        onPressed: () => navigation.pushReplacement(
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
@@ -265,9 +268,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           ),
         ),
         //help button
-        globalWidgets.getHelpBtn(
-          context,
-          '${getString('help_addPaletteList_0')}\n\n'
+        HelpButton(
+          text: '${getString('help_addPaletteList_0')}\n\n'
           '${getString('help_addPaletteList_1')}\n\n'
           '${getString('help_addPaletteList_2_0')}\n'
           '${getString('help_addPaletteList_2_1')}\n'
@@ -498,7 +500,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
   void onEnter(BuildContext context, List<Swatch> swatches) {
     AddPaletteScreen.onEnter(
       context,
-      (String brand, String palette, double weight, double price) {
+      (String brand, String palette, double weight, double price, DateTime? openDate, DateTime? expirationDate, List<SwatchImage> imgs) async {
         globalWidgets.openLoadingDialog(context);
         _palette = Palette(
           id: '',
@@ -506,15 +508,31 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           name: palette,
           weight: weight,
           price: price,
+          openDate: openDate,
+          expirationDate: expirationDate,
           swatches: [],
         );
         //assign brand and palette to all swatches
+        //TODO: test adding new tags to imgs
         for(int i = 0; i < swatches.length; i++) {
           Swatch swatch = swatches[i];
           swatch.brand = brand;
           swatch.palette = palette;
           swatch.weight = double.parse((weight / swatches.length).toStringAsFixed(4));
           swatch.price = double.parse((price / swatches.length).toStringAsFixed(2));
+          swatch.openDate = openDate;
+          swatch.expirationDate = expirationDate;
+          if(imgs.length == swatches.length) {
+            //can't actually save images due to not having swatchId, so just set what the imgIds should be
+            swatch.imgIds = ['0'];
+          } else {
+            swatch.imgIds = [];
+            //can't actually save images due to not having swatchId, so just set what the imgIds should be
+            for(int j = 0; j < imgs.length; j++) {
+              swatch.imgIds!.add('$j');
+            }
+          }
+
           _orgRed.add(swatch.color.values['rgbR']!);
           _orgGreen.add(swatch.color.values['rgbG']!);
           _orgBlue.add(swatch.color.values['rgbB']!);
@@ -528,6 +546,34 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         _blueController = TextEditingController(text: _blueOffset.toString());
         //saves swatches and adds them to final list to display
         IO.add(swatches).then((List<int> val) {
+          //actually save the images now because got swatch ids
+          for(int i = 0; i < swatches.length; i++) {
+            if(imgs.length == swatches.length) {
+              SwatchImage img = SwatchImage(
+                bytes: imgs[i].bytes,
+                id: '0',
+                swatchId: val[i],
+                labels: imgs[i].labels,
+                width: imgs[i].width,
+                height: imgs[i].height,
+              );
+              //using updateImg to specifically set id
+              allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+            } else {
+              for(int j = 0; j < imgs.length; j++) {
+                SwatchImage img = SwatchImage(
+                  bytes: imgs[j].bytes,
+                  id: '$j',
+                  swatchId: val[i],
+                  labels: imgs[j].labels,
+                  width: imgs[j].width,
+                  height: imgs[j].height,
+                );
+                //using updateImg to specifically set id
+                allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+              }
+            }
+          }
           _swatches = val;
           _isUsingPaletteDivider = false;
           Navigator.pop(context);

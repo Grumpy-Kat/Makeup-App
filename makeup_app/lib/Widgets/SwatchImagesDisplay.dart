@@ -1,14 +1,16 @@
-import 'package:flutter/material.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/SwatchImage.dart';
-import '../Widgets/SwatchImagePopup.dart';
-import '../Widgets/ImagePicker.dart';
+import 'package:flutter/material.dart' hide FlatButton, OutlineButton;
 import '../IO/allSwatchesStorageIO.dart' as IO;
 import '../IO/localizationIO.dart';
 import '../types.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
+import 'Swatch.dart';
+import 'SwatchImage.dart';
+import 'SwatchImagePopup.dart';
+import 'ImagePicker.dart';
+import 'FlatButton.dart';
+import 'OutlineButton.dart';
 
 class SwatchImagesDisplay extends StatefulWidget {
   final bool isEditing;
@@ -24,7 +26,7 @@ class SwatchImagesDisplay extends StatefulWidget {
 
 class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
   late List<String> imgIds;
-  Map<String, SwatchImage> imgs = {};
+  Map<String, SwatchImage?> imgs = {};
   int currImgPreviewId = 0;
 
   String? imgSettingState;
@@ -42,7 +44,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
       imgPreview = SwatchIcon.swatch(widget.swatch, showInfoBox: false, overrideOnDoubleTap: true, onDoubleTap: (int id) {});
     } else {
       SwatchImage img = imgs[imgIds[currImgPreviewId - 1]]!;
-      imgPreview = globalWidgets.getFlatButton(
+      imgPreview = FlatButton(
         padding: const EdgeInsets.all(0),
         child: Image.memory(
           img.bytes,
@@ -67,7 +69,14 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
     imgWidgets.insert(0, SwatchIcon.swatch(widget.swatch, showInfoBox: false, overrideOnTap: true, onTap: (int id) { setState(() { currImgPreviewId = 0; }); }, overrideOnDoubleTap: true, onDoubleTap: (int id) {}));
     if(widget.isEditing) {
       imgWidgets.add(
-        SwatchImagePopup(widget.swatch.id, imgIds, (String id) { imgIds.add(id); widget.onChange(imgIds); }),
+        SwatchImagePopup(
+          swatchId: widget.swatch.id,
+          otherImgIds: imgIds,
+          onImgIdAdded: (String id) {
+            imgIds.add(id);
+            widget.onChange(imgIds);
+          },
+        ),
       );
     }
 
@@ -82,7 +91,6 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
           height: 50,
           child: ListView.separated(
             shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 30),
             scrollDirection: Axis.horizontal,
             separatorBuilder: (BuildContext context, int i) {
               return const SizedBox(
@@ -122,29 +130,37 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
               if(imgSettingState == imgIds[i]) {
                 setState(() {});
               }
+            } else {
+              imgs[imgIds[i]] = null;
+              //only setState if last processing img, in order to avoid settingState multiple times
+              if(imgSettingState == imgIds[i]) {
+                setState(() {});
+              }
             }
           }
         );
       } else {
-        int id = i + 1;
-        imgWidgets.add(
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-            ),
-            child: GestureDetector(
-              child: Image.memory(
-                imgs[imgIds[i]]!.bytes,
-                height: 50,
+        if(imgs[imgIds[i]] != null) {
+          int id = i + 1;
+          imgWidgets.add(
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
               ),
-              onTap: () {
-                setState(() {
-                  currImgPreviewId = id;
-                });
-              },
+              child: GestureDetector(
+                child: Image.memory(
+                  imgs[imgIds[i]]!.bytes,
+                  height: 50,
+                ),
+                onTap: () {
+                  setState(() {
+                    currImgPreviewId = id;
+                  });
+                },
+              ),
             ),
-          ),
-        );
+          );
+        }
       }
     }
     return imgWidgets;
@@ -155,7 +171,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
     if(padding < 0) {
       padding = 0;
     }
-    Size imgSize = ImagePicker.getScaledImgSize(Size(MediaQuery.of(context).size.width - 60, 200), Size(img.width.toDouble(), img.height.toDouble()));
+    Size imgSize = ImagePicker.getScaledImgSize(Size(MediaQuery.of(context).size.width - 60, 200), Size(img.width!.toDouble(), img.height!.toDouble()));
     return globalWidgets.openDialog(
       context,
       (BuildContext context) {
@@ -197,7 +213,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              child: globalWidgets.getFlatButton(
+                              child: FlatButton(
                                 bgColor: theme.accentColor,
                                 onPressed: () async {
                                   await IO.updateImg(swatchImg: img);
@@ -216,7 +232,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
                               width: 20,
                             ),
                             Expanded(
-                              child: globalWidgets.getOutlineButton(
+                              child: OutlineButton(
                                 bgColor: theme.bgColor,
                                 outlineColor: theme.primaryColorDark,
                                 onPressed: () async {
@@ -224,7 +240,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
                                     context,
                                     'Are you sure you want to delete the image?',
                                     () async {
-                                      IO.deleteImg(swatchId: img.swatchId, imgId: img.id);
+                                      IO.deleteImg(swatchId: img.swatchId!, imgId: img.id);
                                       onDelete();
                                       Navigator.pop(context);
                                     },

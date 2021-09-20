@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart' hide HSVColor;
+import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton;
 import 'package:flutter/cupertino.dart' hide HSVColor;
 import '../Widgets/Swatch.dart';
 import '../Widgets/SwatchList.dart';
 import '../Widgets/Look.dart';
+import '../Widgets/FlatButton.dart';
+import '../Widgets/OutlineButton.dart';
+import '../Widgets/HelpButton.dart';
 import '../ColorMath/ColorLookGeneration.dart';
 import '../ColorMath/ColorSorting.dart';
 import '../IO/allSwatchesIO.dart' as IO;
@@ -88,9 +91,8 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         5,
         rightBar: [
           //help button
-          globalWidgets.getHelpBtn(
-            context,
-            '${getString('help_randomizeLook_0')}\n\n'
+          HelpButton(
+            text: '${getString('help_randomizeLook_0')}\n\n'
             '${getString('help_randomizeLook_1')}\n\n'
             '${getString('help_randomizeLook_2')}\n\n'
             '${getString('help_randomizeLook_3')}\n\n'
@@ -100,7 +102,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         body: Column(
           children: <Widget>[
             //return to randomize settings
-            globalWidgets.getOutlineButton(
+            OutlineButton(
               bgColor: theme.bgColor,
               outlineColor: theme.primaryColorDark,
               outlineWidth: 2.0,
@@ -116,7 +118,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
               ),
             ),
             //generate another look with the same settings
-            globalWidgets.getOutlineButton(
+            OutlineButton(
               bgColor: theme.bgColor,
               outlineColor: theme.primaryColorDark,
               outlineWidth: 2.0,
@@ -131,7 +133,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
               ),
             ),
             //save look
-            globalWidgets.getFlatButton(
+            FlatButton(
               bgColor: theme.primaryColorDark,
               onPressed: () {
                 globalWidgets.openTextDialog(
@@ -185,9 +187,8 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
         getString('screen_randomizeLook'),
         5,
         rightBar: [
-          globalWidgets.getHelpBtn(
-            context,
-            '${getString('help_randomizeLook_0')}\n\n'
+          HelpButton(
+            text: '${getString('help_randomizeLook_0')}\n\n'
             '${getString('help_randomizeLook_1')}\n\n'
             '${getString('help_randomizeLook_2')}\n\n'
             '${getString('help_randomizeLook_3')}\n\n'
@@ -208,7 +209,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
               child: Container(
                 width: 170,
                 height: 37,
-                child: globalWidgets.getFlatButton(
+                child: FlatButton(
                   bgColor: theme.accentColor,
                   onPressed: () {
                     setState(() {
@@ -536,7 +537,7 @@ class RandomizeLookScreenState extends State<RandomizeLookScreen> with ScreenSta
   }
 
   @override
-  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, int? rating, List<String>? tags) async { }
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags) async { }
 
   @override
   Future<void> deleteSwatches() async { }

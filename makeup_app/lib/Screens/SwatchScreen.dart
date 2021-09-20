@@ -1,10 +1,13 @@
-import 'package:flutter/material.dart' hide HSVColor;
+import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton, BackButton;
 import 'package:flutter/services.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/SwatchImagesDisplay.dart';
 import '../Widgets/StarRating.dart';
 import '../Widgets/ColorPicker.dart';
+import '../Widgets/FlatButton.dart';
+import '../Widgets/OutlineButton.dart';
+import '../Widgets/BackButton.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorConversions.dart';
@@ -83,7 +86,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       getString('screen_swatch'),
       20,
       //back button
-      leftBar: globalWidgets.getBackButton (() => exit()),
+      leftBar: BackButton(onPressed: () => exit()),
       //edit button
       rightBar: [
         IconButton(
@@ -126,6 +129,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
           Container(
             height: 190,
             margin: const EdgeInsets.only(top: 20, bottom: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: SwatchImagesDisplay(
               isEditing: _isEditing,
               imgIds: _swatch.imgIds ?? [],
@@ -160,6 +164,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                 //price
                 getNumField('${getString('swatch_price')}', price, (double value) { _swatch.price = value; onChange(false); }),
                 divider,
+                const SizedBox(
+                  height: 10,
+                ),
                 //open date
                 getDateField('Open Date', openDate, null, (DateTime value) { _swatch.openDate = value; onChange(true); }),
                 //expiration date
@@ -175,7 +182,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                 Container(
                   height: 70,
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                  child: globalWidgets.getOutlineButton(
+                  child: OutlineButton(
                     bgColor: theme.bgColor,
                     outlineColor: theme.primaryColorDark,
                     onPressed: () async {
@@ -562,7 +569,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                               Container(
                                 width: 100,
                                 height: 40,
-                                child: globalWidgets.getFlatButton(
+                                child: FlatButton(
                                   bgColor: theme.accentColor,
                                   onPressed: () {
                                     onChange(date ?? focusedDate);

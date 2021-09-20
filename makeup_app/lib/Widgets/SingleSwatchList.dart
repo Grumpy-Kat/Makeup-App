@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart' hide HSVColor;
-import '../Widgets/Swatch.dart';
-import '../Widgets/SwatchList.dart';
-import '../Widgets/Filter.dart';
 import '../IO/allSwatchesIO.dart' as IO;
 import '../types.dart';
+import 'Swatch.dart';
+import 'SwatchList.dart';
+import 'Filter.dart';
 
 class SingleSwatchList extends StatefulWidget {
   final OnSwatchListAction updateSwatches;
@@ -128,7 +128,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   }
 
   @override
-  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, int? rating, List<String>? tags) async {
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags) async {
     Map<int, Swatch> editing = {};
     List<Swatch> swatches = IO.getMany(_swatches);
     for(int i = 0; i < _swatches.length; i++) {
@@ -144,11 +144,21 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
       if(price != null) {
         swatches[i].price = price;
       }
+      if(openDate != null) {
+        swatches[i].openDate = openDate;
+      }
+      if(expirationDate != null) {
+        swatches[i].expirationDate = expirationDate;
+      }
       if(rating != null && rating > 0 && rating <= 10) {
         swatches[i].rating = rating;
       }
       if(tags != null) {
-        swatches[i].tags!.addAll(tags);
+        if(swatches[i].tags == null) {
+          swatches[i].tags = tags;
+        } else {
+          swatches[i].tags!.addAll(tags);
+        }
       }
       editing[swatches[i].id] = swatches[i];
     }

@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BackButton;
 import '../Screens/Screen.dart';
+import '../Widgets/BackButton.dart';
 import '../IO/loginIO.dart' as IO;
-import '../globalWidgets.dart' as globalWidgets;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import 'LoginAuthType.dart';
 import 'EmailLogin.dart';
-import 'EmailBtn.dart';
+import 'EmailButton.dart';
 import 'PhoneLogin.dart';
-import 'PhoneBtn.dart';
+import 'PhoneButton.dart';
 import 'GoogleLogin.dart';
-//import 'GoogleBtn.dart';
-import 'LoginBtn.dart';
-import 'SignUpBtn.dart';
+//import 'GoogleButton.dart';
+import 'LoginButton.dart';
+import 'SignUpButton.dart';
 
 class LoginScreen extends StatefulWidget {
   final LoginAuthType? type;
@@ -52,21 +52,21 @@ class LoginScreenState extends State<LoginScreen> with ScreenState {
         child = EmailLogin(widget.hasAccount);
         /*btn1 = GoogleBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Google); });
         btn2 = PhoneBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Phone); });*/
-        btn = PhoneBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Phone); });
+        btn = PhoneButton(widget.hasAccount, onPressed: () { setType(LoginAuthType.Phone); });
         break;
       }
       case LoginAuthType.Phone: {
         child = PhoneLogin(widget.hasAccount);
         /*btn1 = EmailBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
         btn2 = GoogleBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Google); });*/
-        btn = EmailBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
+        btn = EmailButton(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
         break;
       }
       case LoginAuthType.Google: {
         child = GoogleLogin(widget.hasAccount);
         /*btn1 = EmailBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
         btn2 = PhoneBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Phone); });*/
-        btn = EmailBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
+        btn = EmailButton(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
         break;
       }
     }
@@ -75,7 +75,7 @@ class LoginScreenState extends State<LoginScreen> with ScreenState {
       widget.hasAccount ? 'Login' : 'Sign Up',
       20,
       //back button
-      leftBar: globalWidgets.getBackButton(() => navigation.pop(context, false)),
+      leftBar: BackButton(onPressed: () => navigation.pop(context, false)),
       body: Column(
         children: <Widget>[
           Container(
@@ -83,7 +83,7 @@ class LoginScreenState extends State<LoginScreen> with ScreenState {
             child: child,
           ),
           btn,
-          widget.hasAccount ? SignUpBtn(_type) : LoginBtn(_type),
+          widget.hasAccount ? SignUpButton(_type) : LoginButton(_type),
         ],
       ),
     );

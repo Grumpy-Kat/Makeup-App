@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FlatButton;
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Look.dart';
+import '../Widgets/FlatButton.dart';
 import '../IO/loginIO.dart' as IO;
 import '../IO/allSwatchesIO.dart' as allSwatchesIO;
 import '../IO/savedLooksIO.dart' as savedLooksIO;
@@ -85,7 +86,7 @@ class EmailLoginState extends State<EmailLogin> {
           ),
           Container(
             width: 200,
-            child: globalWidgets.getFlatButton(
+            child: FlatButton(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
               bgColor: theme.accentColor,
               onPressed: () {

@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide OutlineButton;
+import '../Widgets/OutlineButton.dart';
 import '../types.dart';
 import '../theme.dart' as theme;
-import '../globalWidgets.dart' as globalWidgets;
 
-class PhoneBtn extends StatelessWidget {
+class PhoneButton extends StatelessWidget {
   final bool hasAccount;
   final OnVoidAction? onPressed;
 
-  PhoneBtn(this.hasAccount, { this.onPressed });
+  PhoneButton(this.hasAccount, { this.onPressed });
 
   @override
   Widget build(BuildContext context) {
-    return globalWidgets.getOutlineButton(
+    return OutlineButton(
       bgColor: theme.bgColor,
       outlineColor: theme.primaryColorDark,
       onPressed: onPressed,

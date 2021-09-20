@@ -3,6 +3,7 @@ import '../Widgets/MultipleSwatchList.dart';
 import '../Widgets/Look.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
+import '../Widgets/LoginButton.dart';
 import '../IO/savedLooksIO.dart' as IO;
 import '../IO/allSwatchesIO.dart' as allSwatchesIO;
 import '../IO/localizationIO.dart';
@@ -56,7 +57,7 @@ class SavedLooksScreenState extends State<SavedLooksScreen> with ScreenState {
       getString('screen_savedLooks'),
       1,
       rightBar: [
-        globalWidgets.getLoginButton(context),
+        LoginButton(),
       ],
       //scroll view to show all look names as labels and looks as horizontal bodies
       body: MultipleSwatchList(

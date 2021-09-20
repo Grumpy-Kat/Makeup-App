@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BackButton;
 import '../ColorMath/ColorObjects.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Palette.dart';
+import '../Widgets/BackButton.dart';
 import '../IO/allSwatchesIO.dart' as IO;
 import '../IO/localizationIO.dart';
 import '../routes.dart' as routes;
@@ -63,8 +64,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(
-        () => navigation.pushReplacement(
+      leftBar: BackButton(
+        onPressed: () => navigation.pushReplacement(
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
@@ -156,6 +157,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
                     weight: weightPer,
                     price: pricePer,
                     shade: '',
+                    openDate: _palette!.openDate,
+                    expirationDate: _palette!.expirationDate,
                     rating: 5,
                     tags: [],
                     imgIds: [],
@@ -205,7 +208,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
     });
   }
 
-  static void setValues(String brand, String palette, double weight, double price) {
+  static void setValues(String brand, String palette, double weight, double price, DateTime? openDate, DateTime? expirationDate) {
     //doesn't actually contain swatches, just other values
     _palette = Palette(
       id: '',
@@ -214,6 +217,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       weight: weight,
       price: price,
       swatches: [],
+      openDate: openDate,
+      expirationDate: expirationDate,
     );
   }
 

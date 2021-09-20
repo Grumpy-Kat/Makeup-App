@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FlatButton, BackButton;
 import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../Widgets/FlatButton.dart';
+import '../Widgets/BackButton.dart';
+import '../Widgets/LoginButton.dart';
 import '../IO/settingsIO.dart' as settingsIO;
 import '../IO/allSwatchesIO.dart' as allSwatchesIO;
 import '../IO/savedLooksIO.dart' as savedLooksIO;
@@ -108,9 +111,9 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       title,
       6,
       //back button
-      leftBar: (mode == Mode.Default) ? null : globalWidgets.getBackButton(() => setState(() => mode = Mode.Default)),
+      leftBar: (mode == Mode.Default) ? null : BackButton(onPressed: () => setState(() => mode = Mode.Default)),
       rightBar: [
-        globalWidgets.getLoginButton(context),
+        LoginButton(),
       ],
       body: body,
     );
@@ -1137,7 +1140,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       child: Row(
         children: <Widget>[
           Expanded(
-            child: globalWidgets.getFlatButton(
+            child: FlatButton(
               splashColor: theme.errorTextColor.withAlpha(130),
               onPressed: () async {
                 //confirms clearing

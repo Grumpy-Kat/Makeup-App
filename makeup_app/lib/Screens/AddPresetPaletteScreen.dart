@@ -1,14 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BackButton;
 import '../Widgets/Palette.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/SwatchImage.dart';
 import '../Widgets/PresetPaletteList.dart';
+import '../Widgets/BackButton.dart';
 import '../IO/allSwatchesIO.dart' as allSwatchesIO;
+import '../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import '../IO/localizationIO.dart';
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../globalWidgets.dart' as globalWidgets;
 import 'Screen.dart';
+import 'AddPaletteScreen.dart';
 
 class AddPresetPaletteScreen extends StatefulWidget {
   final bool reset;
@@ -63,8 +67,8 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
       context,
       getString('screen_addPalette'),
       10,
-      leftBar: globalWidgets.getBackButton(
-        () => navigation.pushReplacement(
+      leftBar: BackButton(
+        onPressed: () => navigation.pushReplacement(
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
@@ -90,8 +94,8 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
       context,
       getString('screen_addPalette'),
       10,
-      leftBar: globalWidgets.getBackButton(
-        () {
+      leftBar: BackButton(
+        onPressed: () {
           setState(() {
             _selectedPalette = null;
           });
@@ -169,13 +173,69 @@ class AddPresetPaletteScreenState extends State<AddPresetPaletteScreen> with Scr
   }
 
   void onCheckButton() {
-    //return to AllSwatchesScreen
-    allSwatchesIO.add(_selectedPalette!.swatches).then((value) => navigation.pushReplacement(
+    AddPaletteScreen.onEnter(
       context,
-      const Offset(-1, 0),
-      routes.ScreenRoutes.AllSwatchesScreen,
-      routes.routes['/allSwatchesScreen']!(context),
-    ));
+      (String brand, String palette, double weight, double price, DateTime? openDate, DateTime? expirationDate, List<SwatchImage> imgs) async {
+        globalWidgets.openLoadingDialog(context);
+        List<Swatch> swatches = _selectedPalette!.swatches;
+        //assign brand and palette to all swatches
+        for(int i = 0; i < swatches.length; i++) {
+          Swatch swatch = swatches[i];
+          swatch.openDate = openDate;
+          swatch.expirationDate = expirationDate;
+          if(imgs.length == swatches.length) {
+            //can't actually save images due to not having swatchId, so just set what the imgIds should be
+            swatch.imgIds = ['0'];
+          } else {
+            swatch.imgIds = [];
+            //can't actually save images due to not having swatchId, so just set what the imgIds should be
+            for(int j = 0; j < imgs.length; j++) {
+              swatch.imgIds!.add('$j');
+            }
+          }
+        }
+        //saves swatches
+        allSwatchesIO.add(swatches).then((List<int> val) {
+          //actually save the images now because got swatch ids
+          for(int i = 0; i < swatches.length; i++) {
+            if(imgs.length == swatches.length) {
+              SwatchImage img = SwatchImage(
+                bytes: imgs[i].bytes,
+                id: '0',
+                swatchId: val[i],
+                labels: imgs[i].labels,
+                width: imgs[i].width,
+                height: imgs[i].height,
+              );
+              //using updateImg to specifically set id
+              allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+            } else {
+              for(int j = 0; j < imgs.length; j++) {
+                SwatchImage img = SwatchImage(
+                  bytes: imgs[j].bytes,
+                  id: '$j',
+                  swatchId: val[i],
+                  labels: imgs[j].labels,
+                  width: imgs[j].width,
+                  height: imgs[j].height,
+                );
+                //using updateImg to specifically set id
+                allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+              }
+            }
+          }
+          //return to AllSwatchesScreen
+          navigation.pushReplacement(
+            context,
+            const Offset(-1, 0),
+            routes.ScreenRoutes.AllSwatchesScreen,
+            routes.routes['/allSwatchesScreen']!(context),
+          );
+        });
+      },
+      showRequired: false,
+      showNums: false,
+    );
   }
 
   static void reset() {

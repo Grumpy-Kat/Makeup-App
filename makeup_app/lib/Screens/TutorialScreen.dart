@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FlatButton;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import '../Widgets/SizedSafeArea.dart';
+import '../Widgets/FlatButton.dart';
 import '../IO/localizationIO.dart';
 import '../IO/settingsIO.dart' as IO;
 import '../IO/loginIO.dart' as loginIO;
 import '../globals.dart' as globals;
-import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
@@ -109,7 +109,7 @@ class TutorialScreenState extends State<TutorialScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                         alignment: Alignment.center,
-                        child: globalWidgets.getFlatButton(
+                        child: FlatButton(
                           bgColor: theme.accentColor,
                           onPressed: () {
                             setState(() {
@@ -228,7 +228,7 @@ class TutorialScreenState extends State<TutorialScreen> {
       children: <Widget>[
         Container(
           alignment: Alignment.centerLeft,
-          child: globalWidgets.getFlatButton(
+          child: FlatButton(
             onPressed: onFinished,
             child: Text(
               getString('tutorial_skip'),
@@ -244,7 +244,7 @@ class TutorialScreenState extends State<TutorialScreen> {
         ),
         Container(
           alignment: Alignment.centerRight,
-          child: globalWidgets.getFlatButton(
+          child: FlatButton(
             onPressed: () {
               setState(() {
                 _controller.next(animation: true);

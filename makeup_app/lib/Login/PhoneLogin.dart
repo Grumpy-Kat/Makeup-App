@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart' hide FlatButton;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Look.dart';
+import '../Widgets/FlatButton.dart';
 import '../IO/loginIO.dart' as IO;
 import '../IO/allSwatchesIO.dart' as allSwatchesIO;
 import '../IO/savedLooksIO.dart' as savedLooksIO;
@@ -66,7 +67,7 @@ class PhoneLoginState extends State<PhoneLogin> {
     Widget btn;
     if(_hasSentMsg) {
       child = SMSCodeField(key: _smsCodeKey);
-      btn = globalWidgets.getFlatButton(
+      btn = FlatButton(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         bgColor: theme.accentColor,
         onPressed: () {
@@ -102,7 +103,7 @@ class PhoneLoginState extends State<PhoneLogin> {
       );
     } else {
       child = PhoneNumberField(key: _phoneNumberKey);
-      btn = globalWidgets.getFlatButton(
+      btn = FlatButton(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         bgColor: theme.accentColor,
         onPressed: () {

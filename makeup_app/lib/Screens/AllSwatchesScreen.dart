@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
+import '../Widgets/LoginButton.dart';
 import '../IO/allSwatchesIO.dart' as IO;
 import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
-import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
@@ -53,7 +53,7 @@ class AllSwatchesScreenState extends State<AllSwatchesScreen> with ScreenState {
       getString('screen_allSwatches', defaultValue: 'All Swatches'),
       0,
       rightBar: [
-        globalWidgets.getLoginButton(context),
+        LoginButton(),
       ],
       //scroll view to show all swatches
       body: SingleSwatchList(

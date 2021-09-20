@@ -3,13 +3,13 @@ import '../Widgets/ColorPicker.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
+import '../Widgets/HelpButton.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorConversions.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../IO/allSwatchesIO.dart' as IO;
 import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
-import '../globalWidgets.dart' as globalWidgets;
 import 'Screen.dart';
 
 class ColorWheelScreen extends StatefulWidget {
@@ -72,11 +72,10 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
       3,
       //help button
       rightBar: [
-        globalWidgets.getHelpBtn(
-          context,
-            '${getString('help_colorWheel_0')}\n\n'
-            '${getString('help_colorWheel_1')}\n\n'
-            '${getString('help_colorWheel_2')}',
+        HelpButton(
+          text: '${getString('help_colorWheel_0')}\n\n'
+          '${getString('help_colorWheel_1')}\n\n'
+          '${getString('help_colorWheel_2')}',
         ),
       ],
       body: Column(

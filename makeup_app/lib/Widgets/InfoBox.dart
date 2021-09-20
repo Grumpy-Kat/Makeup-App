@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart' hide FlatButton;
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import '../Screens/SwatchScreen.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../IO/localizationIO.dart';
@@ -9,6 +9,7 @@ import '../routes.dart' as routes;
 import '../navigation.dart' as navigation;
 import '../types.dart';
 import 'Swatch.dart';
+import 'FlatButton.dart';
 
 class InfoBox extends StatefulWidget {
   static Size? screenSize;
@@ -191,7 +192,7 @@ class InfoBoxState extends State<InfoBox> with TickerProviderStateMixin {
                       flex: 4,
                       child: Align(
                         alignment: const Alignment(-1, -1),
-                        child: globalWidgets.getFlatButton(
+                        child: FlatButton(
                           padding: const EdgeInsets.all(0),
                           onPressed: () {
                             _shouldClose = true;

@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BackButton;
 import '../IO/localizationIO.dart';
-import '../globalWidgets.dart' as globalWidgets;
+import '../Widgets/SwatchImage.dart';
+import '../Widgets/PaletteTextPopup.dart';
+import '../Widgets/BackButton.dart';
+import '../Widgets/HelpButton.dart';
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
@@ -11,12 +14,16 @@ class AddPaletteScreen extends StatefulWidget {
   @override
   AddPaletteScreenState createState() => AddPaletteScreenState();
 
-  static void onEnter(BuildContext context, void Function(String, String, double, double) onPressed) {
+  static Future<void> onEnter(BuildContext context, void Function(String, String, double, double, DateTime?, DateTime?, List<SwatchImage>) onPressed, { bool showRequired = true, bool showNums = true, bool showDates = true, bool showImgs = true }) {
     //open dialog to enter palette name and brand
-    globalWidgets.openPaletteTextDialog(
+    return PaletteTextPopup.open(
       context,
       getString('addPalette_popupInstructions'),
       onPressed,
+      showRequired: showRequired,
+      showNums: showNums,
+      showDates: showDates,
+      showImgs: showImgs,
     );
   }
 }
@@ -34,8 +41,8 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(
-        () => navigation.pushReplacement(
+      leftBar: BackButton(
+        onPressed: () => navigation.pushReplacement(
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AllSwatchesScreen,
@@ -44,9 +51,8 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
       ),
       //help button
       rightBar: [
-        globalWidgets.getHelpBtn(
-          context,
-          '${getString('help_addPalette_0')}\n\n'
+        HelpButton(
+          text: '${getString('help_addPalette_0')}\n\n'
           '${getString('help_addPalette_1')}\n\n'
           '${getString('help_addPalette_2')}\n\n',
         ),
@@ -105,10 +111,10 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
             onPressed: () {
               AddPaletteScreen.onEnter(
                 context,
-                (String brand, String palette, double weight, double price) {
+                (String brand, String palette, double weight, double price, DateTime? openDate, DateTime? expirationDate, List<SwatchImage> imgs) {
                   setState(() {
                     AddCustomPaletteScreenState.reset();
-                    AddCustomPaletteScreenState.setValues(brand, palette, weight, price);
+                    AddCustomPaletteScreenState.setValues(brand, palette, weight, price, openDate, expirationDate);
                     navigation.pushReplacement(
                       context,
                       const Offset(1, 0),
@@ -117,6 +123,7 @@ class AddPaletteScreenState extends State<AddPaletteScreen> with ScreenState {
                     );
                   });
                 },
+                showImgs: false,
               );
             },
           ),

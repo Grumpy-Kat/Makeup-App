@@ -6,9 +6,12 @@ class Palette {
   String name = '';
   double weight = 0;
   double price = 0;
+  DateTime? openDate;
+  DateTime? expirationDate;
+
   List<Swatch> swatches = [];
 
-  Palette({ required this.id, required this.brand, required this.name, required this.swatches, this.weight = 0, this.price = 0 });
+  Palette({ required this.id, required this.brand, required this.name, required this.swatches, this.weight = 0, this.price = 0, this.openDate, this.expirationDate });
 
   int compareTo(Palette other, List<double> Function(Palette) comparator) {
     List<double> thisValues = comparator(this);

@@ -1,7 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FlatButton, OutlineButton, BackButton;
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../Screens/Screen.dart';
+import '../Widgets/FlatButton.dart';
+import '../Widgets/OutlineButton.dart';
+import '../Widgets/BackButton.dart';
 import '../IO/loginIO.dart' as IO;
 import '../globalWidgets.dart' as globalWidgets;
 import '../navigation.dart' as navigation;
@@ -87,7 +90,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
         'Account',
         21,
         //back button
-        leftBar: globalWidgets.getBackButton(() => navigation.pop(context, false)),
+        leftBar: BackButton(onPressed: () => navigation.pop(context, false)),
         body: Form(
           autovalidate: _autovalidate,
           key: _formKey,
@@ -97,7 +100,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
               Container(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(left: horizPadding, right: vertPadding, top: 3),
-                child: globalWidgets.getOutlineButton(
+                child: OutlineButton(
                   bgColor: theme.bgColor,
                   outlineColor: theme.primaryColorDark,
                   outlineWidth: 2.0,
@@ -164,7 +167,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       if(_isChangingPhoneNumber && !_hasSentCode) Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: horizPadding, right: horizPadding, bottom: vertPadding),
-        child: globalWidgets.getFlatButton(
+        child: FlatButton(
           bgColor: theme.accentColor,
           onPressed: () async {
             globalWidgets.openLoadingDialog(context);
@@ -240,7 +243,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       if(_isChangingPhoneNumber && _hasSentCode) Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(horizontal: horizPadding, vertical: vertPadding),
-        child: globalWidgets.getFlatButton(
+        child: FlatButton(
           bgColor: theme.accentColor,
           onPressed: () {
             globalWidgets.openLoadingDialog(context);
@@ -284,7 +287,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       if(!_isChangingPhoneNumber) Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: horizPadding, right: horizPadding, bottom: vertPadding),
-        child: globalWidgets.getOutlineButton(
+        child: OutlineButton(
           bgColor: theme.bgColor,
           outlineColor: theme.primaryColorDark,
           outlineWidth: 2.0,
@@ -361,7 +364,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       if(_isChangingPassword) Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(horizontal: horizPadding, vertical: vertPadding),
-        child: globalWidgets.getFlatButton(
+        child: FlatButton(
           bgColor: theme.accentColor,
           onPressed: () {
             if(_formKey.currentState!.validate()) {
@@ -425,7 +428,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       if(!_isChangingPassword) Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: horizPadding, right: horizPadding, bottom: vertPadding),
-        child: globalWidgets.getOutlineButton(
+        child: OutlineButton(
           bgColor: theme.bgColor,
           outlineColor: theme.primaryColorDark,
           outlineWidth: 2.0,

@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart' hide FlatButton;
 //import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter/material.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/Look.dart';
+//import '../Widgets/Swatch.dart';
+//import '../Widgets/Look.dart';
+import '../Widgets/FlatButton.dart';
 //import '../IO/loginIO.dart' as IO;
-import '../IO/allSwatchesIO.dart' as allSwatchesIO;
-import '../IO/savedLooksIO.dart' as savedLooksIO;
+//import '../IO/allSwatchesIO.dart' as allSwatchesIO;
+//import '../IO/savedLooksIO.dart' as savedLooksIO;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
@@ -28,10 +29,10 @@ class GoogleLoginState extends State<GoogleLogin> {
 
   String _error = '';
 
-  late Map<int, Swatch?> _orgAccountSwatches;
-  late Map<String, Look> _orgAccountLooks;
+  //late Map<int, Swatch?> _orgAccountSwatches;
+  //late Map<String, Look> _orgAccountLooks;
 
-  @override
+  /*@override
   void initState() {
     super.initState();
     //save original swatches for later use
@@ -54,7 +55,7 @@ class GoogleLoginState extends State<GoogleLogin> {
     } else {
       _orgAccountLooks = savedLooksIO.looks!;
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +86,7 @@ class GoogleLoginState extends State<GoogleLogin> {
         ),
         Container(
           width: 200,
-          child: globalWidgets.getFlatButton(
+          child: FlatButton(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             bgColor: theme.accentColor,
             onPressed: () {

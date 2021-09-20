@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide HSVColor;
 import 'package:flutter/rendering.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/Filter.dart';
-import '../Widgets/EditSwatchPopup.dart';
 import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
+import 'Swatch.dart';
+import 'Filter.dart';
+import 'EditSwatchPopup.dart';
 
 class SwatchList {
   Future? addSwatches;
@@ -391,9 +391,9 @@ mixin SwatchListState {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.8,
               child: EditSwatchPopup(
-                onSave: (String? brand, String? palette, double? weight, double? price, int? rating, List<String>? tags) {
+                onSave: (String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags) {
                   globalWidgets.openLoadingDialog(context);
-                  editSwatches(brand, palette, weight, price, rating, tags).then((value) {
+                  editSwatches(brand, palette, weight, price, openDate, expirationDate, rating, tags).then((value) {
                     setState(() {});
                     Navigator.pop(context);
                     Navigator.pop(context);
@@ -422,7 +422,7 @@ mixin SwatchListState {
   void setState(OnVoidAction func);
   void parentReset() { }
 
-  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, int? rating, List<String>? tags);
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags);
   Future<void> deleteSwatches();
   void sortSwatches(String val);
   void filterSwatches(List<Filter> filters);

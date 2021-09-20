@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart' hide HSVColor;
+import 'package:flutter/material.dart' hide HSVColor, FlatButton;
 import 'dart:math';
 import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorConversions.dart';
 import '../theme.dart' as theme;
-import '../globalWidgets.dart' as globalWidgets;
+import 'FlatButton.dart';
 
 class ColorPicker extends StatefulWidget {
   final void Function(double, double, double) onEnter;
@@ -154,7 +154,7 @@ class ColorPickerState extends State<ColorPicker> {
       height: 40,
       top: screenSize.height * 0.325,
       left: (screenSize.width * 0.5) - 75,
-      child: globalWidgets.getFlatButton(
+      child: FlatButton(
         bgColor: theme.accentColor,
         onPressed: () { widget.onEnter(hue, saturation, value); },
         child: Align(

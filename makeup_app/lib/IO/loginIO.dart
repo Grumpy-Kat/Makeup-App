@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart' hide FlatButton;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Look.dart';
+import '../Widgets/FlatButton.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
@@ -57,7 +58,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
         context,
         title: Text('Both the local account and the account you are signing into contain swatches. Would you like to combine them or keep the swatches from one account? Warning: Whichever account is not chosen will have its swatches permanently deleted! This can not be undone.', style: theme.primaryTextPrimary),
         actions: <Widget>[
-          globalWidgets.getFlatButton(
+          FlatButton(
             bgColor: theme.accentColor,
             onPressed: () async {
               Navigator.pop(context);
@@ -98,7 +99,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
               style: theme.accentTextBold,
             ),
           ),
-          globalWidgets.getFlatButton(
+          FlatButton(
             bgColor: theme.accentColor,
             onPressed: () async {
               Navigator.pop(context);
@@ -117,7 +118,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
               style: theme.accentTextBold,
             ),
           ),
-          globalWidgets.getFlatButton(
+          FlatButton(
             bgColor: theme.accentColor,
             onPressed: () {
               Navigator.pop(context);

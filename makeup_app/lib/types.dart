@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ColorMath/ColorObjects.dart';
 import 'Widgets/Swatch.dart';
+import 'Widgets/SwatchImage.dart';
 import 'Widgets/Palette.dart';
 
 typedef OnVoidAction = void Function();
@@ -15,5 +16,7 @@ typedef OnSwatchAction = void Function(int);
 typedef OnSwatchListAction = void Function(List<int>);
 typedef OnDoubleSwatchListAction = void Function(List<List<int>>);
 typedef OnSortSwatch = List<double> Function(Swatch, int);
-typedef OnScreenAction = StatefulWidget Function(BuildContext?, [bool]);
+typedef OnSwatchImageAction = void Function(SwatchImage);
+typedef OnSwatchImageListAction = void Function(List<SwatchImage>);
 typedef OnPaletteAction = void Function(Palette);
+typedef OnScreenAction = StatefulWidget Function(BuildContext?, [bool]);

@@ -1,18 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide OutlineButton;
 import '../Widgets/MultipleSwatchList.dart';
 import '../Widgets/PaletteDivider.dart';
 import '../Widgets/PresetPaletteList.dart';
 import '../Widgets/Swatch.dart';
+import '../Widgets/SwatchImage.dart';
 import '../Widgets/Palette.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
 import '../Widgets/ImagePicker.dart';
+import '../Widgets/PaletteTextPopup.dart';
+import '../Widgets/FlatButton.dart' as internal;
+import '../Widgets/OutlineButton.dart';
+import '../Widgets/HelpButton.dart';
 import '../ColorMath/ColorProcessing.dart';
 import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
-import '../globalWidgets.dart' as globalWidgets;
 import 'Screen.dart';
 
 class PaletteScannerScreen extends StatefulWidget {
@@ -184,9 +189,8 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
       4,
       //help button
       rightBar: [
-        globalWidgets.getHelpBtn(
-          context,
-          '${getString('help_paletteScanner_0')}\n\n'
+        HelpButton(
+          text: '${getString('help_paletteScanner_0')}\n\n'
           '${getString('help_paletteScanner_1')}\n\n'
           '${getString('help_paletteScanner_2')}\n\n'
           '${getString('help_paletteScanner_3')}\n\n'
@@ -250,7 +254,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
         child: Column(
           children: <Widget>[
             //return to palette divider
-            globalWidgets.getOutlineButton(
+            OutlineButton(
               bgColor: theme.bgColor,
               outlineColor: theme.primaryColorDark,
               outlineWidth: 2.0,
@@ -268,7 +272,7 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
               ),
             ),
             //save palette to collection
-            globalWidgets.getFlatButton(
+            internal.FlatButton(
               bgColor: theme.primaryColorDark,
               onPressed: () {
                 onSave(context, _labels);
@@ -309,22 +313,119 @@ class PaletteScannerScreenState extends State<PaletteScannerScreen> with ScreenS
   void onSave(BuildContext context, List<Swatch> swatches) {
     if(!_isUsingPaletteDivider && _palette != null) {
       //using preset palette
-      IO.add(_palette!.swatches);
-    } else {
-      //open dialog to enter palette name and brand
-      globalWidgets.openPaletteTextDialog(
+      PaletteTextPopup.open(
         context,
         getString('paletteScanner_popupInstructions'),
-        (String brand, String palette, double weight, double price) {
+        (String brand, String palette, double weight, double price, DateTime? openDate, DateTime? expirationDate, List<SwatchImage> imgs) async {
           //assign brand and palette to all swatches
+          List<Swatch> swatches = _palette!.swatches;
           for(int i = 0; i < swatches.length; i++) {
-            swatches[i].brand = brand;
-            swatches[i].palette = palette;
-            swatches[i].weight = double.parse((weight / swatches.length).toStringAsFixed(2));
-            swatches[i].price = double.parse((price / swatches.length).toStringAsFixed(2));
+            Swatch swatch = swatches[i];
+            swatch.openDate = openDate;
+            swatch.expirationDate = expirationDate;
+            if(imgs.length == swatches.length) {
+              //can't actually save images due to not having swatchId, so just set what the imgIds should be
+              swatch.imgIds = ['0'];
+            } else {
+              swatch.imgIds = [];
+              //can't actually save images due to not having swatchId, so just set what the imgIds should be
+              for(int j = 0; j < imgs.length; j++) {
+                swatch.imgIds!.add('$j');
+              }
+            }
           }
           //saves swatches
-          IO.add(swatches);
+          IO.add(swatches).then((List<int> val) {
+            //actually save the images now because got swatch ids
+            for(int i = 0; i < swatches.length; i++) {
+              if(imgs.length == swatches.length) {
+                SwatchImage img = SwatchImage(
+                  bytes: imgs[i].bytes,
+                  id: '0',
+                  swatchId: val[i],
+                  labels: imgs[i].labels,
+                  width: imgs[i].width,
+                  height: imgs[i].height,
+                );
+                //using updateImg to specifically set id
+                allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+              } else {
+                for(int j = 0; j < imgs.length; j++) {
+                  SwatchImage img = SwatchImage(
+                    bytes: imgs[j].bytes,
+                    id: '$j',
+                    swatchId: val[i],
+                    labels: imgs[j].labels,
+                    width: imgs[j].width,
+                    height: imgs[j].height,
+                  );
+                  //using updateImg to specifically set id
+                  allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+                }
+              }
+            }
+          });
+        },
+        showRequired: false,
+        showNums: false,
+      );
+    } else {
+      //open dialog to enter palette name and brand
+      PaletteTextPopup.open(
+        context,
+        getString('paletteScanner_popupInstructions'),
+        (String brand, String palette, double weight, double price, DateTime? openDate, DateTime? expirationDate, List<SwatchImage> imgs) async {
+          //assign brand and palette to all swatches
+          for(int i = 0; i < swatches.length; i++) {
+            Swatch swatch = swatches[i];
+            swatch.brand = brand;
+            swatch.palette = palette;
+            swatch.weight = double.parse((weight / swatches.length).toStringAsFixed(2));
+            swatch.price = double.parse((price / swatches.length).toStringAsFixed(2));
+            swatch.openDate = openDate;
+            swatch.expirationDate = expirationDate;
+            if(imgs.length == swatches.length) {
+              //can't actually save images due to not having swatchId, so just set what the imgIds should be
+              swatch.imgIds = ['0'];
+            } else {
+              swatch.imgIds = [];
+              //can't actually save images due to not having swatchId, so just set what the imgIds should be
+              for(int j = 0; j < imgs.length; j++) {
+                swatch.imgIds!.add('$j');
+              }
+            }
+          }
+          //saves swatches
+          IO.add(swatches).then((List<int> val) {
+            //actually save the images now because got swatch ids
+            for(int i = 0; i < swatches.length; i++) {
+              if(imgs.length == swatches.length) {
+                SwatchImage img = SwatchImage(
+                  bytes: imgs[i].bytes,
+                  id: '0',
+                  swatchId: val[i],
+                  labels: imgs[i].labels,
+                  width: imgs[i].width,
+                  height: imgs[i].height,
+                );
+                //using updateImg to specifically set id
+                allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+              } else {
+                for(int j = 0; j < imgs.length; j++) {
+                  SwatchImage img = SwatchImage(
+                    bytes: imgs[j].bytes,
+                    id: '$j',
+                    swatchId: val[i],
+                    labels: imgs[j].labels,
+                    width: imgs[j].width,
+                    height: imgs[j].height,
+                  );
+                  //using updateImg to specifically set id
+                  allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+                }
+              }
+            }
+          });
         },
       );
     }

@@ -213,7 +213,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   Future<void> searchSwatches(String val) async { }
 
   @override
-  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, int? rating, List<String>? tags) async { }
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags) async { }
 
   @override
   Future<void> deleteSwatches() async { }

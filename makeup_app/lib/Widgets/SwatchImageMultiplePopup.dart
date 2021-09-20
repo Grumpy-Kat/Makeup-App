@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton;
+import 'package:flutter/material.dart' hide HSVColor, FlatButton;
+import 'dart:typed_data';
 import '../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
@@ -7,24 +8,23 @@ import '../theme.dart' as theme;
 import '../types.dart';
 import 'ImagePicker.dart';
 import 'SwatchImage.dart';
+import 'PaletteDivider.dart';
 import 'FlatButton.dart';
-import 'OutlineButton.dart';
 
-class SwatchImagePopup extends StatefulWidget {
+class SwatchImageMultiplePopup extends StatefulWidget {
   final int? swatchId;
   final List<String> otherImgIds;
-  final OnStringAction? onImgIdAdded;
-  final OnSwatchImageAction? onImgAdded;
+  final OnStringListAction? onImgIdsAdded;
+  final OnSwatchImageListAction? onImgsAdded;
 
-  SwatchImagePopup({ this.swatchId, required this.otherImgIds, this.onImgIdAdded, this.onImgAdded });
+  SwatchImageMultiplePopup({ this.swatchId, required this.otherImgIds, this.onImgIdsAdded, this.onImgsAdded });
 
   @override
-  State<StatefulWidget> createState() => SwatchImagePopupState();
+  State<StatefulWidget> createState() => SwatchImageMultiplePopupState();
 }
 
-class SwatchImagePopupState extends State<SwatchImagePopup> {
+class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> {
   List<String> labels = [];
-  bool _isImgDisplayOpened = false;
 
   bool _hasInit = false;
 
@@ -56,22 +56,49 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
 
   Future<void> openImgPicker(BuildContext context) {
     ImagePicker.error = '';
+    PaletteDividerState.reset(includeImg: false);
     return ImagePicker.open(context).then(
       (val) {
-        if(ImagePicker.img != null && !_isImgDisplayOpened) {
-          openImgDisplay(context);
+        if(ImagePicker.img != null) {
+          openImgDivider(context);
         }
       },
     );
   }
 
-  Future<void> openImgDisplay(BuildContext context) async {
-    _isImgDisplayOpened = true;
+  Future<void> openImgDivider(BuildContext context) async {
+    return globalWidgets.openDialog(
+      context,
+      (BuildContext innerContext) {
+        return StatefulBuilder(
+          builder: (innerContext, setState) {
+            return Padding(
+              padding: MediaQuery.of(innerContext).viewInsets.bottom != 0 ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.1, horizontal: 0),
+              child: Dialog(
+                insetPadding: const EdgeInsets.symmetric(horizontal: 0),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
+                ),
+                child: PaletteDivider(
+                  initialImg: ImagePicker.img,
+                  onEnterImgs: (List<Uint8List> imgs) {
+                    Navigator.pop(innerContext);
+                    openImgDisplay(innerContext, imgs);
+                  },
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> openImgDisplay(BuildContext context, List<Uint8List> imgs) async {
     double padding = (MediaQuery.of(context).size.height * 0.5) - 350;
     if(padding < 0) {
       padding = 0;
     }
-    Size imgSize = ImagePicker.getScaledImgSize(Size(MediaQuery.of(context).size.width - 60, 200), await ImagePicker.getActualImgSize(ImagePicker.img));
     return globalWidgets.openDialog(
       context,
       (BuildContext context) {
@@ -90,45 +117,27 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
                   height: 700,
                   child: Column(
                     children: <Widget>[
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Expanded(
                         child: ListView(
                           children: <Widget>[
-                            Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                width: 170,
-                                height: 40,
-                                child: OutlineButton(
-                                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                                  bgColor: theme.bgColor,
-                                  outlineColor: theme.primaryColorDark,
-                                  outlineWidth: 2.0,
-                                  onPressed: () {
-                                    openImgPicker(context).then(
-                                      (value) {
-                                        if(ImagePicker.img == null) {
-                                          Navigator.pop(context);
-                                        }
-                                        if(ImagePicker.img != ImagePicker.prevImg) {
-                                          setState(() {});
-                                        }
-                                      }
-                                    );
-                                  },
-                                  child: Text(
-                                    getString('paletteDivider_add'),
-                                    style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
-                                  ),
-                                ),
+                            GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisSpacing: 20,
+                                crossAxisSpacing: 20,
+                                crossAxisCount: imgs.length < 4 ? imgs.length : 4,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Image.file(
-                              ImagePicker.img!,
-                              width: imgSize.width,
-                              height: imgSize.height,
+                              itemCount: imgs.length,
+                              itemBuilder: (BuildContext context, int i) {
+                                return Image.memory(
+                                  imgs[i],
+                                );
+                              },
                             ),
                             const SizedBox(
                               height: 12,
@@ -148,27 +157,38 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
                           child: FlatButton(
                             bgColor: theme.accentColor,
                             onPressed: () async {
-                              String? imgId;
+                              List<String>? imgIds;
                               if(widget.swatchId != null) {
-                                imgId = await allSwatchesStorageIO.addImg(file: ImagePicker.img!, otherImgIds: widget.otherImgIds, swatchId: widget.swatchId!, labels: labels);
+                                imgIds = [];
+                                for(int i = 0; i < imgs.length; i++) {
+                                  imgIds.add(await allSwatchesStorageIO.addImgBytes(bytes: imgs[i], otherImgIds: widget.otherImgIds, swatchId: widget.swatchId!, labels: labels));
+                                }
                               }
                               _hasInit = false;
                               Navigator.pop(context);
-                              if(imgId != null && widget.onImgIdAdded != null) {
-                                widget.onImgIdAdded!(imgId);
+                              if(imgIds != null && widget.onImgIdsAdded != null) {
+                                widget.onImgIdsAdded!(imgIds);
                               }
-                              if(widget.onImgAdded != null) {
-                                if(imgId != null) {
-                                  widget.onImgAdded!((await allSwatchesStorageIO.getImg(swatchId: widget.swatchId!, imgId: imgId))!);
+                              if(widget.onImgsAdded != null) {
+                                if(imgIds != null) {
+                                  List<SwatchImage> savedImgs = [];
+                                  for(int i = 0; i < imgIds.length; i++) {
+                                    savedImgs.add((await allSwatchesStorageIO.getImg(swatchId: widget.swatchId!, imgId: imgIds[i]))!);
+                                  }
+                                  widget.onImgsAdded!(savedImgs);
                                 } else {
-                                  widget.onImgAdded!(SwatchImage(id: '', labels: labels, bytes: ImagePicker.img!.readAsBytesSync()));
+                                  List<SwatchImage> newImgs = [];
+                                  for(int i = 0; i < imgs.length; i++) {
+                                    newImgs.add(SwatchImage(id: '', labels: labels, bytes: imgs[i]));
+                                  }
+                                  widget.onImgsAdded!(newImgs);
                                 }
                               }
                             },
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Add Photo',
+                                'Add Photos',
                                 style: theme.accentTextBold,
                               ),
                             ),
@@ -232,7 +252,7 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
             getString('swatch_tags_popupInstructions'),
             getString('swatch_tags_popupError'),
             getString('swatch_tags_popupBtn'),
-            (String value) {
+                (String value) {
               options.add(value);
               globals.swatchImgLabels = options;
               labels.add(value);

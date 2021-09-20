@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BackButton;
 import '../Widgets/Look.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/SelectedSwatchPopup.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
+import '../Widgets/BackButton.dart';
+import '../Widgets/HelpButton.dart';
 import '../IO/allSwatchesIO.dart' as IO;
 import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
@@ -84,12 +86,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
       rightBar.add(buildEdit(context));
     }
     if(widget.helpText != null) {
-      rightBar.add(
-        globalWidgets.getHelpBtn(
-          context,
-          widget.helpText!,
-        ),
-      );
+      rightBar.add(HelpButton(text: widget.helpText!));
     }
     Future<List<int>> swatchesFutureActual = _swatchesFuture!;
     if(_swatchListKey != null && _swatchListKey!.currentWidget != null) {
@@ -135,7 +132,7 @@ class LookScreenState extends State<LookScreen> with ScreenState {
     //creates back button
     return Align(
       alignment: Alignment.centerLeft,
-      child: globalWidgets.getBackButton(() => onExit()),
+      child: BackButton(onPressed: () => onExit()),
     );
   }
 

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FlatButton, OutlineButton;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as image;
 import 'dart:math';
 import 'dart:io';
+import 'dart:typed_data';
 import '../ColorMath/ColorProcessing.dart';
 import '../ColorMath/ColorProcessingTF.dart';
 import '../ColorMath/ColorObjects.dart';
@@ -15,13 +16,16 @@ import '../types.dart';
 import 'ImagePicker.dart';
 import 'BorderBox.dart';
 import 'Swatch.dart';
+import 'FlatButton.dart';
+import 'OutlineButton.dart';
 
 class PaletteDivider extends StatefulWidget {
-  final void Function(List<Swatch>) onEnter;
+  final void Function(List<Swatch>)? onEnter;
+  final void Function(List<Uint8List>)? onEnterImgs;
 
   final File? initialImg;
 
-  PaletteDivider({Key? key, required this.onEnter, this.initialImg }) : super(key: key);
+  PaletteDivider({ Key? key, this.onEnter, this.onEnterImgs, this.initialImg }) : super(key: key);
 
   @override
   PaletteDividerState createState() => PaletteDividerState();
@@ -238,12 +242,12 @@ class PaletteDividerState extends State<PaletteDivider> {
     );
     return Align(
       alignment: const Alignment(0, -1),
-      child: ImagePicker.img == null ? globalWidgets.getFlatButton(
+      child: ImagePicker.img == null ? FlatButton(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         bgColor: theme.accentColor,
         onPressed: onPressed,
         child: child,
-      ) : globalWidgets.getOutlineButton(
+      ) : OutlineButton(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         bgColor: theme.bgColor,
         outlineColor: theme.primaryColorDark,
@@ -261,7 +265,7 @@ class PaletteDividerState extends State<PaletteDivider> {
         showImg,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 23),
-          child: globalWidgets.getFlatButton(
+          child: FlatButton(
             bgColor: theme.primaryColorDark,
             onPressed: save,
             child: Text(
@@ -474,13 +478,63 @@ class PaletteDividerState extends State<PaletteDivider> {
   }
 
   void save() async {
-    globalWidgets.openLoadingDialog(context);
-    await saveActual();
-    Navigator.pop(context);
-    widget.onEnter(_swatches);
+    if(widget.onEnter != null) {
+      globalWidgets.openLoadingDialog(context);
+      await getNewSwatches();
+      Navigator.pop(context);
+      widget.onEnter!(_swatches);
+    } else if(widget.onEnterImgs != null) {
+      widget.onEnterImgs!(await divideImgs());
+    }
   }
 
-  Future<void> saveActual() async {
+  Future<List<Uint8List>> divideImgs() async {
+    List<Uint8List> imgs = [];
+    image.Image? img;
+    Size actualImg;
+    if(globals.debug) {
+      img = await loadImg('imgs/test0.jpg');
+      actualImg = Size(355, 355);
+    } else {
+      img = await loadImg(ImagePicker.img!.path);
+      actualImg = await ImagePicker.getActualImgSize(ImagePicker.img);
+    }
+    if(img != null) {
+      double imgScale = _imgSize.width / actualImg.width;
+      double boxWidth = _getBoxWidth();
+      double scaledBoxWidth = boxWidth / imgScale;
+      double boxHeight = _getBoxHeight();
+      double scaledBoxHeight = boxHeight / imgScale;
+      List<double> scaledBorders = [_borders[0] / imgScale, _borders[1] / imgScale, _borders[2] / imgScale, _borders[3] / imgScale];
+      List<double> scaledPadding = [_padding[0] / imgScale, _padding[1] / imgScale];
+      for(int j = 0; j < _numRows; j++) {
+        //for(int i = _numCols - 1; i >= 0; i--) {
+        //I'm constantly changing between the two, they sometimes look wrong, is not consistent? Try printing cropped.exif.orientation
+        for(int i = 0; i < _numCols; i++) {
+          //get dimensions
+          int x = (scaledBorders[0] + (scaledBoxWidth * i) + scaledPadding[0]).floor();
+          int y = (scaledBorders[1] + (scaledBoxHeight * j) + scaledPadding[1]).floor();
+          int w = (scaledBoxWidth - (scaledPadding[0] * 2)).floor();
+          int h = (scaledBoxHeight - (scaledPadding[1] * 2)).floor();
+          //crop image
+          image.Image? cropped;
+          if(img.width == actualImg.width) {
+            //correct orientation
+            cropped = cropWithBorder(img, x, y, w, h);
+          } else {
+            //rotated orientation
+            cropped = cropWithBorder(img, y, x, h, w);
+          }
+          if(cropped != null) {
+            imgs.add(Uint8List.fromList(image.encodeJpg(cropped)));
+          }
+        }
+      }
+    }
+    return imgs;
+  }
+
+  Future<void> getNewSwatches() async {
     await getModel();
     _swatches = [];
     image.Image? img;
