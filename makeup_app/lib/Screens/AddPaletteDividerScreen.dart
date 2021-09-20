@@ -513,7 +513,6 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           swatches: [],
         );
         //assign brand and palette to all swatches
-        //TODO: test adding new tags to imgs
         for(int i = 0; i < swatches.length; i++) {
           Swatch swatch = swatches[i];
           swatch.brand = brand;
