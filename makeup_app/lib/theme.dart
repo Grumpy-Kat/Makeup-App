@@ -13,9 +13,9 @@ Color get primaryTextColor => isDarkTheme ? Color.fromRGBO(255, 255, 255, 1) : C
 Color get secondaryTextColor => isDarkTheme ? Color.fromRGBO(195, 195, 201, 1) : Color.fromRGBO(44, 44, 46, 1);
 Color get tertiaryTextColor => isDarkTheme ? Color.fromRGBO(141, 141, 147, 1) : Color.fromRGBO(100, 100, 105, 1);
 Color get iconTextColor => isDarkTheme ? Color.fromRGBO(185, 185, 191, 1) : Color.fromRGBO(64, 64, 66, 1);
-Color get accentColorLight => isDarkTheme ? Colors.teal[700] : Colors.teal[200];
+Color get accentColorLight => isDarkTheme ? Colors.teal[700]! : Colors.teal[200]!;
 Color get accentColor => isDarkTheme ? Color.fromRGBO(39, 165, 146, 1) : Color.fromRGBO(39, 165, 146, 1);
-Color get accentColorDark => isDarkTheme ? Colors.teal[600] : Colors.teal[600];
+Color get accentColorDark => isDarkTheme ? Colors.teal[600]! : Colors.teal[600]!;
 Color get accentTextColor => isDarkTheme ? Color.fromRGBO(244, 245, 248, 1) : Color.fromRGBO(248, 249, 251, 1);
 Color get unselectedTextColor => isDarkTheme ? Color.fromRGBO(244, 245, 248, 1) : Color.fromRGBO(248, 249, 251, 1);
 Color get checkTextColor => isDarkTheme ? Color.fromRGBO(67, 163, 79, 1) : Color.fromRGBO(27, 132, 39, 1);
@@ -59,7 +59,6 @@ ThemeData get themeData => ThemeData(
   fontFamily: fontFamily,
   dividerColor: primaryColorLight,
   splashColor: accentColor,
-  textSelectionColor: accentColorLight,
   indicatorColor: accentColor,
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: accentColor,
@@ -76,6 +75,10 @@ ThemeData get themeData => ThemeData(
     shape: const RoundedRectangleBorder(
       borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
     ),
+  ),
+  textSelectionTheme: TextSelectionThemeData(
+    selectionColor: accentColorLight.withAlpha(130),
+    selectionHandleColor: Colors.transparent,
   ),
   sliderTheme: SliderThemeData(
     valueIndicatorColor: primaryColorDarkest,

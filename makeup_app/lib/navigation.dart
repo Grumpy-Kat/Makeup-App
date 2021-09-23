@@ -43,7 +43,7 @@ void push(BuildContext context, Offset offset, routes.ScreenRoutes nextScreenEnu
 
 void pop(BuildContext context, bool reloadPrev) {
   if(_history.length <= 1) {
-    push(context, const Offset(-1, 0), routes.defaultEnumRoute, routes.routes[routes.defaultRoute](context));
+    push(context, const Offset(-1, 0), routes.defaultEnumRoute, routes.routes[routes.defaultRoute]!(context));
     return;
   }
   _history.removeLast();
@@ -55,7 +55,7 @@ void pop(BuildContext context, bool reloadPrev) {
     context,
     globalWidgets.slideTransition(
       context,
-      routes.enumRoutes[prevScreen](context),
+      routes.enumRoutes[prevScreen]!(context),
       350,
       const Offset(-1, 0),
       Offset.zero,

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import '../Widgets/Look.dart';
+import '../IO/savedLooksIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
-import '../savedLooksIO.dart' as IO;
-import '../localizationIO.dart';
 import 'LookScreen.dart';
 
 class SavedLookScreen extends StatefulWidget {
-  static String id;
-  static Look look;
+  static String? id;
+  static late Look look;
 
-  SavedLookScreen({ Look look }) {
-    if(look == null || look.id == null || look.id == '') {
+  SavedLookScreen({ Look? look }) {
+    if(look == null || look.id == '') {
       //if returning to screen, without setting id, load updated swatches
       //most commonly occurs when going back from SwatchScreen
       if(id != null && id != '') {
-        look = IO.looks[id];
+        look = IO.looks![id];
       }
     } else {
       //sets screen info

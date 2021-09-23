@@ -1,11 +1,10 @@
 import 'ColorMath/ColorObjects.dart';
 import 'ColorMath/ColorSorting.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'Widgets/Swatch.dart';
+import 'IO/settingsIO.dart' as IO;
+import 'IO/allSwatchesIO.dart' as allSwatches;
+import 'IO/localizationIO.dart';
 import 'types.dart';
-import 'settingsIO.dart' as IO;
-import 'allSwatchesIO.dart' as allSwatches;
-import 'localizationIO.dart';
 
 //curr swatches in today's look
 CurrSwatches currSwatches = CurrSwatches.instance;
@@ -14,9 +13,9 @@ class CurrSwatches {
   CurrSwatches._privateConstructor();
   static final CurrSwatches instance = CurrSwatches._privateConstructor();
 
-  Map<int, OnIntAction> addListeners = {};
-  Map<int, OnIntAction> removeListeners = {};
-  Map<int, OnVoidAction> setListeners = {};
+  Map<int, OnIntAction?> addListeners = {};
+  Map<int, OnIntAction?> removeListeners = {};
+  Map<int, OnVoidAction?> setListeners = {};
 
   List<int> _currSwatches = [];
 
@@ -24,7 +23,7 @@ class CurrSwatches {
     allSwatches.listenOnSaveChanged(validateAll);
   }
 
-  int addListener(OnIntAction addListener, OnIntAction removeListener, OnVoidAction setListener) {
+  int addListener(OnIntAction? addListener, OnIntAction? removeListener, OnVoidAction? setListener) {
     int i = addListeners.length;
     addListeners[i] = addListener;
     removeListeners[i] = removeListener;
@@ -41,7 +40,7 @@ class CurrSwatches {
   void add(int swatch) {
     if(!_currSwatches.contains(swatch) && allSwatches.isValid(swatch)) {
       _currSwatches.add(swatch);
-      for(OnIntAction listener in addListeners.values) {
+      for(OnIntAction? listener in addListeners.values) {
         if(listener != null) {
           listener(swatch);
         }
@@ -55,7 +54,7 @@ class CurrSwatches {
         _currSwatches.add(swatches[i]);
       }
     }
-    for(OnIntAction listener in addListeners.values) {
+    for(OnIntAction? listener in addListeners.values) {
       if(listener != null) {
         listener(swatches.last);
       }
@@ -65,7 +64,7 @@ class CurrSwatches {
   void remove(int swatch) {
     if(_currSwatches.contains(swatch)) {
       _currSwatches.remove(swatch);
-      for(OnIntAction listener in removeListeners.values) {
+      for(OnIntAction? listener in removeListeners.values) {
         if(listener != null) {
           listener(swatch);
         }
@@ -76,7 +75,7 @@ class CurrSwatches {
   void set(List<int> swatches) {
     _currSwatches = swatches.toSet().toList();
     validateAll();
-    for(OnVoidAction listener in setListeners.values) {
+    for(OnVoidAction? listener in setListeners.values) {
       if(listener != null) {
         listener();
       }
@@ -104,7 +103,7 @@ bool _hasLoaded = false;
 bool get hasLoaded => _hasLoaded;
 set hasLoaded(bool value) {
   if(!_hasLoaded && value) {
-    for(OnVoidAction listener in _hasLoadedListeners) {
+    for(OnVoidAction? listener in _hasLoadedListeners) {
       if(listener != null) {
         listener();
       }
@@ -114,7 +113,7 @@ set hasLoaded(bool value) {
   _hasLoaded = value;
 }
 
-List<OnVoidAction> _hasLoadedListeners = [];
+List<OnVoidAction?> _hasLoadedListeners = [];
 
 void addHasLoadedListener(OnVoidAction hasLoadedListener) {
   if(!_hasLoaded) {
@@ -136,16 +135,6 @@ set userID(String value) {
   if(hasLoaded) {
     IO.save();
   }
-}
-
-Future<void> login() async {
-  if(FirebaseAuth.instance.currentUser == null) {
-    await FirebaseAuth.instance.signInAnonymously();
-  }
-  await FirebaseAuth.instance.currentUser.updateProfile(displayName: userID);
-  FirebaseAuth.instance.currentUser.getIdToken(true);
-  //print(FirebaseAuth.instance.currentUser.displayName);
-  //print(userID);
 }
 
 //has done initial tutorial
@@ -190,9 +179,9 @@ Map<String, OnSortSwatch> defaultSortOptions(List<List<Swatch>> swatches, { step
     'sort_lowestRated': (Swatch swatch, int i) { return lowestRatedSort(swatch, step: step); },
   };
 }
-Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBColor color, { step: 16 }) {
+Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBColor? color, { step: 16 }) {
   return {
-    'sort_hue': (Swatch swatch, int i) { return distanceSort(swatch.color, color); },
+    'sort_hue': (Swatch swatch, int i) { if(color == null) { return [0]; } else { return distanceSort(swatch.color, color); } },
     'sort_lightest': (Swatch swatch, int i) { return lightestSort(swatch, step: step); },
     'sort_darkest': (Swatch swatch, int i) { return darkestSort(swatch, step: step); },
     'sort_finish': (Swatch swatch, int i) { return finishSort(swatch, step: step); },
@@ -208,6 +197,16 @@ List<String> _tags = ['tags_pigmented', 'tags_sheer', 'tags_lotsFallout', 'tags_
 List<String> get tags => _tags;
 set tags(List<String> value) {
   _tags = value.toSet().toList();
+  if(hasLoaded) {
+    IO.save();
+  }
+}
+
+//all swatch photo label
+List<String> _swatchImgLabels = ['Direct lighting', 'Indirect lighting', 'Outdoor lighting', 'Indoor lighting', 'Black background', 'White background'];
+List<String> get swatchImgLabels => _swatchImgLabels;
+set swatchImgLabels(List<String> value) {
+  _swatchImgLabels = value.toSet().toList();
   if(hasLoaded) {
     IO.save();
   }

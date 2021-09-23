@@ -1,17 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FlatButton, BackButton;
 import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../Widgets/FlatButton.dart';
+import '../Widgets/BackButton.dart';
+import '../Widgets/LoginButton.dart';
+import '../IO/settingsIO.dart' as settingsIO;
+import '../IO/allSwatchesIO.dart' as allSwatchesIO;
+import '../IO/savedLooksIO.dart' as savedLooksIO;
+import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
-import '../settingsIO.dart' as settingsIO;
-import '../allSwatchesIO.dart' as allSwatchesIO;
-import '../savedLooksIO.dart' as savedLooksIO;
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 enum Mode {
@@ -28,7 +31,7 @@ class SettingsScreen extends StatefulWidget {
 class SettingsScreenState extends State<SettingsScreen> with ScreenState, WidgetsBindingObserver {
   Mode mode = Mode.Default;
 
-  PermissionStatus notificationStatus;
+  late PermissionStatus notificationStatus;
 
   @override
   void initState() {
@@ -36,7 +39,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
     //start getting notification status, as soon as possible
     getNotificationStatus();
     //add observer for when user leaves and returns to app
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
@@ -108,7 +111,10 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       title,
       6,
       //back button
-      leftBar: (mode == Mode.Default) ? null : globalWidgets.getBackButton(() => setState(() => mode = Mode.Default)),
+      leftBar: (mode == Mode.Default) ? null : BackButton(onPressed: () => setState(() => mode = Mode.Default)),
+      rightBar: [
+        LoginButton(),
+      ],
       body: body,
     );
   }
@@ -118,7 +124,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
       text,
       style: theme.primaryTextSecondary,
       minFontSize: 9,
-      maxFontSize: theme.primaryTextSecondary.fontSize,
+      maxFontSize: theme.primaryTextSecondary.fontSize!,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
@@ -177,7 +183,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   style: theme.primaryTextSecondary,
                   iconEnabledColor: theme.iconTextColor,
                   value: globals.language,
-                  onChanged: (String val) { setState(() { globals.language = val; }); },
+                  onChanged: (String? val) { setState(() { globals.language = val ?? ''; }); },
                   underline: Container(
                     decoration: UnderlineTabIndicator(
                       borderSide: BorderSide(
@@ -274,7 +280,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   style: theme.primaryTextSecondary,
                   iconEnabledColor: theme.iconTextColor,
                   value: globals.sort,
-                  onChanged: (String val) { setState(() { globals.sort = val; }); },
+                  onChanged: (String? val) { setState(() { globals.sort = val ?? ''; }); },
                   underline: Container(
                     decoration: UnderlineTabIndicator(
                       borderSide: BorderSide(
@@ -387,12 +393,9 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   style: theme.primaryTextSecondary,
                   iconEnabledColor: theme.iconTextColor,
                   value: globals.autoShadeNameModeNames[globals.autoShadeNameMode],
-                  onChanged: (String val) {
+                  onChanged: (String? val) {
                     setState(() {
-                      globals.autoShadeNameMode = globals.autoShadeNameModeNames.keys.firstWhere(
-                        (globals.AutoShadeNameMode key) => globals.autoShadeNameModeNames[key] == val,
-                        orElse: () => null,
-                      );
+                      globals.autoShadeNameMode = globals.autoShadeNameModeNames.keys.firstWhere((globals.AutoShadeNameMode key) => globals.autoShadeNameModeNames[key] == val);
                     });
                   },
                   underline: Container(
@@ -468,8 +471,8 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
         getPhotoGreenField(context, height, noBottomDecoration, padding, margin),
         getPhotoBlueField(context, height, decoration, padding, margin),
         getPhotoTitleField(context, height, noBottomDecoration, padding, margin),
-        getPhotoExsField(context, height, noBottomDecoration, padding, const EdgeInsets.symmetric(vertical: 15, horizontal: 10), Colors.grey, Colors.brown[800]),
-        getPhotoExsField(context, height, decoration, padding, const EdgeInsets.symmetric(vertical: 15, horizontal: 10), Colors.blue, Colors.pink[200]),
+        getPhotoExsField(context, height, noBottomDecoration, padding, const EdgeInsets.symmetric(vertical: 15, horizontal: 10), Colors.grey, Colors.brown[800]!),
+        getPhotoExsField(context, height, decoration, padding, const EdgeInsets.symmetric(vertical: 15, horizontal: 10), Colors.blue, Colors.pink[200]!),
       ],
     );
   }
@@ -898,7 +901,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
               context,
               const Offset(1, 0),
               routes.ScreenRoutes.TutorialScreen,
-              routes.routes['/tutorialScreen'](context),
+              routes.routes['/tutorialScreen']!(context),
             );
           },
           child: Row(
@@ -1154,7 +1157,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                       context,
                       const Offset(1.0, 0.0),
                       routes.ScreenRoutes.AllSwatchesScreen,
-                      routes.routes['/allSwatchesScreen'](context),
+                      routes.routes['/allSwatchesScreen']!(context),
                     );
                   },
                   () { },
@@ -1166,7 +1169,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                 textAlign: TextAlign.center,
                 style: theme.errorText,
                 maxLines: 1,
-                maxFontSize: theme.errorText.fontSize,
+                maxFontSize: theme.errorText.fontSize!,
                 minFontSize: 10,
               ),
             ),

@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide HSVColor;
 import 'package:flutter/rendering.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/Filter.dart';
-import '../Widgets/EditSwatchPopup.dart';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
-import '../localizationIO.dart';
+import 'Swatch.dart';
+import 'Filter.dart';
+import 'EditSwatchPopup.dart';
 
 class SwatchList {
-  Future addSwatches;
+  Future? addSwatches;
   //keep original for when changed with sorting or filtering
-  Future orgAddSwatches;
+  Future? orgAddSwatches;
 
-  final List<int> selectedSwatches;
+  final List<int>? selectedSwatches;
 
   final bool showInfoBox;
 
@@ -22,10 +22,10 @@ class SwatchList {
   final bool showNoFilteredColorsFound;
 
   final bool showPlus;
-  final OnVoidAction onPlusPressed;
+  final OnVoidAction? onPlusPressed;
 
-  final Map<String, OnSortSwatch> sort;
-  final String defaultSort;
+  final Map<String, OnSortSwatch>? sort;
+  final String? defaultSort;
 
   final bool showSearch;
 
@@ -33,21 +33,21 @@ class SwatchList {
   final bool showDeleteFiltered;
 
   final bool overrideOnTap;
-  final Function onTap;
+  final Function? onTap;
 
   final bool overrideOnDoubleTap;
-  final Function onDoubleTap;
+  final Function? onDoubleTap;
 
   final bool showEndDrawer;
-  final OnVoidAction openEndDrawer;
+  final OnVoidAction? openEndDrawer;
 
-  SwatchList({ @required this.addSwatches, this.orgAddSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showNoFilteredColorsFound = true, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showSearch = false, this.showDelete = false, this.showDeleteFiltered = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap, this.showEndDrawer = true, this.openEndDrawer });
+  SwatchList({ required this.addSwatches, this.orgAddSwatches, this.selectedSwatches, this.showInfoBox = true, this.showNoColorsFound = false, this.showNoFilteredColorsFound = true, this.showPlus = false, this.onPlusPressed, this.sort, this.defaultSort, this.showSearch = false, this.showDelete = false, this.showDeleteFiltered = false, this.overrideOnTap = false, this.onTap, this.overrideOnDoubleTap = false, this.onDoubleTap, this.showEndDrawer = true, this.openEndDrawer });
 }
 
 mixin SwatchListState {
-  SwatchList swatchList;
+  late SwatchList swatchList;
 
-  String currentSort = 'sort_hue';
+  String? currentSort = 'sort_hue';
 
   GlobalKey searchKey = GlobalKey();
   FocusNode searchFocusNode = FocusNode();
@@ -73,7 +73,7 @@ mixin SwatchListState {
     );
   }
 
-  Widget buildSwatchList(BuildContext context, AsyncSnapshot snapshot, List<SwatchIcon> swatchIcons, { Axis axis = Axis.vertical, int crossAxisCount = 3, double padding = 20, double spacing = 35 }) {
+  Widget buildSwatchList(BuildContext context, AsyncSnapshot snapshot, List<SwatchIcon?> swatchIcons, { Axis axis = Axis.vertical, int crossAxisCount = 3, double padding = 20, double spacing = 35 }) {
     int itemCount = 0;
     if(snapshot.connectionState != ConnectionState.active && snapshot.connectionState != ConnectionState.waiting) {
       if(swatchIcons.length == 0 && (swatchList.showNoColorsFound || (swatchList.showNoFilteredColorsFound && filters.length != 0))) {
@@ -139,7 +139,7 @@ mixin SwatchListState {
             ),
           );
         }
-        return swatchIcons[i];
+        return swatchIcons[i]!;
       }
     );
   }
@@ -192,11 +192,13 @@ mixin SwatchListState {
                   isExpanded: true,
                   style: theme.primaryTextQuaternary,
                   iconEnabledColor: theme.tertiaryTextColor,
-                  onChanged: (String val) {
-                    setState(() {
-                      currentSort = val;
-                      sortAndFilterSwatches();
-                    });
+                  onChanged: (String? val) {
+                    if(val != null) {
+                      setState(() {
+                        currentSort = val;
+                        sortAndFilterSwatches();
+                      });
+                    }
                   },
                   underline: Container(
                     decoration: UnderlineTabIndicator(
@@ -207,8 +209,8 @@ mixin SwatchListState {
                       ),
                     ),
                   ),
-                  value: currentSort ?? (swatchList.sort.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort.keys.first),
-                  items: swatchList.sort.keys.map((String val) {
+                  value: currentSort ?? ((swatchList.sort != null && swatchList.sort!.containsKey(swatchList.defaultSort)) ? swatchList.defaultSort : swatchList.sort!.keys.first),
+                  items: swatchList.sort!.keys.map((String val) {
                     return DropdownMenuItem(
                       value: val,
                       child: Text('${getString(val)}', style: theme.primaryTextQuaternary),
@@ -255,7 +257,7 @@ mixin SwatchListState {
                   setState(() {
                     isSearching = true;
                   });
-                  WidgetsBinding.instance.addPostFrameCallback((_) => searchFocusNode.requestFocus());
+                  WidgetsBinding.instance!.addPostFrameCallback((_) => searchFocusNode.requestFocus());
                 }
               },
             ),
@@ -310,7 +312,7 @@ mixin SwatchListState {
         color: theme.primaryColor,
         onPressed: () {
           if(swatchList.openEndDrawer != null) {
-            swatchList.openEndDrawer();
+            swatchList.openEndDrawer!();
           }
         },
         icon: Icon(
@@ -389,9 +391,9 @@ mixin SwatchListState {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.8,
               child: EditSwatchPopup(
-                onSave: (String brand, String palette, double weight, double price, int rating, List<String> tags) {
+                onSave: (String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags) {
                   globalWidgets.openLoadingDialog(context);
-                  editSwatches(brand.trim(), palette.trim(), weight, price, rating, tags).then((value) {
+                  editSwatches(brand, palette, weight, price, openDate, expirationDate, rating, tags).then((value) {
                     setState(() {});
                     Navigator.pop(context);
                     Navigator.pop(context);
@@ -420,7 +422,7 @@ mixin SwatchListState {
   void setState(OnVoidAction func);
   void parentReset() { }
 
-  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags);
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags);
   Future<void> deleteSwatches();
   void sortSwatches(String val);
   void filterSwatches(List<Filter> filters);

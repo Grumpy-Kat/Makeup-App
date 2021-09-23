@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'dart:math';
 import '../Widgets/SizedSafeArea.dart';
 import '../Widgets/NavigationDrawer.dart';
 import '../Widgets/CurrSwatchBar.dart';
@@ -9,9 +8,7 @@ import '../Widgets/InfoBox.dart';
 import '../theme.dart' as theme;
 
 mixin ScreenState {
-  Size screenSize;
-
-  List<Rectangle<double>> noScreenSwipes = List<Rectangle<double>>();
+  Size? screenSize;
 
   GlobalKey scaffoldKey = GlobalKey();
   GlobalKey menuKey = GlobalKey();
@@ -19,7 +16,7 @@ mixin ScreenState {
 
   bool isDragging = false;
 
-  Widget buildComplete(BuildContext context, String title, int menu, { @required Widget body, Widget leftBar, List<Widget> rightBar, Widget floatingActionButton, Widget endDrawer }) {
+  Widget buildComplete(BuildContext context, String title, int menu, { required Widget body, Widget? leftBar, List<Widget>? rightBar, Widget? floatingActionButton, Widget? endDrawer }) {
     Widget child = SizedSafeArea(
       builder: (context, screenSize) {
         this.screenSize = screenSize.biggest;
@@ -64,7 +61,7 @@ mixin ScreenState {
                           title,
                           style: theme.primaryTextBold,
                           minFontSize: 11,
-                          maxFontSize: theme.primaryTextBold.fontSize,
+                          maxFontSize: theme.primaryTextBold.fontSize!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),

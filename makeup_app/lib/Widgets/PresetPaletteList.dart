@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import '../theme.dart' as theme;
-import '../presetPalettesIO.dart' as IO;
-import '../localizationIO.dart';
+import '../IO/presetPalettesIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../types.dart';
+import '../theme.dart' as theme;
 import 'Palette.dart';
 
 class PresetPaletteList extends StatefulWidget {
   final String initialSearch;
   final OnPaletteAction onPaletteSelected;
 
-  PresetPaletteList({ Key key, @required this.onPaletteSelected, this.initialSearch = '' }) : super(key: key);
+  PresetPaletteList({ Key? key, required this.onPaletteSelected, this.initialSearch = '' }) : super(key: key);
 
   @override
   PresetPaletteListState createState() => PresetPaletteListState();
 }
 
 class PresetPaletteListState extends State<PresetPaletteList> {
-  Future _addPalettesFuture;
-  List<Palette> _allPalettes = [];
-  List<Palette> _palettes = [];
+  late Future _addPalettesFuture;
+  List<Palette>? _allPalettes = [];
+  List<Palette>? _palettes = [];
 
   String search = '';
   bool _isSearching = false;
@@ -30,10 +30,10 @@ class PresetPaletteListState extends State<PresetPaletteList> {
     search = widget.initialSearch;
   }
 
-  Future<List<Palette>> _addPalettes() async {
-    if(_allPalettes == null || _allPalettes.length == 0) {
+  Future<List<Palette>?> _addPalettes() async {
+    if(_allPalettes == null || _allPalettes!.length == 0) {
       Map<String, Palette> map = (await IO.loadFormatted());
-      _allPalettes = map.values.toList() ?? [];
+      _allPalettes = map.values.toList();
       _palettes = _allPalettes;
     }
     if(search != '') {
@@ -50,8 +50,8 @@ class PresetPaletteListState extends State<PresetPaletteList> {
       behavior: HitTestBehavior.opaque,
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-          currentFocus.focusedChild.unfocus();
+        if(!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+          currentFocus.focusedChild!.unfocus();
         }
         setState(() {
           _isSearching = false;
@@ -123,8 +123,8 @@ class PresetPaletteListState extends State<PresetPaletteList> {
                         ),
                         onPressed: () {
                           FocusScopeNode currentFocus = FocusScope.of(context);
-                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-                            currentFocus.focusedChild.unfocus();
+                          if(!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            currentFocus.focusedChild!.unfocus();
                           }
                           setState(() {
                             _isSearching = false;
@@ -163,29 +163,30 @@ class PresetPaletteListState extends State<PresetPaletteList> {
                       ),
                     ),
                   );
-                  for(int i = 0; i < _palettes.length; i++) {
+                  for(int i = 0; i < _palettes!.length; i++) {
+                    Palette palette = _palettes![i];
                     children.add(
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.onPaletteSelected(_palettes[i]);
+                            widget.onPaletteSelected(palette);
                           });
                         },
                         child: Container(
                           height: 64,
-                          decoration: (i == _palettes.length - 1) ? decorationLast : decorationNotLast,
+                          decoration: (i == _palettes!.length - 1) ? decorationLast : decorationNotLast,
                           padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
-                          margin: (i == _palettes.length - 1) ? const EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
+                          margin: (i == _palettes!.length - 1) ? const EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                 alignment: Alignment.centerLeft,
-                                child: Text('${_palettes[i].brand}', style: theme.primaryTextSecondary),
+                                child: Text('${palette.brand}', style: theme.primaryTextSecondary),
                               ),
                               Container(
                                 alignment: Alignment.centerLeft,
-                                child: Text('${_palettes[i].name}', style: theme.primaryTextPrimary),
+                                child: Text('${palette.name}', style: theme.primaryTextPrimary),
                               ),
                             ],
                           ),

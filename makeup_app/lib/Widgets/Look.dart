@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-
 class Look {
   String id = '';
   String name = 'Look';
   List<int> swatches = [];
 
-  Look({ @required this.id, @required this.name, @required this.swatches });
+  Look({ required this.id, required this.name, required this.swatches });
 
   Look.copy(Look other) {
     id = '';

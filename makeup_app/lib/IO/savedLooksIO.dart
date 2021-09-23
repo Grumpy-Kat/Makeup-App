@@ -1,31 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
-import 'Widgets/Look.dart';
+import '../Widgets/Look.dart';
 import 'globalIO.dart';
 import 'allSwatchesIO.dart' as allSwatches;
-import 'globals.dart' as globals;
+import '../globals.dart' as globals;
 
-List<DocumentSnapshot> docs;
-Map<String, Look> looks;
+List<DocumentSnapshot>? docs;
+Map<String, Look>? looks;
 bool hasSaveChanged = true;
 
-CollectionReference _database;
+late CollectionReference _database;
 
-void init() {
+Future<void> init() async {
   allSwatches.listenOnSaveChanged(() {
     loadFormatted(override: true);
   });
   _database = FirebaseFirestore.instance.collection('looks');
 }
 
-void clear(String id) async {
+Future<void> clear(String id) async {
   hasSaveChanged = true;
   print('Clearing $id');
   DocumentSnapshot doc = await _database.doc(id).get();
   await doc.reference.delete();
 }
 
-void clearAll() async {
+Future<void> clearAll() async {
   hasSaveChanged = true;
   List<QueryDocumentSnapshot> allDocs = (await _database.where('user', isEqualTo: globals.userID).get()).docs;
   for(int i = 0; i < allDocs.length; i++) {
@@ -67,7 +67,7 @@ Future<List<DocumentSnapshot>> load({ bool override = false }) async {
   if(docs == null || hasSaveChanged || override) {
     docs = (await _database.where('user', isEqualTo: globals.userID).get()).docs;
   }
-  return docs;
+  return docs!;
 }
 
 Future<Map<String, Look>> loadFormatted({ bool override = false, overrideInner = false }) async {
@@ -82,17 +82,17 @@ Future<Map<String, Look>> loadFormatted({ bool override = false, overrideInner =
         }
       }
       if(swatches.length > 0) {
-        swatches = await allSwatches.sort(swatches, (a, b) => a.compareTo(b, (swatch) => globals.defaultSortOptions([allSwatches.getMany(swatches)])[globals.sort](swatch, 0)));
+        swatches = await allSwatches.sort(swatches, (a, b) => a.compareTo(b, (swatch) => globals.defaultSortOptions([allSwatches.getMany(swatches)])[globals.sort]!(swatch, 0)));
         //contains swatches
-        looks[info[i].id] = Look(
+        looks![info[i].id] = Look(
           id: info[i].id,
           name: info[i].get('name'),
           swatches: swatches,
         );
       }
     }
-    print('${looks.length} looks');
+    print('${looks!.length} looks');
     hasSaveChanged = false;
   }
-  return looks;
+  return looks!;
 }

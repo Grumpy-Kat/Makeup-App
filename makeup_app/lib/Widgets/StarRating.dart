@@ -6,7 +6,7 @@ class StarRating extends StatelessWidget {
   final int starCount;
   final double starSize;
   final int rating;
-  final OnIntAction onChange;
+  final OnIntAction? onChange;
 
   const StarRating({ this.starCount = 5, this.starSize = 30, this.rating = 1, this.onChange });
 
@@ -38,7 +38,7 @@ class StarRating extends StatelessWidget {
     }
     return Expanded(
       child: InkResponse(
-        onTap: () { onChange(i + 1); },
+        onTap: () { if(onChange != null) onChange!(i + 1); },
         child: icon,
       ),
     );

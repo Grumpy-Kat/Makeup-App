@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:math';
 import '../ColorMath/ColorProcessing.dart';
+import '../IO/allSwatchesIO.dart' as IO;
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
-import '../allSwatchesIO.dart' as IO;
 import 'Swatch.dart';
 import 'SwatchList.dart';
 
 class RecommendedSwatchBar extends StatefulWidget {
-  static Size screenSize;
+  static Size? screenSize;
 
-  RecommendedSwatchBar({ Key key }) : super(key: key);
+  RecommendedSwatchBar({ Key? key }) : super(key: key);
 
   @override
   RecommendedSwatchBarState createState() => RecommendedSwatchBarState();
@@ -24,18 +24,19 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
 
   List<AnimationController> _controllers = [];
 
-  Swatch currSwatch;
+  Swatch? currSwatch;
   List<int> _swatches = [];
   List<SwatchIcon> _swatchIcons = [];
-  Future<List<int>> _swatchesFuture;
+  Future<List<int>>? _swatchesFuture;
 
-  Size _size;
-  Offset _pos;
+  Size? _screenSize;
+  late Size _size;
+  late Offset _pos;
 
   @override
   void initState() {
     super.initState();
-    GestureBinding.instance.pointerRouter.addGlobalRoute(onPointerEvent);
+    GestureBinding.instance!.pointerRouter.addGlobalRoute(onPointerEvent);
     globals.currSwatches.addListener(
       (swatch) => setState(() {
         currSwatch = IO.get(swatch);
@@ -45,7 +46,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
       null,
       null,
     );
-    _size = Size(RecommendedSwatchBar.screenSize.width, RecommendedSwatchBar.screenSize.height * 0.1);
+    _size = Size(RecommendedSwatchBar.screenSize!.width, RecommendedSwatchBar.screenSize!.height * 0.1);
     _pos = Offset(0, _size.height);
     init(
       SwatchList(
@@ -74,37 +75,38 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
     _swatchIcons.clear();
     Map<int, int> occurrences = {};
     for(int i = 0; i < currSwatches.length; i++) {
-      Map<Swatch, int> similarSwatches = getSimilarColors(
-        currSwatch.color,
-        currSwatch,
-        IO.getMany(allSwatches),
-        maxDist: 12,
-        getSimilar: true,
-        getOpposite: true,
-      );
-      similarSwatches.forEach(
-        (Swatch key, int value) {
-          int id = IO.find(key);
-          if(currSwatches.contains(id)) {
-            //skip swatches that are already in Today's Look
-            return;
+      Swatch? swatch = IO.get(currSwatches[i]);
+      if(swatch != null) {
+        Map<Swatch, int> similarSwatches = getSimilarColors(
+          swatch.color,
+          swatch,
+          IO.getMany(allSwatches),
+          maxDist: 12,
+          getSimilar: true,
+          getOpposite: true,
+        );
+        similarSwatches.forEach(
+          (Swatch key, int value) {
+            int id = IO.find(key);
+            if(currSwatches.contains(id)) {
+              //skip swatches that are already in Today's Look
+              return;
+            }
+            if(occurrences.containsKey(id)) {
+              occurrences[id] = value + occurrences[id]!;
+            } else {
+              occurrences[id] = value + key.rating;
+            }
           }
-          if(occurrences.containsKey(id)) {
-            occurrences[id] += value;
-          } else {
-            occurrences[id] = value + key.rating;
-          }
-        }
-      );
+        );
+      }
     }
     List<int> recommendedSwatches = occurrences.keys.toList(growable: false);
-    recommendedSwatches.sort((a, b) => occurrences[b].compareTo(occurrences[a]));
+    recommendedSwatches.sort((a, b) => occurrences[b]!.compareTo(occurrences[a]!));
     maxSwatches = min(maxSwatches, recommendedSwatches.length);
     for(int i = 0; i < maxSwatches; i++) {
-      if(recommendedSwatches[i] != null) {
-        _swatches.add(recommendedSwatches[i]);
-        _swatchIcons.add(SwatchIcon.id(recommendedSwatches[i], showInfoBox: true));
-      }
+      _swatches.add(recommendedSwatches[i]);
+      _swatchIcons.add(SwatchIcon.id(recommendedSwatches[i], showInfoBox: true));
     }
     return _swatches;
   }
@@ -121,10 +123,10 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   }
 
   void onPointerEvent(PointerEvent event) {
-    if(event is PointerUpEvent || event is PointerCancelEvent || event is PointerDownEvent) {
-      if(context != null) {
+    if(_screenSize != null) {
+      if(event is PointerUpEvent || event is PointerCancelEvent || event is PointerDownEvent) {
         //event.position goes top to bottom, _pos and _size go bottom to top
-        Offset pointer = Offset(MediaQuery.of(context).size.width - event.position.dx, MediaQuery.of(context).size.height - event.position.dy);
+        Offset pointer = Offset(_screenSize!.width - event.position.dx, _screenSize!.height - event.position.dy);
         if(pointer.dy < _pos.dy || pointer.dy > _pos.dy + _size.height) {
           close();
         }
@@ -133,6 +135,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   }
 
   void open(BuildContext context) {
+    _screenSize = MediaQuery.of(context).size;
     _isOpening = true;
     _controllers.add(
       AnimationController(
@@ -189,7 +192,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
     );
     _controllers.last.forward();
     _overlayEntries.add(OverlayEntry(builder: (BuildContext context) => overlay));
-    Overlay.of(context, debugRequiredFor: widget).insert(_overlayEntries.last);
+    Overlay.of(context, debugRequiredFor: widget)!.insert(_overlayEntries.last);
     Future.delayed(const Duration(milliseconds: 1000), () { _isOpening = false; });
   }
 
@@ -199,7 +202,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
         _controllers[i].reverse();
       }
       for(int i = 0; i < _overlayEntries.length; i++) {
-        _overlayEntries[i]?.remove();
+        _overlayEntries[i].remove();
       }
       _overlayEntries = [];
       _controllers.clear();
@@ -207,23 +210,17 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
   }
 
   @override
-  Future<void> searchSwatches(String val) async {
-    //do nothing
-  }
+  Future<void> searchSwatches(String val) async { }
 
   @override
-  Future<void> editSwatches(String brand, String palette, double weight,  double price,int rating, List<String> tags) async {
-    //do nothing
-  }
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags) async { }
 
   @override
-  Future<void> deleteSwatches() async {
-    //do nothing
-  }
+  Future<void> deleteSwatches() async { }
 
   @override
   void sortSwatches(String val) {
-    _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => globals.distanceSortOptions(IO.getMultiple([_swatches]), currSwatch.color, step: 16)[val](swatch, 0)));
+    _swatchesFuture = IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => globals.distanceSortOptions(IO.getMultiple([_swatches]), currSwatch!.color, step: 16)[val]!(swatch, 0)));
   }
 
   @override
@@ -238,7 +235,7 @@ class RecommendedSwatchBarState extends State<RecommendedSwatchBar> with TickerP
 
   @override
   Future<List<int>> sortAndFilterSwatchesActual() async {
-    _swatches = await IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => swatchList.sort[currentSort](swatch, 0)));
+    _swatches = await IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => swatchList.sort![currentSort]!(swatch, 0)));
     return await IO.filter(_swatches, filters);
   }
 }

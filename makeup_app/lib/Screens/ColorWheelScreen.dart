@@ -3,13 +3,13 @@ import '../Widgets/ColorPicker.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
+import '../Widgets/HelpButton.dart';
 import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorConversions.dart';
 import '../ColorMath/ColorProcessing.dart';
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
-import '../globalWidgets.dart' as globalWidgets;
-import '../allSwatchesIO.dart' as IO;
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 class ColorWheelScreen extends StatefulWidget {
@@ -19,11 +19,11 @@ class ColorWheelScreen extends StatefulWidget {
 
 class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
   List<int> _swatches = [];
-  Future<List<int>> _swatchesFuture;
+  Future<List<int>>? _swatchesFuture;
 
-  GlobalKey _swatchListKey = GlobalKey();
+  GlobalKey? _swatchListKey = GlobalKey();
 
-  RGBColor _pickedColor;
+  RGBColor? _pickedColor;
 
   bool _settingColor = false;
 
@@ -45,7 +45,7 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
     _swatches = IO.findMany(
       //gets the similar swatches
       getSimilarColors(
-        _pickedColor,
+        _pickedColor!,
         null,
         IO.getMany(allSwatches), //converts swatch ids to swatches
         maxDist: ((globals.colorWheelDistance > 4) ? globals.colorWheelDistance - 3 : 1),
@@ -58,10 +58,10 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<int>> swatchesFutureActual = _swatchesFuture;
-    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
+    Future<List<int>> swatchesFutureActual = _swatchesFuture!;
+    if(_swatchListKey != null && _swatchListKey!.currentWidget != null) {
       if(!_settingColor) {
-        swatchesFutureActual = (_swatchListKey.currentWidget as SingleSwatchList).swatchList.addSwatches;
+        swatchesFutureActual = (_swatchListKey!.currentWidget as SingleSwatchList).swatchList.addSwatches as Future<List<int>>;
       } else {
         _settingColor = false;
       }
@@ -72,11 +72,10 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
       3,
       //help button
       rightBar: [
-        globalWidgets.getHelpBtn(
-          context,
-            '${getString('help_colorWheel_0')}\n\n'
-            '${getString('help_colorWheel_1')}\n\n'
-            '${getString('help_colorWheel_2')}',
+        HelpButton(
+          text: '${getString('help_colorWheel_0')}\n\n'
+          '${getString('help_colorWheel_1')}\n\n'
+          '${getString('help_colorWheel_2')}',
         ),
       ],
       body: Column(
@@ -90,9 +89,9 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
                 //sets color and future
                 _pickedColor = HSVtoRGB(HSVColor(hue, saturation, value));
                 _settingColor = true;
-                if(_swatchListKey.currentState != null) {
+                if(_swatchListKey!.currentState != null) {
                   //no need to refilter because setting state soon
-                  (_swatchListKey.currentState as SingleSwatchListState).clearFilters(refilter: false);
+                  (_swatchListKey!.currentState as SingleSwatchListState).clearFilters(refilter: false);
                 }
                 _swatchesFuture = _addSwatches();
                 setState(() { });
@@ -123,6 +122,6 @@ class ColorWheelScreenState extends State<ColorWheelScreen> with ScreenState {
   }
 
   void onFilterDrawerClose(List<Filter> filters) {
-    (_swatchListKey.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
+    (_swatchListKey!.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
   }
 }

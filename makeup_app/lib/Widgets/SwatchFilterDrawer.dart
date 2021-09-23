@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
-import '../localizationIO.dart';
 import 'Filter.dart';
 import 'SwatchList.dart';
 
 class SwatchFilterDrawer extends StatefulWidget {
   final void Function(List<Filter>) onDrawerClose;
 
-  final GlobalKey swatchListKey;
+  final GlobalKey? swatchListKey;
 
-  SwatchFilterDrawer({ Key key, @required this.onDrawerClose, this.swatchListKey }) : super(key: key);
+  SwatchFilterDrawer({ Key? key, required this.onDrawerClose, this.swatchListKey }) : super(key: key);
 
   @override
   SwatchFilterDrawerState createState() => SwatchFilterDrawerState();
@@ -49,8 +49,11 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
   @override
   void initState() {
     super.initState();
-    SwatchListState state = (widget.swatchListKey.currentState as SwatchListState);
-    if(state != null && state.filters != null && state.filters.length > 0) {
+    SwatchListState? state;
+    if(widget.swatchListKey != null) {
+      state = (widget.swatchListKey!.currentState as SwatchListState);
+    }
+    if(state != null && state.filters.length > 0) {
       loadFilters(state.filters);
     } else {
       resetFilters();

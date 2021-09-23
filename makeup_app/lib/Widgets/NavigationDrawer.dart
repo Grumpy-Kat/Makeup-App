@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../types.dart';
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
-import '../localizationIO.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final int currTab;
-  final OnVoidAction onExit;
+  final OnVoidAction? onExit;
 
-  Map<int, routes.ScreenRoutes> menus;
+  late Map<int, routes.ScreenRoutes> menus;
 
-  NavigationDrawer({ Key key, this.currTab, this.onExit }) : super(key: key);
+  NavigationDrawer({ Key? key, required this.currTab, this.onExit }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -153,12 +153,14 @@ class NavigationDrawer extends StatelessWidget {
       pos = Offset(1.0, 0.0);
     }*/
     if(page != currTab) {
-      await onExit();
+      if(onExit != null) {
+        onExit!();
+      }
       navigation.pushReplacement(
         context,
         const Offset(1.0, 0.0),
-        menus[page],
-        routes.enumRoutes[menus[page]](context, true),
+        menus[page]!,
+        routes.enumRoutes[menus[page]]!(context, true),
       );
     } else {
       Navigator.of(context).pop();

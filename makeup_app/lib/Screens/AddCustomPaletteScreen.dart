@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BackButton;
 import '../ColorMath/ColorObjects.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Palette.dart';
+import '../Widgets/BackButton.dart';
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
-import '../allSwatchesIO.dart' as IO;
 import '../globalWidgets.dart' as globalWidgets;
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 class AddCustomPaletteScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
   static List<SwatchIcon> _swatchIcons = [];
 
   //doesn't actually contain swatches, just other values
-  static Palette _palette;
+  static Palette? _palette;
 
   @override
   void initState() {
@@ -63,12 +64,12 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       getString('screen_addPalette'),
       10,
       //back button
-      leftBar: globalWidgets.getBackButton(
-        () => navigation.pushReplacement(
+      leftBar: BackButton(
+        onPressed: () => navigation.pushReplacement(
           context,
           const Offset(-1, 0),
           routes.ScreenRoutes.AddPaletteScreen,
-          routes.routes['/addPaletteScreen'](context),
+          routes.routes['/addPaletteScreen']!(context),
         ),
       ),
       rightBar: [
@@ -90,7 +91,7 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
                     context,
                     const Offset(-1, 0),
                     routes.ScreenRoutes.AddPaletteScreen,
-                    routes.routes['/addPaletteScreen'](context),
+                    routes.routes['/addPaletteScreen']!(context),
                   );
                 },
                 () { },
@@ -139,8 +140,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
               ),
               onPressed: () {
                 globalWidgets.openLoadingDialog(context);
-                double weightPer = double.parse((_palette.weight / (_swatches.length + 1)).toStringAsFixed(4));
-                double pricePer = double.parse((_palette.price / (_swatches.length + 1)).toStringAsFixed(2));
+                double weightPer = double.parse((_palette!.weight / (_swatches.length + 1)).toStringAsFixed(4));
+                double pricePer = double.parse((_palette!.price / (_swatches.length + 1)).toStringAsFixed(2));
                 List<Swatch> swatches = IO.getMany(_swatches);
                 for(int i = 0; i < swatches.length; i++) {
                   swatches[i].weight = weightPer;
@@ -151,13 +152,16 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
                   Swatch(
                     color: RGBColor(0.5, 0.5, 0.5),
                     finish: 'finish_matte',
-                    brand: _palette.brand,
-                    palette: _palette.name,
+                    brand: _palette!.brand,
+                    palette: _palette!.name,
                     weight: weightPer,
                     price: pricePer,
                     shade: '',
+                    openDate: _palette!.openDate,
+                    expirationDate: _palette!.expirationDate,
                     rating: 5,
                     tags: [],
+                    imgIds: [],
                   ),
                 ]).then(
                   (List<int> val) {
@@ -199,12 +203,12 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
         context,
         const Offset(-1, 0),
         routes.ScreenRoutes.AllSwatchesScreen,
-        routes.routes['/allSwatchesScreen'](context),
+        routes.routes['/allSwatchesScreen']!(context),
       );
     });
   }
 
-  static void setValues(String brand, String palette, double weight, double price) {
+  static void setValues(String brand, String palette, double weight, double price, DateTime? openDate, DateTime? expirationDate) {
     //doesn't actually contain swatches, just other values
     _palette = Palette(
       id: '',
@@ -213,6 +217,8 @@ class AddCustomPaletteScreenState extends State<AddCustomPaletteScreen> with Scr
       weight: weight,
       price: price,
       swatches: [],
+      openDate: openDate,
+      expirationDate: expirationDate,
     );
   }
 

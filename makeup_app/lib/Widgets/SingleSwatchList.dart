@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart' hide HSVColor;
-import '../Widgets/Swatch.dart';
-import '../Widgets/SwatchList.dart';
-import '../Widgets/Filter.dart';
-import '../allSwatchesIO.dart' as IO;
+import '../IO/allSwatchesIO.dart' as IO;
 import '../types.dart';
+import 'Swatch.dart';
+import 'SwatchList.dart';
+import 'Filter.dart';
 
 class SingleSwatchList extends StatefulWidget {
   final OnSwatchListAction updateSwatches;
   final SwatchList swatchList;
 
-  final OnVoidAction onTap;
-  final OnVoidAction onDoubleTap;
+  final OnVoidAction? onTap;
+  final OnVoidAction? onDoubleTap;
 
-  SingleSwatchList({ Key key, @required Future addSwatches, Future orgAddSwatches, @required this.updateSwatches, List<int> selectedSwatches, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction onPlusPressed, Map<String, OnSortSwatch> sort, String defaultSort, bool showSearch = false, bool showDelete = false, bool showDeleteFiltered = false, bool overrideSwatchOnTap = false, OnSwatchAction onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction openEndDrawer }) : this.swatchList = SwatchList(
+  SingleSwatchList({ Key? key, required Future addSwatches, Future? orgAddSwatches, required this.updateSwatches, List<int>? selectedSwatches, bool showInfoBox = true, bool showNoColorsFound = false, bool showNoFilteredColorsFound = true, bool showPlus = false, OnVoidAction? onPlusPressed, Map<String, OnSortSwatch>? sort, String? defaultSort, bool showSearch = false, bool showDelete = false, bool showDeleteFiltered = false, bool overrideSwatchOnTap = false, OnSwatchAction? onSwatchTap, bool overrideSwatchOnDoubleTap = false, OnSwatchAction? onSwatchDoubleTap, this.onTap, this.onDoubleTap, bool showEndDrawer = true, OnVoidAction? openEndDrawer }) : this.swatchList = SwatchList(
     addSwatches: addSwatches,
     orgAddSwatches: orgAddSwatches ?? addSwatches,
     selectedSwatches: selectedSwatches ?? [],
@@ -53,11 +53,11 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   void initState() {
     super.initState();
     init(widget.swatchList);
-    currentSort = (swatchList.sort.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort.keys.first);
+    currentSort = (swatchList.sort!.containsKey(swatchList.defaultSort) ? swatchList.defaultSort : swatchList.sort!.keys.first);
   }
 
   void _addSwatchIcons() {
-    OnSwatchAction onDelete = !widget.swatchList.showDelete ? null : (int id) {
+    OnSwatchAction? onDelete = !widget.swatchList.showDelete ? null : (int id) {
       if(_swatches.contains(id)) {
         _swatches.remove(id);
         widget.updateSwatches(_swatches);
@@ -69,12 +69,12 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
         SwatchIcon.id(
           _swatches[i],
           showInfoBox: widget.swatchList.showInfoBox,
-          showCheck: swatchList.selectedSwatches.contains(_swatches[i]),
+          showCheck: (swatchList.selectedSwatches ?? []).contains(_swatches[i]),
           onDelete: onDelete,
           overrideOnTap: swatchList.overrideOnTap,
-          onTap: swatchList.onTap,
+          onTap: swatchList.onTap as OnIntAction?,
           overrideOnDoubleTap: swatchList.overrideOnDoubleTap,
-          onDoubleTap: swatchList.onDoubleTap,
+          onDoubleTap: swatchList.onDoubleTap as OnIntAction?,
         )
       );
     }
@@ -86,7 +86,6 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
 
   @override
   Widget build(BuildContext context) {
-    //TODO: maintain search even when selecting swatch, need to sort on rebuild
     init(widget.swatchList);
     if(widget.swatchList.showEndDrawer) {
       if(!_hasSorted && !_hasFiltered) {
@@ -110,7 +109,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
               if(_shouldChangeOriginalSwatches) {
                 _allSwatches = _swatches;
               }
-              print('${_swatches.length} ${_allSwatches.length}');
+              //print('${_swatches.length} ${_allSwatches.length}');
               _addSwatchIcons();
             }
             return buildSwatchList(
@@ -129,15 +128,15 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   }
 
   @override
-  Future<void> editSwatches(String brand, String palette, double weight, double price, int rating, List<String> tags) async {
+  Future<void> editSwatches(String? brand, String? palette, double? weight, double? price, DateTime? openDate, DateTime? expirationDate, int? rating, List<String>? tags) async {
     Map<int, Swatch> editing = {};
     List<Swatch> swatches = IO.getMany(_swatches);
     for(int i = 0; i < _swatches.length; i++) {
       if(brand != null && brand != '') {
-        swatches[i].brand = brand;
+        swatches[i].brand = brand.trim();
       }
       if(palette != null && palette != '') {
-        swatches[i].palette = palette;
+        swatches[i].palette = palette.trim();
       }
       if(weight != null) {
         swatches[i].weight = weight;
@@ -145,11 +144,21 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
       if(price != null) {
         swatches[i].price = price;
       }
+      if(openDate != null) {
+        swatches[i].openDate = openDate;
+      }
+      if(expirationDate != null) {
+        swatches[i].expirationDate = expirationDate;
+      }
       if(rating != null && rating > 0 && rating <= 10) {
         swatches[i].rating = rating;
       }
       if(tags != null) {
-        swatches[i].tags.addAll(tags);
+        if(swatches[i].tags == null) {
+          swatches[i].tags = tags;
+        } else {
+          swatches[i].tags!.addAll(tags);
+        }
       }
       editing[swatches[i].id] = swatches[i];
     }
@@ -164,7 +173,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
   @override
   void sortSwatches(String val) {
     _shouldChangeOriginalSwatches = true;
-    widget.swatchList.addSwatches = IO.sort(_allSwatches, (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[val](swatch, 0)));
+    widget.swatchList.addSwatches = IO.sort(_allSwatches, (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort![val]!(swatch, 0)));
     _hasSorted = true;
   }
 
@@ -173,7 +182,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
     _shouldChangeOriginalSwatches = false;
     widget.swatchList.addSwatches = IO.filter(_allSwatches, filters);
     _hasFiltered = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() { }));
   }
 
   @override
@@ -181,7 +190,7 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
     _shouldChangeOriginalSwatches = false;
     widget.swatchList.addSwatches = IO.search(_allSwatches, val);
     _hasSearched = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() { }));
   }
 
   @override
@@ -191,14 +200,14 @@ class SingleSwatchListState extends State<SingleSwatchList> with SwatchListState
     _hasFiltered = true;
     _hasSearched = true;
     _swatches = await IO.search(_swatches, search);
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() { }));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() { }));
     return _swatches;
   }
 
   @override
   Future<List<int>> sortAndFilterSwatchesActual() async {
     _swatches = await swatchList.orgAddSwatches;
-    _swatches = await IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort[currentSort](swatch, 0)));
+    _swatches = await IO.sort(_swatches, (a, b) => a.compareTo(b, (swatch) => widget.swatchList.sort![currentSort]!(swatch, 0)));
     _allSwatches = _swatches;
     _swatches = await IO.filter(_swatches, filters);
     _shouldChangeOriginalSwatches = false;

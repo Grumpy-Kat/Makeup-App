@@ -6,11 +6,11 @@ import '../routes.dart' as routes;
 
 class MenuBar extends StatelessWidget {
   final int currTab;
-  final OnVoidAction onExit;
+  final OnVoidAction? onExit;
 
-  Map<int, routes.ScreenRoutes> menus;
+  late Map<int, routes.ScreenRoutes> menus;
 
-  MenuBar({ Key key, this.currTab, this.onExit }) : super(key: key);
+  MenuBar({ Key? key, required this.currTab, this.onExit }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +89,14 @@ class MenuBar extends StatelessWidget {
       pos = Offset(1.0, 0.0);
     }
     if(page != currTab) {
-      await onExit();
+      if(onExit != null) {
+        onExit!();
+      }
       navigation.pushReplacement(
         context,
         pos,
-        menus[page],
-        routes.enumRoutes[menus[page]](context),
+        menus[page]!,
+        routes.enumRoutes[menus[page]]!(context),
       );
     }
   }

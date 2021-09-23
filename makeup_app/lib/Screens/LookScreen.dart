@@ -1,42 +1,44 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BackButton;
 import '../Widgets/Look.dart';
 import '../Widgets/SingleSwatchList.dart';
 import '../Widgets/SelectedSwatchPopup.dart';
 import '../Widgets/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
+import '../Widgets/BackButton.dart';
+import '../Widgets/HelpButton.dart';
+import '../IO/allSwatchesIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
-import '../allSwatchesIO.dart' as IO;
 import '../types.dart';
-import '../localizationIO.dart';
 import 'Screen.dart';
 
 class LookScreen extends StatefulWidget {
   final Look look;
   final int screenId;
 
-  final OnSwatchListAction updateSwatches;
+  final OnSwatchListAction? updateSwatches;
 
-  final String helpText;
+  final String? helpText;
 
   final bool showBack;
   final bool askBackSaved;
-  final OnVoidAction onBackPressed;
+  final OnVoidAction? onBackPressed;
 
   final bool showClear;
-  final OnVoidAction onClearPressed;
+  final OnVoidAction? onClearPressed;
 
   final bool showClone;
-  final OnVoidAction onClonePressed;
+  final OnVoidAction? onClonePressed;
 
   final bool showSave;
-  final OnVoidAction onSavePressed;
+  final OnVoidAction? onSavePressed;
 
   final bool showEdit;
   final bool saveOnEdit;
 
-  LookScreen({ @required this.look, @required this.screenId, @required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showClone = false, this.onClonePressed, this.showSave = false, this.onSavePressed, this.showEdit = true, this.saveOnEdit = false });
+  LookScreen({ required this.look, required this.screenId, required this.updateSwatches, this.helpText, this.showBack = false, this.askBackSaved = true, this.onBackPressed, this.showClear = false, this.onClearPressed, this.showClone = false, this.onClonePressed, this.showSave = false, this.onSavePressed, this.showEdit = true, this.saveOnEdit = false });
 
   @override
   LookScreenState createState() => LookScreenState();
@@ -44,9 +46,9 @@ class LookScreen extends StatefulWidget {
 
 class LookScreenState extends State<LookScreen> with ScreenState {
   List<int> _swatches = [];
-  Future<List<int>> _swatchesFuture;
+  Future<List<int>>? _swatchesFuture;
 
-  GlobalKey _swatchListKey = GlobalKey();
+  GlobalKey? _swatchListKey = GlobalKey();
 
   bool _hasEdited = false;
 
@@ -66,11 +68,11 @@ class LookScreenState extends State<LookScreen> with ScreenState {
   @override
   Widget build(BuildContext context) {
     //checks which buttons are necessary
-    Widget leftBar;
+    Widget? leftBar;
     if(widget.showBack) {
       leftBar = buildBack(context);
     }
-    List<Widget> rightBar = [];
+    List<Widget>? rightBar = [];
     if(widget.showClear) {
       rightBar.add(buildClear(context));
     }
@@ -84,16 +86,11 @@ class LookScreenState extends State<LookScreen> with ScreenState {
       rightBar.add(buildEdit(context));
     }
     if(widget.helpText != null) {
-      rightBar.add(
-        globalWidgets.getHelpBtn(
-          context,
-          widget.helpText,
-        ),
-      );
+      rightBar.add(HelpButton(text: widget.helpText!));
     }
-    Future<List<int>> swatchesFutureActual = _swatchesFuture;
-    if(_swatchListKey != null && _swatchListKey.currentWidget != null) {
-      swatchesFutureActual = (_swatchListKey.currentWidget as SingleSwatchList).swatchList.addSwatches;
+    Future<List<int>> swatchesFutureActual = _swatchesFuture!;
+    if(_swatchListKey != null && _swatchListKey!.currentWidget != null) {
+      swatchesFutureActual = (_swatchListKey!.currentWidget as SingleSwatchList).swatchList.addSwatches as Future<List<int>>;
     }
     return buildComplete(
       context,
@@ -108,7 +105,9 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         orgAddSwatches: _swatchesFuture,
         updateSwatches: (List<int> swatches) {
           this._swatches = swatches;
-          widget.updateSwatches(swatches);
+          if(widget.updateSwatches != null) {
+            widget.updateSwatches!(swatches);
+          }
           _hasEdited = true;
         },
         showNoColorsFound: false,
@@ -126,14 +125,14 @@ class LookScreenState extends State<LookScreen> with ScreenState {
   }
 
   void onFilterDrawerClose(List<Filter> filters) {
-    (_swatchListKey.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
+    (_swatchListKey!.currentState as SingleSwatchListState).onFilterDrawerClose(filters);
   }
 
   Widget buildBack(BuildContext context) {
     //creates back button
     return Align(
       alignment: Alignment.centerLeft,
-      child: globalWidgets.getBackButton(() => onExit()),
+      child: BackButton(onPressed: () => onExit()),
     );
   }
 
@@ -157,7 +156,9 @@ class LookScreenState extends State<LookScreen> with ScreenState {
               getString('lookScreen_clearWarning'),
               () {
                 //action determined by screen that uses it
-                widget.onClearPressed();
+                if(widget.onClearPressed != null) {
+                  widget.onClearPressed!();
+                }
               },
               () { },
             );
@@ -235,9 +236,13 @@ class LookScreenState extends State<LookScreen> with ScreenState {
                         },
                         onSave: (List<int> swatches) {
                           setState(() {
-                            widget.updateSwatches(swatches);
+                            if(widget.updateSwatches != null) {
+                              widget.updateSwatches!(swatches);
+                            }
                             if(widget.saveOnEdit) {
-                              widget.onSavePressed();
+                              if(widget.onSavePressed != null) {
+                                widget.onSavePressed!();
+                              }
                             } else {
                               _hasEdited = true;
                             }
@@ -264,15 +269,23 @@ class LookScreenState extends State<LookScreen> with ScreenState {
         context,
         getString('lookScreen_saveWarning'),
         () {
-          widget.onSavePressed();
-          widget.onBackPressed();
+          if(widget.onSavePressed != null) {
+            widget.onSavePressed!();
+          }
+          if(widget.onBackPressed != null) {
+            widget.onBackPressed!();
+          }
         },
         () {
-          widget.onBackPressed();
+          if(widget.onBackPressed != null) {
+            widget.onBackPressed!();
+          }
         },
       );
     } else {
-      widget.onBackPressed();
+      if(widget.onBackPressed != null) {
+        widget.onBackPressed!();
+      }
     }
   }
 }
