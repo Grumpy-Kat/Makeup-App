@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../routes.dart' as routes;
 import '../navigation.dart' as navigation;
@@ -18,7 +19,7 @@ class LoginButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Already have an account?',
+            '${getString('loginButton_question')}',
             style: theme.primaryTextSecondary,
           ),
           TextButton(
@@ -31,7 +32,7 @@ class LoginButton extends StatelessWidget {
               );
             },
             child: Text(
-              'Login here.',
+              '${getString('loginButton_label')}',
               style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.secondaryTextSize, decoration: TextDecoration.underline, fontFamily: theme.fontFamily),
             ),
           ),

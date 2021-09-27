@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Look.dart';
 import '../Widgets/FlatButton.dart';
+import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;
 import '../IO/allSwatchesIO.dart' as allSwatchesIO;
 import '../IO/savedLooksIO.dart' as savedLooksIO;
@@ -96,7 +97,7 @@ class PhoneLoginState extends State<PhoneLogin> {
         child: Align(
           alignment: Alignment.center,
           child: Text(
-            widget.hasAccount ? 'Sign In' : 'Sign Up',
+            widget.hasAccount ? getString('signIn') : getString('signUp'),
             style: theme.accentTextBold,
           ),
         ),
@@ -122,7 +123,7 @@ class PhoneLoginState extends State<PhoneLogin> {
         child: Align(
           alignment: Alignment.center,
           child: Text(
-            'Send Message',
+            '${getString('phoneLogin_send')}',
             style: theme.accentTextBold,
           ),
         ),
@@ -167,11 +168,11 @@ class PhoneLoginState extends State<PhoneLogin> {
         _hasSentMsg = false;
         switch(e.code) {
           case 'invalid-phone-number': {
-            _error = 'An error occurred. The phone number is invalid. Please try again or use a different method.';
+            _error = getString('phoneLogin_warning0');
             break;
           }
           default: {
-            _error = 'An error occurred. ${e.message} Please try again or use a different method.';
+            _error = getString('phoneLogin_warning1');
             break;
           }
         }
@@ -204,14 +205,14 @@ class PhoneLoginState extends State<PhoneLogin> {
           case 'invalid-verification-code': {
             setState(() {
               _hasSentMsg = false;
-              _error = 'The incorrect verification code was typed. Please try again.';
+              _error = getString('phoneLogin_warning1');
             });
             break;
           }
           default: {
             setState(() {
               _hasSentMsg = false;
-              _error = 'An error occurred while signing in. Please try again or use a different method.';
+              _error = getString('phoneLogin_warning2');
             });
             break;
           }

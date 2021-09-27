@@ -238,7 +238,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
                                 onPressed: () async {
                                   await globalWidgets.openTwoButtonDialog(
                                     context,
-                                    'Are you sure you want to delete the image?',
+                                    '${getString('swatchImage_deleteWarning')}',
                                     () async {
                                       IO.deleteImg(swatchId: img.swatchId!, imgId: img.id);
                                       onDelete();
@@ -248,7 +248,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
                                   );
                                 },
                                 child: Text(
-                                  '${getString('swatch_delete')}',
+                                  '${getString('swatchImage_delete')}',
                                   style: theme.errorText,
                                 ),
                               ),
@@ -349,7 +349,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 3),
           child: Text(
-            'Labels: ',
+            '${getString('swatchImage_labels')}: ',
             style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),

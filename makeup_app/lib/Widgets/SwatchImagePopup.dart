@@ -37,7 +37,7 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
-        color: theme.primaryColorDarkest,
+        color: theme.primaryColorDark,
       ),
       child: IconButton(
         constraints: BoxConstraints.tight(const Size.square(50)),
@@ -168,7 +168,7 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Add Photo',
+                                '${getString('save')}',
                                 style: theme.accentTextBold,
                               ),
                             ),
@@ -250,7 +250,7 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 3),
           child: Text(
-            'Labels: ',
+            '${getString('swatchImage_labels')}: ',
             style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),

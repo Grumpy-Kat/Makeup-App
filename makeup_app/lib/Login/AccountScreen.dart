@@ -5,6 +5,7 @@ import '../Screens/Screen.dart';
 import '../Widgets/FlatButton.dart';
 import '../Widgets/OutlineButton.dart';
 import '../Widgets/BackButton.dart';
+import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;
 import '../globalWidgets.dart' as globalWidgets;
 import '../navigation.dart' as navigation;
@@ -87,7 +88,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       }
       return buildComplete(
         context,
-        'Account',
+        getString('screen_account'),
         21,
         //back button
         leftBar: BackButton(onPressed: () => navigation.pop(context, false)),
@@ -117,7 +118,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
                     );
                   },
                   child: Text(
-                    'Sign Out',
+                    '${getString('signOut')}',
                     style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
                   ),
                 ),
@@ -138,7 +139,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
         child: Row(
           children: <Widget>[
             Text(
-              'Phone Number: ',
+              '${getString('account_phone')}: ',
               style: theme.primaryTextPrimary,
               textAlign: TextAlign.left,
             ),
@@ -189,7 +190,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
                 user.updatePhoneNumber(credential).then(
                   (_) {
                     setState(() {
-                      _msg = 'Your phone number has been successfully changed.';
+                      _msg = getString('account_phoneSuccess');
                       _error = null;
                       _isChangingPhoneNumber = false;
                     });
@@ -198,7 +199,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
                 ).catchError(
                   (e) {
                     setState(() {
-                      _error = 'There was an issue changing your phone number.';
+                      _error = getString('account_phoneWarning2');
                       print('${e.code} ${e.message}');
                     });
                     Navigator.pop(context);
@@ -209,11 +210,11 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
                 _hasSentCode = false;
                 switch(e.code) {
                   case 'invalid-phone-number': {
-                    _error = 'An error occurred. The phone number is invalid. Please try again or use a different method.';
+                    _error = getString('account_phoneWarning0');
                     break;
                   }
                   default: {
-                    _error = 'An error occurred. ${e.message} Please try again or use a different method.';
+                    _error = getString('account_phoneWarning2');
                     break;
                   }
                 }
@@ -235,7 +236,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             );
           },
           child: Text(
-            'Send Message',
+            '${getString('account_phoneSend')}',
             style: theme.accentTextBold,
           ),
         ),
@@ -257,7 +258,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             user.updatePhoneNumber(credential).then(
               (_) {
                 setState(() {
-                  _msg = 'Your phone number has been successfully changed.';
+                  _msg = getString('account_phoneSuccess');
                   _error = null;
                   _isChangingPhoneNumber = false;
                 });
@@ -267,9 +268,9 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
               (e) {
                 setState(() {
                   if(e.code == 'invalid-verification-code') {
-                    _error = 'The incorrect verification code was typed. Please try again.';
+                    _error = getString('account_phoneWarning1');
                   } else {
-                    _error = 'There was an issue changing your phone number.';
+                    _error = getString('account_phoneWarning2');
                   }
                   _hasSentCode = false;
                   print('${e.code} ${e.message}');
@@ -279,7 +280,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             );
           },
           child: Text(
-            'Update Phone Number',
+            '${getString('account_phoneChange')}',
             style: theme.accentTextBold,
           ),
         ),
@@ -299,7 +300,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             });
           },
           child: Text(
-            'Change Phone Number',
+            '${getString('account_phoneChange')}',
             style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
           ),
         ),
@@ -333,7 +334,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
         child: Row(
           children: <Widget>[
             Text(
-              'Email: ',
+              '${getString('account_email')}: ',
               style: theme.primaryTextPrimary,
               textAlign: TextAlign.left,
             ),
@@ -356,11 +357,21 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       ),
       //do not validate if already has password
       //password might have been changed through firebase or another source, where the password was not properly validated
-      if(_isChangingPassword) PasswordField(shouldValidate: false, key: _oldPasswordKey, text: 'Old Password'),
+      if(_isChangingPassword) PasswordField(
+        key: _oldPasswordKey,
+        shouldValidate: false,
+        text: getString('account_passwordOld'),
+        isNewPassword: true,
+      ),
       if(_isChangingPassword) const SizedBox(
         height: 10,
       ),
-      if(_isChangingPassword) PasswordField(shouldValidate: true, key: _newPasswordKey, text: 'New Password'),
+      if(_isChangingPassword) PasswordField(
+        key: _newPasswordKey,
+        shouldValidate: true,
+        text: getString('account_passwordNew'),
+        isNewPassword: false,
+      ),
       if(_isChangingPassword) Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(horizontal: horizPadding, vertical: vertPadding),
@@ -385,7 +396,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
                   user.updatePassword(newPassword ?? '').then(
                     (_) {
                       setState(() {
-                        _msg = 'Your password has been successfully changed.';
+                        _msg = getString('account_passwordSuccess');
                         _error = null;
                         _isChangingPassword = false;
                         _autovalidate = false;
@@ -395,7 +406,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
                   ).catchError(
                     (e) {
                       setState(() {
-                        _error = 'There was an issue changing your password.';
+                        _error = getString('account_passwordWarning1');
                         print('${e.code} ${e.message}');
                       });
                       Navigator.pop(context);
@@ -406,9 +417,9 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
                 (e) {
                   setState(() {
                     if(e.code == 'wrong-password') {
-                      _error = 'The old password you entered is incorrect.';
+                      _error = getString('account_passwordWarning0');
                     } else {
-                      _error = 'There was an issue changing your password.';
+                      _error = getString('account_passwordWarning1');
                     }
                     print('${e.code} ${e.message}');
                   });
@@ -420,7 +431,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             }
           },
           child: Text(
-            'Reset Password',
+            '${getString('account_passwordChange')}',
             style: theme.accentTextBold,
           ),
         ),
@@ -441,7 +452,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             });
           },
           child: Text(
-            'Change Password',
+            '${getString('account_passwordChange')}',
             style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
           ),
         ),
@@ -473,7 +484,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: horizPadding, right: horizPadding, top: 14),
         child: Text(
-          'Signed in through Google.',
+          '${getString('account_google')}',
           style: theme.primaryTextPrimary,
           textAlign: TextAlign.left,
         ),
@@ -484,7 +495,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
         child: Row(
           children: <Widget>[
             Text(
-              'Email: ',
+              '${getString('account_email')}: ',
               style: theme.primaryTextPrimary,
               textAlign: TextAlign.left,
             ),

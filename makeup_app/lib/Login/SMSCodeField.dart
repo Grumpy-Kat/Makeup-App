@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 
 class SMSCodeField extends StatefulWidget {
@@ -29,6 +30,7 @@ class SMSCodeFieldState extends State<SMSCodeField> {
       child: TextFormField(
         textAlign: TextAlign.left,
         keyboardType: TextInputType.number,
+        autofillHints: [AutofillHints.oneTimeCode],
         textInputAction: TextInputAction.done,
         autofocus: true,
         style: TextStyle(color: theme.primaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily, letterSpacing: 7.0),
@@ -42,7 +44,7 @@ class SMSCodeFieldState extends State<SMSCodeField> {
           smsCode = val;
         },
         decoration: InputDecoration(
-          hintText: 'A verification code was sent to your phone.',
+          hintText: getString('smsCodeField_confirm'),
           hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.tertiaryTextSize, fontFamily: theme.fontFamily, letterSpacing: 0.78),
           border: InputBorder.none,
         ),

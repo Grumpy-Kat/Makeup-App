@@ -1,5 +1,6 @@
 import 'package:GlamKit/Login/LoginScreen.dart';
 import 'package:flutter/material.dart';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../routes.dart' as routes;
 import '../navigation.dart' as navigation;
@@ -19,7 +20,7 @@ class SignUpButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Don\'t have an account?',
+            '${getString('signUpButton_question')}',
             style: theme.primaryTextSecondary,
           ),
           TextButton(
@@ -32,7 +33,7 @@ class SignUpButton extends StatelessWidget {
               );
             },
             child: Text(
-              'Sign up here.',
+              '${getString('signUpButton_label')}',
               style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.secondaryTextSize, decoration: TextDecoration.underline, fontFamily: theme.fontFamily),
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide OutlineButton;
 import '../Widgets/OutlineButton.dart';
+import '../IO/localizationIO.dart';
 import '../types.dart';
 import '../theme.dart' as theme;
 
@@ -28,7 +29,7 @@ class EmailButton extends StatelessWidget {
             width: 230,
             padding: const EdgeInsets.only(left: 12),
             child: Text(
-              hasAccount ? 'Login with email' : 'Sign up with email',
+              hasAccount ? getString('emailButton_login') : getString('emailButton_signUp'),
               style: theme.primaryTextSecondary,
             ),
           )

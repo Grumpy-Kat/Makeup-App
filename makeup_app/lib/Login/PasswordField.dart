@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 
 class PasswordField extends StatefulWidget {
   final bool shouldValidate;
   final String text;
+  final bool isNewPassword;
 
-  PasswordField({ Key? key, required this.shouldValidate, this.text = 'Password' }) : super(key: key);
+  PasswordField({ Key? key, required this.shouldValidate, required this.text, required this.isNewPassword }) : super(key: key);
 
   @override
   PasswordFieldState createState() => PasswordFieldState();
@@ -23,7 +25,9 @@ class PasswordFieldState extends State<PasswordField> {
       width: MediaQuery.of(context).size.width - 40,
       child: TextFormField(
         textAlign: TextAlign.left,
+        autocorrect: false,
         keyboardType: TextInputType.visiblePassword,
+        autofillHints: widget.isNewPassword ? [AutofillHints.password] : [AutofillHints.newPassword],
         textInputAction: TextInputAction.done,
         style: theme.primaryTextPrimary,
         maxLines: 1,
@@ -92,19 +96,19 @@ class PasswordFieldState extends State<PasswordField> {
       return null;
     }
     if(val == null || val.length < 1) {
-      return 'Password is required.';
+      return getString('passwordField_warning0');
     }
     if(val.length < 5) {
-      return 'Password must be at least 5 characters.';
+      return getString('passwordField_warning1');
     }
     if(!RegExp('(?=.*?[a-z]).{1,}').hasMatch(val)) {
-      return 'Password must contain a lowercase letter.';
+      return getString('passwordField_warning2');
     }
     if(!RegExp('(?=.*?[A-Z]).{1,}').hasMatch(val)) {
-      return 'Password must contain an uppercase letter.';
+      return getString('passwordField_warning3');
     }
     if(!RegExp('(?=.*?[0-9]).{1,}').hasMatch(val)) {
-      return 'Password must contain a number.';
+      return getString('passwordField_warning4');
     }
     return null;
   }

@@ -24,6 +24,10 @@
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Not required.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Not required.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Not required.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Not required.</string>
 	<key>NSCameraUsageDescription</key>

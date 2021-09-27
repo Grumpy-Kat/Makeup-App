@@ -168,9 +168,9 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                   height: 10,
                 ),
                 //open date
-                getDateField('Open Date', openDate, null, (DateTime value) { _swatch.openDate = value; onChange(true); }),
+                getDateField('${getString('swatch_openDate')}', openDate, null, (DateTime value) { _swatch.openDate = value; onChange(true); }),
                 //expiration date
-                getDateField('Expiration Date', expirationDate, openDate, (DateTime value) { _swatch.expirationDate = value; onChange(true); }),
+                getDateField('${getString('swatch_expirationDate')}', expirationDate, openDate, (DateTime value) { _swatch.expirationDate = value; onChange(true); }),
                 divider,
                 //rating
                 getStarField('${getString('swatch_rating')}', _swatch.rating, (int value) { _swatch.rating = value; onChange(false); }),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart' hide FlatButton;
 //import '../Widgets/Swatch.dart';
 //import '../Widgets/Look.dart';
 import '../Widgets/FlatButton.dart';
+import '../IO/localizationIO.dart';
 //import '../IO/loginIO.dart' as IO;
 //import '../IO/allSwatchesIO.dart' as allSwatchesIO;
 //import '../IO/savedLooksIO.dart' as savedLooksIO;
@@ -112,7 +113,7 @@ class GoogleLoginState extends State<GoogleLogin> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                'Sign In',
+                '${getString('signIn')}',
                 style: theme.accentTextBold,
               ),
             ),
@@ -131,7 +132,7 @@ class GoogleLoginState extends State<GoogleLogin> {
     } catch(e) {
       print('credential issue $e');
       setState(() {
-        _error = 'An error occurred while signing in. Please try again or use a different method.';
+        _error = getString('googleLogin_warning1');
       });
       return false;
     }
@@ -148,13 +149,13 @@ class GoogleLoginState extends State<GoogleLogin> {
       switch(e.code) {
         case 'account-exists-with-different-credential': {
           setState(() {
-            _error = 'A GlamKit account already exists with this email. Try signing in with your email instead.';
+            _error = getString('googleLogin_warning0');
           });
           break;
         }
         default: {
           setState(() {
-            _error = 'An error occurred while signing in. Please try again or use a different method.';
+            _error = getString('googleLogin_warning1');
           });
           break;
         }

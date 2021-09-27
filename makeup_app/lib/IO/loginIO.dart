@@ -7,6 +7,7 @@ import '../Widgets/FlatButton.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
+import 'localizationIO.dart';
 import 'allSwatchesIO.dart' as allSwatchesIO;
 import 'savedLooksIO.dart' as savedLooksIO;
 import 'settingsIO.dart' as settingsIO;
@@ -56,7 +57,10 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
     (BuildContext context) {
       return globalWidgets.getAlertDialog(
         context,
-        title: Text('Both the local account and the account you are signing into contain swatches. Would you like to combine them or keep the swatches from one account? Warning: Whichever account is not chosen will have its swatches permanently deleted! This can not be undone.', style: theme.primaryTextPrimary),
+        title: Text(
+          getString('login_popupInstructions'),
+          style: theme.primaryTextPrimary,
+        ),
         actions: <Widget>[
           FlatButton(
             bgColor: theme.accentColor,
@@ -95,7 +99,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
               Navigator.pop(context);
             },
             child: Text(
-              'Combine',
+              getString('login_combine'),
               style: theme.accentTextBold,
             ),
           ),
@@ -114,7 +118,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
               Navigator.pop(context);
             },
             child: Text(
-              'Local Account',
+              getString('login_local'),
               style: theme.accentTextBold,
             ),
           ),
@@ -126,7 +130,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
               signIn(false);
             },
             child: Text(
-              'New Account',
+              getString('login_new'),
               style: theme.accentTextBold,
             ),
           ),

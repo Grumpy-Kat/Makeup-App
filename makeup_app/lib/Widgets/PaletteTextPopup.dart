@@ -139,20 +139,49 @@ class PaletteTextPopup {
                     ),
 
                     //open date
-                    getDateField(context, 'Open Date', openDate, null, (DateTime value) { setState(() { openDate = value; }); }),
+                    if(showDates) getDateField(
+                      context,
+                      getString('addPalette_openDate'),
+                      openDate,
+                      null,
+                      (DateTime value) {
+                        setState(() {
+                          openDate = value;
+                        });
+                      },
+                    ),
                     if(showDates) const SizedBox(
                       height: 20,
                     ),
 
                     //expiration date
-                    getDateField(context, 'Expiration Date', expirationDate, openDate, (DateTime value) { setState(() { expirationDate = value; }); }),
+                    if(showDates) getDateField(
+                      context,
+                      getString('addPalette_expirationDate'),
+                      expirationDate,
+                      openDate,
+                      (DateTime value) {
+                        setState(() {
+                          expirationDate = value;
+                        });
+                      },
+                    ),
                     if(showDates) const SizedBox(
                       height: 20,
                     ),
 
                     if(showDates && showImgs) divider,
 
-                    if(showImgs) getImgsField(context, 'Swatch Images', imgs, (List<SwatchImage> newImgs) { setState(() { imgs = newImgs; }); }),
+                    if(showImgs) getImgsField(
+                      context,
+                      getString('addPalette_swatchImages'),
+                      imgs,
+                      (List<SwatchImage> value) {
+                        setState(() {
+                          imgs = value;
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),

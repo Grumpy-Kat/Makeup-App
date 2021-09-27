@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Look.dart';
 import '../Widgets/FlatButton.dart';
+import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;
 import '../IO/allSwatchesIO.dart' as allSwatchesIO;
 import '../IO/savedLooksIO.dart' as savedLooksIO;
@@ -76,7 +77,12 @@ class EmailLoginState extends State<EmailLogin> {
           ),
           //do not validate if has account
           //password might have been changed through firebase or another source, where the password was not properly validated
-          if(!_isResettingPassword) PasswordField(shouldValidate: !(widget.hasAccount || _isResettingPassword), key: _passwordKey),
+          if(!_isResettingPassword) PasswordField(
+            key: _passwordKey,
+            shouldValidate: !(widget.hasAccount || _isResettingPassword),
+            text: '${getString('emailLogin_password')}',
+            isNewPassword: widget.hasAccount,
+          ),
           if(!_isResettingPassword) const SizedBox(
             height: 7,
           ),
@@ -96,7 +102,7 @@ class EmailLoginState extends State<EmailLogin> {
                       (value) {
                         setState(() {
                           _isResettingPassword = false;
-                          _error = 'An link to reset your password has been sent to your email. Please reset it and then attempt to login again.';
+                          _error = getString('emailLogin_resetPasswordConfirm');
                           _autovalidate = false;
                         });
                       }
@@ -132,7 +138,7 @@ class EmailLoginState extends State<EmailLogin> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  (_isResettingPassword ? 'Reset Password' : (widget.hasAccount ? 'Login' : 'Sign Up')),
+                  (_isResettingPassword ? getString('emailLogin_resetPassword') : (widget.hasAccount ? getString('signIn') : getString('signUp'))),
                   style: theme.accentTextBold,
                 ),
               ),
@@ -157,28 +163,28 @@ class EmailLoginState extends State<EmailLogin> {
       } on FirebaseAuthException catch (e) {
         switch(e.code) {
           case 'invalid-email': {
-            _error = 'The email you gave is invalid.';
+            _error = getString('emailLogin_warning0');
             break;
           }
           case 'user-disabled':
           case 'user-not-found': {
-            _error = 'No account found for this email. Try signing up instead.';
+            _error = getString('emailLogin_warning1');
             break;
           }
           case 'wrong-password': {
-            _error = 'The password you entered is incorrect.';
+            _error = getString('emailLogin_warning2');
             break;
           }
           case 'email-already-in-use': {
-            _error = 'There is already an account with this email. Try signing in instead.';
+            _error = getString('emailLogin_warning3');
             break;
           }
           case 'weak-password': {
-            _error = 'The password you entered is too weak. Please try a different one.';
+            _error = getString('emailLogin_warning4');
             break;
           }
           default: {
-            _error = 'An error occurred while signing in. Please try again or use a different method.';
+            _error = getString('emailLogin_warning7');
             break;
           }
         }
@@ -193,7 +199,9 @@ class EmailLoginState extends State<EmailLogin> {
       width: MediaQuery.of(context).size.width - 40,
       child: TextFormField(
         textAlign: TextAlign.left,
+        autocorrect: false,
         keyboardType: TextInputType.emailAddress,
+        autofillHints: [AutofillHints.email],
         textInputAction: TextInputAction.next,
         style: theme.primaryTextPrimary,
         maxLines: 1,
@@ -213,7 +221,7 @@ class EmailLoginState extends State<EmailLogin> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           fillColor: theme.primaryColor,
-          labelText: 'Email',
+          labelText: '${getString('emailLogin_email')}',
           labelStyle: theme.primaryTextPrimary,
           errorStyle: theme.errorTextSecondary,
           errorBorder: OutlineInputBorder(
@@ -255,7 +263,7 @@ class EmailLoginState extends State<EmailLogin> {
         });
       },
       child: Text(
-        'Forgot password?',
+        getString('emailLogin_forgotPassword'),
         style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.secondaryTextSize, decoration: TextDecoration.underline, fontFamily: theme.fontFamily),
       ),
     );
@@ -263,10 +271,10 @@ class EmailLoginState extends State<EmailLogin> {
   
   String? emailValidate(String? val) {
     if(val == null || val.length < 1) {
-      return 'Email is required.';
+      return getString('emailLogin_warning5');
     }
     if(!RegExp('^[a-zA-Z0-9.!#\$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*\$').hasMatch(val)) {
-      return 'Email is not valid.';
+      return getString('emailLogin_warning6');
     }
     return null;
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide BackButton;
 import '../Screens/Screen.dart';
 import '../Widgets/BackButton.dart';
+import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
@@ -72,7 +73,7 @@ class LoginScreenState extends State<LoginScreen> with ScreenState {
     }
     return buildComplete(
       context,
-      widget.hasAccount ? 'Login' : 'Sign Up',
+      widget.hasAccount ? getString('login') : getString('signUp'),
       20,
       //back button
       leftBar: BackButton(onPressed: () => navigation.pop(context, false)),

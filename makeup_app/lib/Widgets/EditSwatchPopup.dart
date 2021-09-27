@@ -77,9 +77,9 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
           height: 10,
         ),
         //open date
-        getDateField('Open Date', _openDate, null, (DateTime value) { setState(() { _openDate = value; }); }),
+        getDateField('${getString('swatch_openDate')}', _openDate, null, (DateTime value) { setState(() { _openDate = value; }); }),
         //expiration date
-        getDateField('Expiration Date', _expirationDate, _openDate, (DateTime value) { setState(() { _expirationDate = value; }); }),
+        getDateField('${getString('swatch_expirationDate')}', _expirationDate, _openDate, (DateTime value) { setState(() { _expirationDate = value; }); }),
         divider,
         //rating
         getStarField('${getString('swatch_rating')}', _rating, (int value) { _rating = value; }),

@@ -188,7 +188,7 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Add Photos',
+                                '${getString('save')}',
                                 style: theme.accentTextBold,
                               ),
                             ),
@@ -252,7 +252,7 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> {
             getString('swatch_tags_popupInstructions'),
             getString('swatch_tags_popupError'),
             getString('swatch_tags_popupBtn'),
-                (String value) {
+            (String value) {
               options.add(value);
               globals.swatchImgLabels = options;
               labels.add(value);
@@ -270,7 +270,7 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> {
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 3),
           child: Text(
-            'Labels: ',
+            '${getString('swatchImage_labels')}: ',
             style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),

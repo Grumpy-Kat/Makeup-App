@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide OutlineButton;
 import '../Widgets/OutlineButton.dart';
+import '../IO/localizationIO.dart';
 import '../types.dart';
 import '../theme.dart' as theme;
 
@@ -28,7 +29,7 @@ class PhoneButton extends StatelessWidget {
             width: 230,
             padding: const EdgeInsets.only(left: 12),
             child: Text(
-              hasAccount ? 'Login with phone number' : 'Sign up with phone number',
+              hasAccount ? getString('phoneButton_login') : getString('phoneButton_signUp'),
               style: theme.primaryTextSecondary,
             ),
           )

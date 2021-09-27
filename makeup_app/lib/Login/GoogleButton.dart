@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide OutlineButton;
 import '../Widgets/OutlineButton.dart';
+import '../IO/localizationIO.dart';
 import '../types.dart';
 import '../theme.dart' as theme;
 
@@ -28,7 +29,7 @@ class GoogleButton extends StatelessWidget {
             width: 230,
             padding: const EdgeInsets.only(left: 12),
             child: Text(
-              hasAccount ? 'Login with Google' : 'Sign up with Google',
+              hasAccount ? getString('googleButton_login') : getString('googleButton_signUp'),
               style: theme.primaryTextSecondary,
             ),
           )

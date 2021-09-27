@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import 'PhoneNumberTextInputFormatter.dart';
 
@@ -43,6 +44,7 @@ class PhoneNumberFieldState extends State<PhoneNumberField> {
               textAlign: TextAlign.left,
               initialValue: '+' + countryCode,
               keyboardType: TextInputType.phone,
+              autofillHints: [AutofillHints.telephoneNumberCountryCode],
               textInputAction: TextInputAction.next,
               autofocus: true,
               onChanged: (String val) {
@@ -71,6 +73,7 @@ class PhoneNumberFieldState extends State<PhoneNumberField> {
             child: TextFormField(
               textAlign: TextAlign.left,
               keyboardType: TextInputType.phone,
+              autofillHints: [AutofillHints.telephoneNumberNational],
               textInputAction: TextInputAction.done,
               style: theme.primaryTextPrimary,
               inputFormatters: <TextInputFormatter>[
@@ -84,7 +87,7 @@ class PhoneNumberFieldState extends State<PhoneNumberField> {
               textAlignVertical: TextAlignVertical.center,
               cursorColor: theme.accentColor,
               decoration: InputDecoration(
-                hintText: 'Your Phone Number',
+                hintText: getString('phoneNumberField_label'),
                 hintStyle: TextStyle(color: theme.tertiaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
                 border: InputBorder.none,
               ),
