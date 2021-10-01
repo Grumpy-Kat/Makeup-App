@@ -196,19 +196,23 @@ Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBCo
 List<String> _tags = ['tags_pigmented', 'tags_sheer', 'tags_lotsFallout', 'tags_noFallout', 'tags_soft', 'tags_creamy', 'tags_dry'];
 List<String> get tags => _tags;
 set tags(List<String> value) {
-  _tags = value.toSet().toList();
-  if(hasLoaded) {
-    IO.save();
+  if(value.length > 0) {
+    _tags = value.toSet().toList();
+    if (hasLoaded) {
+      IO.save();
+    }
   }
 }
 
 //all swatch photo label
-List<String> _swatchImgLabels = ['Direct lighting', 'Indirect lighting', 'Outdoor lighting', 'Indoor lighting', 'Black background', 'White background'];
+List<String> _swatchImgLabels = ['Direct lighting', 'Indirect lighting', 'Low Lighting', 'Outdoor lighting', 'Indoor lighting', 'Black background', 'White background'];
 List<String> get swatchImgLabels => _swatchImgLabels;
 set swatchImgLabels(List<String> value) {
-  _swatchImgLabels = value.toSet().toList();
-  if(hasLoaded) {
-    IO.save();
+  if(value.length > 0) {
+    _swatchImgLabels = value.toSet().toList();
+    if (hasLoaded) {
+      IO.save();
+    }
   }
 }
 

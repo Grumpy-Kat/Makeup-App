@@ -106,8 +106,10 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
                   outlineColor: theme.primaryColorDark,
                   outlineWidth: 2.0,
                   onPressed: () {
+                    globalWidgets.openLoadingDialog(context);
                     IO.signOut().then(
                       (value) {
+                        Navigator.pop(context);
                         navigation.pushReplacement(
                           context,
                           const Offset(1, 0),

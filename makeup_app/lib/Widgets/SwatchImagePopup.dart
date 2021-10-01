@@ -101,7 +101,7 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
                                 child: OutlineButton(
                                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                                   bgColor: theme.bgColor,
-                                  outlineColor: theme.primaryColorDark,
+                                  outlineColor: theme.primaryColorDarkest,
                                   outlineWidth: 2.0,
                                   onPressed: () {
                                     openImgPicker(context).then(

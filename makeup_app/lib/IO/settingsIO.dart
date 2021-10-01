@@ -108,7 +108,6 @@ Future<bool> load() async {
           globals.swatchImgLabels = docSnapshot.get('swatchImgLabels').split(';');
         } catch(e) {
           print(e);
-          globals.swatchImgLabels = [];
         }
         //brightness offset
         globals.brightnessOffset = docSnapshot.get('brightness');

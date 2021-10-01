@@ -172,7 +172,8 @@ class PhoneLoginState extends State<PhoneLogin> {
             break;
           }
           default: {
-            _error = getString('phoneLogin_warning1');
+            print(e);
+            _error = getString('phoneLogin_warning2');
             break;
           }
         }
