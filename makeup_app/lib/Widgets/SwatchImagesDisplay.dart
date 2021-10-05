@@ -216,7 +216,9 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
                               child: FlatButton(
                                 bgColor: theme.accentColor,
                                 onPressed: () async {
+                                  globalWidgets.openLoadingDialog(context);
                                   await IO.updateImg(swatchImg: img);
+                                  Navigator.pop(context);
                                   Navigator.pop(context);
                                 },
                                 child: Align(
