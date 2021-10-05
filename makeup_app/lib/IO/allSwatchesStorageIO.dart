@@ -8,7 +8,7 @@ import '../globals.dart' as globals;
 late Reference _folderRef;
 
 //TODO: cache this in the future if worried about performance
-//TODO: deleted image in deleted swatch will not refresh if new image with same swatch id is added
+//TODO: deleted image in deleted swatch will not refresh if new image with same swatch id is added?
 
 void init() {
   _folderRef = FirebaseStorage.instance.ref('swatchesImgs/${globals.userID}');

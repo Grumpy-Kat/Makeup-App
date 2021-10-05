@@ -9,6 +9,7 @@ import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import 'localizationIO.dart';
 import 'allSwatchesIO.dart' as allSwatchesIO;
+import 'allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import 'savedLooksIO.dart' as savedLooksIO;
 import 'settingsIO.dart' as settingsIO;
 
@@ -151,6 +152,7 @@ Future<void> signIn([bool setDisplayName = true]) async {
     String? newUserId = auth.currentUser!.displayName;
     if(newUserId != null && newUserId != '') {
       globals.userID = newUserId;
+      allSwatchesStorageIO.init();
     }
   }
   auth.currentUser!.getIdToken(true);
