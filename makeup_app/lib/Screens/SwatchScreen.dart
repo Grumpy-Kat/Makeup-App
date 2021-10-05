@@ -435,7 +435,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
   Widget getDropdownField(String label, List<String> options, String value, OnStringAction onChange) {
     String valueText = value;
     if(valueText.contains('_')) {
-      valueText = getString(valueText);
+      valueText = getString(valueText, defaultValue: valueText);
     }
     return getField(
       55,
@@ -470,7 +470,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
             (String val) {
               String text = val;
               if(text.contains('_')) {
-                  text = getString(text);
+                text = getString(text, defaultValue: text);
               }
               return DropdownMenuItem(
                 value: val,
@@ -661,7 +661,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       }
       String text = options[i];
       if(text.contains('_')) {
-        text = getString(text);
+        text = getString(text, defaultValue: text);
       }
       widgets.add(
         FilterChip(

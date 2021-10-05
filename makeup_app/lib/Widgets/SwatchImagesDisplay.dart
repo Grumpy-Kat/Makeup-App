@@ -281,7 +281,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
       }
       String text = options[i];
       if(text.contains('_')) {
-        text = getString(text);
+        text = getString(text, defaultValue: text);
       }
       widgets.add(
         FilterChip(

@@ -205,7 +205,7 @@ set tags(List<String> value) {
 }
 
 //all swatch photo label
-List<String> _swatchImgLabels = ['Direct lighting', 'Indirect lighting', 'Low Lighting', 'Outdoor lighting', 'Indoor lighting', 'Black background', 'White background'];
+List<String> _swatchImgLabels = ['swatchImgLabels_directLighting', 'swatchImgLabels_indirectLighting', 'swatchImgLabels_lowLighting', 'swatchImgLabels_outdoorLighting', 'swatchImgLabels_indoorLighting', 'swatchImgLabels_blackBackground', 'swatchImgLabels_whiteBackground'];
 List<String> get swatchImgLabels => _swatchImgLabels;
 set swatchImgLabels(List<String> value) {
   if(value.length > 0) {

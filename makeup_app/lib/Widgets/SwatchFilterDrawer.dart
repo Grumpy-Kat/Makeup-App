@@ -276,7 +276,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
       }
       String text = tags[i];
       if(text.contains('_')) {
-        text = getString(text);
+        text = getString(text, defaultValue: text);
       }
       widgets.add(
         FilterChip(

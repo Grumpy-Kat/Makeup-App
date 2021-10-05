@@ -217,7 +217,7 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> {
       }
       String text = options[i];
       if(text.contains('_')) {
-        text = getString(text);
+        text = getString(text, defaultValue: text);
       }
       widgets.add(
         FilterChip(
