@@ -157,6 +157,7 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> {
                           child: FlatButton(
                             bgColor: theme.accentColor,
                             onPressed: () async {
+                              globalWidgets.openLoadingDialog(context);
                               List<String>? imgIds;
                               if(widget.swatchId != null) {
                                 imgIds = [];
@@ -165,6 +166,7 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> {
                                 }
                               }
                               _hasInit = false;
+                              Navigator.pop(context);
                               Navigator.pop(context);
                               if(imgIds != null && widget.onImgIdsAdded != null) {
                                 widget.onImgIdsAdded!(imgIds);

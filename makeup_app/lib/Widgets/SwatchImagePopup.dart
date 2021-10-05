@@ -148,11 +148,13 @@ class SwatchImagePopupState extends State<SwatchImagePopup> {
                           child: FlatButton(
                             bgColor: theme.accentColor,
                             onPressed: () async {
+                              globalWidgets.openLoadingDialog(context);
                               String? imgId;
                               if(widget.swatchId != null) {
                                 imgId = await allSwatchesStorageIO.addImg(file: ImagePicker.img!, otherImgIds: widget.otherImgIds, swatchId: widget.swatchId!, labels: labels);
                               }
                               _hasInit = false;
+                              Navigator.pop(context);
                               Navigator.pop(context);
                               if(imgId != null && widget.onImgIdAdded != null) {
                                 widget.onImgIdAdded!(imgId);
