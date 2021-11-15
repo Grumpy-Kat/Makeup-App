@@ -11,7 +11,7 @@ import 'EmailButton.dart';
 import 'PhoneLogin.dart';
 import 'PhoneButton.dart';
 import 'GoogleLogin.dart';
-//import 'GoogleButton.dart';
+import 'GoogleButton.dart';
 import 'LoginButton.dart';
 import 'SignUpButton.dart';
 
@@ -53,7 +53,7 @@ class LoginScreenState extends State<LoginScreen> with ScreenState {
         child = EmailLogin(widget.hasAccount);
         /*btn1 = GoogleBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Google); });
         btn2 = PhoneBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Phone); });*/
-        btn = PhoneButton(widget.hasAccount, onPressed: () { setType(LoginAuthType.Phone); });
+        btn = GoogleButton(widget.hasAccount, onPressed: () { setType(LoginAuthType.Google); });
         break;
       }
       case LoginAuthType.Phone: {

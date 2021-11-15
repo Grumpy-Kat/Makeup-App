@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart' hide FlatButton;
-//import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
-//import '../Widgets/Swatch.dart';
-//import '../Widgets/Look.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import '../Widgets/Swatch.dart';
+import '../Widgets/Look.dart';
 import '../Widgets/FlatButton.dart';
 import '../IO/localizationIO.dart';
-//import '../IO/loginIO.dart' as IO;
-//import '../IO/allSwatchesIO.dart' as allSwatchesIO;
-//import '../IO/savedLooksIO.dart' as savedLooksIO;
+import '../IO/loginIO.dart' as IO;
+import '../IO/allSwatchesIO.dart' as allSwatchesIO;
+import '../IO/savedLooksIO.dart' as savedLooksIO;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
@@ -24,18 +24,17 @@ class GoogleLogin extends StatefulWidget {
 }
 
 class GoogleLoginState extends State<GoogleLogin> {
-
-  bool _hasAutoSignedIn = false;
   bool _isSigningIn = false;
 
   String _error = '';
 
-  //late Map<int, Swatch?> _orgAccountSwatches;
-  //late Map<String, Look> _orgAccountLooks;
+  late Map<int, Swatch?> _orgAccountSwatches;
+  late Map<String, Look> _orgAccountLooks;
 
-  /*@override
+  @override
   void initState() {
     super.initState();
+
     //save original swatches for later use
     if(allSwatchesIO.swatches == null || allSwatchesIO.hasSaveChanged) {
       allSwatchesIO.loadFormatted().then(
@@ -46,6 +45,7 @@ class GoogleLoginState extends State<GoogleLogin> {
     } else {
       _orgAccountSwatches = allSwatchesIO.swatches!;
     }
+
     //save original looks for later use
     if(savedLooksIO.looks == null || savedLooksIO.hasSaveChanged) {
       savedLooksIO.loadFormatted().then(
@@ -56,28 +56,10 @@ class GoogleLoginState extends State<GoogleLogin> {
     } else {
       _orgAccountLooks = savedLooksIO.looks!;
     }
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
-    //TODO: add and fix google login
-    if(!_hasAutoSignedIn && !_isSigningIn) {
-      signIn().then(
-        (bool value) {
-          if(value) {
-            navigation.pushReplacement(
-              context,
-              const Offset(1, 0),
-              routes.ScreenRoutes.AccountScreen,
-              AccountScreen(),
-            );
-          } else {
-            setState(() {});
-          }
-        },
-      );
-      _hasAutoSignedIn = true;
-    }
     return Column(
       children: <Widget>[
         Container(),
@@ -124,15 +106,17 @@ class GoogleLoginState extends State<GoogleLogin> {
   }
 
   Future<bool> signIn() async {
-    /*_isSigningIn = true;
+    _isSigningIn = true;
     GoogleSignInAuthentication googleAuth;
     try {
-      GoogleSignInAccount user = await GoogleSignIn().signIn();
+      GoogleSignInAccount? user = (await GoogleSignIn().signIn());
       googleAuth = await user.authentication;
     } catch(e) {
       print('credential issue $e');
+      print('google sign in error');
+      print(e);
       setState(() {
-        _error = getString('googleLogin_warning1');
+        _error = 'An error occurred while signing in. Please try again or use a different method.';
       });
       return false;
     }
@@ -144,27 +128,15 @@ class GoogleLoginState extends State<GoogleLogin> {
       await IO.auth.signInWithCredential(credential);
       await IO.combineAccounts(context, _orgAccountSwatches, _orgAccountLooks);
     } on FirebaseAuthException catch (e) {
-      print('error 1');
       print('${e.code} ${e.message}');
-      switch(e.code) {
-        case 'account-exists-with-different-credential': {
-          setState(() {
-            _error = getString('googleLogin_warning0');
-          });
-          break;
-        }
-        default: {
-          setState(() {
-            _error = getString('googleLogin_warning1');
-          });
-          break;
-        }
-      }
+      print('Firebase error');
+      setState(() {
+        _error = 'An error occurred while signing in. Please try again or use a different method.';
+      });
       _isSigningIn = false;
       return false;
     }
     _isSigningIn = false;
-    return true;*/
-    return false;
+    return true;
   }
 }
