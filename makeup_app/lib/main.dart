@@ -43,35 +43,60 @@ class GlamKitAppState extends State<GlamKitApp> {
   }
 
   static Future<void> load() async {
+    // Sets up Firebase
     await Firebase.initializeApp();
+
+    // Sets up Crashlytics
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-    //FirebaseCrashlytics.instance.crash();
+
+    // Loads global settings
     await IO.init();
     if(!globals.hasLoaded) {
       await IO.load();
     }
+
+    // Set user ID if signed in
     await loginIO.signIn();
     print(globals.userID);
+
+    // Loads localizations
     await localizationIO.load();
+
+    // Sets theme of app
     theme.isDarkTheme = (WidgetsBinding.instance!.window.platformBrightness == Brightness.dark);
     //theme.isDarkTheme = true;
+
+    // Sets orientation of app
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+    // Sets up routes for navigation of pages
     routes.setRoutes();
+
     globals.currSwatches.init();
+
+    // Sets whether in debug mode
     //globals.debug = !kReleaseMode;
     globals.debug = false;
+
+    // Initialize all databases
     allSwatchesIO.init();
     allSwatchesStorageIO.init();
     savedLooksIO.init();
     presetPalettesIO.init();
+
+    // Pregenerates swatches for testing
     /*for(int i = 0; i < 3; i++) {
       for(int j = 0; j < 3; j++) {
         //await generateRainbow(saturation: (i * 0.2) + 0.2, value: (j * 0.2) + 0.2);
       }
     }*/
     //await generateRainbow(saturation: 0.5, value: 0.5);
+
+    // Loads machine learning model
     getModel();
+
+    // Clears save for testing
     //await clearSave();
     //await IO.clear();
   }
@@ -93,9 +118,7 @@ class GlamKitAppState extends State<GlamKitApp> {
   }
 
   Future<void> clearSave() async {
-    //allSwatchesIO
     allSwatchesIO.clear();
-    //savedLooksIO
     savedLooksIO.clearAll();
   }
 

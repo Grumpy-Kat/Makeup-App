@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide FlatButton;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../Widgets/Swatch.dart';
 import '../Widgets/Look.dart';
 import '../Widgets/FlatButton.dart';
@@ -159,11 +160,17 @@ Future<void> signIn([bool setDisplayName = true]) async {
 }
 
 Future<void> signOut() async {
-  //not actually signing out, just signing in anonymously
+  // Not actually signing out, just signing in anonymously
   if(auth.currentUser != null) {
+    if(auth.currentUser!.email != null && auth.currentUser!.providerData[0].providerId == 'google.com') {
+      // If signed in through google, disconnect in order to not automatically log back in
+      await GoogleSignIn().disconnect();
+    }
+
     await auth.signOut();
     await auth.signInAnonymously();
   }
+
   String newId = (await FirebaseFirestore.instance.collection('swatches').add({ 'data': '' })).id;
   globals.userID = newId;
   await signIn();
