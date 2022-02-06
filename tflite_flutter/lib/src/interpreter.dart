@@ -2,8 +2,10 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:ffi/ffi.dart';
 import 'package:flutter/services.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:quiver/check.dart';
 
 import 'bindings/interpreter.dart';
@@ -20,8 +22,8 @@ class Interpreter {
   bool _allocated = false;
   int _lastNativeInferenceDurationMicroSeconds = 0;
 
-  List<Tensor> _inputTensors;
-  List<Tensor> _outputTensors;
+  List<Tensor>? _inputTensors;
+  List<Tensor>? _outputTensors;
 
   int get lastNativeInferenceDurationMicroSeconds =>
       _lastNativeInferenceDurationMicroSeconds;
@@ -34,11 +36,9 @@ class Interpreter {
   /// Creates interpreter from model
   ///
   /// Throws [ArgumentError] is unsuccessful.
-  factory Interpreter._create(Model model, {InterpreterOptions options}) {
-    final interpreter = tfLiteInterpreterCreate(
-        model.base, options?.base ?? cast<TfLiteInterpreterOptions>(nullptr));
-    checkArgument(isNotNull(interpreter),
-        message: 'Unable to create interpreter.');
+  factory Interpreter._create(Model model, { InterpreterOptions? options }) {
+    final interpreter = tfLiteInterpreterCreate!(model.base, options?.base ?? cast<TfLiteInterpreterOptions>(nullptr));
+    checkArgument(isNotNull(interpreter), message: 'Unable to create interpreter.');
     return Interpreter._(interpreter);
   }
 
@@ -62,7 +62,7 @@ class Interpreter {
   ///   return fileOnDevice;
   /// }
   /// ```
-  factory Interpreter.fromFile(File modelFile, {InterpreterOptions options}) {
+  factory Interpreter.fromFile(File modelFile, { InterpreterOptions? options }) {
     final model = Model.fromFile(modelFile.path);
     final interpreter = Interpreter._create(model, options: options);
     model.delete();
@@ -85,8 +85,7 @@ class Interpreter {
   ///       return rawBytes;
   ///   }
   /// ```
-  factory Interpreter.fromBuffer(Uint8List buffer,
-      {InterpreterOptions options}) {
+  factory Interpreter.fromBuffer(Uint8List buffer, { InterpreterOptions? options }) {
     final model = Model.fromBuffer(buffer);
     final interpreter = Interpreter._create(model, options: options);
     model.delete();
@@ -103,26 +102,30 @@ class Interpreter {
   /// ```dart
   /// final interpreter = await tfl.Interpreter.fromAsset('your_model.tflite');
   /// ```
-  static Future<Interpreter> fromAsset(String assetName,
-      {InterpreterOptions options}) async {
-    Uint8List buffer;
+  static Future<Interpreter?> fromAsset(String assetName, { InterpreterOptions? options }) async {
+    Uint8List? buffer;
     try {
       buffer = await _getBuffer(assetName);
     } catch (err) {
-      print(
-          'Caught error: $err, while trying to create interpreter from asset: $assetName');
+      print('Caught error: $err, while trying to create interpreter from asset: $assetName');
+      return null;
     }
-    return Interpreter.fromBuffer(buffer, options: options);
+
+    if(buffer != null) {
+      return Interpreter.fromBuffer(buffer, options: options);
+    }
+
+    return null;
   }
 
   /// Get byte buffer
-  static Future<Uint8List> _getBuffer(String assetFileName) async {
+  static Future<Uint8List?> _getBuffer(String assetFileName) async {
     ByteData rawAssetFile;
     try {
       rawAssetFile = await rootBundle.load('assets/$assetFileName');
     } catch (err) {
-      print(
-          'Caught error: $err, while trying to load asset from "assets/$assetFileName"');
+      print('Caught error: $err, while trying to load asset from "assets/$assetFileName"');
+      return null;
     }
     final rawBytes = rawAssetFile.buffer.asUint8List();
     return rawBytes;
@@ -142,21 +145,21 @@ class Interpreter {
   /// Destroys the interpreter instance.
   void close() {
     checkState(!_deleted, message: 'Interpreter already deleted.');
-    tfLiteInterpreterDelete(_interpreter);
+    tfLiteInterpreterDelete!(_interpreter);
     _deleted = true;
   }
 
   /// Updates allocations for all tensors.
   void allocateTensors() {
     checkState(
-        tfLiteInterpreterAllocateTensors(_interpreter) == TfLiteStatus.ok);
+        tfLiteInterpreterAllocateTensors!(_interpreter) == TfLiteStatus.ok);
     _allocated = true;
   }
 
   /// Runs inference for the loaded graph.
   void invoke() {
     checkState(_allocated, message: 'Interpreter not allocated.');
-    checkState(tfLiteInterpreterInvoke(_interpreter) == TfLiteStatus.ok);
+    checkState(tfLiteInterpreterInvoke!(_interpreter) == TfLiteStatus.ok);
   }
 
   /// Run for single input and output
@@ -168,10 +171,10 @@ class Interpreter {
 
   /// Run for multiple inputs and outputs
   void runForMultipleInputs(List<Object> inputs, Map<int, Object> outputs) {
-    if (inputs == null || inputs.isEmpty) {
+    if(inputs.isEmpty) {
       throw ArgumentError('Input error: Inputs should not be null or empty.');
     }
-    if (outputs == null || outputs.isEmpty) {
+    if(outputs.isEmpty) {
       throw ArgumentError('Input error: Outputs should not be null or empty.');
     }
 
@@ -197,52 +200,49 @@ class Interpreter {
 
     var inferenceStartNanos = DateTime.now().microsecondsSinceEpoch;
     invoke();
-    _lastNativeInferenceDurationMicroSeconds =
-        DateTime.now().microsecondsSinceEpoch - inferenceStartNanos;
+    _lastNativeInferenceDurationMicroSeconds = DateTime.now().microsecondsSinceEpoch - inferenceStartNanos;
 
     var outputTensors = getOutputTensors();
     for (var i = 0; i < outputTensors.length; i++) {
-      outputTensors[i].copyTo(outputs[i]);
+      outputTensors[i].copyTo(outputs[i]!);
     }
   }
 
   /// Gets all input tensors associated with the model.
   List<Tensor> getInputTensors() {
     if (_inputTensors != null) {
-      return _inputTensors;
+      return _inputTensors!;
     }
 
-    var tensors = List.generate(
-        tfLiteInterpreterGetInputTensorCount(_interpreter),
-        (i) => Tensor(tfLiteInterpreterGetInputTensor(_interpreter, i)),
-        growable: false);
-
-    return tensors;
+    return List.generate(
+      tfLiteInterpreterGetInputTensorCount!(_interpreter),
+      (i) => Tensor(tfLiteInterpreterGetInputTensor!(_interpreter, i)),
+      growable: false,
+    );
   }
 
   /// Gets all output tensors associated with the model.
   List<Tensor> getOutputTensors() {
     if (_outputTensors != null) {
-      return _outputTensors;
+      return _outputTensors!;
     }
 
-    var tensors = List.generate(
-        tfLiteInterpreterGetOutputTensorCount(_interpreter),
-        (i) => Tensor(tfLiteInterpreterGetOutputTensor(_interpreter, i)),
-        growable: false);
-
-    return tensors;
+    return List.generate(
+      tfLiteInterpreterGetOutputTensorCount!(_interpreter),
+      (i) => Tensor(tfLiteInterpreterGetOutputTensor!(_interpreter, i)),
+      growable: false,
+    );
   }
 
   /// Resize input tensor for the given tensor index. `allocateTensors` must be called again afterward.
   void resizeInputTensor(int tensorIndex, List<int> shape) {
     final dimensionSize = shape.length;
-    final dimensions = allocate<Int32>(count: dimensionSize);
+    final dimensions = calloc.allocate<Int32>(dimensionSize);
     final externalTypedData = dimensions.asTypedList(dimensionSize);
     externalTypedData.setRange(0, dimensionSize, shape);
-    final status = tfLiteInterpreterResizeInputTensor(
+    final status = tfLiteInterpreterResizeInputTensor!(
         _interpreter, tensorIndex, dimensions, dimensionSize);
-    free(dimensions);
+    calloc.free(dimensions);
     checkState(status == TfLiteStatus.ok);
     _inputTensors = null;
     _outputTensors = null;
@@ -252,28 +252,26 @@ class Interpreter {
   /// Gets the input Tensor for the provided input index.
   Tensor getInputTensor(int index) {
     if (_inputTensors != null) {
-      if (index < 0 || index > _inputTensors.length) {
+      if (index < 0 || index > _inputTensors!.length) {
         throw ArgumentError('Invalid input Tensor index: $index');
       }
-      return _inputTensors[index];
+      return _inputTensors![index];
     }
 
-    final inputTensor =
-        Tensor(tfLiteInterpreterGetInputTensor(_interpreter, index));
+    final inputTensor = Tensor(tfLiteInterpreterGetInputTensor!(_interpreter, index));
     return inputTensor;
   }
 
   /// Gets the output Tensor for the provided output index.
   Tensor getOutputTensor(int index) {
     if (_outputTensors != null) {
-      if (index < 0 || index > _outputTensors.length) {
+      if (index < 0 || index > _outputTensors!.length) {
         throw ArgumentError('Invalid output Tensor index: $index');
       }
-      return _outputTensors[index];
+      return _outputTensors![index];
     }
 
-    final outputTensor =
-        Tensor(tfLiteInterpreterGetOutputTensor(_interpreter, index));
+    final outputTensor = Tensor(tfLiteInterpreterGetOutputTensor!(_interpreter, index));
     return outputTensor;
   }
 
@@ -285,10 +283,9 @@ class Interpreter {
       inputTensorsIndex[inputTensors[i].name] = i;
     }
     if (inputTensorsIndex.containsKey(opName)) {
-      return inputTensorsIndex[opName];
+      return inputTensorsIndex[opName]!;
     } else {
-      throw ArgumentError(
-          "Input error: $opName' is not a valid name for any input. Names of inputs and their indexes are $inputTensorsIndex");
+      throw ArgumentError("Input error: $opName' is not a valid name for any input. Names of inputs and their indexes are $inputTensorsIndex");
     }
   }
 
@@ -300,7 +297,7 @@ class Interpreter {
       outputTensorsIndex[outputTensors[i].name] = i;
     }
     if (outputTensorsIndex.containsKey(opName)) {
-      return outputTensorsIndex[opName];
+      return outputTensorsIndex[opName]!;
     } else {
       throw ArgumentError(
           "Output error: $opName' is not a valid name for any output. Names of outputs and their indexes are $outputTensorsIndex");

@@ -3,7 +3,7 @@ import '../IO/presetPalettesIO.dart' as IO;
 import '../IO/localizationIO.dart';
 import '../types.dart';
 import '../theme.dart' as theme;
-import 'Palette.dart';
+import '../Data/Palette.dart';
 
 class PresetPaletteList extends StatefulWidget {
   final String initialSearch;

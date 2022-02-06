@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Widgets/SingleSwatchList.dart';
-import '../Widgets/Filter.dart';
+import '../Data/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
 import '../Widgets/LoginButton.dart';
 import '../IO/allSwatchesIO.dart' as IO;

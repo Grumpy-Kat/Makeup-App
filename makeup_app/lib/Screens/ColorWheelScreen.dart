@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import '../Widgets/ColorPicker.dart';
 import '../Widgets/SingleSwatchList.dart';
-import '../Widgets/Filter.dart';
+import '../Data/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
 import '../Widgets/HelpButton.dart';
 import '../ColorMath/ColorObjects.dart';

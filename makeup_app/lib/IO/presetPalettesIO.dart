@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import '../ColorMath/ColorObjects.dart';
 import '../ColorMath/ColorSorting.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/Palette.dart';
+import '../Data/Swatch.dart';
+import '../Data/Palette.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
 import'localizationIO.dart';
@@ -97,7 +97,7 @@ Future<Map<String, Palette>> loadFormatted({ bool override = false, overrideInne
     palettes = {};
     List<DocumentSnapshot> info = await load(override: overrideInner);
     for(int i = 0; i < info.length; i++) {
-      Map<String, dynamic>? data = info[i].data();
+      Map<String, dynamic>? data = info[i].data() as Map<String, dynamic>?;
       if (data != null) {
         List<Swatch> swatches = [];
         List<String> swatchLines = decompress(data['data']).split('\n');

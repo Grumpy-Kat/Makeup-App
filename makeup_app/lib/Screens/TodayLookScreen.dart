@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Widgets/Look.dart';
+import '../Data/Look.dart';
 import '../IO/savedLooksIO.dart' as IO;
 import '../IO/localizationIO.dart';
 import '../navigation.dart' as navigation;

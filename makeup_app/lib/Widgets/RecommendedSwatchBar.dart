@@ -1,4 +1,4 @@
-import 'package:GlamKit/Widgets/Filter.dart';
+import '../Data/Filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:math';
@@ -6,7 +6,8 @@ import '../ColorMath/ColorProcessing.dart';
 import '../IO/allSwatchesIO.dart' as IO;
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
-import 'Swatch.dart';
+import '../Data/Swatch.dart';
+import 'SwatchIcon.dart';
 import 'SwatchList.dart';
 
 class RecommendedSwatchBar extends StatefulWidget {

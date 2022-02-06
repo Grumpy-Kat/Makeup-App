@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton;
 import 'package:flutter/cupertino.dart' hide HSVColor;
-import '../Widgets/Swatch.dart';
+import '../Widgets/SwatchIcon.dart';
 import '../Widgets/SwatchList.dart';
-import '../Widgets/Look.dart';
+import '../Data/Look.dart';
 import '../Widgets/FlatButton.dart';
 import '../Widgets/OutlineButton.dart';
 import '../Widgets/HelpButton.dart';

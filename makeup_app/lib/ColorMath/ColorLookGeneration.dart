@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
-import '../Widgets/Swatch.dart';
+import '../Data/Swatch.dart';
 import 'ColorObjects.dart';
 import 'ColorDifferences.dart';
 import 'ColorConversions.dart';

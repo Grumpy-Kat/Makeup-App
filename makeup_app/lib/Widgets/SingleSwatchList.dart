@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import '../IO/allSwatchesIO.dart' as IO;
 import '../types.dart';
-import 'Swatch.dart';
+import '../Data/Filter.dart';
+import '../Data/Swatch.dart';
+import 'SwatchIcon.dart';
 import 'SwatchList.dart';
-import 'Filter.dart';
 
 class SingleSwatchList extends StatefulWidget {
   final OnSwatchListAction updateSwatches;

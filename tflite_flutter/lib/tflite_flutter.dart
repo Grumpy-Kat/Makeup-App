@@ -5,6 +5,7 @@
 /// TensorFlow Lite for Flutter
 library tflite_flutter;
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:ffi/ffi.dart';
 
 import 'src/bindings/bindings.dart';
@@ -21,4 +22,4 @@ export 'src/tensor.dart';
 export 'src/util/list_shape_extension.dart';
 
 /// tflite version information.
-String get version => Utf8.fromUtf8(tfLiteVersion());
+String get version => tfLiteVersion!().toDartString();

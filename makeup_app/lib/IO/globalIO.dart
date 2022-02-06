@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import '../ColorMath/ColorObjects.dart';
-import '../Widgets/Swatch.dart';
+import '../Data/Swatch.dart';
 import '../globalWidgets.dart' as globalWidgets;
 
 Map<String, String> _finishes = { '0': 'finish_matte', '1': 'finish_satin', '2': 'finish_shimmer', '3': 'finish_metallic', '4': 'finish_glitter' };

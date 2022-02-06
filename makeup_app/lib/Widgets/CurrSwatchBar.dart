@@ -4,7 +4,7 @@ import '../globals.dart' as globals;
 import '../navigation.dart' as navigation;
 import '../theme.dart' as theme;
 import '../routes.dart' as routes;
-import 'Swatch.dart';
+import 'SwatchIcon.dart';
 
 class CurrSwatchBar extends StatefulWidget {
   @override CurrSwatchBarState createState() => CurrSwatchBarState();

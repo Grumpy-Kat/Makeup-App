@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -42,10 +42,15 @@ android {
         disable 'InvalidPackage'
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
     defaultConfig {
         applicationId "com.glamkit"
         minSdkVersion 24
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -87,8 +92,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:22.1.2'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.google.firebase:firebase-auth:20.0.3'
+    implementation 'com.google.firebase:firebase-ml-common:22.1.2'
     implementation 'com.google.firebase:firebase-ml-model-interpreter:22.0.4'
-    implementation 'com.google.android.gms:play-services-safetynet:17.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -8,7 +8,7 @@ import '../globalWidgets.dart' as globalWidgets;
 import '../routes.dart' as routes;
 import '../navigation.dart' as navigation;
 import '../types.dart';
-import 'Swatch.dart';
+import '../Data/Swatch.dart';
 import 'FlatButton.dart';
 
 class InfoBox extends StatefulWidget {

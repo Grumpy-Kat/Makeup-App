@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart' hide BackButton;
 import '../ColorMath/ColorObjects.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/Palette.dart';
+import '../Data/Swatch.dart';
+import '../Data/Palette.dart';
+import '../Widgets/SwatchIcon.dart';
 import '../Widgets/BackButton.dart';
 import '../IO/allSwatchesIO.dart' as IO;
 import '../IO/localizationIO.dart';

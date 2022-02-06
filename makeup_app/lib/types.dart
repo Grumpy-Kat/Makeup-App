@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'ColorMath/ColorObjects.dart';
-import 'Widgets/Swatch.dart';
-import 'Widgets/SwatchImage.dart';
-import 'Widgets/Palette.dart';
+import 'Data/Swatch.dart';
+import 'Data/SwatchImage.dart';
+import 'Data/Palette.dart';
 
 typedef OnVoidAction = void Function();
 typedef OnStringAction = void Function(String);

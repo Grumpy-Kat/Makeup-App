@@ -5,12 +5,13 @@ import '../types.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
-import 'Swatch.dart';
-import 'SwatchImage.dart';
+import '../Data/Swatch.dart';
+import '../Data/SwatchImage.dart';
 import 'SwatchImagePopup.dart';
 import 'ImagePicker.dart';
 import 'FlatButton.dart';
 import 'OutlineButton.dart';
+import 'SwatchIcon.dart';
 
 class SwatchImagesDisplay extends StatefulWidget {
   final bool isEditing;

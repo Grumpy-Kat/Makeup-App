@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
-import '../Widgets/Look.dart';
+import '../Data/Look.dart';
 import 'globalIO.dart';
 import 'allSwatchesIO.dart' as allSwatches;
 import '../globals.dart' as globals;

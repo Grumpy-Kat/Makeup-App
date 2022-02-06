@@ -1,7 +1,7 @@
 import 'ColorObjects.dart';
 import 'ColorDifferences.dart';
 import 'ColorConversions.dart';
-import '../Widgets/Swatch.dart';
+import '../Data/Swatch.dart';
 
 Map<String, HSVColor> colorWheel = Map<String, HSVColor>();
 Map<String, RGBColor> colorNames = Map<String, RGBColor>();

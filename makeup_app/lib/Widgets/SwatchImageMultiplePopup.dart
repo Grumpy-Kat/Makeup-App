@@ -7,7 +7,7 @@ import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
 import '../types.dart';
 import 'ImagePicker.dart';
-import 'SwatchImage.dart';
+import '../Data/SwatchImage.dart';
 import 'PaletteDivider.dart';
 import 'FlatButton.dart';
 

@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:ffi/ffi.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:quiver/check.dart';
 import '../bindings/delegate.dart';
 import '../bindings/types.dart';
@@ -18,17 +20,16 @@ class GpuDelegateV2 implements Delegate {
 
   GpuDelegateV2._(this._delegate);
 
-  factory GpuDelegateV2({GpuDelegateOptionsV2 options}) {
+  factory GpuDelegateV2({GpuDelegateOptionsV2? options}) {
     if (options == null) {
-      return GpuDelegateV2._(tfLiteGpuDelegateV2Create(
-          GpuDelegateOptionsV2.defaultOptions().base));
+      return GpuDelegateV2._(tfLiteGpuDelegateV2Create!(GpuDelegateOptionsV2.defaultOptions().base));
     }
-    return GpuDelegateV2._(tfLiteGpuDelegateV2Create(options?.base));
+    return GpuDelegateV2._(tfLiteGpuDelegateV2Create!(options.base));
   }
   @override
   void delete() {
     checkState(!_deleted, message: 'TfLiteGpuDelegateV2 already deleted.');
-    tfLiteGpuDelegateV2Delete(_delegate);
+    tfLiteGpuDelegateV2Delete!(_delegate);
     _deleted = true;
   }
 }
@@ -49,22 +50,24 @@ class GpuDelegateOptionsV2 {
       TfLiteGpuInferencePriority inferencePriority1,
       TfLiteGpuInferencePriority inferencePriority2,
       TfLiteGpuInferencePriority inferencePriority3) {
-    return GpuDelegateOptionsV2._(TfLiteGpuDelegateOptionsV2.allocate(
-            isPrecisionLossAllowed,
-            inferencePreference,
-            inferencePriority1,
-            inferencePriority2,
-            inferencePriority3)
-        .addressOf);
+    return GpuDelegateOptionsV2._(
+      TfLiteGpuDelegateOptionsV2.allocate(
+        isPrecisionLossAllowed,
+        inferencePreference,
+        inferencePriority1,
+        inferencePriority2,
+        inferencePriority3
+      ).addressOf
+    );
   }
 
   factory GpuDelegateOptionsV2.defaultOptions() {
-    return GpuDelegateOptionsV2._(tfLiteGpuDelegateOptionsV2Default());
+    return GpuDelegateOptionsV2._(tfLiteGpuDelegateOptionsV2Default!());
   }
 
   void delete() {
     checkState(!_deleted, message: 'TfLiteGpuDelegateV2 already deleted.');
-    free(_options);
+    calloc.free(_options);
     _deleted = true;
   }
 }

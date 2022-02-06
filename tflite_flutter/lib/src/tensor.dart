@@ -1,7 +1,9 @@
 import 'dart:ffi';
 import 'dart:typed_data';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:ffi/ffi.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:quiver/check.dart';
 
 import 'bindings/tensor.dart';
@@ -22,40 +24,36 @@ class Tensor {
   }
 
   /// Name of the tensor element.
-  String get name => Utf8.fromUtf8(tfLiteTensorName(_tensor));
+  String get name => tfLiteTensorName!(_tensor).toDartString();
 
   /// Data type of the tensor element.
   TfLiteType get type => tfLiteTensorType(_tensor);
 
   /// Dimensions of the tensor.
   List<int> get shape => List.generate(
-      tfLiteTensorNumDims(_tensor), (i) => tfLiteTensorDim(_tensor, i));
+      tfLiteTensorNumDims!(_tensor), (i) => tfLiteTensorDim!(_tensor, i));
 
   /// Underlying data buffer as bytes.
   Uint8List get data {
-    final data = cast<Uint8>(tfLiteTensorData(_tensor));
+    final data = cast<Uint8>(tfLiteTensorData!(_tensor));
 //    checkState(isNotNull(data), message: 'Tensor data is null.');
     return UnmodifiableUint8ListView(
-        data?.asTypedList(tfLiteTensorByteSize(_tensor)));
+        data.asTypedList(tfLiteTensorByteSize!(_tensor)));
   }
 
   /// Quantization Params associated with the model, [only Android]
   QuantizationParams get params {
-    if (_tensor != null) {
-      final ref = tfLiteTensorQuantizationParams(_tensor).ref;
-      return QuantizationParams(ref.scale, ref.zeroPoint);
-    } else {
-      return QuantizationParams(0.0, 0);
-    }
+    final ref = tfLiteTensorQuantizationParams!(_tensor).ref;
+    return QuantizationParams(ref.scale, ref.zeroPoint);
   }
 
   /// Updates the underlying data buffer with new bytes.
   ///
   /// The size must match the size of the tensor.
   set data(Uint8List bytes) {
-    final tensorByteSize = tfLiteTensorByteSize(_tensor);
+    final tensorByteSize = tfLiteTensorByteSize!(_tensor);
     checkArgument(tensorByteSize == bytes.length);
-    final data = cast<Uint8>(tfLiteTensorData(_tensor));
+    final data = cast<Uint8>(tfLiteTensorData!(_tensor));
     checkState(isNotNull(data), message: 'Tensor data is null.');
     final externalTypedData = data.asTypedList(tensorByteSize);
     externalTypedData.setRange(0, tensorByteSize, bytes);
@@ -63,12 +61,12 @@ class Tensor {
 
   /// Returns number of dimensions
   int numDimensions() {
-    return tfLiteTensorNumDims(_tensor);
+    return tfLiteTensorNumDims!(_tensor);
   }
 
   /// Returns the size, in bytes, of the tensor data.
   int numBytes() {
-    return tfLiteTensorByteSize(_tensor);
+    return tfLiteTensorByteSize!(_tensor);
   }
 
   /// Returns the number of elements in a flattened (1-D) view of the tensor.
@@ -95,18 +93,18 @@ class Tensor {
 
   /// Returns the number of dimensions of a multi-dimensional array, otherwise 0.
   static int computeNumDimensions(Object o) {
-    if (o == null || !(o is List)) {
+    if (!(o is List)) {
       return 0;
     }
-    if ((o as List).isEmpty) {
+    if (o.isEmpty) {
       throw ArgumentError('Array lengths cannot be 0.');
     }
-    return 1 + computeNumDimensions((o as List).elementAt(0));
+    return 1 + computeNumDimensions(o.elementAt(0));
   }
 
   /// Recursively populates the shape dimensions for a given (multi-dimensional) array)
   static void fillShape(Object o, int dim, List<int> shape) {
-    if (shape == null || dim == shape.length) {
+    if (dim == shape.length) {
       return;
     }
     final len = (o as List).length;
@@ -117,14 +115,14 @@ class Tensor {
           'Mismatched lengths ${shape[dim]} and $len in dimension $dim');
     }
     for (var i = 0; i < len; ++i) {
-      fillShape((o as List).elementAt(0), dim + 1, shape);
+      fillShape(o.elementAt(0), dim + 1, shape);
     }
   }
 
   /// Returns data type of given object
   static TfLiteType dataTypeOf(Object o) {
     while (o is List) {
-      o = (o as List).elementAt(0);
+      o = o.elementAt(0);
     }
     var c = o;
     if (c is double) {
@@ -143,22 +141,22 @@ class Tensor {
   void setTo(Object src) {
     var bytes = _convertObjectToBytes(src);
     var size = bytes.length;
-    final ptr = allocate<Uint8>(count: size);
+    final ptr = calloc.allocate<Uint8>(size);
     checkState(isNotNull(ptr), message: 'unallocated');
     final externalTypedData = ptr.asTypedList(size);
     externalTypedData.setRange(0, bytes.length, bytes);
-    checkState(tfLiteTensorCopyFromBuffer(_tensor, ptr.cast(), bytes.length) ==
+    checkState(tfLiteTensorCopyFromBuffer!(_tensor, ptr.cast(), bytes.length) ==
         TfLiteStatus.ok);
-    free(ptr);
+    calloc.free(ptr);
   }
 
   Object copyTo(Object dst) {
-    var size = tfLiteTensorByteSize(_tensor);
-    final ptr = allocate<Uint8>(count: size);
+    var size = tfLiteTensorByteSize!(_tensor);
+    final ptr = calloc.allocate<Uint8>(size);
     checkState(isNotNull(ptr), message: 'unallocated');
     final externalTypedData = ptr.asTypedList(size);
     checkState(
-        tfLiteTensorCopyToBuffer(_tensor, ptr.cast(), size) == TfLiteStatus.ok);
+        tfLiteTensorCopyToBuffer!(_tensor, ptr.cast(), size) == TfLiteStatus.ok);
     // Clone the data, because once `free(ptr)`, `externalTypedData` will be
     // volatile
     final bytes = externalTypedData.sublist(0);
@@ -174,7 +172,7 @@ class Tensor {
     } else {
       obj = _convertBytesToObject(bytes);
     }
-    free(ptr);
+    calloc.free(ptr);
     if (obj is List && dst is List) {
       _duplicateList(obj, dst);
     } else {
@@ -269,7 +267,7 @@ class Tensor {
     }
   }
 
-  Object _convertBytesToObject(Uint8List bytes) {
+  Object? _convertBytesToObject(Uint8List bytes) {
     // stores flattened data
     var list = [];
     //TODO: add conversions for the rest of the types
@@ -335,10 +333,7 @@ class Tensor {
     }
   }
 
-  List<int> getInputShapeIfDifferent(Object input) {
-    if (input == null) {
-      return null;
-    }
+  List<int>? getInputShapeIfDifferent(Object input) {
     if (input is ByteBuffer || input is Uint8List) {
       return null;
     }

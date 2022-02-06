@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Widgets/MultipleSwatchList.dart';
-import '../Widgets/Look.dart';
-import '../Widgets/Filter.dart';
+import '../Data/Look.dart';
+import '../Data/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
 import '../Widgets/LoginButton.dart';
 import '../IO/savedLooksIO.dart' as IO;

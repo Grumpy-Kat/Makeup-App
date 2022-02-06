@@ -4,7 +4,7 @@ import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
 import '../types.dart';
 import '../globalWidgets.dart' as globalWidgets;
-import 'SwatchImage.dart';
+import '../Data/SwatchImage.dart';
 import 'SwatchImageMultiplePopup.dart';
 import 'FlatButton.dart';
 

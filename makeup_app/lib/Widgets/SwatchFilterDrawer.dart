@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
 import '../theme.dart' as theme;
-import 'Filter.dart';
+import '../Data/Filter.dart';
 import 'SwatchList.dart';
 
 class SwatchFilterDrawer extends StatefulWidget {

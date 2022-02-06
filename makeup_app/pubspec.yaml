@@ -19,28 +19,34 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_test:
-    sdk: flutter
   path_provider:
+  ffi: ^1.0.0
   firebase_core: ^1.0.3
-  cloud_firestore: ^1.0.4
+  cloud_firestore: ^3.1.7
   firebase_crashlytics: ^2.0.0
-  firebase_auth: ^1.0.3
-  firebase_storage: 8.0.0
-  firebase_ml_custom: 0.2.0
+  firebase_auth: ^3.3.6
+  firebase_storage: ^10.2.6
+  firebase_ml_model_downloader: ^0.1.0+6
   google_sign_in:
   cupertino_icons:
   image: ^3.0.2
-  image_picker: ^0.7.4
+  image_picker: ^0.8.4+6
   table_calendar: ^3.0.1
   tflite_flutter:
     path: ../tflite_flutter
-  notification_permissions: ^0.5.0
-  permission_handler: ^6.1.1
+  notification_permissions: ^0.6.1
+  permission_handler: ^8.3.0
   url_launcher: ^6.0.3
   transformer_page_view: ^0.1.6
   auto_size_text: ^3.0.0-nullsafety.0
   string_validator: ^0.3.0
+
+dependency_overrides:
+  platform: ^3.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
 flutter_icons:
   ios: true

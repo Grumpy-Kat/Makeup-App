@@ -1,6 +1,6 @@
 import 'ColorMath/ColorObjects.dart';
 import 'ColorMath/ColorSorting.dart';
-import 'Widgets/Swatch.dart';
+import 'Data/Swatch.dart';
 import 'IO/settingsIO.dart' as IO;
 import 'IO/allSwatchesIO.dart' as allSwatches;
 import 'IO/localizationIO.dart';

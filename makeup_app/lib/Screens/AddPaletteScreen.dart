@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide BackButton;
 import '../IO/localizationIO.dart';
-import '../Widgets/SwatchImage.dart';
+import '../Data/SwatchImage.dart';
 import '../Widgets/PaletteTextPopup.dart';
 import '../Widgets/BackButton.dart';
 import '../Widgets/HelpButton.dart';

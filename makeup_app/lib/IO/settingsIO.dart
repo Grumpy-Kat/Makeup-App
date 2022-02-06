@@ -64,7 +64,7 @@ Future<void> save() async {
     double colorWheel = globals.colorWheelDistance;
     //save to database
     DocumentSnapshot docSnapshot = await _database.doc(globals.userID).get();
-    Map<String, dynamic> data = (docSnapshot.exists ? docSnapshot.data()! : {});
+    Map<String, dynamic> data = (docSnapshot.exists ? docSnapshot.data()! as Map<String, dynamic> : {});
     await _database.doc(globals.userID).set(
         {
           'sort': sort,
@@ -134,7 +134,7 @@ Future<void> addDebug(String debug) async {
   if(globals.userID != '') {
     try {
       DocumentReference doc = _database.doc(globals.userID);
-      Map<String, dynamic>? data = (await doc.get()).data();
+      Map<String, dynamic>? data = (await doc.get()).data() as Map<String, dynamic>?;
       if(data != null) {
         List<dynamic> prevDebug = data.containsKey('debug') ? data['debug'] : [];
         prevDebug.add(debug);

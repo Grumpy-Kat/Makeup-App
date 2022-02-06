@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart' hide HSVColor;
 import '../IO/allSwatchesIO.dart' as IO;
+import '../Data/Swatch.dart';
+import '../Data/Filter.dart';
 import '../types.dart';
-import 'Swatch.dart';
+import 'SwatchIcon.dart';
 import 'SwatchList.dart';
-import 'Filter.dart';
 
 class MultipleSwatchList extends StatefulWidget {
   final OnDoubleSwatchListAction updateSwatches;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide FlatButton;
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/Look.dart';
+import '../Data/Swatch.dart';
+import '../Data/Look.dart';
 import '../Widgets/FlatButton.dart';
 import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;
@@ -67,7 +67,7 @@ class EmailLoginState extends State<EmailLogin> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      autovalidate: _autovalidate,
+      autovalidateMode: _autovalidate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
       key: _formKey,
       child: Column(
         children: <Widget>[

@@ -1,7 +1,9 @@
 import 'dart:ffi';
 import 'dart:typed_data';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:ffi/ffi.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:quiver/check.dart';
 
 import 'bindings/model.dart';
@@ -19,9 +21,9 @@ class Model {
 
   /// Loads model from a file or throws if unsuccessful.
   factory Model.fromFile(String path) {
-    final cpath = Utf8.toUtf8(path);
-    final model = tfLiteModelCreateFromFile(cpath);
-    free(cpath);
+    final cpath = path.toNativeUtf8();
+    final model = tfLiteModelCreateFromFile!(cpath);
+    calloc.free(cpath);
     checkArgument(isNotNull(model),
         message: 'Unable to create model from file');
     return Model._(model);
@@ -30,10 +32,10 @@ class Model {
   /// Loads model from a buffer or throws if unsuccessful.
   factory Model.fromBuffer(Uint8List buffer) {
     final size = buffer.length;
-    final ptr = allocate<Uint8>(count: size);
+    final ptr = calloc.allocate<Uint8>(size);
     final externalTypedData = ptr.asTypedList(size);
     externalTypedData.setRange(0, buffer.length, buffer);
-    final model = tfLiteModelCreateFromBuffer(ptr.cast(), buffer.length);
+    final model = tfLiteModelCreateFromBuffer!(ptr.cast(), buffer.length);
     checkArgument(isNotNull(model),
         message: 'Unable to create model from buffer');
     return Model._(model);
@@ -42,7 +44,7 @@ class Model {
   /// Destroys the model instance.
   void delete() {
     checkState(!_deleted, message: 'Model already deleted.');
-    tfLiteModelDelete(_model);
+    tfLiteModelDelete!(_model);
     _deleted = true;
   }
 }

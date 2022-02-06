@@ -15,7 +15,7 @@ import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
 import 'ImagePicker.dart';
 import 'BorderBox.dart';
-import 'Swatch.dart';
+import '../Data/Swatch.dart';
 import 'FlatButton.dart';
 import 'OutlineButton.dart';
 

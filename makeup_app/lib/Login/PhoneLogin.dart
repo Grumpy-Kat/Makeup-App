@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide FlatButton;
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/Look.dart';
+import '../Data/Swatch.dart';
+import '../Data/Look.dart';
 import '../Widgets/FlatButton.dart';
 import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;

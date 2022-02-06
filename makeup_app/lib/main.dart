@@ -7,7 +7,7 @@ import 'dart:math';
 import 'ColorMath/ColorObjects.dart';
 import 'ColorMath/ColorConversions.dart';
 import 'ColorMath/ColorProcessingTF.dart';
-import 'Widgets/Swatch.dart';
+import 'Data/Swatch.dart';
 import 'IO/settingsIO.dart' as IO;
 import 'IO/loginIO.dart' as loginIO;
 import 'IO/allSwatchesIO.dart' as allSwatchesIO;

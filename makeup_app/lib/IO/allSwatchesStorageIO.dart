@@ -2,7 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image/image.dart' as image;
 import 'dart:io';
 import 'dart:typed_data';
-import '../Widgets/SwatchImage.dart';
+import '../Data/SwatchImage.dart';
 import '../globals.dart' as globals;
 
 late Reference _folderRef;

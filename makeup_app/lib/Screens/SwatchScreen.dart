@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton, BackButton;
 import 'package:flutter/services.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../Widgets/Swatch.dart';
+import '../Data/Swatch.dart';
 import '../Widgets/SwatchImagesDisplay.dart';
 import '../Widgets/StarRating.dart';
 import '../Widgets/ColorPicker.dart';

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart' hide FlatButton, BackButton;
 import 'package:flutter/services.dart';
-import '../Widgets/Swatch.dart';
-import '../Widgets/SwatchImage.dart';
-import '../Widgets/Palette.dart';
+import '../Data/Swatch.dart';
+import '../Data/SwatchImage.dart';
+import '../Data/Palette.dart';
+import '../Widgets/SwatchIcon.dart';
 import '../Widgets/PaletteDivider.dart';
 import '../Widgets/ImagePicker.dart';
 import '../Widgets/FlatButton.dart';

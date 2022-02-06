@@ -93,7 +93,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
         //back button
         leftBar: BackButton(onPressed: () => navigation.pop(context, false)),
         body: Form(
-          autovalidate: _autovalidate,
+          autovalidateMode: _autovalidate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
           key: _formKey,
           child: Column(
             children: <Widget>[

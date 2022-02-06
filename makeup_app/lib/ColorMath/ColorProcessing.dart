@@ -4,7 +4,7 @@ import 'dart:math';
 import 'dart:io';
 import 'dart:ui';
 import 'dart:typed_data';
-import '../Widgets/Swatch.dart';
+import '../Data/Swatch.dart';
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import 'ColorObjects.dart';
