@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide FlatButton;
-import 'package:flutter/services.dart';
 import 'Widgets/FlatButton.dart';
+import 'Widgets/StringFormField.dart';
 import 'IO/localizationIO.dart';
 import 'theme.dart' as theme;
 import 'types.dart';
@@ -55,13 +55,11 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
           return getAlertDialog(
             context,
             title: Text(title, style: theme.primaryTextBold),
-            content: getTextField(
-              context,
-              null,
-              value,
-              error,
-              showErrorText,
-              (String val) {
+            content: StringFormField(
+              value: value,
+              error: error,
+              showErrorText: showErrorText,
+              onChanged: (String val) {
                 value = val;
                 if(required) {
                   if(showErrorText && val != '') {
@@ -69,7 +67,7 @@ Future<void> openTextDialog(BuildContext context, String title, String error, St
                   }
                 }
               },
-              (String val) {
+              onSubmitted: (String val) {
                 value = val;
                 if(required) {
                   if(showErrorText && val != '') {
@@ -160,107 +158,6 @@ PageRouteBuilder slideTransition(BuildContext context, Widget nextScreen, int du
         ),
         child: child,
       );
-    },
-  );
-}
-
-Widget getTextField(BuildContext context, String? label, String? value, String? error, bool showErrorText, OnStringAction? onChanged, OnStringAction? onSubmitted) {
-  return TextFormField(
-    autofocus: true,
-    textAlign: TextAlign.left,
-    style: theme.primaryTextSecondary,
-    textCapitalization: TextCapitalization.words,
-    cursorColor: theme.accentColor,
-    textInputAction: TextInputAction.done,
-    initialValue: value,
-    decoration: InputDecoration(
-      fillColor: theme.primaryColor,
-      labelText: label,
-      labelStyle: theme.primaryTextSecondary,
-      errorText: showErrorText ? error : null,
-      errorStyle: theme.errorTextSecondary,
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: theme.errorTextColor,
-          width: 1.0,
-        ),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: theme.errorTextColor,
-          width: 2.5,
-        ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: theme.primaryColorDark,
-          width: 1.0,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: theme.accentColor,
-          width: 2.5,
-        ),
-      ),
-    ),
-    onChanged: onChanged,
-    onFieldSubmitted: onSubmitted,
-  );
-}
-
-Widget getNumField(BuildContext context, String? label, double? value, String? error, bool showErrorText, OnDoubleAction? onChanged, OnDoubleAction? onSubmitted) {
-  return TextFormField(
-    autofocus: true,
-    textAlign: TextAlign.left,
-    style: theme.primaryTextSecondary,
-    textInputAction: TextInputAction.done,
-    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-    cursorColor: theme.accentColor,
-    initialValue: value.toString(),
-    inputFormatters: <TextInputFormatter>[
-      FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
-    ],
-    decoration: InputDecoration(
-      fillColor: theme.primaryColor,
-      labelText: label,
-      labelStyle: theme.primaryTextSecondary,
-      errorText: showErrorText ? error : null,
-      errorStyle: theme.errorTextSecondary,
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: theme.errorTextColor,
-          width: 1.0,
-        ),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: theme.errorTextColor,
-          width: 2.5,
-        ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: theme.primaryColorDark,
-          width: 1.0,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: theme.accentColor,
-          width: 2.5,
-        ),
-      ),
-    ),
-    onChanged: (String val) {
-      if(onChanged != null) {
-        onChanged(double.parse(val));
-      }
-    },
-    onFieldSubmitted: (String val) {
-      if(onSubmitted != null) {
-        onSubmitted(double.parse(val));
-      }
     },
   );
 }

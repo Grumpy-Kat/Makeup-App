@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart' hide FlatButton;
-import 'package:table_calendar/table_calendar.dart';
 import '../../IO/localizationIO.dart';
 import '../../theme.dart' as theme;
 import '../../types.dart';
 import '../../globalWidgets.dart' as globalWidgets;
 import '../../Data/SwatchImage.dart';
-import 'SwatchImageMultiplePopup.dart';
+import '../StringFormField.dart';
+import '../DoubleFormField.dart';
+import '../DateField.dart';
 import '../FlatButton.dart';
+import 'SwatchImageMultiplePopup.dart';
 
 class PaletteTextPopup {
   static Future<void> open(BuildContext context, String title, void Function(String, String, double, double, DateTime?, DateTime?, List<SwatchImage>) onPressed, { bool showRequired = true, bool showNums = true, bool showDates = true, bool showImgs = true }) {
@@ -36,153 +38,141 @@ class PaletteTextPopup {
             return globalWidgets.getAlertDialog(
               context,
               title: Text(title, style: theme.primaryTextBold),
-              content: SingleChildScrollView(
-                child: Column(
-                  children: <Widget> [
-                    //brand
-                    if(showRequired) globalWidgets.getTextField(
-                      context,
-                      getString('addPalette_brand'),
-                      brand,
-                      getString('addPalette_brandError'),
-                      showErrorTexts[0],
-                      (String val) {
-                        brand = val;
-                        if(showErrorTexts[0] && val != '') {
-                          setState(() { showErrorTexts[0] = false; });
-                        }
-                      },
-                      (String val) {
-                        brand = val;
-                        if(brand != '') {
-                          setState(() { showErrorTexts[0] = false; });
-                        }
-                        if(brand == '') {
-                          setState(() { showErrorTexts[0] = true; });
-                        }
-                      }
-                    ),
-                    if(showRequired) const SizedBox(
-                      height: 20,
-                    ),
+              content: Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.9,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget> [
+                      // Brand
+                      if(showRequired) StringFormField(
+                        label: getString('addPalette_brand'),
+                        value: brand,
+                        error: getString('addPalette_brandError'),
+                        showErrorText: showErrorTexts[0],
+                        onChanged: (String val) {
+                          brand = val;
+                          if(showErrorTexts[0] && val != '') {
+                            setState(() { showErrorTexts[0] = false; });
+                          }
+                        },
+                        onSubmitted: (String val) {
+                          brand = val;
+                          if(brand != '') {
+                            setState(() { showErrorTexts[0] = false; });
+                          }
+                          if(brand == '') {
+                            setState(() { showErrorTexts[0] = true; });
+                          }
+                        },
+                      ),
+                      if(showRequired) const SizedBox(
+                        height: 20,
+                      ),
 
-                    //palette
-                    if(showRequired) globalWidgets.getTextField(
-                      context,
-                      getString('addPalette_palette'),
-                      palette,
-                      getString('addPalette_paletteError'),
-                      showErrorTexts[1],
-                      (String val) {
-                        palette = val;
-                        if(showErrorTexts[1] && val != '') {
-                          setState(() { showErrorTexts[1] = false; });
+                      // Palette
+                      if(showRequired) StringFormField(
+                        label: getString('addPalette_palette'),
+                        value: palette,
+                        error: getString('addPalette_paletteError'),
+                        showErrorText: showErrorTexts[1],
+                        onChanged: (String val) {
+                          palette = val;
+                          if(showErrorTexts[1] && val != '') {
+                            setState(() { showErrorTexts[1] = false; });
+                          }
+                        },
+                        onSubmitted: (String val) {
+                          palette = val;
+                          if(palette != '') {
+                            setState(() { showErrorTexts[1] = false; });
+                          }
+                          if(palette == '') {
+                            setState(() { showErrorTexts[1] = true; });
+                          }
                         }
-                      },
-                      (String val) {
-                        palette = val;
-                        if(palette != '') {
-                          setState(() { showErrorTexts[1] = false; });
-                        }
-                        if(palette == '') {
-                          setState(() { showErrorTexts[1] = true; });
-                        }
-                      }
-                    ),
-                    if(showRequired) const SizedBox(
-                      height: 20,
-                    ),
+                      ),
+                      if(showRequired) const SizedBox(
+                        height: 20,
+                      ),
 
-                    //weight
-                    if(showNums) globalWidgets.getNumField(
-                      context,
-                      getString('addPalette_weight'),
-                      weight,
-                      '',
-                      false,
-                      (double val) {
-                        weight = double.parse(val.toStringAsFixed(4));
-                      },
-                      (double val) {
-                        setState(() {
+                      // Weight
+                      if(showNums) DoubleFormField(
+                        label: getString('addPalette_weight'),
+                        value: weight,
+                        onChanged: (double val) {
                           weight = double.parse(val.toStringAsFixed(4));
-                        });
-                      },
-                    ),
-                    if(showNums) const SizedBox(
-                      height: 20,
-                    ),
+                        },
+                        onSubmitted: (double val) {
+                          setState(() {
+                            weight = double.parse(val.toStringAsFixed(4));
+                          });
+                        },
+                      ),
+                      if(showNums) const SizedBox(
+                        height: 20,
+                      ),
 
-                    //price
-                    if(showNums) globalWidgets.getNumField(
-                      context,
-                      getString('addPalette_price'),
-                      price,
-                      '',
-                      false,
-                      (double val) {
-                        price = double.parse(val.toStringAsFixed(2));
-                      },
-                      (double val) {
-                        setState(() {
+                      // Price
+                      if(showNums) DoubleFormField(
+                        label: getString('addPalette_price'),
+                        value: price,
+                        onChanged: (double val) {
                           price = double.parse(val.toStringAsFixed(2));
-                        });
-                      },
-                    ),
-                    if(showNums) const SizedBox(
-                      height: 20,
-                    ),
+                        },
+                        onSubmitted: (double val) {
+                          setState(() {
+                            price = double.parse(val.toStringAsFixed(2));
+                          });
+                        },
+                      ),
+                      if(showNums) const SizedBox(
+                        height: 20,
+                      ),
 
-                    if((showRequired || showNums) && (showDates || showImgs)) divider,
-                    if(showDates) const SizedBox(
-                      height: 20,
-                    ),
+                      if((showRequired || showNums) && (showDates || showImgs)) divider,
+                      if(showDates) const SizedBox(
+                        height: 20,
+                      ),
 
-                    //open date
-                    if(showDates) getDateField(
-                      context,
-                      getString('addPalette_openDate'),
-                      openDate,
-                      null,
-                      (DateTime value) {
-                        setState(() {
-                          openDate = value;
-                        });
-                      },
-                    ),
-                    if(showDates) const SizedBox(
-                      height: 20,
-                    ),
+                      //open date
+                      if(showDates) getDateField(
+                        getString('addPalette_openDate'),
+                        openDate,
+                        null,
+                        (DateTime value) {
+                          setState(() {
+                            openDate = value;
+                          });
+                        },
+                      ),
 
-                    //expiration date
-                    if(showDates) getDateField(
-                      context,
-                      getString('addPalette_expirationDate'),
-                      expirationDate,
-                      openDate,
-                      (DateTime value) {
-                        setState(() {
-                          expirationDate = value;
-                        });
-                      },
-                    ),
-                    if(showDates) const SizedBox(
-                      height: 20,
-                    ),
+                      //expiration date
+                      if(showDates) getDateField(
+                        getString('addPalette_expirationDate'),
+                        expirationDate,
+                        openDate,
+                        (DateTime value) {
+                          setState(() {
+                            expirationDate = value;
+                          });
+                        },
+                      ),
 
-                    if(showDates && showImgs) divider,
+                      if(showDates && showImgs) divider,
 
-                    if(showImgs) getImgsField(
-                      context,
-                      getString('addPalette_swatchImages'),
-                      imgs,
-                      (List<SwatchImage> value) {
-                        setState(() {
-                          imgs = value;
-                        });
-                      },
-                    ),
-                  ],
+                      if(showImgs) getImgsField(
+                        context,
+                        getString('addPalette_swatchImages'),
+                        imgs,
+                        (List<SwatchImage> value) {
+                          setState(() {
+                            imgs = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
               actions: <Widget>[
@@ -215,150 +205,14 @@ class PaletteTextPopup {
     );
   }
 
-  static Widget getDateField(BuildContext context, String label, DateTime? date, DateTime? relativeDate, OnDateAction onChange) {
-    return GestureDetector(
-
-      onTap: () {
-        globalWidgets.openDialog(
-          context,
-          (BuildContext context) {
-            if(date == null && relativeDate != null) {
-              date = DateTime(relativeDate.year + 1, relativeDate.month, relativeDate.day);
-            }
-            DateTime focusedDate = date ?? DateTime.now();
-            return Padding(
-              padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height * 0.5) - 251),
-              child: Dialog(
-                insetPadding: const EdgeInsets.symmetric(horizontal: 0),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
-                ),
-                child: StatefulBuilder(
-                  builder: (context, setState) {
-                    return Container(
-                      padding: EdgeInsets.all(20),
-                      width: MediaQuery.of(context).size.width,
-                      height: 502,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget> [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              alignment: Alignment.topLeft,
-                              child: TableCalendar(
-                                firstDay: DateTime.utc(1989, 12, 31),
-                                lastDay: DateTime.utc(2041, 1, 5),
-                                focusedDay: focusedDate,
-                                calendarStyle: CalendarStyle(
-                                  defaultTextStyle: theme.primaryTextSecondary,
-                                  isTodayHighlighted: false,
-                                  disabledDecoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  todayTextStyle: theme.primaryTextSecondary,
-                                  selectedDecoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: theme.accentColor,
-                                  ),
-                                  selectedTextStyle: theme.accentTextSecondary,
-                                ),
-                                headerStyle: HeaderStyle(
-                                  formatButtonVisible: false,
-                                  titleTextStyle: theme.primaryTextBold,
-                                ),
-                                onPageChanged: (DateTime newFocusedDate) {
-                                  focusedDate = newFocusedDate;
-                                },
-                                selectedDayPredicate: (DateTime possibleDate) {
-                                  return isSameDay(possibleDate, date ?? DateTime.now());
-                                },
-                                onDaySelected: (DateTime selectedDate, DateTime newFocusedDate) {
-                                  setState(() {
-                                    date = selectedDate;
-                                    focusedDate = newFocusedDate;
-                                  });
-                                  onChange(selectedDate);
-                                },
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 100,
-                            height: 40,
-                            child: FlatButton(
-                              bgColor: theme.accentColor,
-                              onPressed: () {
-                                onChange(date ?? focusedDate);
-                                Navigator.pop(context);
-                              },
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  '${getString('save')}',
-                                  style: theme.accentTextBold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                ),
-              ),
-            );
-          },
-        );
-      },
-
-      child: TextFormField(
-        autofocus: true,
-        textAlign: TextAlign.left,
-        style: theme.primaryTextSecondary,
-        textCapitalization: TextCapitalization.words,
-        cursorColor: theme.accentColor,
-        textInputAction: TextInputAction.done,
-        controller: TextEditingController()..text = (date == null ? '' : globalWidgets.displayTimeLong(date!)),
-        readOnly: true,
-        decoration: InputDecoration(
-          prefix: date == null ? null : Container(
-            padding: const EdgeInsets.only(right: 9, top: 5, bottom: 0),
-            child: Icon(
-              Icons.calendar_today,
-              size: theme.secondaryIconSize,
-              color: theme.iconTextColor,
-            ),
-          ),
-          prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
-          prefixIcon: date != null ? null : Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Icon(
-              Icons.calendar_today,
-              size: theme.secondaryIconSize,
-              color: theme.iconTextColor,
-            ),
-          ),
-          fillColor: theme.primaryColor,
-          labelText: label,
-          labelStyle: theme.primaryTextSecondary,
-          enabled: false,
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.primaryColorDark,
-              width: 1.0,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.accentColor,
-              width: 2.5,
-            ),
-          ),
-        ),
-      ),
-
+  static Widget getDateField(String label, DateTime? date, DateTime? relativeDate, OnDateAction onChange) {
+    return DateField(
+      label: label,
+      date: date,
+      relativeDate: relativeDate,
+      onChange: onChange,
+      padding: EdgeInsets.zero,
+      outerPadding: const EdgeInsets.only(bottom: 20),
     );
   }
 

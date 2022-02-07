@@ -16,11 +16,10 @@ import 'SwatchIcon.dart';
 
 class SwatchImagesDisplay extends StatefulWidget {
   final bool isEditing;
-  final List<String> imgIds;
   final Swatch swatch;
   final OnStringListAction onChange;
 
-  SwatchImagesDisplay({ Key? key, required this.isEditing, required this.imgIds, required this.swatch, required this.onChange }) : super(key: key);
+  SwatchImagesDisplay({ Key? key, required this.isEditing, required this.swatch, required this.onChange }) : super(key: key);
 
   @override
   SwatchImagesDisplayState createState() => SwatchImagesDisplayState();
@@ -36,7 +35,8 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
   @override
   void initState() {
     super.initState();
-    imgIds = widget.imgIds;
+    
+    imgIds = widget.swatch.imgIds ?? [];
   }
 
   @override
@@ -82,30 +82,35 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
       );
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          height: 125,
-          child: imgPreview,
-        ),
-        if(imgWidgets.length > 1) Container(
-          height: 50,
-          child: ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            separatorBuilder: (BuildContext context, int i) {
-              return const SizedBox(
-                width: 15,
-              );
-            },
-            itemCount: imgWidgets.length,
-            itemBuilder: (BuildContext context, int i) {
-              return imgWidgets[i];
-            },
+    return Container(
+      height: 190,
+      margin: const EdgeInsets.only(top: 20, bottom: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 125,
+            child: imgPreview,
           ),
-        ),
-      ],
+          if(imgWidgets.length > 1) Container(
+            height: 50,
+            child: ListView.separated(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (BuildContext context, int i) {
+                return const SizedBox(
+                  width: 15,
+                );
+              },
+              itemCount: imgWidgets.length,
+              itemBuilder: (BuildContext context, int i) {
+                return imgWidgets[i];
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
