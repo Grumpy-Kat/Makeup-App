@@ -9,7 +9,7 @@ import '../Data/Filter.dart';
 import '../Widgets/SwatchIcon.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
 import '../Widgets/ImagePicker.dart';
-import '../Widgets/PaletteTextPopup.dart';
+import '../Widgets/Popups/PaletteTextPopup.dart';
 import '../Widgets/FlatButton.dart' as internal;
 import '../Widgets/OutlineButton.dart';
 import '../Widgets/HelpButton.dart';

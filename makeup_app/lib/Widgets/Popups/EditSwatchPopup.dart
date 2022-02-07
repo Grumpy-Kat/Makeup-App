@@ -1,13 +1,14 @@
+import 'package:GlamKit/Widgets/TagsField.dart';
 import 'package:flutter/material.dart' hide HSVColor, FlatButton;
 import 'package:flutter/services.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../IO/localizationIO.dart';
-import '../globalWidgets.dart' as globalWidgets;
-import '../theme.dart' as theme;
-import '../globals.dart' as globals;
-import '../types.dart';
-import 'StarRating.dart';
-import 'FlatButton.dart';
+import '../../IO/localizationIO.dart';
+import '../../globalWidgets.dart' as globalWidgets;
+import '../../theme.dart' as theme;
+import '../../globals.dart' as globals;
+import '../../types.dart';
+import '../StarRating.dart';
+import '../FlatButton.dart';
 
 class EditSwatchPopup extends StatefulWidget {
   final void Function(String?, String?, double?, double?, DateTime?, DateTime?, int?, List<String>?)? onSave;
@@ -85,7 +86,22 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
         getStarField('${getString('swatch_rating')}', _rating, (int value) { _rating = value; }),
         divider,
         //tags
-        getChipField('${getString('swatch_tags')}', globals.tags, _tags, (String value) { List<String> tags = globals.tags; tags.add(value); globals.tags = tags; }, (List<String> value) { _tags = value; setState(() { }); }),
+        TagsField(
+          label: '${getString('swatch_tags')}',
+          options: globals.tags,
+          values: _tags,
+          onAddOption: (String value) {
+            List<String> tags = globals.tags;
+            tags.add(value);
+            globals.tags = tags;
+          },
+          onChange: (List<String> value) {
+            _tags = value;
+            setState(() { });
+          },
+          labelPadding: const EdgeInsets.symmetric(vertical: 15),
+          chipFieldPadding: const EdgeInsets.only(bottom: 20),
+        ),
         divider,
         //save button
         Container(
@@ -377,93 +393,6 @@ class EditSwatchPopupState extends State<EditSwatchPopup> {
             onChange: (int rating) {
               setState(() { onChange(rating); });
             },
-          ),
-        ),
-      ],
-    );
-  }
-
-  //many choice selection field with ability to add more choices
-  Widget getChipField(String label, List<String> options, List<String> values, OnStringAction onAddOption, OnStringListAction onChange) {
-    List<Widget> widgets = [];
-    for(int i = 0; i < options.length; i++) {
-      if(options[i] == '') {
-        continue;
-      }
-      String text = options[i];
-      if(text.contains('_')) {
-        text = getString(text, defaultValue: text);
-      }
-      widgets.add(
-        FilterChip(
-          checkmarkColor: theme.accentColor,
-          label: Text(text, style: theme.primaryTextSecondary),
-          selected: values.contains(options[i]),
-          onSelected: (bool selected) {
-            if(selected) {
-              values.add(options[i]);
-            } else {
-              values.remove(options[i]);
-            }
-            onChange(values);
-          },
-        ),
-      );
-      widgets.add(
-        const SizedBox(
-          width: 10,
-        ),
-      );
-    }
-    widgets.add(
-      ActionChip(
-        label: Icon(
-          Icons.add,
-          size: 15,
-          color: theme.iconTextColor,
-        ),
-        onPressed: () {
-          globalWidgets.openTextDialog(
-            context,
-            getString('swatch_tags_popupInstructions'),
-            getString('swatch_tags_popupError'),
-            getString('swatch_tags_popupBtn'),
-            (String value) {
-              onAddOption(value);
-              values.add(value);
-              onChange(values);
-            },
-          );
-        },
-      ),
-    );
-    if(widgets.length == 0) {
-      widgets.add(
-        FilterChip(
-          checkmarkColor: theme.accentColor,
-          label: Text('${getString('swatch_none')}', style: theme.primaryTextSecondary),
-          selected: false,
-          onSelected: (bool selected) { },
-        ),
-      );
-    }
-    return Column(
-      children: <Widget> [
-        Container(
-          height: 55,
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Text(
-            '$label: ',
-            style: theme.primaryTextPrimary,
-            textAlign: TextAlign.left,
-          ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Wrap(
-            children: widgets,
           ),
         ),
       ],

@@ -74,7 +74,7 @@ class ImagePicker {
         setState(() { });
       }
       try {
-        Image_Picker.PickedFile? file = await picker.getImage(source: Image_Picker.ImageSource.gallery);
+        Image_Picker.XFile? file = await picker.pickImage(source: Image_Picker.ImageSource.gallery);
         if(file != null) {
           File newImg = File(file.path);
           prevImg = img;
@@ -107,7 +107,7 @@ class ImagePicker {
         setState(() { });
       }
       try {
-        Image_Picker.PickedFile? file = await picker.getImage(source: Image_Picker.ImageSource.camera);
+        Image_Picker.XFile? file = await picker.pickImage(source: Image_Picker.ImageSource.camera);
         if(file != null) {
           File newImg = File(file.path);
           prevImg = img;

@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'dart:math';
 import 'dart:io';
-import 'dart:ui';
 import 'dart:typed_data';
 import '../Data/Swatch.dart';
 import '../globals.dart' as globals;

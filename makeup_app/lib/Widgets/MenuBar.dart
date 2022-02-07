@@ -4,6 +4,7 @@ import '../theme.dart' as theme;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 
+// ignore: must_be_immutable
 class MenuBar extends StatelessWidget {
   final int currTab;
   final OnVoidAction? onExit;

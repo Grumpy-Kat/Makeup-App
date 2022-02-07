@@ -1,3 +1,4 @@
+import 'package:GlamKit/Widgets/TagsField.dart';
 import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton, BackButton;
 import 'package:flutter/services.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -164,20 +165,40 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                 //price
                 getNumField('${getString('swatch_price')}', price, (double value) { _swatch.price = value; onChange(false); }),
                 divider,
+
                 const SizedBox(
                   height: 10,
                 ),
+
                 //open date
                 getDateField('${getString('swatch_openDate')}', openDate, null, (DateTime value) { _swatch.openDate = value; onChange(true); }),
                 //expiration date
                 getDateField('${getString('swatch_expirationDate')}', expirationDate, openDate, (DateTime value) { _swatch.expirationDate = value; onChange(true); }),
                 divider,
+
                 //rating
                 getStarField('${getString('swatch_rating')}', _swatch.rating, (int value) { _swatch.rating = value; onChange(false); }),
                 divider,
+
                 //tags
-                getChipField('${getString('swatch_tags')}', tags, _swatch.tags!, (String value) { tags.add(value); globals.tags = tags; }, (List<String> value) { _swatch.tags = value; onChange(true); }),
+                TagsField(
+                  label: '${getString('swatch_tags')}',
+                  options: tags,
+                  values: _swatch.tags!,
+                  onAddOption: (String value) {
+                    tags.add(value);
+                    globals.tags = tags;
+                  },
+                  onChange: (List<String> value) {
+                    _swatch.tags = value;
+                    onChange(true);
+                  },
+                  isEditing: _isEditing,
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  chipFieldPadding: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
+                ),
                 divider,
+
                 //delete button
                 Container(
                   height: 70,
@@ -643,100 +664,6 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                 setState(() { onChange(rating); });
               }
             },
-          ),
-        ),
-      ],
-    );
-  }
-
-  //many choice selection field with ability to add more choices
-  Widget getChipField(String label, List<String> options, List<String> values, OnStringAction onAddOption, OnStringListAction onChange) {
-    List<Widget> widgets = [];
-    for(int i = 0; i < options.length; i++) {
-      if(options[i] == '') {
-        continue;
-      }
-      if(!_isEditing && !values.contains(options[i])) {
-        continue;
-      }
-      String text = options[i];
-      if(text.contains('_')) {
-        text = getString(text, defaultValue: text);
-      }
-      widgets.add(
-        FilterChip(
-          checkmarkColor: theme.accentColor,
-          label: Text(text, style: theme.primaryTextSecondary),
-          selected: values.contains(options[i]),
-          onSelected: (bool selected) {
-            if(_isEditing) {
-              if(selected) {
-                values.add(options[i]);
-              } else {
-                values.remove(options[i]);
-              }
-              onChange(values);
-            }
-          },
-        ),
-      );
-      widgets.add(
-        const SizedBox(
-          width: 10,
-        ),
-      );
-    }
-    if(_isEditing) {
-      widgets.add(
-        ActionChip(
-          label: Icon(
-            Icons.add,
-            size: 15,
-            color: theme.iconTextColor,
-          ),
-          onPressed: () {
-            globalWidgets.openTextDialog(
-              context,
-              getString('swatch_tags_popupInstructions'),
-              getString('swatch_tags_popupError'),
-              getString('swatch_tags_popupBtn'),
-              (String value) {
-                onAddOption(value);
-                values.add(value);
-                onChange(values);
-              },
-            );
-          },
-        ),
-      );
-    }
-    if(widgets.length == 0) {
-      widgets.add(
-        FilterChip(
-          checkmarkColor: theme.accentColor,
-          label: Text('${getString('swatch_none')}', style: theme.primaryTextSecondary),
-          selected: false,
-          onSelected: (bool selected) { },
-        ),
-      );
-    }
-    return Column(
-      children: <Widget> [
-        Container(
-          height: 55,
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-          child: Text(
-            '$label: ',
-            style: theme.primaryTextPrimary,
-            textAlign: TextAlign.left,
-          ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
-          child: Wrap(
-            children: widgets,
           ),
         ),
       ],

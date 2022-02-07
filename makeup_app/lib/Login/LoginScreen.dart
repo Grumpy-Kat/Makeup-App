@@ -9,7 +9,6 @@ import 'LoginAuthType.dart';
 import 'EmailLogin.dart';
 import 'EmailButton.dart';
 import 'PhoneLogin.dart';
-import 'PhoneButton.dart';
 import 'GoogleLogin.dart';
 import 'GoogleButton.dart';
 import 'LoginButton.dart';

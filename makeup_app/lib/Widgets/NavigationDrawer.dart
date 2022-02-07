@@ -5,6 +5,7 @@ import '../types.dart';
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 
+// ignore: must_be_immutable
 class NavigationDrawer extends StatelessWidget {
   final int currTab;
   final OnVoidAction? onExit;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart' hide FlatButton;
 import 'package:table_calendar/table_calendar.dart';
-import '../IO/localizationIO.dart';
-import '../theme.dart' as theme;
-import '../types.dart';
-import '../globalWidgets.dart' as globalWidgets;
-import '../Data/SwatchImage.dart';
+import '../../IO/localizationIO.dart';
+import '../../theme.dart' as theme;
+import '../../types.dart';
+import '../../globalWidgets.dart' as globalWidgets;
+import '../../Data/SwatchImage.dart';
 import 'SwatchImageMultiplePopup.dart';
-import 'FlatButton.dart';
+import '../FlatButton.dart';
 
 class PaletteTextPopup {
   static Future<void> open(BuildContext context, String title, void Function(String, String, double, double, DateTime?, DateTime?, List<SwatchImage>) onPressed, { bool showRequired = true, bool showNums = true, bool showDates = true, bool showImgs = true }) {

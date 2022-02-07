@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide FlatButton;
 import 'package:firebase_auth/firebase_auth.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_sign_in/google_sign_in.dart';
 import '../Data/Swatch.dart';
 import '../Data/Look.dart';

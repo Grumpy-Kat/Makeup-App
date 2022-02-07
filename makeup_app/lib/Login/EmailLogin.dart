@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide FlatButton;
-import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../Data/Swatch.dart';
 import '../Data/Look.dart';

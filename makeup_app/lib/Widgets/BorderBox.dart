@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import '../theme.dart' as theme;
 
+// ignore: must_be_immutable
 class BorderBox extends StatefulWidget {
   final GlobalKey _key = GlobalKey();
 

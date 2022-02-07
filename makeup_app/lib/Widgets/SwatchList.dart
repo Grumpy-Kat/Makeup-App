@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide HSVColor;
-import 'package:flutter/rendering.dart';
 import '../IO/localizationIO.dart';
 import '../Data/Filter.dart';
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 import '../types.dart';
+import 'Popups/EditSwatchPopup.dart';
 import 'SwatchIcon.dart';
-import 'EditSwatchPopup.dart';
 
 class SwatchList {
   Future? addSwatches;

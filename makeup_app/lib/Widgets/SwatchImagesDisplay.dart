@@ -1,3 +1,4 @@
+import 'package:GlamKit/Widgets/TagsField.dart';
 import 'package:flutter/material.dart' hide FlatButton, OutlineButton;
 import '../IO/allSwatchesStorageIO.dart' as IO;
 import '../IO/localizationIO.dart';
@@ -7,7 +8,7 @@ import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../Data/Swatch.dart';
 import '../Data/SwatchImage.dart';
-import 'SwatchImagePopup.dart';
+import 'Popups/SwatchImagePopup.dart';
 import 'ImagePicker.dart';
 import 'FlatButton.dart';
 import 'OutlineButton.dart';
@@ -199,16 +200,38 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
                               width: imgSize.width,
                               height: imgSize.height,
                             ),
+
                             const SizedBox(
                               height: 12,
                             ),
-                            getChipField(context, img.labels, (List<String> value) { setState(() { imgs[imgIds[currImgPreviewId - 1]]!.labels = value; img.labels = value; }); }),
+
+                            TagsField(
+                              label: '${getString('swatchImage_labels')}',
+                              options: globals.swatchImgLabels,
+                              values: img.labels,
+                              onAddOption: (String value) {
+                                List<String> labels = globals.swatchImgLabels;
+                                labels.add(value);
+                                globals.swatchImgLabels = labels;
+                              },
+                              onChange: (List<String> value) {
+                                setState(() {
+                                  imgs[imgIds[currImgPreviewId - 1]]!.labels = value;
+                                  img.labels = value;
+                                });
+                              },
+                              isEditing: widget.isEditing,
+                              labelPadding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 3),
+                              chipFieldPadding: const EdgeInsets.only(left: 30, right: 30),
+                            ),
                           ],
                         ),
                       ),
+
                       const SizedBox(
                         height: 12,
                       ),
+
                       Container(
                         height: 40,
                         child: Row(
@@ -267,104 +290,6 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
           ),
         );
       }
-    );
-  }
-
-  Widget getChipField(BuildContext context, List<String> labels, OnStringListAction onChange) {
-    List<Widget> widgets = [];
-    List<String> options = globals.swatchImgLabels;
-    for(int i = 0; i < options.length; i++) {
-      if(options[i] == '') {
-        continue;
-      }
-      if(!widget.isEditing && !labels.contains(options[i])) {
-        continue;
-      }
-      String text = options[i];
-      if(text.contains('_')) {
-        text = getString(text, defaultValue: text);
-      }
-      widgets.add(
-        FilterChip(
-          checkmarkColor: theme.accentColor,
-          label: Text(text, style: theme.primaryTextSecondary),
-          selected: labels.contains(options[i]),
-          onSelected: (bool selected) {
-            if(widget.isEditing) {
-              if (selected) {
-                labels.add(options[i]);
-              } else {
-                labels.remove(options[i]);
-              }
-              onChange(labels);
-            }
-          },
-        ),
-      );
-      widgets.add(
-        const SizedBox(
-          width: 10,
-        ),
-      );
-    }
-
-    if(widget.isEditing) {
-      widgets.add(
-        ActionChip(
-          label: Icon(
-            Icons.add,
-            size: 15,
-            color: theme.iconTextColor,
-          ),
-          onPressed: () {
-            globalWidgets.openTextDialog(
-              context,
-              getString('swatch_tags_popupInstructions'),
-              getString('swatch_tags_popupError'),
-              getString('swatch_tags_popupBtn'),
-              (String value) {
-                options.add(value);
-                globals.swatchImgLabels = options;
-                labels.add(value);
-                onChange(labels);
-              },
-            );
-          },
-        ),
-      );
-    }
-
-    if(widgets.length == 0) {
-      widgets.add(
-        FilterChip(
-          checkmarkColor: theme.accentColor,
-          label: Text('${getString('swatch_none')}', style: theme.primaryTextSecondary),
-          selected: false,
-          onSelected: (bool selected) { },
-        ),
-      );
-    }
-
-    return Column(
-      children: <Widget> [
-        Container(
-          height: 55,
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 3),
-          child: Text(
-            '${getString('swatchImage_labels')}: ',
-            style: theme.primaryTextPrimary,
-            textAlign: TextAlign.left,
-          ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          child: Wrap(
-            children: widgets,
-          ),
-        ),
-      ],
     );
   }
 }

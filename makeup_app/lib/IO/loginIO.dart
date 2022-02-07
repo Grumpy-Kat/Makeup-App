@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide FlatButton;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_sign_in/google_sign_in.dart';
 import '../Data/Swatch.dart';
 import '../Data/Look.dart';
@@ -148,7 +149,7 @@ Future<void> signIn([bool setDisplayName = true]) async {
     await auth.signInAnonymously();
   }
   if(setDisplayName) {
-    await auth.currentUser!.updateProfile(displayName: globals.userID);
+    await auth.currentUser!.updateDisplayName(globals.userID);
   } else {
     String? newUserId = auth.currentUser!.displayName;
     if(newUserId != null && newUserId != '') {

@@ -1,3 +1,4 @@
+import 'package:GlamKit/Widgets/TagsField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../IO/localizationIO.dart';
@@ -86,13 +87,14 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
               ],
             ),
           ),
-          getFinishField(context),
-          getBrandField(context),
-          getPaletteField(context),
-          getRatingField(context),
-          getTagsField(context),
-          getWeightField(context),
-          getPriceField(context),
+
+          getFinishField(),
+          getBrandField(),
+          getPaletteField(),
+          getRatingField(),
+          getTagsField(),
+          getWeightField(),
+          getPriceField(),
         ],
       ),
     );
@@ -123,54 +125,35 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
     );
   }
 
-  Widget getFinishField(BuildContext context) {
-    List<Widget> widgets = [];
-    for(int i = 0; i < _finishes.length; i++) {
-      if(_finishes[i] == '') {
-        continue;
-      }
-      widgets.add(
-        FilterChip(
-          checkmarkColor: theme.accentColor,
-          label: Text('${getString(_finishes[i])}', style: theme.primaryTextSecondary),
-          selected: _selectedFinishes.contains(_finishes[i]),
-          onSelected: (bool selected) {
-            setState(() {
-              if(selected) {
-                _selectedFinishes.add(_finishes[i]);
-                for(int j = 0; j < _finishesFilters.length; j++) {
-                  if(_finishesFilters[j].threshold == _finishes[i]) {
-                    _finishesFilters.removeAt(j);
-                    break;
-                  }
-                }
-              } else {
-                _selectedFinishes.remove(_finishes[i]);
-                _finishesFilters.add(Filter(FilterType.NotEqualTo, 'finish', _finishes[i]));
-              }
-            });
-            //widget.onChange(filters);
-          },
-        ),
-      );
-      widgets.add(
-        const SizedBox(
-          width: 10,
-        ),
-      );
-    }
-    return getField(
-      '${getString('swatch_finish')}',
-      Container(
-        alignment: Alignment.center,
-        child: Wrap(
-          children: widgets,
-        ),
+  Widget getFinishField() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.only(bottom: 26),
+      child: TagsField(
+        label: '${getString('swatch_finish')}',
+        options: _finishes,
+        values: _selectedFinishes,
+        onSelect: (String value) {
+          _selectedFinishes.add(value);
+          for(int j = 0; j < _finishesFilters.length; j++) {
+            if(_finishesFilters[j].threshold == value) {
+              _finishesFilters.removeAt(j);
+              break;
+            }
+          }
+        },
+        onDeselect: (String value) {
+          _selectedFinishes.remove(value);
+          _finishesFilters.add(Filter(FilterType.NotEqualTo, 'finish', value));
+        },
+        showAddChip: false,
+        labelPadding: const EdgeInsets.only(bottom: 7),
+        chipFieldPadding: const EdgeInsets.all(0),
       ),
     );
   }
 
-  Widget getBrandField(BuildContext context) {
+  Widget getBrandField() {
     return getField(
       '${getString('swatch_brand')}',
       TextField(
@@ -204,7 +187,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
     );
   }
 
-  Widget getPaletteField(BuildContext context) {
+  Widget getPaletteField() {
     return getField(
       '${getString('swatch_palette')}',
       TextField(
@@ -238,7 +221,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
     );
   }
 
-  Widget getRatingField(BuildContext context) {
+  Widget getRatingField() {
     return getField(
       '${getString('swatch_rating')}: ${_ratingValues.start.round().toString()} - ${_ratingValues.end.round().toString()}',
       Container(
@@ -267,59 +250,35 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
     );
   }
 
-  Widget getTagsField(BuildContext context) {
-    List<String> tags = globals.tags;
-    List<Widget> widgets = [];
-    for(int i = 0; i < tags.length; i++) {
-      if(tags[i] == '') {
-        continue;
-      }
-      String text = tags[i];
-      if(text.contains('_')) {
-        text = getString(text, defaultValue: text);
-      }
-      widgets.add(
-        FilterChip(
-          checkmarkColor: theme.accentColor,
-          label: Text(text, style: theme.primaryTextSecondary),
-          selected: _selectedTags.contains(tags[i]),
-          onSelected: (bool selected) {
-            setState(() {
-              if(selected) {
-                _selectedTags.add(tags[i]);
-                _tagsFilters.add(Filter(FilterType.ContainedIn, 'tags', tags[i]));
-              } else {
-                _selectedTags.remove(tags[i]);
-                for(int j = 0; j < _tagsFilters.length; j++) {
-                  if(_tagsFilters[j].threshold == tags[i]) {
-                    _tagsFilters.removeAt(j);
-                    break;
-                  }
-                }
-              }
-            });
-            //widget.onChange(filters);
-          },
-        ),
-      );
-      widgets.add(
-        const SizedBox(
-          width: 10,
-        ),
-      );
-    }
-    return getField(
-      '${getString('swatch_tags')}',
-      Container(
-        alignment: Alignment.center,
-        child: Wrap(
-          children: widgets,
-        ),
+  Widget getTagsField() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.only(bottom: 26),
+      child: TagsField(
+        label: '${getString('swatch_tags')}',
+        options: globals.tags,
+        values: _selectedTags,
+        onSelect: (String value) {
+          _selectedTags.add(value);
+          _tagsFilters.add(Filter(FilterType.ContainedIn, 'tags', value));
+        },
+        onDeselect: (String value) {
+          _selectedTags.remove(value);
+          for(int j = 0; j < _tagsFilters.length; j++) {
+            if(_tagsFilters[j].threshold == value) {
+              _tagsFilters.removeAt(j);
+              break;
+            }
+          }
+        },
+        showAddChip: false,
+        labelPadding: const EdgeInsets.only(bottom: 7),
+        chipFieldPadding: const EdgeInsets.all(0),
       ),
     );
   }
 
-  Widget getWeightField(BuildContext context) {
+  Widget getWeightField() {
     TextSelection selection = _minWeightController.selection;
     _minWeightController.text = _minWeightFilter.threshold.toString();
     try {
@@ -425,7 +384,7 @@ class SwatchFilterDrawerState extends State<SwatchFilterDrawer> {
     );
   }
 
-  Widget getPriceField(BuildContext context) {
+  Widget getPriceField() {
     TextSelection selection = _minPriceController.selection;
     _minPriceController.text = _minPriceFilter.threshold.toString();
     try {

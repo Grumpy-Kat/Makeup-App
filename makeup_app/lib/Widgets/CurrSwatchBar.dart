@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import '../globals.dart' as globals;
 import '../navigation.dart' as navigation;
 import '../theme.dart' as theme;

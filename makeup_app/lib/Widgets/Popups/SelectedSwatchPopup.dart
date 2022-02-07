@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart' hide FlatButton;
-import '../IO/allSwatchesIO.dart' as IO;
-import '../IO/localizationIO.dart';
-import '../globals.dart' as globals;
-import '../theme.dart' as theme;
-import '../types.dart';
-import 'SingleSwatchList.dart';
-import 'FlatButton.dart';
+import '../../IO/allSwatchesIO.dart' as IO;
+import '../../IO/localizationIO.dart';
+import '../../globals.dart' as globals;
+import '../../theme.dart' as theme;
+import '../../types.dart';
+import '../SingleSwatchList.dart';
+import '../FlatButton.dart';
 
 class SelectedSwatchPopup extends StatefulWidget {
   final List<int> swatches;

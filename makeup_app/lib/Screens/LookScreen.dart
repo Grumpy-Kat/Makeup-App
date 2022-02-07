@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide BackButton;
 import '../Data/Look.dart';
 import '../Widgets/SingleSwatchList.dart';
-import '../Widgets/SelectedSwatchPopup.dart';
+import '../Widgets/Popups/SelectedSwatchPopup.dart';
 import '../Data/Filter.dart';
 import '../Widgets/SwatchFilterDrawer.dart';
 import '../Widgets/BackButton.dart';
