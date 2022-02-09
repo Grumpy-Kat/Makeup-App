@@ -8,7 +8,7 @@ import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import '../Data/Swatch.dart';
 import '../Data/SwatchImage.dart';
-import 'Popups/SwatchSingleImagePopup.dart';
+import 'Popups/SwatchImageSinglePopup.dart';
 import 'ImagePicker.dart';
 import 'FlatButton.dart';
 import 'OutlineButton.dart';
@@ -71,7 +71,7 @@ class SwatchImagesDisplayState extends State<SwatchImagesDisplay> {
     imgWidgets.insert(0, SwatchIcon.swatch(widget.swatch, showInfoBox: false, overrideOnTap: true, onTap: (int id) { setState(() { currImgPreviewId = 0; }); }, overrideOnDoubleTap: true, onDoubleTap: (int id) {}));
     if(widget.isEditing) {
       imgWidgets.add(
-        SwatchSingleImagePopup(
+        SwatchImageSinglePopup(
           swatchId: widget.swatch.id,
           otherImgIds: imgIds,
           onImgIdAdded: (String id) {

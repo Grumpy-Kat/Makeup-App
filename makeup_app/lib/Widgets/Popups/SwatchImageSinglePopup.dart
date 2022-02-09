@@ -11,19 +11,19 @@ import '../TagsField.dart';
 import '../OutlineButton.dart';
 import 'SwatchImagePopup.dart';
 
-class SwatchSingleImagePopup extends StatefulWidget {
+class SwatchImageSinglePopup extends StatefulWidget {
   final int? swatchId;
   final List<String> otherImgIds;
   final OnStringAction? onImgIdAdded;
   final OnSwatchImageAction? onImgAdded;
 
-  SwatchSingleImagePopup({ this.swatchId, required this.otherImgIds, this.onImgIdAdded, this.onImgAdded });
+  SwatchImageSinglePopup({ this.swatchId, required this.otherImgIds, this.onImgIdAdded, this.onImgAdded });
 
   @override
-  SwatchSingleImagePopupState createState() => SwatchSingleImagePopupState();
+  SwatchImageSinglePopupState createState() => SwatchImageSinglePopupState();
 }
 
-class SwatchSingleImagePopupState extends State<SwatchSingleImagePopup> with SwatchImagePopupState {
+class SwatchImageSinglePopupState extends State<SwatchImageSinglePopup> with SwatchImagePopupState {
   @override
   Widget build(BuildContext context) {
     if(!hasInit) {
