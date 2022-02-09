@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide HSVColor, FlatButton;
+import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton;
 import 'dart:typed_data';
 import '../../IO/localizationIO.dart';
 import '../../globalWidgets.dart' as globalWidgets;
@@ -6,24 +6,24 @@ import '../../globals.dart' as globals;
 import '../../theme.dart' as theme;
 import '../../types.dart';
 import '../ImagePicker.dart';
-import '../PaletteDivider.dart';
-import '../TagsField.dart';
 import '../FlatButton.dart';
+import '../TagsField.dart';
+import '../OutlineButton.dart';
 import 'SwatchImagePopup.dart';
 
-class SwatchImageMultiplePopup extends StatefulWidget {
+class SwatchSingleImagePopup extends StatefulWidget {
   final int? swatchId;
   final List<String> otherImgIds;
-  final OnStringListAction? onImgIdsAdded;
-  final OnSwatchImageListAction? onImgsAdded;
+  final OnStringAction? onImgIdAdded;
+  final OnSwatchImageAction? onImgAdded;
 
-  SwatchImageMultiplePopup({ this.swatchId, required this.otherImgIds, this.onImgIdsAdded, this.onImgsAdded });
+  SwatchSingleImagePopup({ this.swatchId, required this.otherImgIds, this.onImgIdAdded, this.onImgAdded });
 
   @override
-  State<StatefulWidget> createState() => SwatchImageMultiplePopupState();
+  SwatchSingleImagePopupState createState() => SwatchSingleImagePopupState();
 }
 
-class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with SwatchImagePopupState {
+class SwatchSingleImagePopupState extends State<SwatchSingleImagePopup> with SwatchImagePopupState {
   @override
   Widget build(BuildContext context) {
     if(!hasInit) {
@@ -34,7 +34,7 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
-        color: theme.primaryColorDarkest,
+        color: theme.primaryColorDark,
       ),
       child: IconButton(
         constraints: BoxConstraints.tight(const Size.square(50)),
@@ -52,50 +52,16 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with
   }
 
   @override
-  Future<void> openImgPicker(BuildContext context) {
-    PaletteDividerState.reset(includeImg: false);
-    return super.openImgPicker(context);
-  }
-
-  @override
-  Future<void> openAfterImgPicker(BuildContext context) async {
-    return openImgDivider(context);
-  }
-
-  Future<void> openImgDivider(BuildContext context) async {
-    return globalWidgets.openDialog(
-      context,
-      (BuildContext innerContext) {
-        return StatefulBuilder(
-          builder: (innerContext, setState) {
-            return Padding(
-              padding: MediaQuery.of(innerContext).viewInsets.bottom != 0 ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.1, horizontal: 0),
-              child: Dialog(
-                insetPadding: const EdgeInsets.symmetric(horizontal: 0),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
-                ),
-                child: PaletteDivider(
-                  initialImg: ImagePicker.img,
-                  onEnterImgs: (List<Uint8List> imgs) {
-                    Navigator.pop(innerContext);
-                    openImgDisplay(innerContext, imgs);
-                  },
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  @override
   Future<void> openImgDisplay(BuildContext context, List<Uint8List>? imgs) async {
+    isImgDisplayOpened = true;
+
     double padding = (MediaQuery.of(context).size.height * 0.5) - 350;
     if(padding < 0) {
       padding = 0;
     }
+
+    Size imgSize = ImagePicker.getScaledImgSize(Size(MediaQuery.of(context).size.width - 60, 200), await ImagePicker.getActualImgSize(ImagePicker.img));
+
     return globalWidgets.openDialog(
       context,
       (BuildContext context) {
@@ -114,29 +80,50 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with
                   height: 700,
                   child: Column(
                     children: <Widget>[
-                      const SizedBox(
-                        height: 12,
-                      ),
                       Expanded(
                         child: ListView(
                           children: <Widget>[
-                            GridView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                mainAxisSpacing: 20,
-                                crossAxisSpacing: 20,
-                                crossAxisCount: imgs!.length < 4 ? imgs.length : 4,
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                width: 170,
+                                height: 40,
+                                child: OutlineButton(
+                                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                                  bgColor: theme.bgColor,
+                                  outlineColor: theme.primaryColorDarkest,
+                                  outlineWidth: 2.0,
+                                  onPressed: () {
+                                    openImgPicker(context).then(
+                                      (value) {
+                                        if(ImagePicker.img == null) {
+                                          Navigator.pop(context);
+                                        }
+
+                                        if(ImagePicker.img != ImagePicker.prevImg) {
+                                          setState(() {});
+                                        }
+                                      }
+                                    );
+                                  },
+                                  child: Text(
+                                    getString('paletteDivider_add'),
+                                    style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
+                                  ),
+                                ),
                               ),
-                              itemCount: imgs.length,
-                              itemBuilder: (BuildContext context, int i) {
-                                return Image.memory(
-                                  imgs[i],
-                                );
-                              },
                             ),
-                            
+
+                            const SizedBox(
+                              height: 12,
+                            ),
+
+                            Image.file(
+                              ImagePicker.img!,
+                              width: imgSize.width,
+                              height: imgSize.height,
+                            ),
+
                             const SizedBox(
                               height: 12,
                             ),
@@ -179,8 +166,8 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with
                                 [ImagePicker.img!.readAsBytesSync()],
                                 widget.swatchId,
                                 widget.otherImgIds,
-                                widget.onImgIdsAdded,
-                                widget.onImgsAdded,
+                                widget.onImgIdAdded,
+                                widget.onImgAdded,
                               );
                             },
                             child: Align(

@@ -1,223 +1,80 @@
-import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton;
-import '../../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
-import '../../IO/localizationIO.dart';
-import '../../Data/SwatchImage.dart';
-import '../../globalWidgets.dart' as globalWidgets;
-import '../../globals.dart' as globals;
-import '../../theme.dart' as theme;
-import '../../types.dart';
+import 'package:flutter/material.dart';
+import 'dart:typed_data';
+import '../../../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
+import '../../../Data/SwatchImage.dart';
+import '../../../types.dart';
+import '../../../globalWidgets.dart' as globalWidgets;
 import '../ImagePicker.dart';
-import '../FlatButton.dart';
-import '../TagsField.dart';
-import '../OutlineButton.dart';
 
-class SwatchImagePopup extends StatefulWidget {
-  final int? swatchId;
-  final List<String> otherImgIds;
-  final OnStringAction? onImgIdAdded;
-  final OnSwatchImageAction? onImgAdded;
-
-  SwatchImagePopup({ this.swatchId, required this.otherImgIds, this.onImgIdAdded, this.onImgAdded });
-
-  @override
-  State<StatefulWidget> createState() => SwatchImagePopupState();
-}
-
-class SwatchImagePopupState extends State<SwatchImagePopup> {
+mixin SwatchImagePopupState {
   List<String> labels = [];
-  bool _isImgDisplayOpened = false;
+  bool isImgDisplayOpened = false;
 
-  bool _hasInit = false;
-
-  @override
-  Widget build(BuildContext context) {
-    if(!_hasInit) {
-      ImagePicker.img = null;
-      _hasInit = true;
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(7),
-        color: theme.primaryColorDark,
-      ),
-      child: IconButton(
-        constraints: BoxConstraints.tight(const Size.square(50)),
-        alignment: Alignment.center,
-        icon: Icon(
-          Icons.camera_alt,
-          size: 30,
-          color: theme.bgColor,
-        ),
-        onPressed: () {
-          openImgPicker(context);
-        },
-      ),
-    );
-  }
+  // ignore: unused_field
+  bool hasInit = false;
 
   Future<void> openImgPicker(BuildContext context) {
     ImagePicker.error = '';
     return ImagePicker.open(context).then(
       (val) {
-        if(ImagePicker.img != null && !_isImgDisplayOpened) {
-          openImgDisplay(context);
+        if(ImagePicker.img != null && !isImgDisplayOpened) {
+          openAfterImgPicker(context);
         }
       },
     );
   }
 
-  Future<void> openImgDisplay(BuildContext context) async {
-    _isImgDisplayOpened = true;
+  Future<void> openAfterImgPicker(BuildContext context) async {
+    return openImgDisplay(context, null);
+  }
 
-    double padding = (MediaQuery.of(context).size.height * 0.5) - 350;
-    if(padding < 0) {
-      padding = 0;
+  Future<void> openImgDisplay(BuildContext context, List<Uint8List>? imgs) async { }
+
+  Future<void> addImgs(BuildContext context, List<Uint8List> imgs, int? swatchId, List<String> otherImgIds, dynamic onImgIdsAdded, dynamic onImgsAdded) async {
+    globalWidgets.openLoadingDialog(context);
+
+    // Save images
+    List<String>? imgIds;
+    if(swatchId != null) {
+      imgIds = [];
+      for(int i = 0; i < imgs.length; i++) {
+        imgIds.add(await allSwatchesStorageIO.addImgBytes(bytes: imgs[i], otherImgIds: otherImgIds, swatchId: swatchId, labels: labels));
+      }
     }
 
-    Size imgSize = ImagePicker.getScaledImgSize(Size(MediaQuery.of(context).size.width - 60, 200), await ImagePicker.getActualImgSize(ImagePicker.img));
+    // Reset state and allow user to return, while finishing operations in background
+    hasInit = false;
+    Navigator.pop(context);
+    Navigator.pop(context);
 
-    return globalWidgets.openDialog(
-      context,
-      (BuildContext context) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: padding),
-          child: Dialog(
-            insetPadding: const EdgeInsets.symmetric(horizontal: 0),
-            shape: const RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
-            ),
-            child: StatefulBuilder(
-              builder: (context, setState) {
-                return Container(
-                  padding: EdgeInsets.all(20),
-                  width: MediaQuery.of(context).size.width,
-                  height: 700,
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        child: ListView(
-                          children: <Widget>[
-                            Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                width: 170,
-                                height: 40,
-                                child: OutlineButton(
-                                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                                  bgColor: theme.bgColor,
-                                  outlineColor: theme.primaryColorDarkest,
-                                  outlineWidth: 2.0,
-                                  onPressed: () {
-                                    openImgPicker(context).then(
-                                      (value) {
-                                        if(ImagePicker.img == null) {
-                                          Navigator.pop(context);
-                                        }
-
-                                        if(ImagePicker.img != ImagePicker.prevImg) {
-                                          setState(() {});
-                                        }
-                                      }
-                                    );
-                                  },
-                                  child: Text(
-                                    getString('paletteDivider_add'),
-                                    style: TextStyle(color: theme.secondaryTextColor, fontSize: theme.primaryTextSize, fontFamily: theme.fontFamily),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            const SizedBox(
-                              height: 12,
-                            ),
-
-                            Image.file(
-                              ImagePicker.img!,
-                              width: imgSize.width,
-                              height: imgSize.height,
-                            ),
-
-                            const SizedBox(
-                              height: 12,
-                            ),
-
-                            TagsField(
-                              label: '${getString('swatchImage_labels')}',
-                              values: labels,
-                              options: globals.swatchImgLabels,
-                              onAddOption: (String value) {
-                                List<String> labels = globals.swatchImgLabels;
-                                labels.add(value);
-                                globals.swatchImgLabels = labels;
-                              },
-                              onChange: (List<String> value) {
-                                setState(() {
-                                  labels = value;
-                                });
-                              },
-                              labelPadding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 3),
-                              chipFieldPadding: const EdgeInsets.only(left: 30, right: 30),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: 12,
-                      ),
-
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          width: 170,
-                          height: 40,
-                          child: FlatButton(
-                            bgColor: theme.accentColor,
-                            onPressed: () async {
-                              globalWidgets.openLoadingDialog(context);
-
-                              String? imgId;
-                              if(widget.swatchId != null) {
-                                imgId = await allSwatchesStorageIO.addImg(file: ImagePicker.img!, otherImgIds: widget.otherImgIds, swatchId: widget.swatchId!, labels: labels);
-                              }
-
-                              _hasInit = false;
-
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-
-                              if(imgId != null && widget.onImgIdAdded != null) {
-                                widget.onImgIdAdded!(imgId);
-                              }
-
-                              if(widget.onImgAdded != null) {
-                                if(imgId != null) {
-                                  widget.onImgAdded!((await allSwatchesStorageIO.getImg(swatchId: widget.swatchId!, imgId: imgId))!);
-                                } else {
-                                  widget.onImgAdded!(SwatchImage(id: '', labels: labels, bytes: ImagePicker.img!.readAsBytesSync()));
-                                }
-                              }
-                            },
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                '${getString('save')}',
-                                style: theme.accentTextBold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            ),
-          ),
-        );
+    // Call change functions
+    if(imgIds != null && onImgIdsAdded != null) {
+      if(onImgIdsAdded is OnStringListAction) {
+        onImgIdsAdded(imgIds);
+      } else {
+        onImgIdsAdded(imgIds[0]);
       }
-    );
+    }
+
+    // Call change functions
+    if(onImgsAdded != null) {
+      List<SwatchImage> addedImgs = [];
+
+      if(imgIds != null) {
+        for(int i = 0; i < imgIds.length; i++) {
+          addedImgs.add((await allSwatchesStorageIO.getImg(swatchId: swatchId!, imgId: imgIds[i]))!);
+        }
+      } else {
+        for(int i = 0; i < imgs.length; i++) {
+          addedImgs.add(SwatchImage(id: '', labels: labels, bytes: imgs[i]));
+        }
+      }
+
+      if(onImgIdsAdded is OnSwatchImageListAction) {
+        onImgsAdded(addedImgs);
+      } else {
+        onImgsAdded(addedImgs[0]);
+      }
+    }
   }
 }
