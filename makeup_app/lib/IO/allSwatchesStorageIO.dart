@@ -64,7 +64,7 @@ Future<String> addImgBytes({ required Uint8List bytes, required int swatchId, re
   return imgId.toString();
 }
 
-//most likely don't need to compress because already compressed
+// Most likely don't need to compress because already compressed
 Future<void> updateImg({ required SwatchImage swatchImg, bool shouldCompress = false }) async {
   try {
     image.Image fileImg = image.decodeImage(swatchImg.bytes.toList())!;
@@ -113,5 +113,27 @@ Future<SwatchImage?> getImg({ required int swatchId, required String imgId }) as
   } on FirebaseException catch(e) {
     print('${e.code} ${e.message}');
   }
+
   return null;
+}
+
+Future<List<SwatchImage>> getAllImgs() async {
+  List<SwatchImage> ret = [];
+
+  List<Reference> imgs = (await _folderRef.listAll()).items;
+  for(Reference img in imgs) {
+    int swatchId = int.parse(img.name.split('_')[0]);
+    String imgId = img.name.split('_')[1].split('.')[0];
+
+    FullMetadata metadata = await img.getMetadata();
+    int width = int.parse(metadata.customMetadata!['width']!);
+    int height = int.parse(metadata.customMetadata!['height']!);
+    Uint8List? bytes = await _folderRef.child('${swatchId}_$imgId.jpg').getData();
+    if(bytes != null) {
+      List<String> labels = metadata.customMetadata!['labels']!.split(';');
+      ret.add(SwatchImage(id: imgId, swatchId: swatchId, width: width, height: height, bytes: bytes, labels: labels));
+    }
+  }
+
+  return ret;
 }

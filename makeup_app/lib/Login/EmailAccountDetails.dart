@@ -6,7 +6,6 @@ import '../Widgets/FlatButton.dart';
 import '../Widgets/OutlineButton.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
-import 'SignOutButton.dart';
 import 'PasswordField.dart';
 
 class EmailAccountDetails extends StatefulWidget {
@@ -15,7 +14,9 @@ class EmailAccountDetails extends StatefulWidget {
 
   final User user;
 
-  EmailAccountDetails({ required this.horizontalPadding, required this.verticalPadding, required this.user });
+  final Widget buttons;
+
+  EmailAccountDetails({ required this.horizontalPadding, required this.verticalPadding, required this.user, required this.buttons });
 
   @override
   EmailAccountDetailsState createState() => EmailAccountDetailsState();
@@ -67,8 +68,8 @@ class EmailAccountDetailsState extends State<EmailAccountDetails> {
             ),
           ),
 
-          //do not validate if already has password
-          //password might have been changed through firebase or another source, where the password was not properly validated
+          // Do not validate if already has password
+          // Password might have been changed through firebase or another source, where the password was not properly validated
           if(_isChangingPassword) PasswordField(
             key: _oldPasswordKey,
             shouldValidate: false,
@@ -196,10 +197,7 @@ class EmailAccountDetailsState extends State<EmailAccountDetails> {
             ),
           ),
 
-          SignOutButton(
-            horizontalPadding: widget.horizontalPadding,
-            verticalPadding: widget.verticalPadding,
-          ),
+          widget.buttons,
         ],
       ),
     );

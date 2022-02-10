@@ -6,7 +6,6 @@ import '../Widgets/FlatButton.dart';
 import '../Widgets/OutlineButton.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import '../theme.dart' as theme;
-import 'SignOutButton.dart';
 import 'PhoneNumberField.dart';
 import 'SMSCodeField.dart';
 
@@ -16,7 +15,9 @@ class PhoneAccountDetails extends StatefulWidget {
 
   final User user;
 
-  PhoneAccountDetails({ required this.horizontalPadding, required this.verticalPadding, required this.user });
+  final Widget buttons;
+
+  PhoneAccountDetails({ required this.horizontalPadding, required this.verticalPadding, required this.user, required this.buttons });
 
   @override
   PhoneAccountDetailsState createState() => PhoneAccountDetailsState();
@@ -256,10 +257,7 @@ class PhoneAccountDetailsState extends State<PhoneAccountDetails> {
             ),
           ),
 
-          SignOutButton(
-            horizontalPadding: widget.horizontalPadding,
-            verticalPadding: widget.verticalPadding,
-          ),
+          widget.buttons,
         ],
       ),
     );

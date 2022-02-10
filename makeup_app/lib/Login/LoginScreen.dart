@@ -44,32 +44,25 @@ class LoginScreenState extends State<LoginScreen> with ScreenState {
   @override
   Widget build(BuildContext context) {
     Widget child;
-    /*Widget btn1;
-    Widget btn2;*/
     Widget btn;
     switch(_type) {
       case LoginAuthType.Email: {
         child = EmailLogin(widget.hasAccount);
-        /*btn1 = GoogleBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Google); });
-        btn2 = PhoneBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Phone); });*/
         btn = GoogleButton(widget.hasAccount, onPressed: () { setType(LoginAuthType.Google); });
         break;
       }
       case LoginAuthType.Phone: {
         child = PhoneLogin(widget.hasAccount);
-        /*btn1 = EmailBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
-        btn2 = GoogleBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Google); });*/
         btn = EmailButton(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
         break;
       }
       case LoginAuthType.Google: {
         child = GoogleLogin(widget.hasAccount);
-        /*btn1 = EmailBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
-        btn2 = PhoneBtn(widget.hasAccount, onPressed: () { setType(LoginAuthType.Phone); });*/
         btn = EmailButton(widget.hasAccount, onPressed: () { setType(LoginAuthType.Email); });
         break;
       }
     }
+
     return buildComplete(
       context,
       widget.hasAccount ? getString('login') : getString('signUp'),

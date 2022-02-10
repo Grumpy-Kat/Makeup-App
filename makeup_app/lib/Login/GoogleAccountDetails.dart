@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../IO/localizationIO.dart';
 import '../theme.dart' as theme;
-import 'SignOutButton.dart';
 
 class GoogleAccountDetails extends StatelessWidget {
   final double horizontalPadding;
@@ -10,7 +9,9 @@ class GoogleAccountDetails extends StatelessWidget {
 
   final User user;
 
-  GoogleAccountDetails({ required this.horizontalPadding, required this.verticalPadding, required this.user });
+  final Widget buttons;
+
+  GoogleAccountDetails({ required this.horizontalPadding, required this.verticalPadding, required this.user, required this.buttons });
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +55,7 @@ class GoogleAccountDetails extends StatelessWidget {
           ),
         ),
 
-        SignOutButton(
-          horizontalPadding: horizontalPadding,
-          verticalPadding: verticalPadding,
-        ),
+        buttons,
       ],
     );
   }

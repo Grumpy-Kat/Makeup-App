@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart' hide FlatButton;
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Data/Swatch.dart';
-import '../Data/Look.dart';
 import '../Widgets/FlatButton.dart';
 import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;
-import '../IO/allSwatchesIO.dart' as allSwatchesIO;
-import '../IO/savedLooksIO.dart' as savedLooksIO;
+import '../IO/combineAccountsLoginIO.dart' as IO;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 import 'AccountScreen.dart';
 import 'PasswordField.dart';
+import 'Login.dart';
 
 class EmailLogin extends StatefulWidget {
   final bool hasAccount;
@@ -23,7 +21,7 @@ class EmailLogin extends StatefulWidget {
   EmailLoginState createState() => EmailLoginState();
 }
 
-class EmailLoginState extends State<EmailLogin> {
+class EmailLoginState extends State<EmailLogin> with LoginState {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey _passwordKey = GlobalKey();
 
@@ -35,32 +33,11 @@ class EmailLoginState extends State<EmailLogin> {
 
   String _error = '';
 
-  late Map<int, Swatch?> _orgAccountSwatches;
-  late Map<String, Look> _orgAccountLooks;
-
   @override
   void initState() {
     super.initState();
-    //save original swatches for later use
-    if(allSwatchesIO.swatches == null || allSwatchesIO.hasSaveChanged) {
-      allSwatchesIO.loadFormatted().then(
-        (value) {
-          _orgAccountSwatches = allSwatchesIO.swatches!;
-        }
-      );
-    } else {
-      _orgAccountSwatches = allSwatchesIO.swatches!;
-    }
-    //save original looks for later use
-    if(savedLooksIO.looks == null || savedLooksIO.hasSaveChanged) {
-      savedLooksIO.loadFormatted().then(
-        (value) {
-          _orgAccountLooks = savedLooksIO.looks!;
-        }
-      );
-    } else {
-      _orgAccountLooks = savedLooksIO.looks!;
-    }
+
+    preserveSaveData();
   }
 
   @override
@@ -71,24 +48,30 @@ class EmailLoginState extends State<EmailLogin> {
       child: Column(
         children: <Widget>[
           getEmailField(context),
+
           const SizedBox(
             height: 12,
           ),
-          //do not validate if has account
-          //password might have been changed through firebase or another source, where the password was not properly validated
+
+          // Do not validate if has account
+          // Password might have been changed through Firebase or another source, where the password was not properly validated
           if(!_isResettingPassword) PasswordField(
             key: _passwordKey,
             shouldValidate: !(widget.hasAccount || _isResettingPassword),
             text: '${getString('emailLogin_password')}',
             isNewPassword: widget.hasAccount,
           ),
+
           if(!_isResettingPassword) const SizedBox(
             height: 7,
           ),
+
           if(_error != '') Text(_error, style: theme.errorTextSecondary),
+
           if(_error != '') const SizedBox(
             height: 7,
           ),
+
           Container(
             width: 200,
             child: FlatButton(
@@ -143,6 +126,7 @@ class EmailLoginState extends State<EmailLogin> {
               ),
             ),
           ),
+
           if(widget.hasAccount && !_isResettingPassword) getResetField(context),
         ],
       ),
@@ -158,7 +142,7 @@ class EmailLoginState extends State<EmailLogin> {
         } else {
           await IO.auth.createUserWithEmailAndPassword(email: email, password: password);
         }
-        await IO.combineAccounts(context, _orgAccountSwatches, _orgAccountLooks);
+        await IO.combineAccounts(context, orgAccountSwatches, orgAccountLooks, orgAccountSwatchImgs);
       } on FirebaseAuthException catch (e) {
         switch(e.code) {
           case 'invalid-email': {

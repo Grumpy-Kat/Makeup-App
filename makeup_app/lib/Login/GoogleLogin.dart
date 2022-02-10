@@ -2,18 +2,16 @@ import 'package:flutter/material.dart' hide FlatButton;
 import 'package:firebase_auth/firebase_auth.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:google_sign_in/google_sign_in.dart';
-import '../Data/Swatch.dart';
-import '../Data/Look.dart';
 import '../Widgets/FlatButton.dart';
 import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;
-import '../IO/allSwatchesIO.dart' as allSwatchesIO;
-import '../IO/savedLooksIO.dart' as savedLooksIO;
+import '../IO/combineAccountsLoginIO.dart' as IO;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 import 'AccountScreen.dart';
+import 'Login.dart';
 
 class GoogleLogin extends StatefulWidget {
   final bool hasAccount;
@@ -24,39 +22,16 @@ class GoogleLogin extends StatefulWidget {
   GoogleLoginState createState() => GoogleLoginState();
 }
 
-class GoogleLoginState extends State<GoogleLogin> {
+class GoogleLoginState extends State<GoogleLogin> with LoginState {
   bool _isSigningIn = false;
 
   String _error = '';
-
-  late Map<int, Swatch?> _orgAccountSwatches;
-  late Map<String, Look> _orgAccountLooks;
 
   @override
   void initState() {
     super.initState();
 
-    //save original swatches for later use
-    if(allSwatchesIO.swatches == null || allSwatchesIO.hasSaveChanged) {
-      allSwatchesIO.loadFormatted().then(
-        (value) {
-          _orgAccountSwatches = allSwatchesIO.swatches!;
-        }
-      );
-    } else {
-      _orgAccountSwatches = allSwatchesIO.swatches!;
-    }
-
-    //save original looks for later use
-    if(savedLooksIO.looks == null || savedLooksIO.hasSaveChanged) {
-      savedLooksIO.loadFormatted().then(
-        (value) {
-          _orgAccountLooks = savedLooksIO.looks!;
-        }
-      );
-    } else {
-      _orgAccountLooks = savedLooksIO.looks!;
-    }
+    preserveSaveData();
   }
 
   @override
@@ -64,10 +39,13 @@ class GoogleLoginState extends State<GoogleLogin> {
     return Column(
       children: <Widget>[
         Container(),
+
         if(_error != '') Text(_error, style: theme.errorTextSecondary),
+
         if(_error != '') const SizedBox(
           height: 7,
         ),
+
         Container(
           width: 200,
           child: FlatButton(
@@ -127,7 +105,7 @@ class GoogleLoginState extends State<GoogleLogin> {
     );
     try {
       await IO.auth.signInWithCredential(credential);
-      await IO.combineAccounts(context, _orgAccountSwatches, _orgAccountLooks);
+      await IO.combineAccounts(context, orgAccountSwatches, orgAccountLooks, orgAccountSwatchImgs);
     } on FirebaseAuthException catch (e) {
       print('${e.code} ${e.message}');
       print('Firebase error');

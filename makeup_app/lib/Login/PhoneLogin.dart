@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart' hide FlatButton;
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Data/Swatch.dart';
-import '../Data/Look.dart';
 import '../Widgets/FlatButton.dart';
 import '../IO/localizationIO.dart';
 import '../IO/loginIO.dart' as IO;
-import '../IO/allSwatchesIO.dart' as allSwatchesIO;
-import '../IO/savedLooksIO.dart' as savedLooksIO;
+import '../IO/combineAccountsLoginIO.dart' as IO;
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
@@ -14,6 +11,7 @@ import '../globalWidgets.dart' as globalWidgets;
 import 'AccountScreen.dart';
 import 'PhoneNumberField.dart';
 import 'SMSCodeField.dart';
+import 'Login.dart';
 
 class PhoneLogin extends StatefulWidget {
   final bool hasAccount;
@@ -24,7 +22,7 @@ class PhoneLogin extends StatefulWidget {
   PhoneLoginState createState() => PhoneLoginState();
 }
 
-class PhoneLoginState extends State<PhoneLogin> {
+class PhoneLoginState extends State<PhoneLogin> with LoginState  {
   final GlobalKey _phoneNumberKey = GlobalKey();
   final GlobalKey _smsCodeKey = GlobalKey();
 
@@ -34,32 +32,11 @@ class PhoneLoginState extends State<PhoneLogin> {
 
   String _error = '';
 
-  late Map<int, Swatch?> _orgAccountSwatches;
-  late Map<String, Look> _orgAccountLooks;
-
   @override
   void initState() {
     super.initState();
-    //save original swatches for later use
-    if(allSwatchesIO.swatches == null || allSwatchesIO.hasSaveChanged) {
-      allSwatchesIO.loadFormatted().then(
-        (value) {
-          _orgAccountSwatches = allSwatchesIO.swatches!;
-        }
-      );
-    } else {
-      _orgAccountSwatches = allSwatchesIO.swatches!;
-    }
-    //save original looks for later use
-    if(savedLooksIO.looks == null || savedLooksIO.hasSaveChanged) {
-      savedLooksIO.loadFormatted().then(
-        (value) {
-          _orgAccountLooks = savedLooksIO.looks!;
-        }
-      );
-    } else {
-      _orgAccountLooks = savedLooksIO.looks!;
-    }
+
+    preserveSaveData();
   }
 
   @override
@@ -129,6 +106,7 @@ class PhoneLoginState extends State<PhoneLogin> {
         ),
       );
     }
+
     return Column(
       children: <Widget>[
         child,
@@ -196,11 +174,11 @@ class PhoneLoginState extends State<PhoneLogin> {
   }
 
   Future<bool> signIn(AuthCredential credential) async {
-    //check to make sure not signed in
+    // Check to make sure not signed in
     if(IO.auth.currentUser != null && IO.auth.currentUser!.phoneNumber == null) {
       try {
         await IO.auth.signInWithCredential(credential);
-        await IO.combineAccounts(context, _orgAccountSwatches, _orgAccountLooks);
+        await IO.combineAccounts(context, orgAccountSwatches, orgAccountLooks, orgAccountSwatchImgs);
       } on FirebaseAuthException catch (e) {
         switch(e.code) {
           case 'invalid-verification-code': {

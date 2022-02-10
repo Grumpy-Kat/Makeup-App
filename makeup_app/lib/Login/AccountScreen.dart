@@ -9,6 +9,8 @@ import 'LoginAuthType.dart';
 import 'EmailAccountDetails.dart';
 import 'GoogleAccountDetails.dart';
 import 'PhoneAccountDetails.dart';
+import 'SignOutButton.dart';
+import 'DeleteAccountButton.dart';
 
 class AccountScreen extends StatefulWidget {
   @override
@@ -28,7 +30,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       if(user.phoneNumber != null) {
         _type = LoginAuthType.Phone;
       } else if(user.email != null) {
-        if (user.providerData[0].providerId == 'google.com') {
+        if(user.providerData[0].providerId == 'google.com') {
           _type = LoginAuthType.Google;
         } else {
           _type = LoginAuthType.Email;
@@ -45,11 +47,14 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
 
   @override
   Widget build(BuildContext context) {
+
     User? user = IO.auth.currentUser;
 
     if(user != null) {
       double horizontalPadding = 20;
       double verticalPadding = 7;
+
+      Widget buttons = getButtons(horizontalPadding, verticalPadding);
 
       Widget body;
       switch(_type) {
@@ -58,6 +63,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             horizontalPadding: horizontalPadding,
             verticalPadding: verticalPadding,
             user: user,
+            buttons: buttons,
           );
           break;
         }
@@ -66,6 +72,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             horizontalPadding: horizontalPadding,
             verticalPadding: verticalPadding,
             user: user,
+            buttons: buttons,
           );
           break;
         }
@@ -74,6 +81,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
             horizontalPadding: horizontalPadding,
             verticalPadding: verticalPadding,
             user: user,
+            buttons: buttons,
           );
           break;
         }
@@ -90,5 +98,25 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
     }
 
     return Container();
+  }
+
+  Widget getButtons(double horizontalPadding, double verticalPadding) {
+    return Row(
+      children: <Widget>[
+        SignOutButton(
+          horizontalPadding: horizontalPadding,
+          verticalPadding: verticalPadding,
+        ),
+
+        const SizedBox(
+          width: 10,
+        ),
+
+        DeleteAccountButton(
+          horizontalPadding: horizontalPadding,
+          verticalPadding: verticalPadding,
+        ),
+      ],
+    );
   }
 }
