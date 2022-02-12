@@ -8,6 +8,7 @@ import '../Widgets/BackButton.dart';
 import '../Widgets/LoginButton.dart';
 import '../IO/settingsIO.dart' as settingsIO;
 import '../IO/allSwatchesIO.dart' as allSwatchesIO;
+import '../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import '../IO/savedLooksIO.dart' as savedLooksIO;
 import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
@@ -1150,6 +1151,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                   () async {
                     await settingsIO.clear();
                     await allSwatchesIO.clear();
+                    await allSwatchesStorageIO.deleteAllImgs();
                     await savedLooksIO.clearAll();
                     globals.hasDoneTutorial = true;
                     globals.currSwatches.set([]);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide OutlineButton;
 import '../Widgets/OutlineButton.dart';
 import '../IO/loginIO.dart' as IO;
+import '../IO/localizationIO.dart';
 import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
@@ -23,9 +24,12 @@ class DeleteAccountButton extends StatelessWidget {
         outlineColor: theme.errorTextColor,
         outlineWidth: 2.0,
         onPressed: () {
-          globalWidgets.openLoadingDialog(context);
-          IO.deleteAccount().then(
-            (value) {
+          globalWidgets.openTwoButtonDialog(
+            context,
+            getString('settings_default_resetQuestion'),
+            () async {
+              globalWidgets.openLoadingDialog(context);
+              await IO.deleteAccount();
               Navigator.pop(context);
               navigation.pushReplacement(
                 context,
@@ -34,6 +38,7 @@ class DeleteAccountButton extends StatelessWidget {
                 LoginScreen(true),
               );
             },
+            () { },
           );
         },
         child: Text(

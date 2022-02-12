@@ -100,6 +100,21 @@ Future<void> deleteImg({ required int swatchId, required String imgId }) async {
   }
 }
 
+Future<List<SwatchImage>> deleteAllImgs() async {
+  List<SwatchImage> ret = [];
+
+  List<Reference> imgs = (await _folderRef.listAll()).items;
+  for(Reference img in imgs) {
+    try {
+      img.delete();
+    } on FirebaseException catch(e) {
+      print('${e.code} ${e.message}');
+    }
+  }
+
+  return ret;
+}
+
 Future<SwatchImage?> getImg({ required int swatchId, required String imgId }) async {
   try {
     FullMetadata metadata = await _folderRef.child('${swatchId}_$imgId.jpg').getMetadata();
@@ -122,16 +137,20 @@ Future<List<SwatchImage>> getAllImgs() async {
 
   List<Reference> imgs = (await _folderRef.listAll()).items;
   for(Reference img in imgs) {
-    int swatchId = int.parse(img.name.split('_')[0]);
-    String imgId = img.name.split('_')[1].split('.')[0];
+    try {
+      int swatchId = int.parse(img.name.split('_')[0]);
+      String imgId = img.name.split('_')[1].split('.')[0];
 
-    FullMetadata metadata = await img.getMetadata();
-    int width = int.parse(metadata.customMetadata!['width']!);
-    int height = int.parse(metadata.customMetadata!['height']!);
-    Uint8List? bytes = await _folderRef.child('${swatchId}_$imgId.jpg').getData();
-    if(bytes != null) {
-      List<String> labels = metadata.customMetadata!['labels']!.split(';');
-      ret.add(SwatchImage(id: imgId, swatchId: swatchId, width: width, height: height, bytes: bytes, labels: labels));
+      FullMetadata metadata = await img.getMetadata();
+      int width = int.parse(metadata.customMetadata!['width']!);
+      int height = int.parse(metadata.customMetadata!['height']!);
+      Uint8List? bytes = await _folderRef.child('${swatchId}_$imgId.jpg').getData();
+      if(bytes != null) {
+        List<String> labels = metadata.customMetadata!['labels']!.split(';');
+        ret.add(SwatchImage(id: imgId, swatchId: swatchId, width: width, height: height, bytes: bytes, labels: labels));
+      }
+    } on FirebaseException catch(e) {
+      print('${e.code} ${e.message}');
     }
   }
 

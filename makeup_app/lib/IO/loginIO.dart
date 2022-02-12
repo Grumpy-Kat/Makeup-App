@@ -72,6 +72,14 @@ Future<void> deleteAccount() async {
     }
   }
 
+  await settingsIO.clear();
+  await allSwatchesIO.clear();
+  await allSwatchesStorageIO.deleteAllImgs();
+  await savedLooksIO.clearAll();
+
   // Even though deleteAccount will sign the user out of Firebase, still need to take care of various signOut related operations
   await signOut();
+
+  globals.hasDoneTutorial = true;
+  globals.currSwatches.set([]);
 }
