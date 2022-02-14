@@ -9,16 +9,16 @@ import '../globalWidgets.dart' as globalWidgets;
 import 'LoginScreen.dart';
 
 class DeleteAccountButton extends StatelessWidget {
-  final double horizontalPadding;
-  final double verticalPadding;
+  final double leftPadding;
+  final double rightPadding;
 
-  DeleteAccountButton({ required this.horizontalPadding, required this.verticalPadding });
+  DeleteAccountButton({ required this.leftPadding, required this.rightPadding });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: horizontalPadding, right: verticalPadding, top: 3),
+      padding: EdgeInsets.only(left: leftPadding, right: rightPadding, top: 3),
       child: OutlineButton(
         bgColor: theme.bgColor,
         outlineColor: theme.errorTextColor,

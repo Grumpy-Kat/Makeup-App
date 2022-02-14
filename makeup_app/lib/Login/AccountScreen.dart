@@ -54,7 +54,7 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
       double horizontalPadding = 20;
       double verticalPadding = 7;
 
-      Widget buttons = getButtons(horizontalPadding, verticalPadding);
+      Widget buttons = getButtons();
 
       Widget body;
       switch(_type) {
@@ -100,21 +100,17 @@ class AccountScreenState extends State<AccountScreen> with ScreenState {
     return Container();
   }
 
-  Widget getButtons(double horizontalPadding, double verticalPadding) {
+  Widget getButtons() {
     return Row(
       children: <Widget>[
         SignOutButton(
-          horizontalPadding: horizontalPadding,
-          verticalPadding: verticalPadding,
-        ),
-
-        const SizedBox(
-          width: 10,
+          leftPadding: 20,
+          rightPadding: 12,
         ),
 
         DeleteAccountButton(
-          horizontalPadding: horizontalPadding,
-          verticalPadding: verticalPadding,
+          leftPadding: 0,
+          rightPadding: 7,
         ),
       ],
     );

@@ -211,8 +211,8 @@ class PaletteTextPopup {
       date: date,
       relativeDate: relativeDate,
       onChange: onChange,
-      padding: EdgeInsets.zero,
       outerPadding: const EdgeInsets.only(bottom: 20),
+      isHorizontal: false,
     );
   }
 
@@ -258,6 +258,7 @@ class PaletteTextPopup {
             textAlign: TextAlign.left,
           ),
         ),
+
         Container(
           height: 50,
           alignment: Alignment.centerLeft,
