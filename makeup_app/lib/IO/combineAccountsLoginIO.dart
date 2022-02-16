@@ -16,7 +16,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
   // Clear swatches from today's look to avoid problems
   globals.CurrSwatches.instance.set([]);
 
-  if(auth.currentUser!.displayName ==  null || auth.currentUser!.displayName == '') {
+  if(auth.currentUser!.displayName == null || auth.currentUser!.displayName == '') {
     await _newAccount();
     return;
   }

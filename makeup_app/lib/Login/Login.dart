@@ -34,10 +34,15 @@ mixin LoginState {
     }
 
     // Save original swatch images for later use
+    orgAccountSwatchImgs = [];
     allSwatchesStorageIO.getAllImgs().then(
       (value) {
+        print(value);
         orgAccountSwatchImgs = value;
-      }
+      },
+      onError: (e) {
+        print('Error retrieving original account swatch images in Login $e');
+      },
     );
   }
 }

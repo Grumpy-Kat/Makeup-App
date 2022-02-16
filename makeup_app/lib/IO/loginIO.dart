@@ -16,8 +16,6 @@ Future<void> markAllForReload() async {
   await settingsIO.load();
 }
 
-
-
 Future<void> signIn([bool setDisplayName = true]) async {
   if(auth.currentUser == null) {
     // If not signed in with some other method previously, sign in anonymously
@@ -26,13 +24,21 @@ Future<void> signIn([bool setDisplayName = true]) async {
 
   if(setDisplayName) {
     await auth.currentUser!.updateDisplayName(globals.userID);
+    print('set display name to ${globals.userID}');
   } else {
     String? newUserId = auth.currentUser!.displayName;
-    if(newUserId != null && newUserId != '') {
+    // A valid userId should not contain spaces
+    // If it does, its most likely the displayName from a Google account and therefore not a userId
+    if(newUserId != null && newUserId != '' && !newUserId.contains(' ')) {
       globals.userID = newUserId;
       allSwatchesStorageIO.init();
+    } else {
+      await auth.currentUser!.updateDisplayName(globals.userID);
     }
+    print('retrieved display name of ${globals.userID}');
   }
+
+  print(globals.userID);
 
   auth.currentUser!.getIdToken(true);
 }
