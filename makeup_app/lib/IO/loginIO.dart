@@ -24,7 +24,6 @@ Future<void> signIn([bool setDisplayName = true]) async {
 
   if(setDisplayName) {
     await auth.currentUser!.updateDisplayName(globals.userID);
-    print('set display name to ${globals.userID}');
   } else {
     String? newUserId = auth.currentUser!.displayName;
     // A valid userId should not contain spaces
@@ -35,7 +34,6 @@ Future<void> signIn([bool setDisplayName = true]) async {
     } else {
       await auth.currentUser!.updateDisplayName(globals.userID);
     }
-    print('retrieved display name of ${globals.userID}');
   }
 
   print(globals.userID);
