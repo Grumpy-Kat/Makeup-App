@@ -6,10 +6,11 @@ import 'dart:math';
 import '../ColorMath/ColorProcessing.dart';
 import '../Data/Swatch.dart';
 import '../Data/Filter.dart';
-import 'globalIO.dart';
-import 'localizationIO.dart';
 import '../globals.dart' as globals;
 import '../types.dart';
+import 'globalIO.dart';
+import 'localizationIO.dart';
+import 'allSwatchesStorageIO.dart';
 
 Map<int, String>? lines;
 Map<int, Swatch?>? swatches;
@@ -79,12 +80,25 @@ Future<void> edit(Swatch old, Swatch swatch) async {
   await editId(find(old), swatch);
 }
 
-Future<void> removeId(int i) async {
-  if(i > 0) {
+Future<void> deleteImgsFromSwatch(int id, String swatchLine) async {
+  if(swatchLine != '') {
+    List<String>? imgIds = (await loadSwatch(id, swatchLine))!.imgIds;
+
+    if(imgIds != null) {
+      for(int i = 0; i < imgIds.length; i++) {
+        deleteImg(swatchId: id, imgId: imgIds[i]);
+      }
+    }
+  }
+}
+
+Future<void> removeId(int id) async {
+  if(id > 0) {
     await load();
     Map<int, String> info = lines!;
-    info.remove(i);
-    print('removing $i');
+    String? swatchLine = info.remove(id);
+    deleteImgsFromSwatch(id, swatchLine ?? '');
+    print('removing $id');
     await save(info);
   }
 }
@@ -93,8 +107,10 @@ Future<void> removeIDsMany(List<int> ids) async {
   await load();
   Map<int, String> info = lines!;
   for (int i = ids.length - 1; i >= 0; i--) {
-    if(ids[i] > 0) {
-      info.remove(ids[i]);
+    int id = ids[i];
+    if(id > 0) {
+      String? swatchLine = info.remove(id);
+      deleteImgsFromSwatch(id, swatchLine ?? '');
       print('removing ${ids[i]}');
     }
   }

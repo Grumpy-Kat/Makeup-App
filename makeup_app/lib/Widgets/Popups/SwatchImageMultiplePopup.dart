@@ -176,7 +176,7 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with
                             onPressed: () async {
                               await addImgs(
                                 context,
-                                [ImagePicker.img!.readAsBytesSync()],
+                                imgs,
                                 widget.swatchId,
                                 widget.otherImgIds,
                                 widget.onImgIdsAdded,

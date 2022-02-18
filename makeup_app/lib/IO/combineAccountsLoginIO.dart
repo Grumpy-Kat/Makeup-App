@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide FlatButton;
-import '../Data/Swatch.dart';
 import '../Data/Look.dart';
 import '../Data/SwatchImage.dart';
+import '../Login/Login.dart';
 import '../Widgets/FlatButton.dart';
 import '../theme.dart' as theme;
 import '../globals.dart' as globals;
@@ -12,7 +12,7 @@ import 'allSwatchesIO.dart' as allSwatchesIO;
 import 'allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import 'savedLooksIO.dart' as savedLooksIO;
 
-Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountSwatches, Map<String, Look> orgAccountLooks, List<SwatchImage> orgAccountSwatchImgs) async {
+Future<void> combineAccounts(BuildContext context, OriginalAccountData orgAccount) async {
   // Clear swatches from today's look to avoid problems
   globals.CurrSwatches.instance.set([]);
 
@@ -21,7 +21,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
     return;
   }
 
-  if(orgAccountSwatches.length == 0) {
+  if(orgAccount.swatches.length == 0) {
     await _oldNoSwatches();
     return;
   }
@@ -39,7 +39,7 @@ Future<void> combineAccounts(BuildContext context, Map<int, Swatch?> orgAccountS
     return;
   }
 
-  await _bothAccounts(context, oldUserID, orgAccountSwatches, orgAccountLooks, orgAccountSwatchImgs);
+  await _bothAccounts(context, oldUserID, orgAccount);
 }
 
 Future<void> _newAccount() async {
@@ -59,7 +59,9 @@ Future<void> _newNoSwatches(String oldUserID) async {
   await signIn(true);
 }
 
-Future<void> _bothAccounts(BuildContext context, String oldUserID, Map<int, Swatch?> orgAccountSwatches, Map<String, Look> orgAccountLooks, List<SwatchImage> orgAccountSwatchImgs) async {
+Future<void> _bothAccounts(BuildContext context, String oldUserID, OriginalAccountData orgAccount) async {
+  // TODO: test all versions of both accounts having swatches, make sure swatchImgs, tags, and swatchImgLabels are properly transferred
+
   // If both accounts have swatches, ask user their preference
   await globalWidgets.openDialog(
     context,
@@ -77,7 +79,7 @@ Future<void> _bothAccounts(BuildContext context, String oldUserID, Map<int, Swat
               Navigator.pop(context);
               globalWidgets.openLoadingDialog(context);
 
-              await _bothCombineAccounts(orgAccountSwatches, orgAccountLooks, orgAccountSwatchImgs);
+              await _bothCombineAccounts(orgAccount);
 
               Navigator.pop(context);
             },
@@ -119,17 +121,20 @@ Future<void> _bothAccounts(BuildContext context, String oldUserID, Map<int, Swat
   );
 }
 
-Future<void> _bothCombineAccounts(Map<int, Swatch?> orgAccountSwatches, Map<String, Look> orgAccountLooks, List<SwatchImage> orgAccountSwatchImgs) async {
+Future<void> _bothCombineAccounts(OriginalAccountData orgAccount) async {
   await signIn(false);
-  List<int> newIds = await allSwatchesIO.add(orgAccountSwatches.values.toList());
-  if(orgAccountLooks.length != 0) {
-    List<int> oldIds = orgAccountSwatches.keys.toList();
+  List<int> newIds = await allSwatchesIO.add(orgAccount.swatches.values.toList());
+  if(orgAccount.looks.length != 0 || orgAccount.swatchImgs.length != 0) {
+    globals.tags.addAll(orgAccount.tags);
+    globals.swatchImgLabels.addAll(orgAccount.swatchImgLabels);
+
+    List<int> oldIds = orgAccount.swatches.keys.toList();
     Map<int, int> idToId = {};
     // Old and new ids might be different length if any swatches are null
     int newI = 0;
     // Create map that converts the swatches old ids to their new ids
-    for(int i = 0; i < orgAccountSwatches.length; i++) {
-      if(orgAccountSwatches[oldIds[i]] != null) {
+    for(int i = 0; i < orgAccount.swatches.length; i++) {
+      if(orgAccount.swatches[oldIds[i]] != null) {
         idToId[oldIds[i]] = newIds[newI];
         print('$i ${oldIds[i]} $newI ${newIds[newI]}');
       }
@@ -137,10 +142,10 @@ Future<void> _bothCombineAccounts(Map<int, Swatch?> orgAccountSwatches, Map<Stri
     }
 
     // Change ids in looks and save the new ones
-    List<Look> oldLooks = orgAccountLooks.values.toList();
-    for(int i = 0; i < oldLooks.length; i++) {
+    List<Look> oldLooks = orgAccount.looks.values.toList();
+    for (int i = 0; i < oldLooks.length; i++) {
       List<int> swatches = oldLooks[i].swatches;
-      for(int j = 0; j < swatches.length; j++) {
+      for (int j = 0; j < swatches.length; j++) {
         swatches[j] = idToId[swatches[j]] ?? -1;
       }
       print(swatches);
@@ -152,8 +157,8 @@ Future<void> _bothCombineAccounts(Map<int, Swatch?> orgAccountSwatches, Map<Stri
     }
 
     // Change ids in swatchImgs and save the new ones
-    for(int i = 0; i < orgAccountSwatchImgs.length; i++) {
-      SwatchImage swatchImg = orgAccountSwatchImgs[i];
+    for(int i = 0; i < orgAccount.swatchImgs.length; i++) {
+      SwatchImage swatchImg = orgAccount.swatchImgs[i];
       int newSwatchId = idToId[swatchImg.swatchId] ?? -1;
 
       if(newSwatchId != -1) {

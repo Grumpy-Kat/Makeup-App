@@ -39,9 +39,9 @@ Future<String> addImgBytes({ required Uint8List bytes, required int swatchId, re
 
     image.Image fileImg = image.decodeImage(bytes.toList())!;
     if(shouldCompress) {
-      fileImg = image.copyResize(fileImg, height: 300);
+      fileImg = image.copyResize(fileImg, height: 250);
     }
-    bytes = Uint8List.fromList(image.encodeJpg(fileImg, quality: shouldCompress ? 85 : 100));
+    bytes = Uint8List.fromList(image.encodeJpg(fileImg, quality: shouldCompress ? 75 : 100));
 
     String labelsCombined = '';
     for(int i = 0; i < labels.length; i++) {
@@ -69,9 +69,9 @@ Future<void> updateImg({ required SwatchImage swatchImg, bool shouldCompress = f
   try {
     image.Image fileImg = image.decodeImage(swatchImg.bytes.toList())!;
     if(shouldCompress) {
-      fileImg = image.copyResize(fileImg, height: 500);
+      fileImg = image.copyResize(fileImg, height: 250);
     }
-    Uint8List bytes = Uint8List.fromList(image.encodeJpg(fileImg, quality: shouldCompress ? 85 : 100));
+    Uint8List bytes = Uint8List.fromList(image.encodeJpg(fileImg, quality: shouldCompress ? 75 : 100));
 
     String labelsCombined = '';
     for(int i = 0; i < swatchImg.labels.length; i++) {

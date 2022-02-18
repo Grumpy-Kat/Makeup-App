@@ -78,6 +78,7 @@ ThemeData get themeData => ThemeData(
   textSelectionTheme: TextSelectionThemeData(
     selectionColor: accentColorLight.withAlpha(130),
     selectionHandleColor: Colors.transparent,
+    cursorColor: accentTextColor,
   ),
   sliderTheme: SliderThemeData(
     valueIndicatorColor: primaryColorDarkest,

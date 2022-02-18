@@ -80,7 +80,7 @@ class TagsField extends StatelessWidget {
     }
 
     // Plus chip to add new chips
-    if(isEditing) {
+    if(isEditing && showAddChip) {
       widgets.add(
         ActionChip(
           label: Icon(

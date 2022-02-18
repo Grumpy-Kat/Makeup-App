@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide HSVColor, FlatButton, OutlineButton;
 import 'dart:typed_data';
+import '../../Data/SwatchImage.dart';
 import '../../IO/localizationIO.dart';
 import '../../globalWidgets.dart' as globalWidgets;
 import '../../globals.dart' as globals;
@@ -166,8 +167,8 @@ class SwatchImageSinglePopupState extends State<SwatchImageSinglePopup> with Swa
                                 [ImagePicker.img!.readAsBytesSync()],
                                 widget.swatchId,
                                 widget.otherImgIds,
-                                widget.onImgIdAdded,
-                                widget.onImgAdded,
+                                widget.onImgIdAdded == null ? null : (List<String> imgIds) { widget.onImgIdAdded!(imgIds[0]); },
+                                widget.onImgAdded == null ? null : (List<SwatchImage> imgs) { widget.onImgAdded!(imgs[0]); },
                               );
                             },
                             child: Align(

@@ -105,7 +105,7 @@ class GoogleLoginState extends State<GoogleLogin> with LoginState {
     );
     try {
       await IO.auth.signInWithCredential(credential);
-      await IO.combineAccounts(context, orgAccountSwatches, orgAccountLooks, orgAccountSwatchImgs);
+      await IO.combineAccounts(context, orgAccount);
     } on FirebaseAuthException catch (e) {
       print('${e.code} ${e.message}');
       print('Firebase error');

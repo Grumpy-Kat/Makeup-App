@@ -178,7 +178,7 @@ class PhoneLoginState extends State<PhoneLogin> with LoginState  {
     if(IO.auth.currentUser != null && IO.auth.currentUser!.phoneNumber == null) {
       try {
         await IO.auth.signInWithCredential(credential);
-        await IO.combineAccounts(context, orgAccountSwatches, orgAccountLooks, orgAccountSwatchImgs);
+        await IO.combineAccounts(context, orgAccount);
       } on FirebaseAuthException catch (e) {
         switch(e.code) {
           case 'invalid-verification-code': {

@@ -142,7 +142,7 @@ class EmailLoginState extends State<EmailLogin> with LoginState {
         } else {
           await IO.auth.createUserWithEmailAndPassword(email: email, password: password);
         }
-        await IO.combineAccounts(context, orgAccountSwatches, orgAccountLooks, orgAccountSwatchImgs);
+        await IO.combineAccounts(context, orgAccount);
       } on FirebaseAuthException catch (e) {
         switch(e.code) {
           case 'invalid-email': {

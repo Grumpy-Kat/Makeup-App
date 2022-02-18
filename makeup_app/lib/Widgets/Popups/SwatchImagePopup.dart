@@ -30,7 +30,7 @@ mixin SwatchImagePopupState {
 
   Future<void> openImgDisplay(BuildContext context, List<Uint8List>? imgs) async { }
 
-  Future<void> addImgs(BuildContext context, List<Uint8List> imgs, int? swatchId, List<String> otherImgIds, dynamic onImgIdsAdded, dynamic onImgsAdded) async {
+  Future<void> addImgs(BuildContext context, List<Uint8List> imgs, int? swatchId, List<String> otherImgIds, OnStringListAction? onImgIdsAdded, OnSwatchImageListAction? onImgsAdded) async {
     globalWidgets.openLoadingDialog(context);
 
     // Save images
@@ -49,11 +49,7 @@ mixin SwatchImagePopupState {
 
     // Call change functions
     if(imgIds != null && onImgIdsAdded != null) {
-      if(onImgIdsAdded is OnStringListAction) {
-        onImgIdsAdded(imgIds);
-      } else {
-        onImgIdsAdded(imgIds[0]);
-      }
+      onImgIdsAdded(imgIds);
     }
 
     // Call change functions
@@ -70,11 +66,7 @@ mixin SwatchImagePopupState {
         }
       }
 
-      if(onImgIdsAdded is OnSwatchImageListAction) {
-        onImgsAdded(addedImgs);
-      } else {
-        onImgsAdded(addedImgs[0]);
-      }
+      onImgsAdded(addedImgs);
     }
   }
 }
