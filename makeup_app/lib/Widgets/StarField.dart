@@ -20,6 +20,15 @@ class StarField extends StatefulWidget {
 }
 
 class StarFieldState extends State<StarField> {
+  int? value;
+
+  @override
+  void initState() {
+    super.initState();
+
+    value = widget.value;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,7 +38,7 @@ class StarFieldState extends State<StarField> {
           alignment: Alignment.centerLeft,
           padding: widget.labelPadding ?? const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           child: Text(
-            '${widget.label}: ${(widget.value == null ? 0 : widget.value)}/10',
+            '${widget.label}: ${(value ?? 0)}/10',
             style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),
@@ -41,10 +50,12 @@ class StarFieldState extends State<StarField> {
           child: StarRating(
             starCount: 10,
             starSize: 35,
-            rating: (widget.value == null ? 0 : widget.value!),
+            rating: value ?? 0,
             onChange: (int rating) {
               if(widget.isEditing) {
-                setState(() { widget.onChange(rating); });
+                value = rating;
+                widget.onChange(rating);
+                setState(() { });
               }
             },
           ),

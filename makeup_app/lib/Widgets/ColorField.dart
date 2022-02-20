@@ -8,7 +8,7 @@ import '../types.dart';
 import '../globalWidgets.dart' as globalWidgets;
 import 'ColorPicker.dart';
 
-class ColorField extends StatelessWidget {
+class ColorField extends StatefulWidget {
   final String label;
   final RGBColor color;
   final String colorNameOrg;
@@ -19,6 +19,23 @@ class ColorField extends StatelessWidget {
   final bool isEditing;
 
   ColorField({ required this.label, required this.color, required this.colorNameOrg, required this.onChange, required this.onNameChange, this.isEditing = true });
+
+  @override
+  ColorFieldState createState() => ColorFieldState();
+}
+
+
+class ColorFieldState extends State<ColorField> {
+  late RGBColor color;
+  late String colorNameOrg;
+
+  @override
+  void initState() {
+    super.initState();
+
+    color = widget.color;
+    colorNameOrg = widget.colorNameOrg;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +49,7 @@ class ColorField extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Text(
-            '$label: ',
+            '${widget.label}: ',
             style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),
@@ -40,11 +57,11 @@ class ColorField extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
-                color: isEditing ? theme.primaryColorLight : theme.bgColor,
+                color: widget.isEditing ? theme.primaryColorLight : theme.bgColor,
                 borderRadius: BorderRadius.circular(3.0),
                 border: Border.fromBorderSide(
                   BorderSide(
-                    color: isEditing ? theme.primaryColorDark : theme.bgColor,
+                    color: widget.isEditing ? theme.primaryColorDark : theme.bgColor,
                     width: 1.0,
                   ),
                 ),
@@ -57,7 +74,7 @@ class ColorField extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
 
-                  if(isEditing) IconButton(
+                  if(widget.isEditing) IconButton(
                     padding: const EdgeInsets.only(left: 12, bottom: 70),
                     constraints: BoxConstraints.tight(const Size.fromWidth(theme.primaryIconSize + 15)),
                     alignment: Alignment.topLeft,
@@ -92,8 +109,9 @@ class ColorField extends StatelessWidget {
                                           btnText: '${getString('save')}',
                                           initialColor: RGBtoHSV(color),
                                           onEnter: (double hue, double saturation, double value) {
-                                            onChange(HSVtoRGB(HSVColor(hue, saturation, value)));
-                                            //doesn't use navigation because is popping an Dialog
+                                            color = HSVtoRGB(HSVColor(hue, saturation, value));
+                                            widget.onChange(color);
+                                            // Doesn't use navigation because is popping an Dialog
                                             Navigator.pop(context);
                                           },
                                         ),
@@ -109,7 +127,7 @@ class ColorField extends StatelessWidget {
                     },
                   ),
 
-                  if(isEditing) IconButton(
+                  if(widget.isEditing) IconButton(
                     padding: const EdgeInsets.only(bottom: 70),
                     constraints: BoxConstraints.tight(const Size.fromWidth(theme.primaryIconSize + 15)),
                     alignment: Alignment.topLeft,
@@ -124,7 +142,9 @@ class ColorField extends StatelessWidget {
                         '',
                         getString('save'),
                         (String value) {
-                          onNameChange(value);
+                          colorNameOrg = value;
+                          widget.onNameChange(value);
+                          setState(() { });
                         },
                         orgValue: localizedColorName,
                         required: false,

@@ -154,7 +154,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                   },
                   (String value) {
                     _swatch.colorName = value.trim();
-                    onChange(true);
+                    onChange(false);
                   },
                 ),
 
@@ -226,6 +226,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                   null,
                   (DateTime value) {
                     _swatch.openDate = value;
+                    // OnChange needs to be true since this date affects the relative date of expiration date
                     onChange(true);
                   },
                 ),
@@ -236,7 +237,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
                   openDate,
                   (DateTime value) {
                     _swatch.expirationDate = value;
-                    onChange(true);
+                    onChange(false);
                   },
                 ),
                 divider,
@@ -309,6 +310,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       label: label,
       value: value,
       onChange: onChange,
+      isEditing: _isEditing,
       outerPadding: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
     );
   }
@@ -360,7 +362,7 @@ class SwatchScreenState extends State<SwatchScreen> with ScreenState {
       },
       onChange: (List<String> value) {
         _swatch.tags = value;
-        onChange(true);
+        onChange(false);
       },
       isEditing: _isEditing,
       labelPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),

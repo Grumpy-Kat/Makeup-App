@@ -4,7 +4,7 @@ import '../types.dart';
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
 
-class TagsField extends StatelessWidget {
+class TagsField extends StatefulWidget {
   final String label;
   final List<String> options;
   final List<String> values;
@@ -25,6 +25,22 @@ class TagsField extends StatelessWidget {
   TagsField({ required this.label, required this.options, required this.values, this.onAddOption, this.onChange, this.onSelect, this.onDeselect, this.showAddChip = true, this.isEditing = true, this.labelPadding, this.chipFieldPadding });
 
   @override
+  TagsFieldState createState() => TagsFieldState();
+}
+
+class TagsFieldState extends State<TagsField> {
+  late List<String> options;
+  late List<String> values;
+
+  @override
+  void initState() {
+    super.initState();
+
+    options = widget.options;
+    values = widget.values;
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
 
@@ -34,7 +50,7 @@ class TagsField extends StatelessWidget {
         continue;
       }
 
-      if(!isEditing && !values.contains(options[i])) {
+      if(!widget.isEditing && !values.contains(options[i])) {
         continue;
       }
 
@@ -49,25 +65,27 @@ class TagsField extends StatelessWidget {
           label: Text(text, style: theme.primaryTextSecondary),
           selected: values.contains(options[i]),
           onSelected: (bool selected) {
-            if(isEditing) {
+            if(widget.isEditing) {
               if(selected) {
                 values.add(options[i]);
 
-                if(onSelect != null) {
-                  onSelect!(options[i]);
+                if(widget.onSelect != null) {
+                  widget.onSelect!(options[i]);
                 }
               } else {
                 values.remove(options[i]);
 
-                if(onDeselect != null) {
-                  onDeselect!(options[i]);
+                if(widget.onDeselect != null) {
+                  widget.onDeselect!(options[i]);
                 }
               }
 
-              if(onChange != null) {
-                onChange!(values);
+              if(widget.onChange != null) {
+                widget.onChange!(values);
               }
             }
+
+            setState(() {});
           },
         ),
       );
@@ -80,7 +98,7 @@ class TagsField extends StatelessWidget {
     }
 
     // Plus chip to add new chips
-    if(isEditing && showAddChip) {
+    if(widget.isEditing && widget.showAddChip) {
       widgets.add(
         ActionChip(
           label: Icon(
@@ -95,15 +113,17 @@ class TagsField extends StatelessWidget {
               getString('swatch_tags_popupError'),
               getString('swatch_tags_popupBtn'),
               (String value) {
-                if(onAddOption != null) {
-                  onAddOption!(value);
+                if(widget.onAddOption != null) {
+                  widget.onAddOption!(value);
                 }
 
                 values.add(value);
 
-                if(onChange != null) {
-                  onChange!(values);
+                if(widget.onChange != null) {
+                  widget.onChange!(values);
                 }
+
+                setState(() {  });
               },
             );
           },
@@ -127,16 +147,16 @@ class TagsField extends StatelessWidget {
         Container(
           height: 55,
           alignment: Alignment.centerLeft,
-          padding: labelPadding ?? const EdgeInsets.symmetric(vertical: 15),
+          padding: widget.labelPadding ?? const EdgeInsets.symmetric(vertical: 15),
           child: Text(
-            '$label: ',
+            '${widget.label}: ',
             style: theme.primaryTextPrimary,
             textAlign: TextAlign.left,
           ),
         ),
         Container(
           alignment: Alignment.center,
-          padding: chipFieldPadding ?? const EdgeInsets.only(bottom: 20),
+          padding: widget.chipFieldPadding ?? const EdgeInsets.only(bottom: 20),
           child: Wrap(
             children: widgets,
           ),
