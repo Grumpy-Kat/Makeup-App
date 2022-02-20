@@ -45,155 +45,11 @@ class DateFieldState extends State<DateField> {
         textAlign: TextAlign.left,
       ),
 
-      Expanded(
-        child: Container(
-          height: 55,
-          padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          decoration: BoxDecoration(
-            color: (widget.isEditing && widget.showInputBorder) ? theme.primaryColorLight : theme.bgColor,
-            borderRadius: BorderRadius.circular(3.0),
-            border: Border.fromBorderSide(
-              BorderSide(
-                color: (widget.isEditing && widget.showInputBorder) ? theme.primaryColorDark : theme.bgColor,
-                width: 1.0,
-              ),
-            ),
-          ),
-          alignment: Alignment.center,
-          child: Row(
-            crossAxisAlignment: widget.isHorizontal ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                date == null ? '' : globalWidgets.displayTimeLong(date!),
-                style: TextStyle(color: theme.primaryTextColor, fontSize: theme.primaryTextSize - 2),
-                textAlign: TextAlign.left,
-              ),
-
-              IconButton(
-                padding: EdgeInsets.only(left: date == null ? 0 : 9, bottom: 4.5),
-                constraints: BoxConstraints.tight(const Size.fromWidth(theme.secondaryIconSize + 5)),
-                alignment: Alignment.centerLeft,
-                icon: Icon(
-                  Icons.calendar_today,
-                  size: theme.secondaryIconSize - 2.5,
-                  color: widget.isEditing ? theme.iconTextColor : theme.bgColor,
-                ),
-                onPressed: () {
-                  if(!widget.isEditing) {
-                    return;
-                  }
-
-                  globalWidgets.openDialog(
-                    context,
-                    (BuildContext context) {
-                      DateTime? date = this.date;
-
-                      if(date == null && widget.relativeDate != null) {
-                        date = DateTime(widget.relativeDate!.year + 1, widget.relativeDate!.month, widget.relativeDate!.day);
-                      }
-
-                      DateTime focusedDate = date ?? DateTime.now();
-
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height * 0.5) - 251),
-                        child: Dialog(
-                          insetPadding: const EdgeInsets.symmetric(horizontal: 0),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
-                          ),
-                          child: StatefulBuilder(
-                            builder: (context, setState) {
-                              return Container(
-                                padding: EdgeInsets.all(20),
-                                width: MediaQuery.of(context).size.width,
-                                height: 502,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget> [
-                                    // TableCalendar
-                                    Expanded(
-                                      child: Container(
-                                        padding: const EdgeInsets.only(bottom: 30),
-                                        alignment: Alignment.topLeft,
-                                        child: TableCalendar(
-                                          firstDay: DateTime.utc(1989, 12, 31),
-                                          lastDay: DateTime.utc(2041, 1, 5),
-                                          focusedDay: focusedDate,
-                                          calendarStyle: CalendarStyle(
-                                            defaultTextStyle: theme.primaryTextSecondary,
-                                            isTodayHighlighted: false,
-                                            disabledDecoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            todayTextStyle: theme.primaryTextSecondary,
-                                            selectedDecoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: theme.accentColor,
-                                            ),
-                                            selectedTextStyle: theme.accentTextSecondary,
-                                          ),
-                                          headerStyle: HeaderStyle(
-                                            formatButtonVisible: false,
-                                            titleTextStyle: theme.primaryTextBold,
-                                          ),
-                                          onPageChanged: (DateTime newFocusedDate) {
-                                            focusedDate = newFocusedDate;
-                                          },
-                                          selectedDayPredicate: (DateTime possibleDate) {
-                                            return isSameDay(possibleDate, date ?? DateTime.now());
-                                          },
-                                          onDaySelected: (DateTime selectedDate, DateTime newFocusedDate) {
-                                            setState(() {
-                                              date = selectedDate;
-                                              focusedDate = newFocusedDate;
-                                            });
-
-                                            this.date = date;
-
-                                            widget.onChange(selectedDate);
-                                            this.setState(() {});
-                                          },
-                                        ),
-                                      ),
-                                    ),
-
-                                    // Enter button
-                                    Container(
-                                      width: 100,
-                                      height: 40,
-                                      child: FlatButton(
-                                        bgColor: theme.accentColor,
-                                        onPressed: () {
-                                          this.date = date ?? focusedDate;
-                                          widget.onChange(date ?? focusedDate);
-                                          this.setState(() {});
-                                          Navigator.pop(context);
-                                        },
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            '${getString('save')}',
-                                            style: theme.accentTextBold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+      if(widget.isHorizontal) Expanded(
+        child: getField(),
       ),
+
+      if(!widget.isHorizontal) getField(),
     ];
 
     if(widget.isHorizontal) {
@@ -208,13 +64,163 @@ class DateFieldState extends State<DateField> {
     }
 
     return Container(
-      height: 100,
+      height: 103,
       alignment: Alignment.centerLeft,
       padding: widget.outerPadding ?? const EdgeInsets.only(bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: children,
+      ),
+    );
+  }
+
+  Widget getField() {
+    return Container(
+      height: 55,
+      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: (widget.isEditing && widget.showInputBorder) ? theme.primaryColorLight : theme.bgColor,
+        borderRadius: BorderRadius.circular(3.0),
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: (widget.isEditing && widget.showInputBorder) ? theme.primaryColorDark : theme.bgColor,
+            width: 1.0,
+          ),
+        ),
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        crossAxisAlignment: widget.isHorizontal ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            date == null ? '' : globalWidgets.displayTimeLong(date!),
+            style: TextStyle(color: theme.primaryTextColor, fontSize: widget.isHorizontal ? theme.primaryTextSize - 2 : theme.primaryTextSize),
+            textAlign: TextAlign.left,
+          ),
+
+          IconButton(
+            padding: EdgeInsets.only(left: date == null ? 0 : 9, bottom: widget.isHorizontal ? 4.5 : 3),
+            constraints: BoxConstraints.tight(const Size.fromWidth(theme.secondaryIconSize + 5)),
+            alignment: Alignment.centerLeft,
+            icon: Icon(
+              Icons.calendar_today,
+              size: widget.isHorizontal ? theme.secondaryIconSize - 2.5 : theme.secondaryIconSize,
+              color: widget.isEditing ? theme.iconTextColor : theme.bgColor,
+            ),
+            onPressed: () {
+              if(!widget.isEditing) {
+                return;
+              }
+
+              globalWidgets.openDialog(
+                context,
+                (BuildContext context) {
+                  DateTime? date = this.date;
+
+                  if(date == null && widget.relativeDate != null) {
+                    date = DateTime(widget.relativeDate!.year + 1, widget.relativeDate!.month, widget.relativeDate!.day);
+                  }
+
+                  DateTime focusedDate = date ?? DateTime.now();
+
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height * 0.5) - 251),
+                    child: Dialog(
+                      insetPadding: const EdgeInsets.symmetric(horizontal: 0),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
+                      ),
+                      child: StatefulBuilder(
+                        builder: (context, setState) {
+                          return Container(
+                            padding: EdgeInsets.all(20),
+                            width: MediaQuery.of(context).size.width,
+                            height: 502,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget> [
+                                // TableCalendar
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.only(bottom: 30),
+                                    alignment: Alignment.topLeft,
+                                    child: TableCalendar(
+                                      firstDay: DateTime.utc(1989, 12, 31),
+                                      lastDay: DateTime.utc(2041, 1, 5),
+                                      focusedDay: focusedDate,
+                                      calendarStyle: CalendarStyle(
+                                        defaultTextStyle: theme.primaryTextSecondary,
+                                        isTodayHighlighted: false,
+                                        disabledDecoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                        ),
+                                        todayTextStyle: theme.primaryTextSecondary,
+                                        selectedDecoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: theme.accentColor,
+                                        ),
+                                        selectedTextStyle: theme.accentTextSecondary,
+                                      ),
+                                      headerStyle: HeaderStyle(
+                                        formatButtonVisible: false,
+                                        titleTextStyle: theme.primaryTextBold,
+                                      ),
+                                      onPageChanged: (DateTime newFocusedDate) {
+                                        focusedDate = newFocusedDate;
+                                      },
+                                      selectedDayPredicate: (DateTime possibleDate) {
+                                        return isSameDay(possibleDate, date ?? DateTime.now());
+                                      },
+                                      onDaySelected: (DateTime selectedDate, DateTime newFocusedDate) {
+                                        setState(() {
+                                          date = selectedDate;
+                                          focusedDate = newFocusedDate;
+                                        });
+
+                                        this.date = date;
+
+                                        widget.onChange(selectedDate);
+                                        this.setState(() {});
+                                      },
+                                    ),
+                                  ),
+                                ),
+
+                                // Enter button
+                                Container(
+                                  width: 100,
+                                  height: 40,
+                                  child: FlatButton(
+                                    bgColor: theme.accentColor,
+                                    onPressed: () {
+                                      this.date = date ?? focusedDate;
+                                      widget.onChange(date ?? focusedDate);
+                                      this.setState(() {});
+                                      Navigator.pop(context);
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '${getString('save')}',
+                                        style: theme.accentTextBold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
     );
   }
