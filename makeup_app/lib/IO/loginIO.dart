@@ -61,13 +61,19 @@ Future<void> signOut() async {
   globals.userID = newId;
 
   await signIn();
-  await settingsIO.save();
+  await settingsIO.reset();
+  allSwatchesStorageIO.init();
 
   allSwatchesIO.hasSaveChanged = true;
   savedLooksIO.hasSaveChanged = true;
 }
 
 Future<void> deleteAccount() async {
+  allSwatchesStorageIO.deleteAllImgs();
+  await settingsIO.clear();
+  await allSwatchesIO.clear();
+  await savedLooksIO.clearAll();
+
   if(auth.currentUser != null) {
     try {
       await auth.currentUser!.delete();
@@ -75,11 +81,6 @@ Future<void> deleteAccount() async {
       print(e);
     }
   }
-
-  await settingsIO.clear();
-  await allSwatchesIO.clear();
-  await allSwatchesStorageIO.deleteAllImgs();
-  await savedLooksIO.clearAll();
 
   // Even though deleteAccount will sign the user out of Firebase, still need to take care of various signOut related operations
   await signOut();

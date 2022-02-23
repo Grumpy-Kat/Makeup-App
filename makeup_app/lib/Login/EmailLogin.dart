@@ -142,6 +142,10 @@ class EmailLoginState extends State<EmailLogin> with LoginState {
         } else {
           await IO.auth.createUserWithEmailAndPassword(email: email, password: password);
         }
+
+        if(!hasFinished) {
+          await preserveSaveData();
+        }
         await IO.combineAccounts(context, orgAccount);
       } on FirebaseAuthException catch (e) {
         switch(e.code) {

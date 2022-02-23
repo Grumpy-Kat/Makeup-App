@@ -6,7 +6,6 @@ import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
-import 'LoginScreen.dart';
 
 class SignOutButton extends StatelessWidget {
   final double leftPadding;
@@ -26,15 +25,15 @@ class SignOutButton extends StatelessWidget {
         onPressed: () {
           globalWidgets.openLoadingDialog(context);
           IO.signOut().then(
-            (value) {
+            (val) {
               Navigator.pop(context);
               navigation.pushReplacement(
                 context,
                 const Offset(1, 0),
-                routes.ScreenRoutes.LoginScreen,
-                LoginScreen(true),
+                routes.ScreenRoutes.AllSwatchesScreen,
+                routes.routes['/allSwatchesScreen']!(context),
               );
-            },
+            }
           );
         },
         child: Text(

@@ -159,7 +159,9 @@ set language(String value) {
 }
 
 //default sort and sort options
-String _sort = 'sort_hue';
+String _defaultSort = 'sort_hue';
+String get defaultSort => _defaultSort;
+String _sort = _defaultSort;
 String get sort => _sort == '' ? 'sort_hue' : _sort;
 set sort(String value) {
   _sort = value;
@@ -193,7 +195,9 @@ Map<String, OnSortSwatch> distanceSortOptions(List<List<Swatch>> swatches, RGBCo
 }
 
 //all eyeshadow tags
-List<String> _tags = ['tags_pigmented', 'tags_sheer', 'tags_lotsFallout', 'tags_noFallout', 'tags_soft', 'tags_creamy', 'tags_dry'];
+List<String> _defaultTags = ['tags_pigmented', 'tags_sheer', 'tags_lotsFallout', 'tags_noFallout', 'tags_soft', 'tags_creamy', 'tags_dry'];
+List<String> get defaultTags => _defaultTags;
+List<String> _tags = _defaultTags;
 List<String> get tags => _tags;
 set tags(List<String> value) {
   if(value.length > 0) {
@@ -205,7 +209,9 @@ set tags(List<String> value) {
 }
 
 //all swatch photo label
-List<String> _swatchImgLabels = ['swatchImgLabels_directLighting', 'swatchImgLabels_indirectLighting', 'swatchImgLabels_lowLighting', 'swatchImgLabels_outdoorLighting', 'swatchImgLabels_indoorLighting', 'swatchImgLabels_blackBackground', 'swatchImgLabels_whiteBackground'];
+List<String> _defaultSwatchImgLabels = ['swatchImgLabels_directLighting', 'swatchImgLabels_indirectLighting', 'swatchImgLabels_lowLighting', 'swatchImgLabels_outdoorLighting', 'swatchImgLabels_indoorLighting', 'swatchImgLabels_blackBackground', 'swatchImgLabels_whiteBackground'];
+List<String> get defaultSwatchImgLabels => _defaultSwatchImgLabels;
+List<String> _swatchImgLabels = _defaultSwatchImgLabels;
 List<String> get swatchImgLabels => _swatchImgLabels;
 set swatchImgLabels(List<String> value) {
   if(value.length > 0) {
@@ -222,9 +228,11 @@ enum AutoShadeNameMode {
   RowLetters,
   None,
 }
-final Map<AutoShadeNameMode, String> autoShadeNameModeNames = {AutoShadeNameMode.ColLetters: getString( 'nameMode_column'), AutoShadeNameMode.RowLetters: getString('nameMode_row'), AutoShadeNameMode.None: getString('nameMode_none')};
-final Map<AutoShadeNameMode, String> autoShadeNameModeDescriptions = {AutoShadeNameMode.ColLetters: getString('nameDescription_column'), AutoShadeNameMode.RowLetters: getString('nameDescription_row'), AutoShadeNameMode.None: getString('nameDescription_none')};
-AutoShadeNameMode _autoShadeNameMode = AutoShadeNameMode.ColLetters;
+final Map<AutoShadeNameMode, String> autoShadeNameModeNames = {AutoShadeNameMode.ColLetters: 'nameMode_column', AutoShadeNameMode.RowLetters: 'nameMode_row', AutoShadeNameMode.None: 'nameMode_none'};
+final Map<AutoShadeNameMode, String> autoShadeNameModeDescriptions = {AutoShadeNameMode.ColLetters: 'nameDescription_column', AutoShadeNameMode.RowLetters: 'nameDescription_row', AutoShadeNameMode.None: 'nameDescription_none'};
+AutoShadeNameMode _defaultAutoShadeNameMode = AutoShadeNameMode.ColLetters;
+AutoShadeNameMode get defaultAutoShadeNameMode => _defaultAutoShadeNameMode;
+AutoShadeNameMode _autoShadeNameMode = _defaultAutoShadeNameMode;
 AutoShadeNameMode get autoShadeNameMode => _autoShadeNameMode;
 set autoShadeNameMode(AutoShadeNameMode value) {
    _autoShadeNameMode = value;
@@ -234,7 +242,9 @@ set autoShadeNameMode(AutoShadeNameMode value) {
 }
 
 //brightness offset for making new swatches from photos
-int _brightnessOffset = 0;
+int _defaultBrightnessOffset = 0;
+int get defaultBrightnessOffset => _defaultBrightnessOffset;
+int _brightnessOffset = _defaultBrightnessOffset;
 int get brightnessOffset => _brightnessOffset;
 set brightnessOffset(int value) {
   _brightnessOffset = value.clamp(-255, 255);
@@ -244,7 +254,9 @@ set brightnessOffset(int value) {
 }
 
 //red offset for making new swatches from photos
-int _redOffset = 0;
+int _defaultRedOffset = 0;
+int get defaultRedOffset => _defaultRedOffset;
+int _redOffset = _defaultRedOffset;
 int get redOffset => _redOffset;
 set redOffset(int value) {
   _redOffset = value.clamp(-255, 255);
@@ -254,7 +266,9 @@ set redOffset(int value) {
 }
 
 //green offset for making new swatches from photos
-int _greenOffset = 0;
+int _defaultGreenOffset = 0;
+int get defaultGreenOffset => _defaultGreenOffset;
+int _greenOffset = _defaultGreenOffset;
 int get greenOffset => _greenOffset;
 set greenOffset(int value) {
   _greenOffset = value.clamp(-255, 255);
@@ -264,7 +278,9 @@ set greenOffset(int value) {
 }
 
 //blue offset for making new swatches from photos
-int _blueOffset = 0;
+int _defaultBlueOffset = 0;
+int get defaultBlueOffset => _defaultBlueOffset;
+int _blueOffset = _defaultBlueOffset;
 int get blueOffset => _blueOffset;
 set blueOffset(int value) {
   _blueOffset = value.clamp(-255, 255);
@@ -274,7 +290,9 @@ set blueOffset(int value) {
 }
 
 //color distance for ColorWheelScreen
-double _colorWheelDistance = 11;
+double _defaultColorWheelDistance = 11;
+double get defaultColorWheelDistance => _defaultColorWheelDistance;
+double _colorWheelDistance = _defaultColorWheelDistance;
 double get colorWheelDistance => _colorWheelDistance;
 set colorWheelDistance(double value) {
   _colorWheelDistance = value.clamp(2, 30);

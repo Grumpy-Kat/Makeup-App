@@ -6,7 +6,6 @@ import '../navigation.dart' as navigation;
 import '../routes.dart' as routes;
 import '../theme.dart' as theme;
 import '../globalWidgets.dart' as globalWidgets;
-import 'LoginScreen.dart';
 
 class DeleteAccountButton extends StatelessWidget {
   final double leftPadding;
@@ -16,6 +15,7 @@ class DeleteAccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: test deleteAccount
     return Container(
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: leftPadding, right: rightPadding, top: 3),
@@ -27,15 +27,18 @@ class DeleteAccountButton extends StatelessWidget {
           globalWidgets.openTwoButtonDialog(
             context,
             getString('settings_default_resetQuestion'),
-            () async {
+            () {
               globalWidgets.openLoadingDialog(context);
-              await IO.deleteAccount();
-              Navigator.pop(context);
-              navigation.pushReplacement(
-                context,
-                const Offset(1, 0),
-                routes.ScreenRoutes.LoginScreen,
-                LoginScreen(true),
+              IO.deleteAccount().then(
+                (val) {
+                  Navigator.pop(context);
+                  navigation.pushReplacement(
+                    context,
+                    const Offset(1, 0),
+                    routes.ScreenRoutes.AllSwatchesScreen,
+                    routes.routes['/allSwatchesScreen']!(context),
+                  );
+                }
               );
             },
             () { },

@@ -503,6 +503,7 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
       context,
       (String brand, String palette, double weight, double price, DateTime? openDate, DateTime? expirationDate, List<SwatchImage> imgs) async {
         globalWidgets.openLoadingDialog(context);
+
         _palette = Palette(
           id: '',
           brand: brand,
@@ -513,7 +514,8 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           expirationDate: expirationDate,
           swatches: [],
         );
-        //assign brand and palette to all swatches
+
+        // Assign brand and palette to all swatches
         for(int i = 0; i < swatches.length; i++) {
           Swatch swatch = swatches[i];
           swatch.brand = brand;
@@ -523,11 +525,11 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           swatch.openDate = openDate;
           swatch.expirationDate = expirationDate;
           if(imgs.length == swatches.length) {
-            //can't actually save images due to not having swatchId, so just set what the imgIds should be
+            // Can't actually save images due to not having swatchId, so just set what the imgIds should be
             swatch.imgIds = ['0'];
           } else {
             swatch.imgIds = [];
-            //can't actually save images due to not having swatchId, so just set what the imgIds should be
+            // Can't actually save images due to not having swatchId, so just set what the imgIds should be
             for(int j = 0; j < imgs.length; j++) {
               swatch.imgIds!.add('$j');
             }
@@ -540,46 +542,49 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
           swatch.color.values['rgbG'] = swatch.color.clampValue(_orgGreen[i] + (_greenOffset / 255.0) + (_brightnessOffset / 255.0));
           swatch.color.values['rgbB'] = swatch.color.clampValue(_orgBlue[i] + (_blueOffset / 255.0) + (_brightnessOffset / 255.0));
         }
+
         _brightnessController = TextEditingController(text: _brightnessOffset.toString());
         _redController = TextEditingController(text: _redOffset.toString());
         _greenController = TextEditingController(text: _greenOffset.toString());
         _blueController = TextEditingController(text: _blueOffset.toString());
-        //saves swatches and adds them to final list to display
-        IO.add(swatches).then((List<int> val) {
-          //actually save the images now because got swatch ids
-          for(int i = 0; i < swatches.length; i++) {
-            if(imgs.length == swatches.length) {
+
+        // Saves swatches and adds them to final list to display
+        List<int> val = await IO.add(swatches);
+
+        // Actually save the images now because got swatch ids
+        for(int i = 0; i < swatches.length; i++) {
+          if(imgs.length == swatches.length) {
+            SwatchImage img = SwatchImage(
+              bytes: imgs[i].bytes,
+              id: '0',
+              swatchId: val[i],
+              labels: imgs[i].labels,
+              width: imgs[i].width,
+              height: imgs[i].height,
+            );
+            // Using updateImg to specifically set id
+            allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+          } else {
+            for(int j = 0; j < imgs.length; j++) {
               SwatchImage img = SwatchImage(
-                bytes: imgs[i].bytes,
-                id: '0',
+                bytes: imgs[j].bytes,
+                id: '$j',
                 swatchId: val[i],
-                labels: imgs[i].labels,
-                width: imgs[i].width,
-                height: imgs[i].height,
+                labels: imgs[j].labels,
+                width: imgs[j].width,
+                height: imgs[j].height,
               );
-              //using updateImg to specifically set id
+              // Using updateImg to specifically set id
               allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
-            } else {
-              for(int j = 0; j < imgs.length; j++) {
-                SwatchImage img = SwatchImage(
-                  bytes: imgs[j].bytes,
-                  id: '$j',
-                  swatchId: val[i],
-                  labels: imgs[j].labels,
-                  width: imgs[j].width,
-                  height: imgs[j].height,
-                );
-                //using updateImg to specifically set id
-                allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
-              }
             }
           }
-          _swatches = val;
-          _isUsingPaletteDivider = false;
-          Navigator.pop(context);
-          setState(() { });
-        });
-      }
+        }
+
+        _swatches = val;
+        _isUsingPaletteDivider = false;
+        Navigator.pop(context);
+        setState(() { });
+      },
     );
   }
 

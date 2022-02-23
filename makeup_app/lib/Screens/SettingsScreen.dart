@@ -6,10 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../Widgets/FlatButton.dart';
 import '../Widgets/BackButton.dart';
 import '../Widgets/LoginButton.dart';
-import '../IO/settingsIO.dart' as settingsIO;
-import '../IO/allSwatchesIO.dart' as allSwatchesIO;
-import '../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
-import '../IO/savedLooksIO.dart' as savedLooksIO;
+import '../IO/loginIO.dart' as loginIO;
 import '../IO/localizationIO.dart';
 import '../types.dart';
 import '../globals.dart' as globals;
@@ -172,7 +169,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                     icon,
                     size: iconSize ?? theme.primaryIconSize,
                     color: theme.tertiaryTextColor,
-                    semanticLabel: '${getString(label)} ',
+                    semanticLabel: '$label ',
                   ),
                 ),
               ),
@@ -223,7 +220,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
                     Icons.arrow_forward_ios,
                     size: theme.tertiaryTextSize,
                     color: theme.secondaryTextColor,
-                    semanticLabel: '${getString(label)} ',
+                    semanticLabel: '$label ',
                   ),
                 ),
               ),
@@ -359,7 +356,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
           height: height,
           padding: padding,
           margin: margin,
-          child: Text('${globals.autoShadeNameModeDescriptions[globals.autoShadeNameMode]}', style: theme.primaryTextSecondary),
+          child: Text('${getString(globals.autoShadeNameModeDescriptions[globals.autoShadeNameMode] ?? '')}', style: theme.primaryTextSecondary),
         ),
       ],
     );
@@ -719,6 +716,7 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
   // Button to reset all saved looks and saved swatches
   Widget getDefaultResetField() {
     return Container(
+      width: MediaQuery.of(context).size.width,
       height: height,
       decoration: decoration,
       padding: padding,
@@ -731,12 +729,10 @@ class SettingsScreenState extends State<SettingsScreen> with ScreenState, Widget
             context,
             getString('settings_default_resetQuestion'),
             () async {
-              await settingsIO.clear();
-              await allSwatchesIO.clear();
-              await allSwatchesStorageIO.deleteAllImgs();
-              await savedLooksIO.clearAll();
-              globals.hasDoneTutorial = true;
-              globals.currSwatches.set([]);
+              globalWidgets.openLoadingDialog(context);
+              await loginIO.deleteAccount();
+              Navigator.pop(context);
+
               navigation.pushReplacement(
                 context,
                 const Offset(1.0, 0.0),

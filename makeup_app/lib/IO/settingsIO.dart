@@ -160,3 +160,51 @@ Future<void> clearDebug() async {
     );
   }
 }
+
+Future<void> reset() async {
+  if(globals.userID != '') {
+    //sort
+    String sort = globals.defaultSort;
+    //tags
+    String tags = '';
+    for(int i = 0; i < globals.defaultTags.length; i++) {
+      tags += '${globals.defaultTags[i]};';
+    }
+    //swatch image labels
+    String swatchImgLabels = '';
+    for(int i = 0; i < globals.defaultSwatchImgLabels.length; i++) {
+      swatchImgLabels += '${globals.defaultSwatchImgLabels[i]};';
+    }
+    //brightness offset
+    int brightness = globals.defaultBrightnessOffset;
+    //red offset
+    int red = globals.defaultRedOffset;
+    //green offset
+    int green = globals.defaultGreenOffset;
+    //blue offset
+    int blue = globals.defaultBlueOffset;
+    //auto shade name mode
+    int nameMode = globals.AutoShadeNameMode.values.indexOf(globals.defaultAutoShadeNameMode);
+    //ColorWheelScreen distance
+    double colorWheel = globals.defaultColorWheelDistance;
+    //save to database
+    DocumentSnapshot docSnapshot = await _database.doc(globals.userID).get();
+    Map<String, dynamic> data = (docSnapshot.exists ? docSnapshot.data()! as Map<String, dynamic> : {});
+    await _database.doc(globals.userID).set(
+        {
+          'sort': sort,
+          'tags': tags,
+          'swatchImgLabels': swatchImgLabels,
+          'brightness': brightness,
+          'red': red,
+          'green': green,
+          'blue': blue,
+          'nameMode': nameMode,
+          'colorWheel': colorWheel,
+          'debug': data.containsKey('debug') ? data['debug'] : <String>[],
+        }
+    );
+  }
+
+  await load();
+}

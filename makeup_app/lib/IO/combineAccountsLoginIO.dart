@@ -60,12 +60,10 @@ Future<void> _newNoSwatches(String oldUserID) async {
 }
 
 Future<void> _bothAccounts(BuildContext context, String oldUserID, OriginalAccountData orgAccount) async {
-  // TODO: test all versions of both accounts having swatches, make sure swatchImgs, tags, and swatchImgLabels are properly transferred
-
   // If both accounts have swatches, ask user their preference
   await globalWidgets.openDialog(
     context,
-        (BuildContext context) {
+    (BuildContext context) {
       return globalWidgets.getAlertDialog(
         context,
         title: Text(
@@ -75,13 +73,15 @@ Future<void> _bothAccounts(BuildContext context, String oldUserID, OriginalAccou
         actions: <Widget>[
           FlatButton(
             bgColor: theme.accentColor,
-            onPressed: () async {
+            onPressed: () {
               Navigator.pop(context);
               globalWidgets.openLoadingDialog(context);
 
-              await _bothCombineAccounts(orgAccount);
-
-              Navigator.pop(context);
+              _bothCombineAccounts(orgAccount).then(
+                    (val) {
+                  Navigator.pop(context);
+                },
+              );
             },
             child: Text(
               getString('login_combine'),
@@ -90,13 +90,15 @@ Future<void> _bothAccounts(BuildContext context, String oldUserID, OriginalAccou
           ),
           FlatButton(
             bgColor: theme.accentColor,
-            onPressed: () async {
+            onPressed: () {
               Navigator.pop(context);
               globalWidgets.openLoadingDialog(context);
 
-              await _bothOldAccount(oldUserID);
-
-              Navigator.pop(context);
+              _bothOldAccount(oldUserID).then(
+                (val) {
+                  Navigator.pop(context);
+                },
+              );
             },
             child: Text(
               getString('login_local'),
@@ -125,8 +127,8 @@ Future<void> _bothCombineAccounts(OriginalAccountData orgAccount) async {
   await signIn(false);
   List<int> newIds = await allSwatchesIO.add(orgAccount.swatches.values.toList());
   if(orgAccount.looks.length != 0 || orgAccount.swatchImgs.length != 0) {
-    globals.tags.addAll(orgAccount.tags);
-    globals.swatchImgLabels.addAll(orgAccount.swatchImgLabels);
+    globals.tags = (globals.tags + orgAccount.tags).toSet().toList();
+    globals.swatchImgLabels = (globals.swatchImgLabels + orgAccount.swatchImgLabels).toSet().toList();
 
     List<int> oldIds = orgAccount.swatches.keys.toList();
     Map<int, int> idToId = {};
@@ -143,37 +145,44 @@ Future<void> _bothCombineAccounts(OriginalAccountData orgAccount) async {
 
     // Change ids in looks and save the new ones
     List<Look> oldLooks = orgAccount.looks.values.toList();
-    for (int i = 0; i < oldLooks.length; i++) {
-      List<int> swatches = oldLooks[i].swatches;
-      for (int j = 0; j < swatches.length; j++) {
-        swatches[j] = idToId[swatches[j]] ?? -1;
-      }
-      print(swatches);
+    await Future.wait(
+      oldLooks.map(
+        (Look look) async {
+          List<int> swatches = look.swatches;
+          for (int j = 0; j < swatches.length; j++) {
+            swatches[j] = idToId[swatches[j]] ?? -1;
+          }
+          look.swatches = swatches;
+          look.id = '';
+          await savedLooksIO.save(look);
+        }
+      ),
+    );
 
-      oldLooks[i].swatches = swatches;
-      oldLooks[i].id = '';
-
-      await savedLooksIO.save(oldLooks[i]);
-    }
-
+    print('_bothCombineAccounts length ${orgAccount.swatchImgs.length}');
     // Change ids in swatchImgs and save the new ones
-    for(int i = 0; i < orgAccount.swatchImgs.length; i++) {
-      SwatchImage swatchImg = orgAccount.swatchImgs[i];
-      int newSwatchId = idToId[swatchImg.swatchId] ?? -1;
-
-      if(newSwatchId != -1) {
-        await allSwatchesStorageIO.updateImg(
-          swatchImg: SwatchImage(
-            swatchId: newSwatchId,
-            id: swatchImg.id,
-            width: swatchImg.width,
-            height: swatchImg.height,
-            bytes: swatchImg.bytes,
-            labels: swatchImg.labels,
-          ),
-        );
-      }
-    }
+    List<SwatchImage?> oldSwatchImgs = orgAccount.swatchImgs;
+    await Future.wait(
+      oldSwatchImgs.map(
+        (SwatchImage? swatchImg) async {
+          if(swatchImg != null) {
+            int newSwatchId = idToId[swatchImg.swatchId] ?? -1;
+            if(newSwatchId != -1) {
+              await allSwatchesStorageIO.updateImg(
+                swatchImg: SwatchImage(
+                  swatchId: newSwatchId,
+                  id: swatchImg.id,
+                  width: swatchImg.width,
+                  height: swatchImg.height,
+                  bytes: swatchImg.bytes,
+                  labels: swatchImg.labels,
+                ),
+              );
+            }
+          }
+        }
+      ),
+    );
   }
 }
 
