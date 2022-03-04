@@ -9,8 +9,8 @@ import '../Widgets/ImagePicker.dart';
 import '../Widgets/FlatButton.dart';
 import '../Widgets/BackButton.dart';
 import '../Widgets/HelpButton.dart';
+import '../Widgets/SwatchImageAddingBar.dart';
 import '../IO/allSwatchesIO.dart' as IO;
-import '../IO/allSwatchesStorageIO.dart' as allSwatchesStorageIO;
 import '../IO/presetPalettesIO.dart' as presetPalettesIO;
 import '../IO/localizationIO.dart';
 import '../globals.dart' as globals;
@@ -551,33 +551,37 @@ class AddPaletteDividerScreenState extends State<AddPaletteDividerScreen> with S
         // Saves swatches and adds them to final list to display
         List<int> val = await IO.add(swatches);
 
-        // Actually save the images now because got swatch ids
-        for(int i = 0; i < swatches.length; i++) {
-          if(imgs.length == swatches.length) {
-            SwatchImage img = SwatchImage(
-              bytes: imgs[i].bytes,
-              id: '0',
-              swatchId: val[i],
-              labels: imgs[i].labels,
-              width: imgs[i].width,
-              height: imgs[i].height,
-            );
-            // Using updateImg to specifically set id
-            allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
-          } else {
-            for(int j = 0; j < imgs.length; j++) {
-              SwatchImage img = SwatchImage(
-                bytes: imgs[j].bytes,
-                id: '$j',
-                swatchId: val[i],
-                labels: imgs[j].labels,
-                width: imgs[j].width,
-                height: imgs[j].height,
+        if(imgs.length != 0) {
+          List<SwatchImage> actualImgs = [];
+          // Actually save the images now because got swatch ids
+          for (int i = 0; i < swatches.length; i++) {
+            if (imgs.length == swatches.length) {
+              actualImgs.add(
+                  SwatchImage(
+                    bytes: imgs[i].bytes,
+                    id: '0',
+                    swatchId: val[i],
+                    labels: imgs[i].labels,
+                    width: imgs[i].width,
+                    height: imgs[i].height,
+                  )
               );
-              // Using updateImg to specifically set id
-              allSwatchesStorageIO.updateImg(swatchImg: img, shouldCompress: true);
+            } else {
+              for (int j = 0; j < imgs.length; j++) {
+                actualImgs.add(
+                    SwatchImage(
+                      bytes: imgs[j].bytes,
+                      id: '$j',
+                      swatchId: val[i],
+                      labels: imgs[j].labels,
+                      width: imgs[j].width,
+                      height: imgs[j].height,
+                    )
+                );
+              }
             }
           }
+          SwatchImageAddingBar(context, actualImgs);
         }
 
         _swatches = val;

@@ -37,6 +37,7 @@ class GlamKitAppState extends State<GlamKitApp> {
       title: globals.appName,
       theme: theme.themeData,
       home: _getHome(),
+      navigatorKey: navigation.navigatorKey,
       routes: routes.routes,
       debugShowCheckedModeBanner: false,
     );

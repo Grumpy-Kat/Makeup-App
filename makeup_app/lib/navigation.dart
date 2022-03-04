@@ -4,6 +4,8 @@ import 'routes.dart' as routes;
 
 List<routes.ScreenRoutes> _history = [];
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void init(routes.ScreenRoutes nextScreenEnum) {
   _history.clear();
   _history.add(nextScreenEnum);
