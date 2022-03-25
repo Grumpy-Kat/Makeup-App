@@ -63,7 +63,9 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with
   }
 
   Future<void> openImgDivider(BuildContext context) async {
-    return globalWidgets.openDialog(
+    isImgDisplayOpened = true;
+
+    await globalWidgets.openDialog(
       context,
       (BuildContext innerContext) {
         return StatefulBuilder(
@@ -87,16 +89,22 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with
           },
         );
       },
+      barrierDismissible: false,
     );
+
+    isImgDisplayOpened = false;
   }
 
   @override
   Future<void> openImgDisplay(BuildContext context, List<Uint8List>? imgs) async {
+    isImgDisplayOpened = true;
+
     double padding = (MediaQuery.of(context).size.height * 0.5) - 350;
     if(padding < 0) {
       padding = 0;
     }
-    return globalWidgets.openDialog(
+
+    await globalWidgets.openDialog(
       context,
       (BuildContext context) {
         return Padding(
@@ -200,7 +208,10 @@ class SwatchImageMultiplePopupState extends State<SwatchImageMultiplePopup> with
             ),
           ),
         );
-      }
+      },
+      barrierDismissible: false,
     );
+
+    reset();
   }
 }

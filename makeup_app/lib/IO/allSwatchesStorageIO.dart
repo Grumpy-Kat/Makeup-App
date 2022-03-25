@@ -9,8 +9,6 @@ late Reference _folderRef;
 
 Map<int, Map<String, SwatchImage>> swatchImgs = {};
 
-// TODO: add bottom popup when adding many images similar to Google Drive
-
 void init() {
   swatchImgs = {};
   _folderRef = FirebaseStorage.instance.ref('swatchesImgs/${globals.userID}');

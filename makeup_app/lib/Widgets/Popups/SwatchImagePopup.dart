@@ -69,4 +69,9 @@ mixin SwatchImagePopupState {
       onImgsAdded(addedImgs);
     }
   }
+
+  void reset() {
+    labels = [];
+    isImgDisplayOpened = false;
+  }
 }

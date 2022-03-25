@@ -15,7 +15,6 @@ class DeleteAccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: test deleteAccount
     return Container(
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: leftPadding, right: rightPadding, top: 3),

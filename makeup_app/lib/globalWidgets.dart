@@ -5,10 +5,11 @@ import 'IO/localizationIO.dart';
 import 'theme.dart' as theme;
 import 'types.dart';
 
-Future<void> openDialog(BuildContext context, Widget Function(BuildContext) builder) {
+Future<void> openDialog(BuildContext context, Widget Function(BuildContext) builder, { bool barrierDismissible = true }) {
   return showDialog(
     context: context,
     builder: builder,
+    barrierDismissible: barrierDismissible,
   );
 }
 

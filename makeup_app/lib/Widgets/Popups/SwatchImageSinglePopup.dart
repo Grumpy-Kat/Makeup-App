@@ -63,7 +63,7 @@ class SwatchImageSinglePopupState extends State<SwatchImageSinglePopup> with Swa
 
     Size imgSize = ImagePicker.getScaledImgSize(Size(MediaQuery.of(context).size.width - 60, 200), await ImagePicker.getActualImgSize(ImagePicker.img));
 
-    return globalWidgets.openDialog(
+    await globalWidgets.openDialog(
       context,
       (BuildContext context) {
         return Padding(
@@ -188,7 +188,10 @@ class SwatchImageSinglePopupState extends State<SwatchImageSinglePopup> with Swa
             ),
           ),
         );
-      }
+      },
+      barrierDismissible: false,
     );
+
+    reset();
   }
 }
