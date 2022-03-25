@@ -28,6 +28,8 @@ class _SwatchImagesAddingLoaderState extends State<SwatchImagesAddingLoader> {
 
   @override
   Widget build(BuildContext context) {
+    print('$currentSavingIndex ${widget.imgs.length}');
+
     return Container(
       height: 35,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -60,7 +62,7 @@ class _SwatchImagesAddingLoaderState extends State<SwatchImagesAddingLoader> {
 
           Expanded(
             child: LinearProgressIndicator(
-              value: currentSavingIndex / widget.imgs.length.toDouble(),
+              value: widget.imgs.length == 0 ? 0 : currentSavingIndex / widget.imgs.length.toDouble(),
               backgroundColor: theme.primaryColorDark,
               color: theme.accentColor,
               minHeight: 10,

@@ -1,6 +1,9 @@
 import 'package:GlamKit/Widgets/SwatchImagesAddingLoader.dart';
 import 'package:flutter/material.dart';
 import '../Data/SwatchImage.dart';
+import '../navigation.dart' as navigation;
+
+// TODO: test what happens when clicking on SignInButton before SwatchImageAddingBar finishes
 
 class SwatchImageAddingBar {
   final List<SwatchImage> imgs;
@@ -15,8 +18,10 @@ class SwatchImageAddingBar {
   }
 
   void open(BuildContext context) {
+    // Passing context only works for the AddSwatchScreens
+    // navigation.navigatorKey.currentContext only works for combineAccountsIO, except context only breaks later, so use it as second option
     final Widget overlay = Positioned(
-      width: MediaQuery.of(context).size.width - 40,
+      width: MediaQuery.of(navigation.navigatorKey.currentContext ?? context).size.width - 40,
       height: 55,
       left: 20,
       bottom: 20,

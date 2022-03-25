@@ -5,6 +5,7 @@ import '../Login/Login.dart';
 import '../Widgets/FlatButton.dart';
 import '../Widgets/SwatchImageAddingBar.dart';
 import '../theme.dart' as theme;
+import '../navigation.dart' as navigation;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import 'localizationIO.dart';
@@ -73,15 +74,11 @@ Future<void> _bothAccounts(BuildContext context, String oldUserID, OriginalAccou
         actions: <Widget>[
           FlatButton(
             bgColor: theme.accentColor,
-            onPressed: () {
-              Navigator.pop(context);
+            onPressed: () async {
+              //Navigator.pop(context);
               globalWidgets.openLoadingDialog(context);
 
-              _bothCombineAccounts(context, orgAccount).then(
-                    (val) {
-                  Navigator.pop(context);
-                },
-              );
+              await _bothCombineAccounts(context, orgAccount);
             },
             child: Text(
               getString('login_combine'),
@@ -164,27 +161,35 @@ Future<void> _bothCombineAccounts(BuildContext context, OriginalAccountData orgA
     // Change ids in swatchImgs and save the new ones
     List<SwatchImage?> oldSwatchImgs = orgAccount.swatchImgs;
     List<SwatchImage> swatchImgsToAdd = [];
-    oldSwatchImgs.map(
-      (SwatchImage? swatchImg) async {
-        if(swatchImg != null) {
-          int newSwatchId = idToId[swatchImg.swatchId] ?? -1;
-          if(newSwatchId != -1) {
-            swatchImgsToAdd.add(
-              SwatchImage(
-                swatchId: newSwatchId,
-                id: swatchImg.id,
-                width: swatchImg.width,
-                height: swatchImg.height,
-                bytes: swatchImg.bytes,
-                labels: swatchImg.labels,
-              ),
-            );
+    await Future.wait(
+      oldSwatchImgs.map(
+        (SwatchImage? swatchImg) async {
+          if(swatchImg != null) {
+            int newSwatchId = idToId[swatchImg.swatchId] ?? -1;
+            if(newSwatchId != -1) {
+              swatchImgsToAdd.add(
+                SwatchImage(
+                  swatchId: newSwatchId,
+                  id: swatchImg.id,
+                  width: swatchImg.width,
+                  height: swatchImg.height,
+                  bytes: swatchImg.bytes,
+                  labels: swatchImg.labels,
+                ),
+              );
+            }
           }
         }
-      }
+      ),
     );
+
     SwatchImageAddingBar(context, swatchImgsToAdd);
   }
+
+  // Close popup and loading dialog
+  // Have to do together so that await isn't called after globalWidgets.showDialog finishes
+  Navigator.pop(context);
+  Navigator.pop(context);
 }
 
 Future<void> _bothOldAccount(String oldUserID) async {
