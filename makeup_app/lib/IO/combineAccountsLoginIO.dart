@@ -5,7 +5,6 @@ import '../Login/Login.dart';
 import '../Widgets/FlatButton.dart';
 import '../Widgets/SwatchImageAddingBar.dart';
 import '../theme.dart' as theme;
-import '../navigation.dart' as navigation;
 import '../globals.dart' as globals;
 import '../globalWidgets.dart' as globalWidgets;
 import 'localizationIO.dart';
